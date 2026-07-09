@@ -1,0 +1,3362 @@
+{
+ "canon": "Delta Atlas Canon",
+ "version": "1.8",
+ "generated": "2026-07-01",
+ "content_hash": "0202d4a4d829",
+ "purpose": "A portable, standardized vocabulary. Give it to any model at session start so it uses the same terms and definitions, minimizing uncontrolled context drift across agents.",
+ "drift_stance": "Minimize UNCONTROLLED drift (silent, unaccounted meaning-shift). CONTROLLED drift (deliberate, logged edits) is essential for tuning and is welcome.",
+ "source_of_truth": "terms.enriched.json (open dataset). This file is generated, not hand-written; regenerate to verify.",
+ "principles": [
+  "Keep what is true, drop the noise. Hold one current understanding, not a pile of everything said.",
+  "Check before you trust. Validate a new claim against ground truth before accepting it.",
+  "Account for every step. Anything committed is logged and can be traced.",
+  "Carry less, not more. Coherence comes from reducing context wisely, not adding to it.",
+  "Say what is not verified. Mark candidates as candidates, and when you change a definition on purpose, record why."
+ ],
+ "status_legend": {
+  "reviewed": {
+   "light": "Green",
+   "label": "Verified",
+   "meaning": "human-reviewed, well-sourced"
+  },
+  "candidate": {
+   "light": "Amber",
+   "label": "Draft",
+   "meaning": "AI-drafted, plausible but unverified"
+  },
+  "stub": {
+   "light": "Red",
+   "label": "Thin",
+   "meaning": "placeholder or single weak source"
+  }
+ },
+ "cross_model_protocol": "Load this file first. Use these exact terms and definitions. Flag any term you use that is not here. If an answer contradicts itself or drifts from these definitions, stop and re-ground against the relevant entry. Cite the entry; do not re-explain the whole file.",
+ "cornerstone_state_delta": [
+  {
+   "id": "context-reset",
+   "term": "Context Reset After Commit",
+   "definition": "Flushing an agent's working memory after each committed change so the next task starts from verified current state, not accumulated reasoning. Drift cannot compound when memory resets against truth.",
+   "area": "Agentic Mechanics",
+   "purpose": "reset",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "deterministic-air-gapping",
+   "term": "Deterministic Air-Gapping",
+   "definition": "The requirement that safety-critical checks run entirely on local hardware with no network dependency, so they still work when the connection fails. The lock works whether or not the security company's servers are online.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "dual-pass-validation",
+   "term": "Dual-Pass Local Validation",
+   "definition": "Requiring every proposed change to clear two local checks before commit: does it fit the rules (ontology), and does it make sense in reality now (semantics). One check is not enough.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "LEAN-AGENT"
+   ]
+  },
+  {
+   "id": "dynamic-agent-layer",
+   "term": "Dynamic Agent Layer",
+   "definition": "The flexible, creative reasoning zone of a system, run in a temporary read-only sandbox with no direct authority over real systems. It proposes; it does not commit.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "elimination-earned-confidence",
+   "term": "Elimination-Earned Confidence",
+   "definition": "A proposed mechanism where a system earns the right to act in proportion to what it has ruled out, carried as an explicit margin, rather than from self-reported certainty. The right to commit scales with confidence and shrinks as consequence rises. Author's candidate contribution, pending review.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "firewall-of-cognition",
+   "term": "Firewall of Cognition",
+   "definition": "Keeping the reasoning model in a read-only context that never directly touches infrastructure, with actions run in disposable sandboxes. The boundary does the work, so the reasoning engine is never trusted with the controls.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "friction-principle",
+   "term": "Friction Principle",
+   "definition": "The design stance that a calibrated amount of resistance, validation that can refuse, is what gives a system traction under load. Too little and it drifts; too much and it consumes itself.",
+   "area": "Foundations",
+   "purpose": "center",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "impedance",
+   "term": "Impedance",
+   "definition": "Borrowed from electronics: how much a structure resists a signal passing through it. In governance, the deliberate friction a control layer adds so unverified change meets resistance and only a clean, in-tune signal (a grounded, coherent change) passes without distortion. Too little and drift flows straight through; too much and the system chokes: the tuning that keeps a structure's integrity under load.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "mandate-gate",
+   "term": "Mandate Gate",
+   "definition": "A check that routes high-consequence actions to a human instead of letting the agent commit them. Autonomy is scoped by how much is at stake.",
+   "area": "Control & Safety",
+   "purpose": "center",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "metaphor-as-transmission",
+   "term": "Metaphor as Transmission Layer",
+   "definition": "Treating a plain-language bridge image as a required layer of a control, not optional documentation, so engineers, operators, and affected people can all audit the same boundary. A control no outsider can read is one no outsider can challenge. Author's candidate contribution.",
+   "area": "Oversight & Governance",
+   "purpose": "center",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "monotonicity-gate",
+   "term": "Monotonicity Gate",
+   "definition": "A validation pass enforcing signed, append-only time: history moves forward only, so committed records cannot be silently rewritten.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "purpose-gate",
+   "term": "Purpose Gate",
+   "definition": "A check that re-verifies an agent is still pursuing its authorized intent during a task, not only at startup, since static permissions do not survive dynamic workflows.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "refusal-logic",
+   "term": "Refusal Logic",
+   "definition": "The deterministic, non-AI hard stop that blocks a change when validation fails, independent of the model's reasoning. The model does not get a vote; the breaker trips on its own, and the failure is logged.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "representation-locality",
+   "term": "Representation Locality",
+   "definition": "The rule that components communicate only in compact state-deltas, never raw narrative or full histories, so contradictions cannot pile up in transit.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "semantic-drift",
+   "term": "Semantic Drift",
+   "definition": "When a system's internal picture slowly stops matching reality because it keeps absorbing data without checking it against current truth. Distinct from model drift: the world may be unchanged while the representation rots.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "semantics-gate",
+   "term": "Semantics Gate",
+   "definition": "The second validation pass: even if a change is technically allowed, does it cohere with current conditions and safety thresholds? Catches the move that is legal but catastrophic.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "system-state",
+   "term": "State",
+   "definition": "What a system currently treats as true about its environment: the single current model it acts on, not the pile of everything it has ever seen. The map the GPS is using now, not every map it has held.",
+   "area": "Data & Provenance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "state-delta",
+   "term": "State-Delta (the unit)",
+   "definition": "A small structured record of one change: what changed, where, and when, carrying only the minimum needed to update a single variable. Parts of the system talk in these instead of long histories. A receipt for one transaction, not the whole bank statement.",
+   "area": "Data & Provenance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "state-delta-architecture",
+   "term": "State-Delta Architecture",
+   "definition": "A way of building agentic systems where the AI proposes changes but a fixed, local rule-layer must verify each one against current reality before it can take effect. The model reasons; the structure decides what commits.",
+   "area": "Foundations",
+   "purpose": "center",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "structural-floor",
+   "term": "Structural Floor",
+   "definition": "The commitment that safety boundaries are enforced by fixed, non-AI components rather than by the model's own judgment. A fence at the cliff edge, not a sign asking you not to fall. Closely tied to the Harness.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "substrate-gate",
+   "term": "Substrate Gate",
+   "definition": "A validation pass that checks a proposed change stays coupled to ground truth, real-world signal, rather than only being internally consistent.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "truth-ledger",
+   "term": "Truth Ledger",
+   "definition": "An append-only local record of every change that passed validation; once written, entries cannot be edited or erased, so the audit trail is the system itself rather than a report bolted on later.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "unbounded-accumulation",
+   "term": "Unbounded Accumulation",
+   "definition": "The failure of piling up inputs without ever deciding what is still true, until contradictions make a clean decision impossible. The closet you never clean out.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  }
+ ],
+ "terms": [
+  {
+   "id": "artificial-intelligence",
+   "term": "Artificial Intelligence",
+   "definition": "Software that performs tasks we associate with human intelligence: learning from data, spotting patterns, using language, or making decisions.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "context-window",
+   "term": "Context Window",
+   "definition": "The fixed amount of text, measured in tokens, a model can consider at once. Input beyond it is dropped or must be retrieved.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "HF"
+   ]
+  },
+  {
+   "id": "deep-learning",
+   "term": "Deep Learning",
+   "definition": "The breakthrough that made image recognition, speech, and language models work well.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "depth",
+   "term": "Depth",
+   "definition": "How many layers or reasoning steps a process runs through. Deeper models and chains capture more abstract structure but are harder to inspect and explain.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "FOUND",
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "embedding",
+   "term": "Embedding",
+   "definition": "Turning data into vectors whose distances capture meaning.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "OPENAI"
+   ]
+  },
+  {
+   "id": "embeddings",
+   "term": "Embeddings",
+   "definition": "Data represented as numeric vectors whose distances reflect similarity in meaning, which enables search and comparison by meaning.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OWASP-LLM",
+    "HF"
+   ]
+  },
+  {
+   "id": "fine-tuning",
+   "term": "Fine-tuning",
+   "definition": "Further training a pretrained model on focused data so it adapts to a specific task or domain.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "FOUND",
+    "HF"
+   ]
+  },
+  {
+   "id": "foundation-model",
+   "term": "Foundation Model",
+   "definition": "A large model trained broadly on general data, then adapted to many tasks rather than trained from scratch for each one.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "friction-principle",
+   "term": "Friction Principle",
+   "definition": "The design stance that a calibrated amount of resistance, validation that can refuse, is what gives a system traction under load. Too little and it drifts; too much and it consumes itself.",
+   "area": "Foundations",
+   "purpose": "center",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "frontier-ai",
+   "term": "Frontier AI",
+   "definition": "The most capable, newest models at the leading edge of ability and risk, the focus of heightened governance.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "generative-ai",
+   "term": "Generative AI",
+   "definition": "Names the capability that distinguishes today's tools from older predict-and-classify AI.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "inference",
+   "term": "Inference",
+   "definition": "Running a trained model to produce an output. The operating phase of AI, as opposed to training.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "FOUND",
+    "NVIDIA",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "large-language-model",
+   "term": "Large Language Model",
+   "definition": "The core of chatbots and most agentic systems; NSA/CISA guidance treats agentic AI as primarily LLM-based.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-AGENTIC",
+    "NIST",
+    "EU",
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "machine-learning",
+   "term": "Machine Learning",
+   "definition": "A method where a system learns patterns from data instead of following explicit rules, then applies them to new inputs.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "model",
+   "term": "Model",
+   "definition": "A trained system that maps inputs to outputs. The artifact you run, deploy, and govern once training is finished.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ISO",
+    "NIST",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "multimodal-ai",
+   "term": "Multimodal AI",
+   "definition": "Expands what agents can perceive and act on (reading a screenshot, describing a photo).",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "HF"
+   ]
+  },
+  {
+   "id": "neural-network",
+   "term": "Neural Network",
+   "definition": "The basic machinery deep learning runs on.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "parameter",
+   "term": "Parameter",
+   "definition": "A single learned value inside a model.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "FOUND"
+   ]
+  },
+  {
+   "id": "parameter-weights",
+   "term": "Parameter / Weights",
+   "definition": "The numbers a model adjusts during training to store what it has learned. Model size is often quoted as a parameter count.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "HF"
+   ]
+  },
+  {
+   "id": "pre-training",
+   "term": "Pre-training",
+   "definition": "Training a model broadly before specializing it.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OPENAI",
+    "HF"
+   ]
+  },
+  {
+   "id": "pretraining",
+   "term": "Pretraining",
+   "definition": "Training a model broadly before specializing it.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ARXIV",
+    "HF"
+   ]
+  },
+  {
+   "id": "prompt",
+   "term": "Prompt",
+   "definition": "The text input given to a model. It carries both the request and its context, so its wording strongly shapes the output.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "NIST",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "prompt-engineering",
+   "term": "Prompt Engineering",
+   "definition": "The practice of designing prompts, examples, and context to get reliable outputs from a model without retraining it.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "HF"
+   ]
+  },
+  {
+   "id": "reasoning-model",
+   "term": "Reasoning Model",
+   "definition": "Better at math, logic, and multi-step tasks; underpins more capable agents.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "reinforcement-learning",
+   "term": "Reinforcement learning",
+   "definition": "A model learns by trial and error, rewarded for actions that move it toward a goal.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ARXIV",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "state-delta-architecture",
+   "term": "State-Delta Architecture",
+   "definition": "A way of building agentic systems where the AI proposes changes but a fixed, local rule-layer must verify each one against current reality before it can take effect. The model reasons; the structure decides what commits.",
+   "area": "Foundations",
+   "purpose": "center",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "supervised",
+   "term": "Supervised",
+   "definition": "Learning from labeled examples.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FOUND",
+    "ISO",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "token",
+   "term": "Token",
+   "definition": "A chunk of text a model reads or writes.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ARXIV",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "token-tokenization",
+   "term": "Token / Tokenization",
+   "definition": "Explains usage limits and pricing: most AI services bill and budget by tokens.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "HF"
+   ]
+  },
+  {
+   "id": "tokenization",
+   "term": "Tokenization",
+   "definition": "Splitting text into tokens for a model.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "OPENAI"
+   ]
+  },
+  {
+   "id": "traditional-ai",
+   "term": "Traditional AI",
+   "definition": "Useful contrast: it explains why modern AI behaves less predictably, having learned patterns instead of being told rules.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "training",
+   "term": "Training",
+   "definition": "Adjusting a model's weights from data.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ISO",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "transformer",
+   "term": "Transformer",
+   "definition": "The architecture that made LLMs possible. You rarely need the internals, but the word comes up constantly.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ARXIV",
+    "HF"
+   ]
+  },
+  {
+   "id": "unsupervised",
+   "term": "Unsupervised",
+   "definition": "Finding structure in data without labels.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FOUND",
+    "ISO",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "weights",
+   "term": "Weights",
+   "definition": "The learned numbers that hold a model's knowledge.",
+   "area": "Foundations",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ARXIV",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "anonymization",
+   "term": "Anonymization",
+   "definition": "Removing identity so data cannot be traced to a person.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "EU",
+    "ISO"
+   ]
+  },
+  {
+   "id": "attestation",
+   "term": "Attestation",
+   "definition": "Verifiable, often cryptographic, evidence of a system's identity or state, used to establish trust between parties.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-DATA"
+   ]
+  },
+  {
+   "id": "chain-of-custody",
+   "term": "Chain of Custody",
+   "definition": "The unbroken, traceable record of where data and decisions came from and how they changed, preserved end to end.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "context-engineering",
+   "term": "Context Engineering",
+   "definition": "Designs what enters a model's context: retrieval, memory, and prompts assembled so the output stays grounded.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "data-lineage",
+   "term": "Data Lineage",
+   "definition": "The detailed, technical form of provenance. Essential for auditing and debugging bad outputs.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-DATA"
+   ]
+  },
+  {
+   "id": "ground-truth",
+   "term": "Ground Truth",
+   "definition": "The fixed reference everything is measured from. The Ledger's whole point: a system can be perfectly self-consistent and still wrong, so it needs an external ground truth, ultimately verified by a human in contact with reality.",
+   "area": "Data & Provenance",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-DATA",
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "knowledge-graph",
+   "term": "Knowledge Graph",
+   "definition": "Gives agents a reliable, queryable map of how things relate; a structured alternative or complement to RAG.",
+   "area": "Data & Provenance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "HF"
+   ]
+  },
+  {
+   "id": "monotonicity-gate",
+   "term": "Monotonicity Gate",
+   "definition": "A validation pass enforcing signed, append-only time: history moves forward only, so committed records cannot be silently rewritten.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "polarity",
+   "term": "Polarity",
+   "definition": "The positive-versus-negative orientation of a text or signal, as measured in sentiment analysis. When data or outputs cluster at opposing extremes they are polarized, which can skew what a model learns or produces.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "ARXIV",
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "provenance",
+   "term": "Provenance",
+   "definition": "The recorded origin and history of data or a model, used to judge whether it can be trusted.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-AGENTIC",
+    "W3C",
+    "NSA-CISA-DATA"
+   ]
+  },
+  {
+   "id": "pseudonymization",
+   "term": "Pseudonymization",
+   "definition": "Replacing identifiers with reversible tokens.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "EU",
+    "ISO"
+   ]
+  },
+  {
+   "id": "retrieval",
+   "term": "Retrieval",
+   "definition": "Fetching relevant external documents to ground an answer.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "sensitive",
+   "term": "Sensitive",
+   "definition": "Data needing special protection, such as health or identity.",
+   "area": "Data & Provenance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "EU"
+   ]
+  },
+  {
+   "id": "system-state",
+   "term": "State",
+   "definition": "What a system currently treats as true about its environment: the single current model it acts on, not the pile of everything it has ever seen. The map the GPS is using now, not every map it has held.",
+   "area": "Data & Provenance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "state-delta",
+   "term": "State-Delta (the unit)",
+   "definition": "A small structured record of one change: what changed, where, and when, carrying only the minimum needed to update a single variable. Parts of the system talk in these instead of long histories. A receipt for one transaction, not the whole bank statement.",
+   "area": "Data & Provenance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "synthetic-data",
+   "term": "Synthetic Data",
+   "definition": "Useful when real data is scarce or sensitive, but its quality and biases need their own scrutiny.",
+   "area": "Data & Provenance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "HF"
+   ]
+  },
+  {
+   "id": "truth-ledger",
+   "term": "Truth Ledger",
+   "definition": "An append-only local record of every change that passed validation; once written, entries cannot be edited or erased, so the audit trail is the system itself rather than a report bolted on later.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "vector-database",
+   "term": "Vector Database",
+   "definition": "The memory store behind most RAG and agent-memory systems.",
+   "area": "Data & Provenance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OWASP-LLM"
+   ]
+  },
+  {
+   "id": "watermarking",
+   "term": "Watermarking",
+   "definition": "Helps trace provenance of outputs and flag synthetic media. Imperfect, but raises the cost of undetected fakery.",
+   "area": "Data & Provenance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-DATA"
+   ]
+  },
+  {
+   "id": "agent",
+   "term": "Agent",
+   "definition": "An AI system that pursues a goal over multiple steps, choosing actions and calling tools, rather than answering a single prompt.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OTHER",
+    "NIST",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "agentic",
+   "term": "Agentic",
+   "definition": "Describes a system that acts on goals with autonomy rather than only answering, often working through agents and subagents that each handle part of the task.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OPENAI",
+    "ANTHROPIC",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "agentic-ai",
+   "term": "Agentic AI",
+   "definition": "AI that pursues goals over multiple steps with limited human oversight, often by coordinating one or more agents and subagents. Agency is a spectrum, from a single scoped agent to many acting together, not an on/off switch.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "NIST-AI-RMF",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "automation",
+   "term": "Automation",
+   "definition": "Running a task without human effort each time.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ISO",
+    "ISA",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "autonomous",
+   "term": "Autonomous",
+   "definition": "Acting without step-by-step human direction.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "SAE",
+    "NIST"
+   ]
+  },
+  {
+   "id": "autonomy",
+   "term": "Autonomy",
+   "definition": "The dial that most determines risk. More autonomy = more speed and scale, but also more ways to go wrong before anyone notices.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "EU",
+    "ISO-22989",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "chain-of-thought",
+   "term": "Chain-of-Thought",
+   "definition": "Prompting a model to reason step by step before answering.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "GOOGLE",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "collaboration",
+   "term": "Collaboration",
+   "definition": "Agents or people working together toward a goal.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FIPA",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "context",
+   "term": "Context",
+   "definition": "The surrounding information a model uses to respond.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "context-reset",
+   "term": "Context Reset After Commit",
+   "definition": "Flushing an agent's working memory after each committed change so the next task starts from verified current state, not accumulated reasoning. Drift cannot compound when memory resets against truth.",
+   "area": "Agentic Mechanics",
+   "purpose": "reset",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "decision",
+   "term": "Decision",
+   "definition": "A choice a model or agent commits to.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FOUND"
+   ]
+  },
+  {
+   "id": "decomposition",
+   "term": "Decomposition",
+   "definition": "Breaking a task into smaller subtasks.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FOUND",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "delegation",
+   "term": "Delegation",
+   "definition": "Handing a task to another agent or tool.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FIPA",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "deployment",
+   "term": "Deployment",
+   "definition": "Putting a trained model into production use.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "MLOPS",
+    "ISO",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "dynamic-agent-layer",
+   "term": "Dynamic Agent Layer",
+   "definition": "The flexible, creative reasoning zone of a system, run in a temporary read-only sandbox with no direct authority over real systems. It proposes; it does not commit.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "excessive-agency",
+   "term": "Excessive Agency",
+   "definition": "Names a top agentic risk category and points straight at the fix: scope it down, limit its tools, add approval.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "NIST-AI-RMF",
+    "OWASP-AGENTIC",
+    "MIT"
+   ]
+  },
+  {
+   "id": "execution",
+   "term": "Execution",
+   "definition": "Carrying out a planned action.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "few-shot",
+   "term": "Few-Shot",
+   "definition": "Giving a few examples in the prompt to guide output.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ARXIV",
+    "HF"
+   ]
+  },
+  {
+   "id": "goal",
+   "term": "Goal",
+   "definition": "The outcome an agent is trying to reach.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "goal-objective",
+   "term": "Goal / Objective",
+   "definition": "The thing everything else is optimized toward. Most agentic failures trace back to a goal that was vague, wrong, or quietly outranked the rules.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "human-in-the-loop",
+   "term": "Human-in-the-Loop",
+   "definition": "A setup where a person must review or approve an AI's action before it takes effect, so higher-risk decisions are not left fully to the machine.",
+   "area": "Agentic Mechanics",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "NIST",
+    "ISO",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "human-on-the-loop",
+   "term": "Human-on-the-Loop",
+   "definition": "A lighter-touch oversight model for higher autonomy: faster, but relies on the human actually noticing in time.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "NATO",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "kahneman-tversky",
+   "term": "Kahneman-Tversky",
+   "definition": "An alignment method using human-style gain/loss judgments.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "kto",
+   "term": "KTO",
+   "definition": "Kahneman-Tversky Optimization: aligns a model from simple good/bad signals.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "rlhf",
+   "term": "Learning from human feedback",
+   "definition": "Humans rank a model's outputs and that preference signal trains the model toward what people actually want.",
+   "area": "Agentic Mechanics",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OPENAI"
+   ]
+  },
+  {
+   "id": "loops",
+   "term": "Loops",
+   "definition": "The feedback and control cycles an agent runs in: acting, being checked, and correcting, including human-in and human-on-the-loop.",
+   "area": "Agentic Mechanics",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "memory",
+   "term": "Memory",
+   "definition": "Lets agents stay coherent over long tasks, and creates a new place where bad or poisoned data can persist.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "model-context-protocol",
+   "term": "Model Context Protocol",
+   "definition": "An open standard for connecting agents to external tools and data through one uniform interface.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "multi-agent",
+   "term": "Multi-Agent",
+   "definition": "Several agents working together on a task.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FIPA",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "multi-agent-system",
+   "term": "Multi-Agent System",
+   "definition": "More capable, but introduces structural risk: one agent's error can cascade through the others (NSA/CISA).",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-AGENTIC",
+    "OWASP-AGENTIC",
+    "MIT"
+   ]
+  },
+  {
+   "id": "negotiation",
+   "term": "Negotiation",
+   "definition": "Agents resolving differences to reach agreement.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FIPA",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "one-shot",
+   "term": "One-Shot",
+   "definition": "Giving one example in the prompt to guide output.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "orchestration",
+   "term": "Orchestration",
+   "definition": "The layer that coordinates models, tools, and steps into a workflow, and where approvals and limits are enforced.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OASIS",
+    "CNCF",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "plan",
+   "term": "Plan",
+   "definition": "An ordered set of steps toward a goal.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "planning",
+   "term": "Planning",
+   "definition": "The capability that turns a single answer into a multi-step task. Powerful, and harder to predict or audit.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "preference",
+   "term": "Preference",
+   "definition": "A human signal of which output is better.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "prefix",
+   "term": "Prefix",
+   "definition": "Tokens prepended to steer a model's output.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "prompting",
+   "term": "Prompting",
+   "definition": "Phrasing an input to steer a model's output.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "react",
+   "term": "ReAct",
+   "definition": "Interleaving reasoning with tool actions in a loop.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "GOOGLE",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "reasoning",
+   "term": "Reasoning",
+   "definition": "Working through a problem in steps before answering.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "reflect",
+   "term": "Reflect",
+   "definition": "An agent reviewing its own work to improve it.",
+   "area": "Agentic Mechanics",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "representation-locality",
+   "term": "Representation Locality",
+   "definition": "The rule that components communicate only in compact state-deltas, never raw narrative or full histories, so contradictions cannot pile up in transit.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "rlaif",
+   "term": "RLAIF",
+   "definition": "Reinforcement learning where an AI model, not a human, gives the preference signal.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ANTHROPIC",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "scaffold",
+   "term": "Scaffold",
+   "definition": "The supporting structure of prompts, tools, memory, and checks around a model that both enables and bounds agentic behavior.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "self-reflection",
+   "term": "Self-Reflection",
+   "definition": "An agent critiques its own output and revises it.",
+   "area": "Agentic Mechanics",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ANTHROPIC",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "skills",
+   "term": "Skills",
+   "definition": "Discrete, scoped capabilities an agent can call: modular tools it composes, each permissioned and bounded.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "tool",
+   "term": "Tool",
+   "definition": "An external function an agent can call.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OPENAI",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "tool-use-function-calling",
+   "term": "Tool Use / Function Calling",
+   "definition": "What lets an agent affect the real world. Also the main place it can cause real damage, so tools are a key control point.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "tree-of-thoughts",
+   "term": "Tree-of-Thoughts",
+   "definition": "Exploring multiple reasoning branches and keeping the best.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "workflow",
+   "term": "Workflow",
+   "definition": "A fixed series of steps the AI follows to finish a task. Because the path is set ahead of time, it is predictable and easy to check, which is why it is the safest place to start.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "zero-shot",
+   "term": "Zero-Shot",
+   "definition": "Asking with no examples, relying on prior training.",
+   "area": "Agentic Mechanics",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER",
+    "ARXIV"
+   ]
+  },
+  {
+   "id": "agent-goal-hijack",
+   "term": "Agent Goal Hijack",
+   "definition": "Combines prompt injection with autonomy: multi-step execution amplifies the damage before a human can step in.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "OWASP-AGENTIC",
+    "MIT"
+   ]
+  },
+  {
+   "id": "automation-bias",
+   "term": "Automation Bias",
+   "definition": "The human tendency to over-trust automated output and stop checking it, which weakens human oversight.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "MIT"
+   ]
+  },
+  {
+   "id": "bias",
+   "term": "Bias",
+   "definition": "A core fairness and legal risk; often traces back to training data.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "NIST",
+    "ISO",
+    "ISO-22989",
+    "NIST-AI-RMF",
+    "NIST-AML",
+    "MIT"
+   ]
+  },
+  {
+   "id": "cascading-failure",
+   "term": "Cascading Failure",
+   "definition": "When one part's failure sets off others in a chain, so a small fault spreads into a system-wide breakdown. Common where many agents or services depend on each other.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-AGENTIC",
+    "MIT"
+   ]
+  },
+  {
+   "id": "data-poisoning",
+   "term": "Data Poisoning",
+   "definition": "An attack that corrupts training data so the resulting model behaves incorrectly or carries hidden flaws.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "NIST-AML",
+    "NSA-CISA-DATA"
+   ]
+  },
+  {
+   "id": "deceptive-alignment",
+   "term": "Deceptive Alignment",
+   "definition": "The hardest failure to detect: it's invisible to checks that only test individual claims. Maps to the Ledger's ordering drift: Purpose quietly outranking the Check, with every local test still green.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "MIT"
+   ]
+  },
+  {
+   "id": "emergent-behavior",
+   "term": "Emergent Behavior",
+   "definition": "Cuts both ways: useful new skills, but also unanticipated risks. A reason evaluation must be ongoing.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "MIT"
+   ]
+  },
+  {
+   "id": "goal-misalignment-goal-misgeneralization",
+   "term": "Goal Misalignment / Goal Misgeneralization",
+   "definition": "A quiet, systemic failure: every individual step can look fine while the overall direction is wrong.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "MIT"
+   ]
+  },
+  {
+   "id": "hallucination",
+   "term": "Hallucination",
+   "definition": "When an AI states something false as if it were true: fluent, confident output that isn't grounded in real data. Also called contextual mismatch or semantic drift.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "NIST",
+    "OWASP-LLM",
+    "MIT"
+   ]
+  },
+  {
+   "id": "jailbreak",
+   "term": "Jailbreak",
+   "definition": "Close to prompt injection; specifically aimed at defeating guardrails. A reason guardrails alone aren't enough.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "NIST-AML"
+   ]
+  },
+  {
+   "id": "model-drift",
+   "term": "Model Drift",
+   "definition": "The gradual decline in a model's accuracy as real-world data drifts away from the data it was trained on.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "NIST-AI-RMF",
+    "NIST-AML",
+    "NSA-CISA-DATA",
+    "MIT"
+   ]
+  },
+  {
+   "id": "privilege",
+   "term": "Privilege",
+   "definition": "Names the single most cited agentic risk and its fix: don't over-grant access.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-AGENTIC",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "prompt-injection",
+   "term": "Prompt Injection",
+   "definition": "The top-ranked LLM risk. Dangerous for agents because the injected instruction can trigger real tool actions.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OWASP-LLM",
+    "NIST-AML"
+   ]
+  },
+  {
+   "id": "reward-hacking",
+   "term": "Reward Hacking",
+   "definition": "When a system maximizes its given metric in unintended ways that satisfy the measure but not the real goal.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "MIT"
+   ]
+  },
+  {
+   "id": "semantic-drift",
+   "term": "Semantic Drift",
+   "definition": "When a system's internal picture slowly stops matching reality because it keeps absorbing data without checking it against current truth. Distinct from model drift: the world may be unchanged while the representation rots.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "sensitive-information-disclosure",
+   "term": "Sensitive Information Disclosure",
+   "definition": "A leading real-world harm, especially for agents with access to internal data. Drives least-privilege and scoping.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "NIST-AML"
+   ]
+  },
+  {
+   "id": "tool-poisoning",
+   "term": "Tool Poisoning",
+   "definition": "Turns the agent's own capabilities against it. A supply-chain attack aimed at the action layer.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OWASP-LLM",
+    "NIST-AML",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "unbounded-accumulation",
+   "term": "Unbounded Accumulation",
+   "definition": "The failure of piling up inputs without ever deciding what is still true, until contradictions make a clean decision impossible. The closet you never clean out.",
+   "area": "Failure Modes & Risks",
+   "purpose": "risk",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "ai-safety",
+   "term": "AI Safety",
+   "definition": "The discipline that contains most other terms in this cluster.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "alignment",
+   "term": "Alignment",
+   "definition": "The overarching aim of safety work. Misalignment is the root of many failure modes downstream.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "OPENAI",
+    "NIST"
+   ]
+  },
+  {
+   "id": "boundary",
+   "term": "Boundary",
+   "definition": "The limit of what a system may do.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FOUND",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "buffer",
+   "term": "Buffer",
+   "definition": "Takes survivable error and deforms instead of breaking, holding room a node cannot shed.",
+   "area": "Control & Safety",
+   "purpose": "absorb",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER",
+    "FOUND"
+   ]
+  },
+  {
+   "id": "constraint",
+   "term": "Constraint",
+   "definition": "A rule limiting an agent's actions.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST"
+   ]
+  },
+  {
+   "id": "control",
+   "term": "Control",
+   "definition": "Keeping a system within intended bounds.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "IEEE",
+    "NIST"
+   ]
+  },
+  {
+   "id": "defense-in-depth",
+   "term": "Defense-in-Depth",
+   "definition": "If one control fails, others still hold. An Absorb function at the system level.",
+   "area": "Control & Safety",
+   "purpose": "absorb",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "deterministic-air-gapping",
+   "term": "Deterministic Air-Gapping",
+   "definition": "The requirement that safety-critical checks run entirely on local hardware with no network dependency, so they still work when the connection fails. The lock works whether or not the security company's servers are online.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "deterministic-constraint",
+   "term": "Deterministic Constraint",
+   "definition": "A fixed rule the model cannot override, so it holds even when the model misbehaves. It is the enforcing core of a harness or tether: the part that actually says no.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "dual-pass-validation",
+   "term": "Dual-Pass Local Validation",
+   "definition": "Requiring every proposed change to clear two local checks before commit: does it fit the rules (ontology), and does it make sense in reality now (semantics). One check is not enough.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "LEAN-AGENT"
+   ]
+  },
+  {
+   "id": "elimination-earned-confidence",
+   "term": "Elimination-Earned Confidence",
+   "definition": "A proposed mechanism where a system earns the right to act in proportion to what it has ruled out, carried as an explicit margin, rather than from self-reported certainty. The right to commit scales with confidence and shrinks as consequence rises. Author's candidate contribution, pending review.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "evaluation-benchmark",
+   "term": "Evaluation / Benchmark",
+   "definition": "A standardized test of a model or agent's performance, used to judge fitness for a task and to detect decline over time.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "fallbacks",
+   "term": "Fallbacks",
+   "definition": "Backup actions used when the main one fails.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "W3C",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "firewall-of-cognition",
+   "term": "Firewall of Cognition",
+   "definition": "Keeping the reasoning model in a read-only context that never directly touches infrastructure, with actions run in disposable sandboxes. The boundary does the work, so the reasoning engine is never trusted with the controls.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "floor",
+   "term": "Floor",
+   "definition": "Compares every claim to a fixed reference held still during the check.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "forgiveness",
+   "term": "Forgiveness",
+   "definition": "Absorbs cost after a stop, making a valid intervention distinguishable from damage.",
+   "area": "Control & Safety",
+   "purpose": "reset",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "grace",
+   "term": "Grace",
+   "definition": "Absorbs cost before a stop, so a recoverable error does not end the run.",
+   "area": "Control & Safety",
+   "purpose": "absorb",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "graceful-degradation",
+   "term": "Graceful Degradation",
+   "definition": "The Ledger's Absorb function by its field-standard name: survivable error doesn't become a terminal stop.",
+   "area": "Control & Safety",
+   "purpose": "absorb",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "guardrail",
+   "term": "Guardrail",
+   "definition": "An enforced limit on what a model or agent may do, checked against a rule before an action is allowed to proceed.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "NVIDIA",
+    "OWASP"
+   ]
+  },
+  {
+   "id": "harness",
+   "term": "Harness",
+   "definition": "Wraps a model to direct, constrain, and watch its actions: the control surface that turns a raw model into a governable agent.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "hitc",
+   "term": "HITC",
+   "definition": "Human-in-the-Command: a human directs the agent's actions.",
+   "area": "Control & Safety",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "DOD",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "hotl",
+   "term": "HOTL",
+   "definition": "Human-on-the-Loop: a human monitors and can intervene.",
+   "area": "Control & Safety",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NATO",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "human-in-the-command",
+   "term": "Human-in-the-Command",
+   "definition": "A human directs and authorizes the agent's actions.",
+   "area": "Control & Safety",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "DOD",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "impedance",
+   "term": "Impedance",
+   "definition": "Borrowed from electronics: how much a structure resists a signal passing through it. In governance, the deliberate friction a control layer adds so unverified change meets resistance and only a clean, in-tune signal (a grounded, coherent change) passes without distortion. Too little and drift flows straight through; too much and the system chokes: the tuning that keeps a structure's integrity under load.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "kill-switch-circuit-breaker",
+   "term": "Kill Switch / Circuit Breaker",
+   "definition": "The last-resort Reset: halts runaway behavior. Circuit breakers can trip automatically when limits are crossed.",
+   "area": "Control & Safety",
+   "purpose": "absorb",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "least-privilege",
+   "term": "Least Privilege",
+   "definition": "Giving an agent only the minimum access and permissions its task needs, so a compromise or mistake can do limited damage.",
+   "area": "Control & Safety",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-AGENTIC",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "loop",
+   "term": "Loop",
+   "definition": "The control loop placing a human in or on the process.",
+   "area": "Control & Safety",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "OTHER"
+   ]
+  },
+  {
+   "id": "mandate-gate",
+   "term": "Mandate Gate",
+   "definition": "A check that routes high-consequence actions to a human instead of letting the agent commit them. Autonomy is scoped by how much is at stake.",
+   "area": "Control & Safety",
+   "purpose": "center",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "ontology-policy-gate",
+   "term": "Ontology / Policy Gate",
+   "definition": "A control that first checks whether an action is even a permitted type, before checking whether it is carried out correctly.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "purpose-gate",
+   "term": "Purpose Gate",
+   "definition": "A check that re-verifies an agent is still pursuing its authorized intent during a task, not only at startup, since static permissions do not survive dynamic workflows.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "rate-limiting",
+   "term": "Rate Limiting",
+   "definition": "Slows damage so humans can catch it, an Absorb function that buys reaction time.",
+   "area": "Control & Safety",
+   "purpose": "absorb",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "red-teaming",
+   "term": "Red Teaming",
+   "definition": "Turns unknown risks into known, fixable ones. A Check run adversarially.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "redaction",
+   "term": "Redaction",
+   "definition": "Removing sensitive content from data or output.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST",
+    "EU"
+   ]
+  },
+  {
+   "id": "redundancy",
+   "term": "Redundancy",
+   "definition": "Spare capacity that keeps a system running.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "IEEE",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "refusal-logic",
+   "term": "Refusal Logic",
+   "definition": "The deterministic, non-AI hard stop that blocks a change when validation fails, independent of the model's reasoning. The model does not get a vote; the breaker trips on its own, and the failure is logged.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "safety",
+   "term": "Safety",
+   "definition": "Keeping a system from causing harm.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST",
+    "ISO",
+    "OPENAI",
+    "ISO-22989",
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "sandboxing",
+   "term": "Sandboxing",
+   "definition": "Lets an agent fail safely. In Ledger terms an Absorb function: it contains survivable error instead of letting it spread.",
+   "area": "Control & Safety",
+   "purpose": "absorb",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "scoping",
+   "term": "Scoping",
+   "definition": "The cheapest, most effective control. NSA/CISA advise starting with low-risk, tightly scoped, non-sensitive use cases.",
+   "area": "Control & Safety",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-AGENTIC",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "security",
+   "term": "Security",
+   "definition": "Protecting systems and data from attack.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ISO",
+    "NIST",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "semantics-gate",
+   "term": "Semantics Gate",
+   "definition": "The second validation pass: even if a change is technically allowed, does it cohere with current conditions and safety thresholds? Catches the move that is legal but catastrophic.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "structural-floor",
+   "term": "Structural Floor",
+   "definition": "The commitment that safety boundaries are enforced by fixed, non-AI components rather than by the model's own judgment. A fence at the cliff edge, not a sign asking you not to fall. Closely tied to the Harness.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA",
+    "NSA-CISA-AGENTIC"
+   ]
+  },
+  {
+   "id": "substrate-gate",
+   "term": "Substrate Gate",
+   "definition": "A validation pass that checks a proposed change stays coupled to ground truth, real-world signal, rather than only being internally consistent.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "tether",
+   "term": "Tether",
+   "definition": "Binds an agent to its goal, its ground truth, and human oversight, so it cannot drift loose.",
+   "area": "Control & Safety",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "tolerance",
+   "term": "Tolerance",
+   "definition": "Fault tolerance: staying up despite failures.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "IEEE",
+    "NIST"
+   ]
+  },
+  {
+   "id": "validation-gate",
+   "term": "Validation Gate",
+   "definition": "Catches bad results before they take effect. A deterministic Check the agent cannot talk its way past.",
+   "area": "Control & Safety",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "zero-trust",
+   "term": "Zero Trust",
+   "definition": "A security model that verifies every action rather than trusting it by default, applied here to each step an agent takes.",
+   "area": "Control & Safety",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-AGENTIC",
+    "OWASP-AGENTIC"
+   ]
+  },
+  {
+   "id": "accountability",
+   "term": "Accountability",
+   "definition": "One of NSA/CISA's five agentic risk categories. Hard with autonomous agents precisely because the actor isn't a person, so accountability has to be assigned deliberately.",
+   "area": "Oversight & Governance",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-AGENTIC",
+    "NIST",
+    "ISO",
+    "NIST-AI-RMF",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "ai-governance",
+   "term": "AI Governance",
+   "definition": "The framework everything in this cluster lives inside. NSA/CISA stress agentic AI usually fits existing governance, not a brand-new discipline.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NSA-CISA-AGENTIC",
+    "NIST-AI-RMF",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "ai-lifecycle",
+   "term": "AI Lifecycle",
+   "definition": "Governance attaches at every stage; risks and controls differ by stage. A useful mental map for newcomers.",
+   "area": "Oversight & Governance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "audit-trail",
+   "term": "Audit Trail",
+   "definition": "The Ledger's Reset/Return function: it makes a valid action distinguishable from damage, and makes accountability possible after the fact.",
+   "area": "Oversight & Governance",
+   "purpose": "reset",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "auditing",
+   "term": "Auditing",
+   "definition": "Reviewing a system against rules or expectations.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ISO",
+    "NIST"
+   ]
+  },
+  {
+   "id": "black-box",
+   "term": "Black Box",
+   "definition": "A system whose outputs can be observed but whose internal reasoning cannot be seen or readily understood.",
+   "area": "Oversight & Governance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "coherence",
+   "term": "Coherence",
+   "definition": "The whole structure holding its orientation as it moves, not merely keeping its facts: sustained coupling between what a system intends, what it does, and what is real.",
+   "area": "Oversight & Governance",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "coherence-ledger",
+   "term": "Coherence Ledger",
+   "definition": "Audits any framework for coherence and resilience to its stated goal, scoring structure over narrative.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "compliance",
+   "term": "Compliance",
+   "definition": "Conformance with the laws, regulations, and policies that apply to a system. These are the rules that cannot be opted out of without eventual consequence.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "ISO"
+   ]
+  },
+  {
+   "id": "delta",
+   "term": "Delta",
+   "definition": "The change between two versions or values.",
+   "area": "Oversight & Governance",
+   "purpose": "reset",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FOUND"
+   ]
+  },
+  {
+   "id": "detection",
+   "term": "Detection",
+   "definition": "Surfacing a problem or pattern as it occurs.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FOUND",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "elasticity",
+   "term": "Elasticity",
+   "definition": "Scaling resources up and down with demand.",
+   "area": "Oversight & Governance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST"
+   ]
+  },
+  {
+   "id": "elicitation",
+   "term": "Elicitation",
+   "definition": "Drawing out a model's capabilities or knowledge.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "ethical-ai",
+   "term": "Ethical AI",
+   "definition": "Close cousin of Responsible AI; emphasizes the values themselves over the process.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "ethics",
+   "term": "Ethics",
+   "definition": "Principles for what AI should and should not do.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "IEEE",
+    "UNESCO"
+   ]
+  },
+  {
+   "id": "explainability",
+   "term": "Explainability",
+   "definition": "How clearly a model's outputs can be explained.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "DARPA",
+    "NIST",
+    "ISO-22989",
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "explainability-interpretability",
+   "term": "Explainability / Interpretability",
+   "definition": "The degree to which a model's outputs, and the reasoning behind them, can be understood and explained by people.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "ISO-22989",
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "go-to-market",
+   "term": "Go-to-Market",
+   "definition": "The plan for releasing an AI capability to users, governed for staged, responsible rollout rather than a single launch.",
+   "area": "Oversight & Governance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "governance",
+   "term": "Governance",
+   "definition": "The rules and oversight guiding how AI is built and used.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ISO",
+    "NIST"
+   ]
+  },
+  {
+   "id": "human-centered-ai",
+   "term": "Human-Centered AI",
+   "definition": "The orienting philosophy behind keeping a human meaningfully in the loop.",
+   "area": "Oversight & Governance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "interpretability",
+   "term": "Interpretability",
+   "definition": "How well a model's inner workings can be understood.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "DARPA",
+    "NIST",
+    "ISO-22989",
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "management",
+   "term": "Management",
+   "definition": "Coordinating resources, models, or workflows.",
+   "area": "Oversight & Governance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ISO",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "metaphor-as-transmission",
+   "term": "Metaphor as Transmission Layer",
+   "definition": "Treating a plain-language bridge image as a required layer of a control, not optional documentation, so engineers, operators, and affected people can all audit the same boundary. A control no outsider can read is one no outsider can challenge. Author's candidate contribution.",
+   "area": "Oversight & Governance",
+   "purpose": "center",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "STATE-DELTA"
+   ]
+  },
+  {
+   "id": "model-card",
+   "term": "Model Card",
+   "definition": "A short document describing a model's purpose, training data, limitations, and intended use.",
+   "area": "Oversight & Governance",
+   "purpose": "reset",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "nist-ai-risk-management-framework",
+   "term": "NIST AI Risk Management Framework",
+   "definition": "Gives organizations a shared structure and vocabulary for AI risk. Govern sets policy; Map finds risks in context; Measure rates trustworthiness; Manage decides what to do about them.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "outcomes",
+   "term": "Outcomes",
+   "definition": "The real-world results a system produces downstream, as opposed to its immediate outputs. Governance judges an AI by its outcomes, the impact on people and systems, not just what it prints on the screen.",
+   "area": "Oversight & Governance",
+   "purpose": "center",
+   "tier": "core",
+   "status": "candidate",
+   "light": "Amber",
+   "sources": [
+    "NIST-AI-RMF",
+    "STANFORD-HAI"
+   ]
+  },
+  {
+   "id": "privacy",
+   "term": "Privacy",
+   "definition": "Protecting personal information from misuse.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "EU",
+    "NIST",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "query-concept",
+   "term": "Query",
+   "definition": "A structured request that asks the system by pattern and function, not by keyword, so the answer reflects the structure.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "resilience",
+   "term": "Resilience",
+   "definition": "A system's capacity to absorb load, hold its chain of custody, stay anchored to ground truth, and recover, while respecting the human cost.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "resilience-ledger",
+   "term": "Resilience Ledger",
+   "definition": "Measures how a system absorbs load, checks against a reference, and resets, scored from a neutral center rather than its own story.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "responsible-ai",
+   "term": "Responsible AI",
+   "definition": "The values layer that governance operationalizes.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "STANFORD-HAI",
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "return",
+   "term": "Return",
+   "definition": "Keeps an append-only record so the system returns to baseline rather than locking in a changed state.",
+   "area": "Oversight & Governance",
+   "purpose": "reset",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "risk-assessment",
+   "term": "Risk Assessment",
+   "definition": "The process of identifying, rating, and prioritizing the ways a system could cause harm.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "scalability",
+   "term": "Scalability",
+   "definition": "How well a system grows with load.",
+   "area": "Oversight & Governance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "shadow-ai",
+   "term": "Shadow AI",
+   "definition": "AI tools used inside an organization without approval or oversight, operating outside its governance.",
+   "area": "Oversight & Governance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "solution-architecture",
+   "term": "Solution Architecture",
+   "definition": "The overall design of how an agentic system's models, tools, data, controls, and people fit together to meet a goal safely.",
+   "area": "Oversight & Governance",
+   "purpose": "capability",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "sovereign-zero",
+   "term": "Sovereign Zero",
+   "definition": "The neutral, function-first reference a translation calibrates against, so no single vocabulary captures the meaning.",
+   "area": "Oversight & Governance",
+   "purpose": "center",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "supervision",
+   "term": "Supervision",
+   "definition": "Human oversight of a model or agent.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "FIPA",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "system-card",
+   "term": "System Card",
+   "definition": "Documentation of a deployed system as a whole: the model plus the surrounding components and safeguards.",
+   "area": "Oversight & Governance",
+   "purpose": "reset",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "systems-thinking",
+   "term": "Systems Thinking",
+   "definition": "Reasoning about the whole agentic system and its feedback loops, not isolated parts, so controls and risks are seen in relation.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "RESILIENCE-LEDGER"
+   ]
+  },
+  {
+   "id": "testing",
+   "term": "Testing",
+   "definition": "Checking a system behaves as intended.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ISO",
+    "ISO-22989"
+   ]
+  },
+  {
+   "id": "tracking",
+   "term": "Tracking",
+   "definition": "Recording experiment runs and their results.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "LF",
+    "OTHER"
+   ]
+  },
+  {
+   "id": "transparency",
+   "term": "Transparency",
+   "definition": "Making how a system works and how it reaches its decisions open to inspection, so outsiders can see what it does rather than take it on faith.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "NIST-AI-RMF",
+    "EU",
+    "NIST",
+    "ISO-22989",
+    "ISO-42001"
+   ]
+  },
+  {
+   "id": "validation",
+   "term": "Validation",
+   "definition": "Checking that data or a model meets requirements.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "ISO",
+    "ISO-22989",
+    "NIST-AI-RMF"
+   ]
+  },
+  {
+   "id": "xai",
+   "term": "XAI",
+   "definition": "Explainable AI: making model decisions understandable.",
+   "area": "Oversight & Governance",
+   "purpose": "check",
+   "tier": "core",
+   "status": "reviewed",
+   "light": "Green",
+   "sources": [
+    "DARPA",
+    "NIST",
+    "STANFORD-HAI"
+   ]
+  }
+ ],
+ "counts": {
+  "total": 443,
+  "core_canon": 214,
+  "state_delta": 23,
+  "reviewed": 188
+ },
+ "metaphor_layer_note": "Sovereign Zero, Kintsugi, and impedance/resonance analogies are intuition pumps, not mechanisms. Not engineering claims.",
+ "license": "CC BY 4.0",
+ "author": "Jake Tiller",
+ "year": 2026
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - Framework Audit</title>
+<style>
+ :root{--bg:#e3ecf3;--panel:#ffffff;--line:#cbd7e1;--txt:#1f3147;--dim:#56697d;--accent:#2c6bb0;--win:#5f7d50;--mid:#b8902e;--bad:#b4503c;}
+ *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--txt);line-height:1.55;
+   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;}
+ header{padding:16px 22px;border-bottom:1px solid var(--line);}
+ header h1{margin:0;font-size:19px;} header p{margin:5px 0 0;color:var(--dim);font-size:12.5px;max-width:900px;}
+ .main{max-width:1000px;margin:0 auto;padding:18px 20px 100px;}
+ label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin:14px 0 5px;}
+ input,textarea{width:100%;background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:9px;
+   padding:10px 12px;font-size:14px;font-family:inherit;} textarea{min-height:150px;resize:vertical;line-height:1.5;}
+ input:focus,textarea:focus{outline:none;border-color:var(--accent);}
+ .row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+ button{cursor:pointer;border:1px solid var(--accent);background:rgba(44,107,176,0.09);color:var(--accent);
+   border-radius:9px;padding:10px 18px;font-size:14px;} button.ghost{border-color:var(--line);color:var(--txt);background:var(--panel);}
+ button:hover{border-color:var(--accent);}
+ .res{margin-top:22px;display:none;} .res.show{display:block;}
+ .score{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px;}
+ .big{font-size:34px;font-weight:700;font-family:ui-monospace,Menlo,Consolas,monospace;}
+ .verdict{font-size:14px;font-weight:600;} .slop{color:var(--dim);font-size:13px;}
+ h2{font-size:14px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin:24px 0 8px;border-bottom:1px solid var(--line);padding-bottom:5px;}
+ .dim{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:13px;}
+ .dlbl{width:160px;flex:none;} .dtrk{flex:1;height:9px;background:#d7e2ec;border-radius:5px;overflow:hidden;}
+ .dfill{height:100%;border-radius:5px;} .dval{width:34px;text-align:right;font-family:ui-monospace,monospace;font-size:12px;color:var(--dim);}
+ .grpd{font-size:10.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin:12px 0 2px;}
+ .rt{background:linear-gradient(180deg,rgba(180,80,60,0.08),rgba(180,80,60,0));border:1px solid #e3c1b8;border-radius:10px;padding:12px 15px;margin:10px 0 4px;}
+ .rt h3{margin:0 0 6px;font-size:13px;color:var(--bad);} .rt .sub{color:var(--dim);font-size:12px;margin-bottom:8px;}
+ .rt b{color:var(--txt);}
+ .part{border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin:8px 0;background:var(--panel);}
+ .ptxt{font-size:13.5px;margin-bottom:6px;} .pscore{font-family:ui-monospace,monospace;font-size:12px;float:right;}
+ .flag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:20px;border:1px solid var(--line);margin:2px 5px 2px 0;}
+ .flag.bad{color:var(--bad);border-color:#e3c1b8;} .flag.mid{color:var(--mid);border-color:#e6d3a3;} .flag.ok{color:var(--win);border-color:#c2d3b6;}
+ .fix{color:var(--dim);font-size:12px;margin-top:6px;border-top:1px solid var(--line);padding-top:6px;}
+ .fix b{color:var(--mid);}
+ .note{color:var(--dim);font-size:12px;background:rgba(95,125,80,0.07);border:1px solid #c2d3b6;border-radius:9px;padding:11px 14px;margin-top:20px;}
+ .ex{color:var(--accent);cursor:pointer;font-size:12.5px;}
+</style></head><body>
+<header>
+ <h1>Delta Atlas - Framework Audit</h1>
+ <p>Paste a plan, framework, or project and the goal it serves. Think of the goal as the power, and each part as a wire. A solid part <b>carries the current</b> to a real outcome: it says who does what, you can test it, and something backs it up. A hollow part is a <b>broken connection dressed to look whole</b> - confident words with the current jumping the gap, an arc flash of language and nothing on the far side. This traces the circuit, shows where it breaks, names the weakest joints to fix first, and hands you a simple pattern to make them measurable. It judges structure, not subject, so it works on any topic. Heuristic, deterministic, and entirely on your device.</p>
+</header>
+<div class="main">
+ <label>The goal (one sentence: what is this framework for?)</label>
+ <input id="goal" placeholder="e.g. Keep our customer data secure without slowing the team down."/>
+ <label>The parts (one per line: claims, principles, steps, controls)</label>
+ <textarea id="parts" placeholder="One idea per line. For example:
+We will leverage a holistic, world-class security posture.
+Encrypt all customer data at rest using AES-256.
+The on-call engineer reviews every access alert within 15 minutes.
+Our culture of security empowers everyone to do the right thing."></textarea>
+ <div class="row">
+   <button id="run">Run audit</button>
+   <button class="ghost" id="ex1">Strong plan</button>
+   <button class="ghost" id="ex2">Weak plan</button>
+   <button class="ghost" id="ex3">Typical (mixed)</button>
+   <button class="ghost" id="clr">Clear</button>
+ </div>
+ <div class="res" id="res"></div>
+ <div class="note">Honest limit: this reads words, not meaning. It flags likely weakness to point you where to look; it does not deliver verdicts. A plain, blunt line can be sound, and a polished line can be hollow. The judgment stays yours. Nothing you type leaves your device.</div>
+</div>
+<script src="coherence-score-engine.js"></script>
+<script>
+// The scoring itself lives in coherence-score-engine.js — the same engine the Continuity
+// Audit tool uses with an added dimension. Default config here matches this page's
+// original shipped behavior exactly (pinned by coherence-audit-corpus.js).
+var SCORER = CoherenceScoreEngine.makeScorer();
+var DIMS = SCORER.DIMS;
+function content(s){ return CoherenceScoreEngine.content(s); }
+function scorePart(text, goalTokens, allParts, idx){ return SCORER.scorePart(text, goalTokens, allParts, idx); }
+
+function run(){
+  var goal=document.getElementById("goal").value.trim();
+  var raw=document.getElementById("parts").value.split("\n").map(function(x){return x.trim();}).filter(function(x){return x.length>1;});
+  var res=document.getElementById("res");
+  if(!raw.length){res.className="res show";res.innerHTML='<div class="slop">Add at least one part to audit.</div>';return;}
+  var goalTokens=content(goal);
+  var parts=raw.map(function(t,i){return scorePart(t,goalTokens,raw,i);});
+  // rollup
+  var dimAvg={}; DIMS.forEach(function(d){ var s=0; parts.forEach(function(p){s+=p.scores[d.k];}); dimAvg[d.k]=Math.round(s/parts.length); });
+  var overall=Math.round(parts.reduce(function(a,p){return a+p.avg;},0)/parts.length);
+  var clearN=parts.filter(function(p){return p.avg>=55;}).length;
+  var vagueN=parts.length-clearN;
+  var vtxt= overall>=75?["Solid plan",'var(--win)'] : overall>=55?["Mostly solid, a few soft spots",'var(--accent)'] : overall>=38?["Half-formed, needs work",'var(--mid)'] : ["Mostly vague",'var(--bad)'];
+  function col(v){return v>=68?'var(--win)':v>=45?'var(--accent)':v>=28?'var(--mid)':'var(--bad)';}
+  var h='';
+  h+='<div class="score"><span class="big" style="color:'+vtxt[1]+'">'+overall+'</span>'+
+     '<span class="verdict" style="color:'+vtxt[1]+'">'+vtxt[0]+'</span>'+
+     '<span class="slop"><b style="color:'+(vagueN>clearN?'var(--bad)':'var(--win)')+'">'+clearN+' of '+parts.length+'</b> parts are clear and testable'+(vagueN?'; '+vagueN+' need work.':'.')+'</span></div>';
+  // profile
+  h+='<h2>How the plan holds up</h2><div class="grpd" style="margin-bottom:8px">Every part is checked for the same simple things. Higher is better.</div>';
+  DIMS.forEach(function(d){ var v=dimAvg[d.k];
+    h+='<div class="dim"><span class="dlbl">'+d.label+' <span style="color:var(--dim);font-weight:400;font-size:11.5px">'+d.help+'</span></span><span class="dtrk"><span class="dfill" style="width:'+v+'%;background:'+col(v)+'"></span></span><span class="dval">'+v+'</span></div>';
+  });
+  // red team
+  var dimsSorted=DIMS.slice().sort(function(a,b){return dimAvg[a.k]-dimAvg[b.k];});
+  var weakDims=dimsSorted.slice(0,2);
+  var partsSorted=parts.slice().sort(function(a,b){return a.avg-b.avg;});
+  var weakParts=partsSorted.filter(function(p){return p.avg<55;}).slice(0,3);
+  h+='<div class="rt"><h3>Fix these first</h3>';
+  h+='<div class="sub">Across the plan, the softest spots are <b>'+weakDims[0].label.toLowerCase()+'</b> and <b>'+weakDims[1].label.toLowerCase()+'</b>.</div>';
+  h+='<div class="sub" style="margin-top:6px">The pattern that fixes most soft parts: <b>[who] does [what] [how much / how often], and you know it worked when [a number].</b></div>';
+  if(weakParts.length){ h+='<div class="sub">The parts that need work most:</div>';
+    weakParts.forEach(function(p){ h+='<div style="font-size:12.5px;margin:3px 0"><b style="color:var(--bad)">'+p.avg+'</b> &nbsp;'+esc(p.text)+'</div>'; });
+  } else { h+='<div class="sub">Every part is reasonably clear. Nice.</div>'; }
+  h+='</div>';
+  // per part
+  h+='<h2>Every part, scored</h2>';
+  parts.forEach(function(p){
+    h+='<div class="part"><span class="pscore" style="color:'+col(p.avg)+'">'+p.avg+'</span><div class="ptxt">'+esc(p.text)+'</div>';
+    p.flags.forEach(function(f){h+='<span class="flag '+f[0]+'">'+f[1]+'</span>';});
+    if(p.fix.length){ h+='<div class="fix"><b>Tighten:</b> '+p.fix[0]+'</div>'; }
+    if(p.avg<55){ h+='<div class="fix" style="border-left-color:var(--win)"><b>Make it measurable:</b> who does what, how much, how often, and how you will know it worked. e.g. &ldquo;I walk 20 minutes, 5 days a week; done when I have hit 20 sessions.&rdquo;</div>'; }
+    h+='</div>';
+  });
+  res.className="res show"; res.innerHTML=h;
+  res.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+document.getElementById("run").onclick=run;
+document.getElementById("clr").onclick=function(){document.getElementById("goal").value="";document.getElementById("parts").value="";document.getElementById("res").className="res";};
+function loadEx(goal, parts){ document.getElementById("goal").value=goal; document.getElementById("parts").value=parts.join("\n"); run(); }
+document.getElementById("ex1").onclick=function(){ loadEx("Ship the new release without breaking existing customers.",[
+  "Run the full test suite on every change; block the merge if any test fails.",
+  "The on-call engineer reviews error rates for 30 minutes after each deploy.",
+  "Keep the previous version ready; if error rates rise above 2%, roll back within 5 minutes.",
+  "Email customers the change list 24 hours before release.",
+  "Track failed logins daily; if they jump 20% above baseline, page security."]); };
+document.getElementById("ex2").onclick=function(){ loadEx("Become the market leader.",[
+  "Leverage synergies to deliver world-class, best-in-class value.",
+  "Always exceed every customer expectation, guaranteed.",
+  "Foster a culture of innovation and excellence.",
+  "Be agile, scalable, and future-proof.",
+  "Empower our people to win."]); };
+document.getElementById("ex3").onclick=function(){ loadEx("Open the cafe and cover our costs within six months.",[
+  "Deliver a best-in-class, unforgettable customer journey.",
+  "Serve at least 60 customers a day by month three.",
+  "The owner checks sales against the budget every Friday.",
+  "We will always delight every single guest.",
+  "If weekly sales miss target for a month, drop the priciest supplier."]); };
+(function(){try{var pf=JSON.parse(localStorage.getItem('delta_prefill')||'null'); if(pf&&pf.tool==='audit'){localStorage.removeItem('delta_prefill'); if(pf.goal)document.getElementById('goal').value=pf.goal; if(pf.parts)document.getElementById('parts').value=pf.parts; run();}}catch(e){}})();
+</script>
+</body></html>

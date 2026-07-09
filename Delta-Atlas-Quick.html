@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - Quick check</title>
+<style>
+ :root{--bg:#e3ecf3;--panel:#fff;--line:#cbd7e1;--txt:#1f3147;--dim:#56697d;--accent:#2c6bb0;--green:#5f7d50;--flag:#b4503c;}
+ *{box-sizing:border-box;} html,body{margin:0;height:100%;}
+ body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6;}
+ .wrap{max-width:640px;margin:0 auto;padding:34px 22px 90px;}
+ h1{font-size:23px;margin:0 0 4px;} .lead{color:var(--dim);font-size:14.5px;margin:0 0 22px;}
+ .choice{display:block;width:100%;text-align:left;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:11px 0;transition:border-color .15s,transform .15s;}
+ .choice:hover{border-color:var(--accent);transform:translateY(-2px);}
+ .choice .t{font-size:16px;font-weight:650;} .choice .d{font-size:13px;color:var(--dim);margin-top:3px;}
+ label{display:block;font-size:13.5px;font-weight:600;margin:16px 0 5px;}
+ .hint{font-weight:400;color:var(--dim);font-size:12.5px;}
+ input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:14px;font-family:inherit;background:var(--panel);color:var(--txt);}
+ textarea{min-height:80px;resize:vertical;line-height:1.5;}
+ input:focus,textarea:focus{outline:none;border-color:var(--accent);}
+ .toggles{margin-top:6px;}
+ .tg{display:flex;align-items:center;justify-content:space-between;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;}
+ .tg .q{font-size:13.5px;} .seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+ .seg button{border:0;background:var(--panel);color:var(--dim);font-size:12.5px;padding:6px 13px;cursor:pointer;}
+ .seg button.on{background:var(--accent);color:#fff;font-weight:600;}
+ .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;}
+ .btn{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--txt);font-size:14px;padding:11px 18px;border-radius:10px;}
+ .btn.pri{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;} .btn:hover{border-color:var(--accent);}
+ .back{cursor:pointer;color:var(--dim);font-size:13px;display:inline-block;margin-bottom:14px;}
+ .or{color:var(--dim);font-size:12.5px;margin:18px 0 4px;text-transform:uppercase;letter-spacing:.5px;}
+</style></head><body>
+<div class="wrap"><div id="view"></div></div>
+<script>
+var view=document.getElementById('view');
+function go(tool,payload){ try{localStorage.setItem('delta_prefill',JSON.stringify(Object.assign({tool:tool},payload)));}catch(e){}
+  var f=tool==='gap'?'Delta-Atlas-GapCheck.html':'Coherence-Audit.html', l=tool==='gap'?'Gap Check':'Framework Audit';
+  if(window.parent&&window.parent!==window&&window.parent.nav){window.parent.nav(f,l);} else {location.href=f;} }
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+function home(){
+ view.innerHTML='<h1>Quick check</h1><p class="lead">A minute, a few taps. Answer what you can and skip the rest.</p>'+
+  '<button class="choice" data-p="ai"><div class="t">Check an AI system, policy, or claim &rarr;</div><div class="d">What is it allowed to do, and what governance is missing?</div></button>'+
+  '<button class="choice" data-p="gen"><div class="t">Check a plan, decision, or anything &rarr;</div><div class="d">Is it clear, testable, and coherent? Works on any topic.</div></button>';
+ view.querySelectorAll('.choice').forEach(function(b){b.onclick=function(){ b.dataset.p==='ai'?ai():gen(); };});
+}
+var T={stop:'',approve:'',log:''};
+function seg(key,q,yes,no){
+ return '<div class="tg"><span class="q">'+q+'</span><span class="seg" data-k="'+key+'">'+
+   '<button data-v="yes">Yes</button><button data-v="no">No</button><button data-v="">Not sure</button></span></div>';
+}
+function bindSegs(){ view.querySelectorAll('.seg').forEach(function(s){ s.querySelectorAll('button').forEach(function(b){ b.onclick=function(){
+   T[s.dataset.k]=b.dataset.v; s.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b);}); };});});}
+function ai(){
+ T={stop:'',approve:'',log:''};
+ view.innerHTML='<span class="back" id="bk">&larr; back</span><h1>Check an AI system</h1><p class="lead">One line is enough to start. Tap the rest.</p>'+
+  '<label>In one line, what is it meant to do? <span class="hint">(required)</span></label>'+
+  '<input type="text" id="what" placeholder="e.g. Approve or deny customer refunds automatically."/>'+
+  '<div class="toggles">'+
+   seg('approve','Does it act on its own, without a person approving each action?')+
+   seg('stop','Can a person stop or override it at any time?')+
+   seg('log','Is there a log or record of what it does?')+
+  '</div>'+
+  '<div class="or">Or add anything else (optional)</div>'+
+  '<textarea id="dump" placeholder="Paste notes, a policy, an email... whatever you have."></textarea>'+
+  '<div class="row"><button class="btn pri" id="run">Check it &rarr;</button><button class="btn" id="ex">Use an example</button></div>';
+ document.getElementById('bk').onclick=home; bindSegs();
+ document.getElementById('ex').onclick=function(){ document.getElementById('what').value='Approve or deny customer refunds automatically and adjust prices in real time.'; T={approve:'yes',stop:'no',log:'no'}; view.querySelectorAll('.seg').forEach(function(s){s.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.v===T[s.dataset.k]);});}); };
+ document.getElementById('run').onclick=function(){
+   var parts=[]; var w=document.getElementById('what').value.trim(); if(w) parts.push('This system is meant to '+w.replace(/\.$/,'')+'.');
+   if(T.approve==='yes') parts.push('The system takes actions autonomously without human approval.');
+   if(T.approve==='no') parts.push('A human must approve each action before it takes effect.');
+   if(T.stop==='no') parts.push('The emergency stop is disabled and humans cannot intervene once it is running.');
+   if(T.stop==='yes') parts.push('A human can stop or override the system at any time.');
+   if(T.log==='yes') parts.push('All actions are recorded in an audit log.');
+   var d=document.getElementById('dump').value.trim(); if(d) parts.push(d);
+   if(!parts.length){ alert('Add one line about what it does, or use the example.'); return; }
+   go('gap',{text:parts.join('\n')});
+ };
+}
+function gen(){
+ view.innerHTML='<span class="back" id="bk">&larr; back</span><h1>Check a plan</h1><p class="lead">Rough is fine. Get the goal down, then the pieces.</p>'+
+  '<label>The goal, in one line <span class="hint">(what is this for?)</span></label>'+
+  '<input type="text" id="goal" placeholder="e.g. Get healthier over the next three months."/>'+
+  '<label>The parts, one per line <span class="hint">(steps, rules, promises)</span></label>'+
+  '<textarea id="parts" placeholder="Walk 30 minutes after dinner, five days a week.\nWeigh in every Monday and write it down.\nCut back on sugar."></textarea>'+
+  '<div class="row"><button class="btn pri" id="run">Check it &rarr;</button><button class="btn" id="ex">Use an example</button></div>';
+ document.getElementById('bk').onclick=home;
+ document.getElementById('ex').onclick=function(){ document.getElementById('goal').value='Open the cafe and cover our costs within six months.';
+   document.getElementById('parts').value='Deliver a best-in-class, unforgettable customer journey.\nServe at least 60 customers a day by month three.\nThe owner checks sales against the budget every Friday.\nWe will always delight every single guest.'; };
+ document.getElementById('run').onclick=function(){ var g=document.getElementById('goal').value.trim(), p=document.getElementById('parts').value.trim();
+   if(!p){ alert('List at least one part, or use the example.'); return; } go('audit',{goal:g,parts:p}); };
+}
+home();
+</script></body></html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - White Paper</title>
+<style>
+ :root{--bg:#e3ecf3;--panel:#ffffff;--line:#cbd7e1;--txt:#1f3147;--dim:#56697d;--accent:#2c6bb0;--win:#5f7d50;--mid:#b8902e;--bad:#b4503c;--gold:#b8902e;}
+ *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--txt);line-height:1.6;
+   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;}
+ header{padding:16px 22px;border-bottom:1px solid var(--line);}
+ header h1{margin:0;font-size:19px;} header p{margin:5px 0 0;color:var(--dim);font-size:12.5px;max-width:860px;}
+ .main{max-width:860px;margin:0 auto;padding:18px 20px 90px;}
+ h2{font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);margin:26px 0 10px;border-bottom:1px solid var(--line);padding-bottom:5px;}
+ .five{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:13px 16px;font-size:14.5px;}
+ .leg{display:grid;grid-template-columns:1fr;gap:6px;}
+ .row{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:8px 12px;display:flex;gap:10px;align-items:baseline;}
+ .dot{flex:none;width:10px;height:10px;border-radius:50%;position:relative;top:1px;}
+ .g-read{background:#378ADD;} .g-plan{background:#5f7d50;} .g-trace{background:#b4503c;} .g-under{background:#7F77DD;} .g-script{background:#56697d;} .g-gov{background:var(--gold);}
+ .row b{flex:none;min-width:150px;font-size:13.5px;}
+ .row span{color:var(--dim);font-size:13px;}
+ table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:9px;overflow:hidden;font-size:13px;}
+ th,td{padding:7px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+ th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);background:rgba(44,107,176,0.05);}
+ tr:last-child td{border-bottom:none;}
+ td b{font-size:13px;}
+ .note{color:var(--dim);font-size:12px;background:rgba(95,125,80,0.07);border:1px solid #c2d3b6;border-radius:9px;padding:11px 14px;margin-top:22px;}
+ .seam{color:var(--gold);font-weight:600;}
+ .vlog{margin-top:26px;font-size:12px;color:var(--dim);}
+ .vlog table{font-size:12px;}
+ a{color:var(--accent);text-decoration:none;} a:hover{text-decoration:underline;}
+</style></head><body>
+<header>
+ <h1>Delta Atlas &mdash; White Paper</h1>
+ <p>The living, plain-English ledger of what this project is, what each piece does, and how it keeps itself honest. This page is kept current on purpose: if you are a person, start here; if you are an AI model about to write or reason about this project, <b>load this page first and use these exact meanings</b> &mdash; every definition here matches the Resilience Ledger, and paraphrasing them from memory is how drift starts.</p>
+</header>
+<div class="main">
+
+ <div class="five" style="margin-top:16px">
+  <b>The whole thing in five sentences.</b> Delta Atlas is a set of free tools that read plans, frameworks, and AI decision logs, and point at the places where they quietly contradict themselves. Everything runs on your own device &mdash; no account, no network call, no AI model at runtime &mdash; so the answer is the same for everyone, every time, and nothing you paste ever leaves your machine. The tools don't understand meaning; they read structure, the way a spell-checker reads spelling, and a human always makes the final call. Underneath them is one idea called the Resilience Ledger: systems stay trustworthy by bending without breaking, checking themselves against something outside themselves, and coming back to center. The project runs its own development through the same tools and rules it offers you &mdash; every change is logged, every mistake is mended in the open.
+ </div>
+
+ <h2>Legend &mdash; the tools you click</h2>
+ <div class="leg">
+  <div class="row"><span class="dot g-read"></span><b>Start here</b><span>the two-minute guide for someone brand new to AI words.</span></div>
+  <div class="row"><span class="dot g-read"></span><b>Ask (home search)</b><span>type a question, get a sourced plain-English answer. A deterministic search engine, not a chatbot &mdash; if a word isn't in the model, it says exactly which one is missing instead of guessing.</span></div>
+  <div class="row"><span class="dot g-read"></span><b>Explore</b><span>browse all 439 terms and how they connect &mdash; what defends against what, what needs what.</span></div>
+  <div class="row"><span class="dot g-plan"></span><b>Quick check</b><span>compares a one-line goal against its parts in about a minute: do the parts actually serve the goal?</span></div>
+  <div class="row"><span class="dot g-plan"></span><b>Gap Check</b><span>reads a plan or policy and flags what's missing: unhandled risks, ungoverned autonomy, vague words doing load-bearing work.</span></div>
+  <div class="row"><span class="dot g-plan"></span><b>Framework Audit</b><span>scores each part of a framework: does it act, can it be tested, does it survive having its buzzwords removed?</span></div>
+  <div class="row"><span class="dot g-trace"></span><b>Priority Tracer</b><span>reads an AI agent's decision log and flags the moment a goal quietly climbs over a rule it was supposed to obey. Also credits where the rule held. Its word lists are versioned, shown in the tool, and privately extendable (see the seed frame below).</span></div>
+  <div class="row"><span class="dot g-under"></span><b>Primitives &middot; Field &middot; Ground Truth</b><span>the structures under the vocabulary, an instrument view, and a dashboard of how well-sourced each term is.</span></div>
+ </div>
+
+ <h2>Legend &mdash; the ledger underneath (the exact meanings)</h2>
+ <table>
+  <tr><th style="width:130px">Three functions</th><th>What each one does</th></tr>
+  <tr><td><b>Absorb</b></td><td>Takes a survivable hit and bends instead of breaking. It is a shock absorber for errors and costs &mdash; <i>not</i> "taking in information."</td></tr>
+  <tr><td><b>Check</b></td><td>Compares every claim against a reference that sits <i>outside</i> the system and is held still during the check &mdash; and is exactly as hard on claims it likes as on claims it doesn't.</td></tr>
+  <tr><td><b>Return</b></td><td>Comes back to baseline after a stop or a fix, keeping an append-only record so a real repair can always be told apart from damage.</td></tr>
+ </table>
+ <div style="height:10px"></div>
+ <table>
+  <tr><th style="width:130px">Three drifts</th><th>What each one is</th></tr>
+  <tr><td><b>Content drift</b></td><td>A claim wanders away from the reference. The easy one &mdash; checking against the reference catches it.</td></tr>
+  <tr><td><b>Thermal drift</b></td><td>The <i>judge</i> wears down under sustained load &mdash; every individual claim can still pass while the ability to tell signal from noise erodes. The slowest-recovering judge in any loop is the human, so protection is calibrated to the human. Rest fixes this; more checking does not.</td></tr>
+  <tr><td><b>Ordering drift</b></td><td>The priority flips: the goal quietly outranks the rule while every single step still looks fine. The rule gets reinterpreted, rewritten, or cited after the fact instead of obeyed. This is the hardest drift to see and the one the Priority Tracer hunts.</td></tr>
+ </table>
+ <p style="color:var(--dim);font-size:12.5px;margin-top:8px">One more meaning that matters: the <b>sovereign zero</b> is the neutral center everything is measured from. It is <i>unowned and returned-to</i> &mdash; not incorruptible, not an untainted observer. Nothing here claims to be unfoolable; the claim is that fooling it can't happen <i>silently</i>.</p>
+
+ <h2>Legend &mdash; the scripts (command line, zero installs beyond Node)</h2>
+ <div class="leg">
+  <div class="row"><span class="dot g-script"></span><b>tracer-corpus.js</b><span>proves the Tracer still earns its labels: a fixed test corpus where a failing case changes the detector, never the label.</span></div>
+  <div class="row"><span class="dot g-script"></span><b>tracer-bench.js</b><span>keeps the measured speed limits reproducible and fails loudly if the engine ever gets slow in the dangerous way again.</span></div>
+  <div class="row"><span class="dot g-script"></span><b>delta-atlas-cli.js</b><span>the checks for pipelines, or for an agent on its own output: <b>trace</b> a decision log or <b>gapcheck</b> a plan &mdash; findings, JSON, and an exit code. See llms.txt.</span></div>
+  <div class="row"><span class="dot g-gov"></span><b>mend-gate.js</b><span>the change register: every proposed change to this project, from any source, gets logged, gated, and sorted by a human with a written reason. Models may propose; only a person decides.</span></div>
+  <div class="row"><span class="dot g-gov"></span><b>mcp-manifest-pin.js</b><span>freezes an MCP server's tool descriptions in a fingerprint the day you approve them; if the server quietly changes the contract later, the change becomes visible and waits for your decision.</span></div>
+  <div class="row"><span class="dot g-script"></span><b>tracer-overlay.sample.js</b><span>the seed frame: copy it to a private file, add your own domain's words, and the tools harden locally without ever leaking your additions &mdash; the public floor stays public, your tripwires stay yours.</span></div>
+ </div>
+
+ <h2>Legend &mdash; how the project governs itself</h2>
+ <div class="leg">
+  <div class="row"><span class="dot g-gov"></span><b>The register</b><span>proposals.json &mdash; every suggested change, its source, and its fate (folded or declined, reason attached).</span></div>
+  <div class="row"><span class="dot g-gov"></span><b>The logs</b><span>every detector change, every outside review, and every correction is dated and reasoned in the calibration log. Silence in the log means nothing moved.</span></div>
+  <div class="row"><span class="dot g-gov"></span><b>The seams</b><span class="seam">mistakes are mended in the open and left visible</span><span> &mdash; a repair you can inspect is worth more than a surface that claims it never broke.</span></div>
+ </div>
+
+ <div class="note"><b>Honest limit, always in force:</b> these tools read words and structure, not meaning. A flag is a pointer for a human to look at, never a verdict; a clean result is not a guarantee. Deeper reading: <a href="README.md">README</a> &middot; <a href="State-Delta-Bridge.md">State-Delta-Bridge</a> (how changes are governed) &middot; <a href="Delta-Atlas-Tracer-Calibration.md">the calibration log</a> &middot; the Resilience Ledger paper (v0.5) in this folder.</div>
+
+ <div class="vlog">
+  <b>This page's own little ledger</b> (it practices what it preaches):
+  <div style="height:6px"></div>
+  <table>
+   <tr><th style="width:90px">Date</th><th>Change</th><th>Reason</th></tr>
+   <tr><td>2026-07-02</td><td>v1 established: five-sentence summary, tool legend, exact ledger meanings, script legend, self-governance legend.</td><td>Requested by the author as the living plain-English front door &mdash; and as the reference to hand any AI model before it writes about this project, after a drafted white paper paraphrased the core definitions from memory and drifted on all six.</td></tr>
+   <tr><td>(next)</td><td>(update whenever a tool, meaning, or rule changes &mdash; a legend that lags its map is drift wearing a helpful face)</td><td></td></tr>
+  </table>
+ </div>
+</div>
+</body></html>

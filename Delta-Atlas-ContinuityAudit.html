@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - Continuity Audit</title>
+<style>
+ :root{--bg:#e3ecf3;--panel:#ffffff;--line:#cbd7e1;--txt:#1f3147;--dim:#56697d;--accent:#2c6bb0;--green:#5f7d50;--amber:#b8902e;--red:#b4503c;}
+ *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;line-height:1.55;}
+ header{padding:15px 22px;border-bottom:1px solid var(--line);}
+ header h1{margin:0;font-size:18px;} header p{margin:4px 0 0;color:var(--dim);font-size:12.5px;max-width:900px;}
+ .main{max-width:1040px;margin:0 auto;padding:18px 20px 100px;}
+ label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin:14px 0 5px;}
+ input,textarea{width:100%;background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit;}
+ textarea{min-height:170px;resize:vertical;line-height:1.5;} input:focus,textarea:focus{outline:none;border-color:var(--accent);}
+ .row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;}
+ button{cursor:pointer;border:1px solid var(--accent);background:rgba(44,107,176,0.09);color:var(--accent);border-radius:9px;padding:10px 18px;font-size:14px;}
+ button.ghost{border-color:var(--line);color:var(--txt);background:var(--panel);} button:hover{border-color:var(--accent);}
+ .res{margin-top:22px;display:none;} .res.show{display:block;}
+ .big{font-size:34px;font-weight:700;font-family:ui-monospace,Menlo,Consolas,monospace;}
+ .verdict{font-size:14px;font-weight:600;} .slop{color:var(--dim);font-size:13px;}
+ h2{font-size:14px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin:24px 0 8px;border-bottom:1px solid var(--line);padding-bottom:5px;}
+ .dim{display:flex;align-items:center;gap:10px;margin:7px 0;font-size:13px;}
+ .dlbl{width:190px;flex:none;} .dtrk{flex:1;height:9px;background:#d7e2ec;border-radius:5px;overflow:hidden;}
+ .dfill{height:100%;border-radius:5px;} .dval{width:34px;text-align:right;font-family:ui-monospace,monospace;font-size:12px;color:var(--dim);}
+ .gap{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:10px;padding:12px 15px;margin:9px 0;}
+ .gap.warn{border-left-color:var(--amber);} .gap.info{border-left-color:var(--accent);}
+ .gap .t{font-weight:650;font-size:14px;margin-bottom:3px;} .gap .dt{font-size:13px;} .gap .dt b{color:var(--txt);}
+ .sugg{margin-top:8px;} .chip{display:inline-block;border:1px solid var(--line);border-radius:20px;padding:3px 10px;font-size:12px;margin:3px 5px 0 0;background:rgba(44,107,176,0.05);}
+ .part{border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin:8px 0;background:var(--panel);}
+ .ptxt{font-size:13.5px;margin-bottom:6px;} .pscore{font-family:ui-monospace,monospace;font-size:12px;float:right;}
+ .flag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:20px;border:1px solid var(--line);margin:2px 5px 2px 0;}
+ .flag.bad{color:var(--red);border-color:#e3c1b8;} .flag.mid{color:var(--amber);border-color:#e6d3a3;} .flag.ok{color:var(--green);border-color:#c2d3b6;}
+ .note{color:var(--dim);font-size:12px;background:rgba(95,125,80,0.07);border:1px solid #c2d3b6;border-radius:9px;padding:11px 14px;margin-top:20px;}
+ .overlaynote{font-size:11px;color:var(--dim);margin-top:6px;}
+</style></head><body>
+<header>
+ <h1>Delta Atlas - Continuity Audit</h1>
+ <p>Paste an operations manual, SOP, or workflow — one procedure per line — and the one-sentence goal it serves. Get three readings from one input: a <b>resilience</b> reading (can the manual keep the goal on track when a key person is out, a vendor fails, or an emergency hits — does it absorb, stay anchored, and recover), the <b>gaps</b> (a risk named with no stated control, single points of failure with no documented backup), and a <b>coherence score</b> (is each procedure a clear, testable action, or a vague label). Same engines as Gap Check and Framework Audit, pointed at a new domain. Heuristic, deterministic, entirely on your device — nothing you paste here ever leaves your browser.</p>
+</header>
+<div class="main">
+ <label>The goal (one sentence: what is this manual for?)</label>
+ <input id="goal" placeholder="e.g. Keep the household running safely and privately whether or not any one staff member is available."/>
+ <label>The procedures (one per line: steps, controls, responsibilities)</label>
+ <textarea id="parts" placeholder="One procedure per line. For example:
+Only the head housekeeper knows the alarm codes and safe combination.
+The chief of staff reconciles the household accounts against receipts every month.
+A new vendor is granted building access after a background check and a signed confidentiality agreement.
+If the principal's schedule changes, only the driver is informed."></textarea>
+ <div class="row">
+   <button id="run">Run audit</button>
+   <button class="ghost" id="ex1">Strong example</button>
+   <button class="ghost" id="ex2">Weak example</button>
+   <button class="ghost" id="clr">Clear</button>
+ </div>
+ <div class="overlaynote" id="overlaynote"></div>
+ <div class="res" id="res"></div>
+ <div class="note">Honest limit: this reads words and patterns, not meaning or your household's actual arrangements. It flags likely gaps to point you where to look; it does not deliver a verdict, and it cannot see anything you haven't written down. The judgment stays yours. Nothing you type leaves your device. Want to harden this privately with your own real procedures and vendor names? Copy <code>continuity-overlay.sample.js</code> to <code>continuity-overlay.local.js</code> next to this file (gitignored — never published) and this page will load it automatically.</div>
+</div>
+<script src="lexicon-engine.js"></script>
+<script src="coherence-score-engine.js"></script>
+<script>
+function esc(s){return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+
+// --- knowledge base: generic, non-client-specific operations-manual risk vocabulary.
+// Craft generalizes; a specific household's real procedures, vendor names, or staff never
+// belong here — that's exactly what the private overlay below is for.
+const BASE_KB = {
+  noControlNoun: 'knowledge base',
+  clusters: ['Succession & Continuity','Principal Security','Access & Vendor Control','Confidentiality','Financial Controls','Emergency Procedures'],
+  terms: [
+    {id:'single-point-of-failure', name:'Single point of failure', purpose:'risk', cluster:'Succession & Continuity', acct:'', aliases:['single point of failure','only one person knows','sole point of contact','nobody else can','no one else knows','no one else can']},
+    {id:'staff-turnover-risk', name:'Undocumented staff turnover', purpose:'risk', cluster:'Succession & Continuity', acct:'', aliases:['staff turnover','without notice','sudden departure','no transition plan']},
+    {id:'undocumented-procedure', name:'Undocumented procedure', purpose:'risk', cluster:'Succession & Continuity', acct:'', aliases:['not written down','tribal knowledge','never documented','no written procedure']},
+    {id:'cross-training', name:'Cross-training', purpose:'control', cluster:'Succession & Continuity', acct:'human', aliases:['cross trained','cross training','backup person trained','second person knows']},
+    {id:'documented-procedure', name:'Documented procedure', purpose:'control', cluster:'Succession & Continuity', acct:'human', aliases:['written procedure','documented in','standard operating procedure','sop','procedures manual']},
+    {id:'succession-plan', name:'Succession plan', purpose:'control', cluster:'Succession & Continuity', acct:'human', aliases:['succession plan','transition plan','continuity plan']},
+    {id:'knowledge-handoff', name:'Knowledge handoff', purpose:'control', cluster:'Succession & Continuity', acct:'human', aliases:['handoff checklist','transition checklist','knowledge transfer']},
+
+    {id:'principal-exposure', name:'Principal exposure', purpose:'risk', cluster:'Principal Security', acct:'', aliases:['schedule shared broadly','location shared','travel plans posted','publicly known schedule']},
+    {id:'unvetted-access', name:'Unvetted access granted', purpose:'risk', cluster:'Principal Security', acct:'', aliases:['no background check','without a background check','unvetted','not screened']},
+    {id:'travel-security-protocol', name:'Travel security protocol', purpose:'control', cluster:'Principal Security', acct:'human', aliases:['travel security protocol','need to know schedule','advance security check']},
+    {id:'background-check-policy', name:'Background check policy', purpose:'control', cluster:'Principal Security', acct:'human', aliases:['background check','background screening','vetted before']},
+
+    {id:'vendor-overreach', name:'Vendor access overreach', purpose:'risk', cluster:'Access & Vendor Control', acct:'', aliases:['full access to the property','full access to the house','full access to the home','full access to the residence','full access to the estate','full access to everything','all areas access','unrestricted access','run of the house']},
+    {id:'unattended-visitor', name:'Unattended visitor or vendor', purpose:'risk', cluster:'Access & Vendor Control', acct:'', aliases:['left unattended','unsupervised','no escort','without supervision']},
+    {id:'least-privilege-access', name:'Least-privilege access', purpose:'control', cluster:'Access & Vendor Control', acct:'human', aliases:['least privilege','only the access needed','scoped access','access limited to','access is limited to']},
+    {id:'escort-policy', name:'Escort policy', purpose:'control', cluster:'Access & Vendor Control', acct:'human', aliases:['escorted at all times','always accompanied','staff escort']},
+    {id:'vendor-access-log', name:'Vendor access log', purpose:'control', cluster:'Access & Vendor Control', acct:'human', aliases:['visitor access log','vendor access log','sign in log','sign-in sheet','visitor log']},
+
+    {id:'information-leakage', name:'Information leakage', purpose:'risk', cluster:'Confidentiality', acct:'', aliases:['discussed outside','shared with outsiders','posted about the household','talked about publicly']},
+    {id:'device-exposure', name:'Personal device exposure', purpose:'risk', cluster:'Confidentiality', acct:'', aliases:['personal phone','personal device','unencrypted device','personal email for household']},
+    {id:'confidentiality-agreement', name:'Confidentiality agreement', purpose:'control', cluster:'Confidentiality', acct:'human', aliases:['confidentiality agreement','signed nda','non disclosure agreement']},
+    {id:'secure-communication-channel', name:'Secure communication channel', purpose:'control', cluster:'Confidentiality', acct:'human', aliases:['secure channel','encrypted communication','household issued device']},
+
+    {id:'unauthorized-expenditure', name:'Unauthorized expenditure', purpose:'risk', cluster:'Financial Controls', acct:'', aliases:['spends without approval','no approval needed','without sign off','discretionary spending']},
+    {id:'reconciliation-gap', name:'Financial reconciliation gap', purpose:'risk', cluster:'Financial Controls', acct:'', aliases:['not reconciled','no reconciliation','accounts unchecked']},
+    {id:'dual-approval', name:'Dual approval', purpose:'control', cluster:'Financial Controls', acct:'human', aliases:['dual approval','two signatures','second sign off','requires approval from']},
+    {id:'monthly-reconciliation', name:'Regular reconciliation', purpose:'control', cluster:'Financial Controls', acct:'human', aliases:['reconciles monthly','reconciled every month','regular reconciliation','audited quarterly']},
+
+    {id:'unclear-emergency-chain', name:'Unclear emergency chain', purpose:'risk', cluster:'Emergency Procedures', acct:'', aliases:['no emergency plan','unclear who to call','no defined chain','not sure who decides']},
+    {id:'single-key-holder', name:'Single key/code holder', purpose:'risk', cluster:'Emergency Procedures', acct:'', aliases:['only one key','one person has the code','single keyholder','only the driver knows']},
+    {id:'emergency-contact-protocol', name:'Emergency contact protocol', purpose:'control', cluster:'Emergency Procedures', acct:'human', aliases:['emergency contact list','emergency protocol','crisis contact chain']},
+    {id:'redundant-access', name:'Redundant emergency access', purpose:'control', cluster:'Emergency Procedures', acct:'human', aliases:['sealed envelope','backup key holder','redundant access','second key holder'] },
+
+    {id:'accountability', name:'Named accountable owner', purpose:'concept', cluster:'Financial Controls', acct:'human', aliases:['accountable owner','responsible party','who is responsible']},
+  ],
+  relations: [
+    ['cross-training','single-point-of-failure','mitigates'], ['documented-procedure','single-point-of-failure','mitigates'], ['succession-plan','single-point-of-failure','governs'],
+    ['succession-plan','staff-turnover-risk','mitigates'], ['knowledge-handoff','staff-turnover-risk','checks'],
+    ['documented-procedure','undocumented-procedure','mitigates'],
+    ['travel-security-protocol','principal-exposure','mitigates'],
+    ['background-check-policy','unvetted-access','mitigates'],
+    ['least-privilege-access','vendor-overreach','mitigates'],
+    ['escort-policy','unattended-visitor','mitigates'], ['vendor-access-log','unattended-visitor','detects'],
+    ['confidentiality-agreement','information-leakage','mitigates'],
+    ['secure-communication-channel','device-exposure','mitigates'],
+    ['dual-approval','unauthorized-expenditure','mitigates'],
+    ['monthly-reconciliation','reconciliation-gap','mitigates'],
+    ['emergency-contact-protocol','unclear-emergency-chain','mitigates'],
+    ['redundant-access','single-key-holder','mitigates'],
+  ],
+  defendRelTypes: new Set(['mitigates','checks','detects','governs']),
+  bridge: {
+    'single-point-of-failure': ['only she knows','only he knows','no one else is trained','if she is out','if he is out'],
+    'least-privilege-access': ['need to know basis','need-to-know basis'],
+  },
+  redFlags: [
+    {t:'Single keyholder for emergency access', d:'Only one person can open the safe, disarm the alarm, or reach emergency medical information. If that person is unreachable, so is the household.',
+     re:/\bonly\s+(?:the\s+)?(?:[a-z]+\s+){0,3}(knows|has|holds)\b[^.]{0,40}\b(safe|combination|alarm|password|passcode|key ?code)\b|\b(held by|known to)\s+(?:exactly |just |only )?one person\b/i},
+    {t:'Vendor granted unrestricted access', d:'A vendor or contractor is described with access broader than the job requires, with no stated limit or expiry.',
+     re:/\bmaster key\b|\b(all[- ]areas|unrestricted|unfettered|unlimited)\s+access\b|\bfull\s+access\s+to\s+(the\s+)?(house|home|property|residence|estate|everything)\b|\bkeys?\s+to\s+(every|all|the whole|the entire)\b/i},
+    {t:'Principal schedule or location broadly known', d:'The principal\'s whereabouts or schedule is shared beyond the people who need it to do their job.',
+     re:/\b(schedule|itinerary|location|whereabouts|travel plans?|address)\b[^.]{0,50}\b(posted|shared|visible|known|tagged|geotag\w*)\b[^.]{0,40}\b(publicly|broadly|with everyone|with all staff|online|on social|on instagram|on facebook|to the public)\b|\b(principal|family|children|kids)('s|s')?\b[^.]{0,40}\b(schedule|itinerary|location|whereabouts|travel)\b[^.]{0,40}\b(posted|shared|public|online|social media|instagram)\b/i},
+  ],
+  groupChecks: [{
+    ifGroup: { ids: new Set(['single-point-of-failure','staff-turnover-risk','undocumented-procedure']) },
+    unlessGroup: { ids: new Set(['cross-training','documented-procedure','succession-plan','knowledge-handoff']) },
+    sev: 'gap',
+    title: () => 'Institutional knowledge has no backup',
+    detail: () => 'A task or piece of knowledge is named as resting on one person, and nothing in the text says it is cross-trained, written down, or covered by a succession plan. If that person is unavailable, so is the household.',
+    sugg: ['cross-training','documented-procedure','succession-plan','knowledge-handoff'],
+  }],
+};
+
+// Private overlay (gitignored *.local.js, never published): additive only. Copy
+// continuity-overlay.sample.js to continuity-overlay.local.js and add real terms/relations/redFlags
+// specific to one household — those never belong in the public floor above.
+//
+// SHALLOW copy, never a JSON round-trip: BASE_KB carries a Set (defendRelTypes) and functions
+// (groupChecks[].title/detail, ifGroup.ids) that JSON.stringify silently destroys — a red-team
+// found that broke the whole overlay path (spec.ids.has is not a function). We only ever CONCAT
+// the four additive, JSON-safe arrays; everything structural (groupChecks, defendRelTypes,
+// clusters) is shared by reference from the base, untouched.
+function mergeOverlay(base, ov){
+  if(!ov) return base;
+  var kb = {};
+  for (var k in base) kb[k] = base[k];               // shallow copy — keeps Set + functions intact
+  if(ov.terms)     kb.terms     = base.terms.concat(ov.terms);
+  if(ov.relations) kb.relations = base.relations.concat(ov.relations);
+  if(ov.redFlags)  kb.redFlags  = base.redFlags.concat(ov.redFlags);
+  if(ov.bridge){
+    kb.bridge = {};
+    for (var b in base.bridge) kb.bridge[b] = base.bridge[b];
+    Object.keys(ov.bridge).forEach(function(id){ kb.bridge[id] = (kb.bridge[id]||[]).concat(ov.bridge[id]); });
+  }
+  return kb;
+}
+
+// --- coherence scoring: base 5 dimensions + one new one this domain needed: continuity ---
+const CONTINUITY_PHRASE = /\bonly\s+(?:the\s+)?(?:[a-z]+\s+){0,3}(knows|can|has access|is trained|handles)\b|\bsole(ly)?\s+(responsible|point of contact)\b|\bno\s?one\s+else\s+(knows|can)\b/i;
+const BACKUP_PHRASE = /\bcross[- ]?train|\bbackup\b|\bsecond\s+person\b|\bwritten\s+(down|procedure)\b|\bdocumented\b|\bsuccession\b|\bhandoff\b/i;
+const SCORER = CoherenceScoreEngine.makeScorer({
+  weights: { action:0.24, testable:0.24, plain:0.14, goal:0.10, backup:0.08, continuity:0.20 },
+  extraDims: [{
+    k:'continuity', label:'Institutional continuity', help:'not resting on one person',
+    score: function(ctx){
+      if(CONTINUITY_PHRASE.test(ctx.text) && !BACKUP_PHRASE.test(ctx.text)) return 25;
+      if(CONTINUITY_PHRASE.test(ctx.text) && BACKUP_PHRASE.test(ctx.text)) return 80;
+      return 85;
+    },
+    flagIf: function(v){ return v < 50; }, flagSev:'bad', flagLabel:'no backup named',
+    fixText: function(){ return 'Name who else can do this, or where the procedure is written down, so one person\'s absence does not stop the household.'; },
+  }],
+});
+
+let KB = BASE_KB;
+function analyze(text){ return LexiconEngine.analyze(text, KB); }
+
+// --- Resilience of the goal: a whole-manual reading (system-level, not per-line — resilience
+// is a property of the whole, per the Resilience Ledger and Holling 1973). It asks whether the
+// manual can keep the household on its stated goal when disrupted, across three functions
+// (Resilience Ledger absorb/check/reset ~ MITRE 2011 withstand/anchor/recover).
+//
+// HARDENED after a red-team found the earlier version certified a maximally BRITTLE manual as
+// "resilient" (84, beating the strong example) by evading the risk regexes and stuffing
+// reassuring vocabulary. The fixes, all execution-verified: (1) resilience is DEMONSTRATED, not
+// asserted — every sub-score scales on real STRUCTURE (distinct real controls, defended risks,
+// recovery controls minus open gaps), never on a constant or on gameable coherence dimensions;
+// (2) Anchor counts only lines that are themselves clear AND testable, so goal-keyword-stuffed
+// filler can't anchor; (3) a HARD GATE keeps the top band out of reach unless the manual shows
+// real structure (>=4 distinct controls, or a control wired to a named risk) and has no open
+// single-point gap. Honest residual limit, stated in the UI: this reads words, and a determined
+// author stuffing control vocabulary can still inflate a middling score — a clean read is a
+// pointer to verify, never a certificate.
+function resilienceReading(A, roll, parts){
+  parts = parts || [];
+  var byId = {}; KB.terms.forEach(function(t){ byId[t.id]=t; });
+  var controls = A.M.filter(function(id){ return byId[id] && byId[id].purpose==='control'; });
+  var RECOVERY_CONTROLS = ['emergency-contact-protocol','redundant-access','succession-plan','knowledge-handoff','cross-training','documented-procedure'];
+  var recoveryControls = controls.filter(function(id){ return RECOVERY_CONTROLS.indexOf(id) >= 0; });
+  // open structural gaps straight from the gap scan (which the red-team confirmed sound)
+  var openGaps = A.findings.filter(function(f){ return f.sev==='gap' && /no control|no backup|Single keyholder|unrestricted access/i.test(f.t); }).length;
+  // a control that actually defends a named, present risk — the strongest structural evidence
+  var wired = controls.some(function(id){ return (KB.relations||[]).some(function(r){ return r[0]===id && A.M.indexOf(r[1])>=0 && KB.defendRelTypes.has(r[2]); }); });
+
+  // WITHSTAND — demonstrated absorption. Named risks that are actually defended, and/or real
+  // distinct controls present. Silence (no risks, no controls) is NOT safety; it scores ~0.
+  var ctrlScore = Math.min(1, controls.length / 5);
+  var withstand = A.risks.length
+    ? Math.round(100 * (0.65*(A.defended/A.risks.length) + 0.35*ctrlScore))
+    : Math.round(100 * ctrlScore);
+  // RECOVER — real recovery structure (needs ~2 recovery controls), dragged down hard by any open gap.
+  var recover = Math.max(0, Math.min(100, Math.round(100 * Math.min(1, recoveryControls.length / 2)) - 30*openGaps));
+  // ANCHOR — trajectory holds to the goal, but only substantive lines count (clear AND testable);
+  // goal-keyword-stuffed filler is excluded, and a mostly-vague manual can't anchor.
+  var solid = parts.filter(function(p){ return p.scores.action>=60 && p.scores.testable>=60; });
+  var anchor;
+  if (!solid.length) anchor = Math.min(40, roll.dimAvg.goal);
+  else { anchor = Math.round(solid.reduce(function(a,p){ return a+p.scores.goal; },0)/solid.length);
+         if (solid.length < Math.ceil(parts.length/2)) anchor = Math.round(anchor*0.6); }
+
+  var overall = Math.round((withstand + anchor + recover)/3);
+  // HARD GATE — the top "resilient" band requires real structure and no open single-point gap.
+  var realStructure = controls.length >= 4 || wired || A.defended > 0;
+  if (overall >= 72 && (!realStructure || openGaps > 0)) overall = 60; // best a no-structure manual gets is mid-band
+  return { withstand: withstand, anchor: anchor, recover: recover, overall: overall };
+}
+
+function run(){
+  const goal=document.getElementById('goal').value.trim();
+  const raw=document.getElementById('parts').value.split('\n').map(function(x){return x.trim();}).filter(function(x){return x.length>1;});
+  const res=document.getElementById('res');
+  if(!raw.length){res.className='res show';res.innerHTML='<div class="slop">Add at least one procedure to audit.</div>';return;}
+
+  // 1) gap scan over the whole pasted text
+  const A = analyze(raw.join('\n'));
+
+  // 2) coherence scoring per line
+  const goalTokens=CoherenceScoreEngine.content(goal);
+  const parts=raw.map(function(t,i){return SCORER.scorePart(t,goalTokens,raw,i);});
+  const roll=SCORER.rollup(parts);
+  function col(v){return v>=68?'var(--green)':v>=45?'var(--accent)':v>=28?'var(--amber)':'var(--red)';}
+  const vtxt = roll.overall>=75?['Solid manual','var(--green)'] : roll.overall>=55?['Mostly solid, a few soft spots','var(--accent)'] : roll.overall>=38?['Half-formed, needs work','var(--amber)'] : ['Mostly vague','var(--red)'];
+
+  let h='';
+  // Resilience headline — frames the whole audit: does the goal stay resilient throughout?
+  const R = resilienceReading(A, roll, parts);
+  const rv = R.overall>=72?['Reads resilient &mdash; verify against real events','var(--green)'] : R.overall>=52?['Holds, with soft spots','var(--accent)'] : R.overall>=34?['Brittle in places','var(--amber)'] : ['Not yet resilient','var(--red)'];
+  h+='<h2>Resilience of the goal</h2>';
+  h+='<div class="slop" style="margin-bottom:8px">Can this manual keep the household on its stated goal when disrupted &mdash; a key person out, a vendor failing, an emergency? <b style="color:'+rv[1]+'">'+R.overall+' &middot; '+rv[0]+'</b></div>';
+  [['Withstand','absorbs the hit — named risks have a control',R.withstand],['Anchor','stays true to the goal under stress',R.anchor],['Recover','resets to normal after a disruption',R.recover]].forEach(function(row){
+    h+='<div class="dim"><span class="dlbl">'+row[0]+' <span style="color:var(--dim);font-weight:400;font-size:11.5px">'+row[1]+'</span></span><span class="dtrk"><span class="dfill" style="width:'+row[2]+'%;background:'+col(row[2])+'"></span></span><span class="dval">'+row[2]+'</span></div>';
+  });
+  h+='<div class="overlaynote">Resilience here follows the <b>Resilience Ledger</b>: absorb load, stay anchored to a fixed reference, recover to baseline &mdash; the withstand/recover pattern from ecological resilience (Holling 1973) and cyber-resiliency engineering (MITRE 2011; NIST SP 800-160 v2). A whole-manual reading, not a per-line score, and it credits real structure (controls that defend named risks, recovery procedures) &mdash; not reassuring vocabulary. Honest limit: it still reads words, so a determined author can inflate a middling read by naming controls that aren\'t really there. A clean read points you to verify; it does not certify.</div>';
+
+  h+='<h2>Gaps &amp; coverage</h2>';
+  h+='<div class="slop">'+A.M.length+' governance terms found &middot; '+A.areas+'/'+KB.clusters.length+' areas touched &middot; '+A.defended+'/'+A.risks.length+' risks defended</div>';
+  if(!A.findings.length){ h+='<div class="gap info"><div class="t">No gaps found</div><div class="dt">Every risk this scan recognizes has a stated control alongside it.</div></div>'; }
+  A.findings.forEach(function(f){
+    h+='<div class="gap '+(f.sev==='warn'?'warn':f.sev==='info'?'info':'')+'"><div class="t">'+f.t+'</div><div class="dt">'+f.dt+'</div>';
+    if(f.sugg&&f.sugg.length){ h+='<div class="sugg">Consider: '+f.sugg.map(function(id){var t=KB.terms.find(function(x){return x.id===id;}); return t?'<span class="chip">'+esc(t.name)+'</span>':'';}).join('')+'</div>'; }
+    h+='</div>';
+  });
+
+  h+='<h2>How the manual holds up</h2><div class="slop" style="margin-bottom:8px">'+roll.overall+' &mdash; <b style="color:'+vtxt[1]+'">'+vtxt[0]+'</b> &middot; '+roll.clearN+' of '+parts.length+' procedures are clear and testable'+(roll.vagueN?'; '+roll.vagueN+' need work.':'.')+'</div>';
+  SCORER.DIMS.forEach(function(d){ var v=roll.dimAvg[d.k];
+    h+='<div class="dim"><span class="dlbl">'+d.label+' <span style="color:var(--dim);font-weight:400;font-size:11.5px">'+d.help+'</span></span><span class="dtrk"><span class="dfill" style="width:'+v+'%;background:'+col(v)+'"></span></span><span class="dval">'+v+'</span></div>';
+  });
+
+  h+='<h2>Every procedure, scored</h2>';
+  parts.forEach(function(p){
+    h+='<div class="part"><span class="pscore" style="color:'+col(p.avg)+'">'+p.avg+'</span><div class="ptxt">'+esc(p.text)+'</div>';
+    p.flags.forEach(function(f){h+='<span class="flag '+f[0]+'">'+f[1]+'</span>';});
+    if(p.fix.length){ h+='<div class="sugg" style="font-size:12px;color:var(--dim)"><b style="color:var(--amber)">Tighten:</b> '+p.fix[0]+'</div>'; }
+    h+='</div>';
+  });
+
+  res.className='res show'; res.innerHTML=h;
+  res.scrollIntoView({behavior:'smooth',block:'start'});
+}
+document.getElementById('run').onclick=run;
+document.getElementById('clr').onclick=function(){document.getElementById('goal').value='';document.getElementById('parts').value='';document.getElementById('res').className='res';};
+function loadEx(goal, parts){ document.getElementById('goal').value=goal; document.getElementById('parts').value=parts.join('\n'); run(); }
+document.getElementById('ex1').onclick=function(){ loadEx("Keep the household running safely and privately whether or not any one staff member is available.",[
+  "The chief of staff and the deputy are both cross-trained on the alarm codes and safe combination, documented in the sealed emergency envelope.",
+  "New vendors are granted access only after a background check and a signed confidentiality agreement, and are escorted at all times on-site.",
+  "The household accounts are reconciled every month by the bookkeeper and reviewed independently each quarter.",
+  "Any expenditure over the threshold requires dual approval from the principal and the chief of staff.",
+  "The emergency contact protocol names three people, in order, for every category of incident."]); };
+document.getElementById('ex2').onclick=function(){ loadEx("Run the household smoothly.",[
+  "Only the head housekeeper knows the alarm codes and safe combination.",
+  "The new landscaping contractor has full access to the property with no supervision.",
+  "The household accounts are not reconciled on any regular schedule.",
+  "Staff can approve purchases without any sign-off from the principal's office.",
+  "If there is an emergency, only the driver knows who to call."]); };
+fetch('continuity-overlay.local.js').then(function(r){ if(!r.ok) throw 0; return r.text(); }).then(function(src){
+  (0,eval)(src); // defines window.CONTINUITY_OVERLAY if present; local file only, never fetched over a network
+  if(window.CONTINUITY_OVERLAY){ KB = mergeOverlay(BASE_KB, window.CONTINUITY_OVERLAY); document.getElementById('overlaynote').textContent = 'Private overlay loaded: base + your local rules.'; }
+}).catch(function(){});
+</script>
+</body></html>

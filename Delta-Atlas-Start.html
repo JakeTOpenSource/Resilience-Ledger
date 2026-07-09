@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - Start here</title>
+<style>
+ :root{--bg:#e3ecf3;--panel:#ffffff;--line:#cbd7e1;--txt:#1f3147;--dim:#56697d;--accent:#2c6bb0;--green:#5f7d50;}
+ *{box-sizing:border-box;} html,body{margin:0;height:100%;}
+ body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6;}
+ .wrap{max-width:640px;margin:0 auto;padding:40px 22px 90px;}
+ .stages{display:flex;gap:6px;justify-content:center;margin-bottom:26px;}
+ .stage{height:5px;flex:1;max-width:70px;border-radius:3px;background:var(--line);}
+ .stage.on{background:var(--accent);}
+ h1{font-size:24px;margin:0 0 6px;text-align:center;} .lead{color:var(--dim);text-align:center;margin:0 0 26px;font-size:15px;}
+ .choice{display:block;width:100%;text-align:left;cursor:pointer;background:var(--panel);border:1px solid var(--line);
+   border-radius:12px;padding:16px 18px;margin:11px 0;transition:border-color .15s,transform .15s;}
+ .choice:hover{border-color:var(--accent);transform:translateY(-2px);}
+ .choice .t{font-size:16px;font-weight:650;} .choice .d{font-size:13px;color:var(--dim);margin-top:3px;}
+ .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 22px;text-align:center;}
+ .card .kicker{font-size:11.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);}
+ .card h2{font-size:22px;margin:6px 0 10px;} .card .subname{color:var(--dim);font-size:13px;margin:2px 0 12px;} .card .def{font-size:15.5px;line-height:1.6;}
+ .nav{display:flex;justify-content:space-between;margin-top:22px;gap:10px;}
+ .btn{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--txt);font-size:14px;padding:11px 18px;border-radius:10px;}
+ .btn:hover{border-color:var(--accent);} .btn.pri{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;}
+ .btn.ghost{border-color:transparent;color:var(--dim);}
+ .back{cursor:pointer;color:var(--dim);font-size:13px;display:inline-block;margin-bottom:16px;}
+ .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:18px;}
+ .explain{font-size:15px;color:var(--txt);} .explain b{color:var(--txt);}
+</style></head><body>
+<div class="wrap">
+  <div class="stages" id="stages"></div>
+  <div id="view"></div>
+</div>
+<script>
+const DATA={"basics": [{"name": "Artificial Intelligence", "sub": "", "def": "Software that performs tasks we associate with human intelligence: learning from data, spotting patterns, using language, or making decisions."}, {"name": "Machine Learning", "sub": "", "def": "A method where a system learns patterns from data instead of following explicit rules, then applies them to new inputs."}, {"name": "Model", "sub": "", "def": "A trained system that maps inputs to outputs. The artifact you run, deploy, and govern once training is finished."}, {"name": "Agent", "sub": "", "def": "An AI system that pursues a goal over multiple steps, choosing actions and calling tools, rather than answering a single prompt."}, {"name": "Agentic AI", "sub": "", "def": "AI that pursues goals over multiple steps with limited human oversight, often by coordinating one or more agents and subagents. Agency is a spectrum, from a single scoped agent to many acting together, not an on/off switch."}, {"name": "Prompt", "sub": "", "def": "The text input given to a model. It carries both the request and its context, so its wording strongly shapes the output."}, {"name": "Guardrail", "sub": "", "def": "An enforced limit on what a model or agent may do, checked against a rule before an action is allowed to proceed."}, {"name": "Alignment", "sub": "", "def": "The overarching aim of safety work. Misalignment is the root of many failure modes downstream."}, {"name": "Human-in-the-Loop", "sub": "", "def": "A setup where a person must review or approve an AI's action before it takes effect, so higher-risk decisions are not left fully to the machine."}, {"name": "Hallucination", "sub": "also called: contextual mismatch, semantic drift, or decoupled from reality", "def": "When an AI states something false with total confidence. Picture the foundation of a house quietly eroding while the paint still looks perfect: the trouble is underneath, where you cannot see it. That is why answers get grounded in real sources, and why a human stays in the loop."}]}; const B=DATA.basics;
+const view=document.getElementById('view'), stages=document.getElementById('stages');
+function go(file,label){ try{ if(window.parent&&window.parent!==window&&window.parent.nav){ window.parent.nav(file,label); return; } }catch(e){} location.href=file; }
+function goHome(){ try{ if(window.parent&&window.parent!==window&&window.parent.goHome){ window.parent.goHome(); return; } }catch(e){} location.href='index.html'; }
+function setStages(n,total){ stages.innerHTML=''; for(let i=0;i<total;i++){ const d=document.createElement('div'); d.className='stage'+(i<n?' on':''); stages.appendChild(d); } }
+function esc(s){return (s==null?'':String(s)).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+
+function home(){
+  setStages(1,4);
+  view.innerHTML='<h1>Let\'s get you oriented</h1><p class="lead">A couple of minutes. Pick whatever fits, you can come back.</p>'+
+   '<button class="choice" data-go="learn"><div class="t">I\'m new to AI &rarr;</div><div class="d">Learn the ten words everything else is built on, one at a time.</div></button>'+
+   '<button class="choice" data-go="gap"><div class="t">I need to check a document or policy &rarr;</div><div class="d">See what governance a real document is missing.</div></button>'+
+   '<button class="choice" data-go="audit"><div class="t">I want to sharpen a plan &rarr;</div><div class="d">Score any plan and turn vague parts into measurable ones.</div></button>'+
+   '<button class="choice" data-go="lookup"><div class="t">I just want to look a word up &rarr;</div><div class="d">Go straight to the search.</div></button>';
+  view.querySelectorAll('.choice').forEach(b=>b.onclick=()=>({learn:()=>learn(0),gap:gap,audit:audit,lookup:goHome}[b.dataset.go]()));
+}
+function learn(i){
+  if(i<0) return home(); if(i>=B.length) return done();
+  setStages(2,4);
+  const t=B[i];
+  view.innerHTML='<span class="back" id="bk">&larr; start over</span>'+
+   '<div class="card"><div class="kicker">Basic '+(i+1)+' of '+B.length+'</div><h2>'+esc(t.name)+'</h2>'+(t.sub?'<div class="subname">'+esc(t.sub)+'</div>':'')+'<div class="def">'+esc(t.def)+'</div></div>'+
+   '<div class="nav"><button class="btn" id="prev">Back</button><button class="btn pri" id="next">'+(i===B.length-1?'Finish':'Next')+'</button></div>';
+  document.getElementById('bk').onclick=home;
+  document.getElementById('prev').onclick=()=>learn(i-1);
+  document.getElementById('next').onclick=()=>learn(i+1);
+}
+function done(){
+  setStages(4,4);
+  view.innerHTML='<div class="card"><div class="kicker">You\'re oriented</div><h2>That\'s the backbone.</h2>'+
+   '<div class="def">Those ten hold up most of the rest. From here you can look anything up, or see how the words connect.</div>'+
+   '<div class="row"><button class="btn pri" id="ask">Look something up</button><button class="btn" id="exp">Explore the connections</button></div></div>'+
+   '<div class="nav"><button class="btn ghost" id="again">&larr; go through again</button><button class="btn ghost" id="menu">back to start menu</button></div>';
+  document.getElementById('ask').onclick=goHome;
+  document.getElementById('exp').onclick=()=>go('Agentic-AI-Governance-Query.html','Explore');
+  document.getElementById('again').onclick=()=>learn(0);
+  document.getElementById('menu').onclick=home;
+}
+function routeCard(kicker,title,body,btnLabel,file,lbl){
+  setStages(3,4);
+  view.innerHTML='<span class="back" id="bk">&larr; back</span><div class="card"><div class="kicker">'+kicker+'</div><h2>'+title+'</h2>'+
+   '<div class="explain">'+body+'</div><div class="row"><button class="btn pri" id="open">'+btnLabel+'</button></div></div>';
+  document.getElementById('bk').onclick=home;
+  document.getElementById('open').onclick=()=>go(file,lbl);
+}
+function gap(){ routeCard('Check a document','Gap Check',
+  'Paste an AI policy, a plan, or a vendor\'s claims. It reads the governance terms you used and tells you, in plain words, what is <b>missing</b>: a risk with no defense, autonomy with no oversight, and how to close each gap.',
+  'Open Gap Check &rarr;','Delta-Atlas-GapCheck.html','Gap Check'); }
+function audit(){ routeCard('Sharpen a plan','Framework Audit',
+  'Paste any plan, on any topic. It scores each part on whether it says what to do, can be tested, and stays on goal, then hands you a simple pattern to make the vague parts measurable.',
+  'Open Framework Audit &rarr;','Coherence-Audit.html','Framework Audit'); }
+home();
+</script></body></html>

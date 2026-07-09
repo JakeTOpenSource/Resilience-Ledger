@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas — Verification Checklist</title>
+<style>
+ :root{--bg:#e3ecf3;--panel:#ffffff;--line:#cbd7e1;--txt:#1f3147;--dim:#56697d;--accent:#2c6bb0;--win:#5f7d50;--gold:#b8902e;--flag:#b4503c;}
+ *{box-sizing:border-box;} html,body{margin:0;}
+ body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5;padding-bottom:74px;}
+ .bar{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--line);background:#f4f8fc;position:sticky;top:0;z-index:10;flex-wrap:wrap;}
+ .brand{font-weight:700;font-size:15px;display:flex;align-items:center;gap:9px;}
+ .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 9px var(--accent);}
+ .brand small{font-weight:600;color:var(--dim);}
+ #search{margin-left:auto;padding:8px 13px;border:1px solid var(--line);border-radius:18px;font-size:13px;min-width:220px;}
+ #search:focus{outline:none;border-color:var(--accent);}
+ .toggle{font-size:12.5px;color:var(--dim);display:flex;align-items:center;gap:5px;cursor:pointer;}
+ .wrap{max-width:840px;margin:0 auto;padding:16px 20px 30px;}
+ .lead{color:var(--dim);font-size:13px;margin:6px 0 16px;}
+ .lead b{color:var(--txt);}
+ h3.cl{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);margin:26px 0 8px;border-bottom:1px solid var(--line);padding-bottom:5px;}
+ .row{display:flex;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 15px;margin-bottom:8px;align-items:flex-start;}
+ .row.checked{background:#f2f6ee;border-color:#c2d3b6;}
+ .row input[type=checkbox]{width:18px;height:18px;margin-top:2px;flex:none;accent-color:var(--win);cursor:pointer;}
+ .row .body{flex:1;min-width:0;}
+ .row .nm{font-weight:650;font-size:14px;}
+ .row .def{font-size:13px;color:var(--dim);margin:2px 0 6px;}
+ .row .src{display:flex;flex-wrap:wrap;gap:5px;}
+ .pill{font-size:10.5px;padding:1px 8px;border-radius:10px;border:1px solid var(--line);color:var(--dim);background:#eef3f8;}
+ .pill.none{color:var(--flag);border-color:#e6c2ba;background:#faeeec;}
+ .hidden{display:none !important;}
+ .empty{color:var(--dim);font-size:13px;padding:20px 0;text-align:center;}
+ .footbar{position:fixed;left:0;right:0;bottom:0;background:#f4f8fc;border-top:1px solid var(--line);padding:11px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;z-index:10;}
+ .footbar .stat{font-size:13px;} .footbar .stat b{color:var(--win);}
+ .footbar button{margin-left:auto;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:20px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;}
+ .footbar button.ghost{background:transparent;color:var(--accent);margin-left:0;}
+ .footbar button:disabled{opacity:.45;cursor:not-allowed;}
+ .toast{position:fixed;bottom:70px;right:20px;background:var(--txt);color:#fff;padding:9px 16px;border-radius:8px;font-size:12.5px;opacity:0;pointer-events:none;transition:opacity .2s;}
+ .toast.show{opacity:1;}
+ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:#eef3f8;border:1px solid var(--line);border-radius:5px;padding:1px 6px;}
+</style></head><body>
+<div class="bar">
+  <div class="brand"><span class="dot"></span>Delta Atlas <small>· VERIFY</small></div>
+  <label class="toggle"><input type="checkbox" id="hideChecked"/> hide checked</label>
+  <input id="search" placeholder="filter by name or text…"/>
+</div>
+<div class="wrap">
+  <p class="lead" id="lead">Loading terms.enriched.json…</p>
+  <div id="list"></div>
+</div>
+<div class="footbar">
+  <span class="stat"><b id="checkedCount">0</b> checked this session</span>
+  <button class="ghost" id="btnCopy" disabled>Copy IDs</button>
+  <button id="btnExport" disabled>Download verified-batch.json</button>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+// One checkbox per candidate term: "reads right, source backs it." No bulk-check —
+// the point is a human actually reading each one, not rubber-stamping a batch.
+// Checked state persists in localStorage so closing the tab never loses progress.
+// Nothing here writes to terms.enriched.json — export a batch, then run
+// `node verify-terms.js apply <file>` yourself to apply it. Human decides, the
+// script does the mechanical part.
+const LSKEY = 'deltaAtlasVerifyChecked';
+let checked = {};
+try { checked = JSON.parse(localStorage.getItem(LSKEY) || '{}'); } catch (e) { checked = {}; }
+function persist() { try { localStorage.setItem(LSKEY, JSON.stringify(checked)); } catch (e) {} }
+function esc(s) { return String(s || '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+fetch('terms.enriched.json').then(r => r.json()).then(data => {
+  const SRC = {}; (data.sources || []).forEach(s => SRC[s.id] = s);
+  const candidates = (data.terms || []).filter(t => t.status === 'candidate');
+  const total = (data.terms || []).length;
+
+  // Prune localStorage entries for ids no longer candidate (already applied via
+  // verify-terms.js) so "checked this session" reflects remaining work, not a
+  // stale count carried over from a batch that's already shipped.
+  const candidateIds = new Set(candidates.map(t => t.id));
+  let pruned = false;
+  Object.keys(checked).forEach(id => { if (!candidateIds.has(id)) { delete checked[id]; pruned = true; } });
+  if (pruned) persist();
+
+  document.getElementById('lead').innerHTML =
+    '<b>' + candidates.length + '</b> of <b>' + total + '</b> terms are still candidate. ' +
+    'Check the ones that read right and are backed by their source; uncheck if not. ' +
+    'When you\'re done a batch, <b>Download</b> below, then run ' +
+    '<code>node verify-terms.js apply verified-batch.json</code> to flip exactly those to reviewed — nothing else changes.';
+
+  const byCluster = {};
+  candidates.forEach(t => { const c = t.cluster || 'Uncategorized'; (byCluster[c] = byCluster[c] || []).push(t); });
+  const clusters = Object.keys(byCluster).sort();
+
+  const list = document.getElementById('list');
+  clusters.forEach(cl => {
+    const h = document.createElement('h3'); h.className = 'cl'; h.textContent = cl + ' (' + byCluster[cl].length + ')';
+    list.appendChild(h);
+    byCluster[cl].sort((a, b) => (a.names?.plain?.[0] || a.id).localeCompare(b.names?.plain?.[0] || b.id)).forEach(t => {
+      const name = (t.names && t.names.plain && t.names.plain[0]) || t.id;
+      const srcs = [...new Set((t.sources || []).map(id => SRC[id] && (SRC[id].family || SRC[id].publisher)).filter(Boolean))];
+      const row = document.createElement('div');
+      row.className = 'row' + (checked[t.id] ? ' checked' : '');
+      row.dataset.id = t.id;
+      row.dataset.text = (name + ' ' + (t.function_statement || '')).toLowerCase();
+      row.innerHTML =
+        '<input type="checkbox" ' + (checked[t.id] ? 'checked' : '') + '/>' +
+        '<div class="body"><div class="nm">' + esc(name) + '</div>' +
+        '<div class="def">' + esc(t.function_statement || '(no function statement)') + '</div>' +
+        '<div class="src">' + (srcs.length
+          ? srcs.map(s => '<span class="pill">' + esc(s) + '</span>').join('')
+          : '<span class="pill none">no source</span>') + '</div></div>';
+      row.querySelector('input').addEventListener('change', e => {
+        if (e.target.checked) checked[t.id] = true; else delete checked[t.id];
+        row.classList.toggle('checked', e.target.checked);
+        persist(); updateFooter();
+      });
+      list.appendChild(row);
+    });
+  });
+  if (!candidates.length) list.innerHTML = '<div class="empty">Nothing left to verify — every term is reviewed.</div>';
+
+  function applyFilters() {
+    const q = document.getElementById('search').value.trim().toLowerCase();
+    const hide = document.getElementById('hideChecked').checked;
+    let anyVisibleInGroup = {};
+    list.querySelectorAll('.row').forEach(r => {
+      const show = (!q || r.dataset.text.includes(q)) && !(hide && checked[r.dataset.id]);
+      r.classList.toggle('hidden', !show);
+    });
+    list.querySelectorAll('h3.cl').forEach(h => {
+      let n = h.nextElementSibling, any = false;
+      while (n && n.tagName === 'DIV') { if (!n.classList.contains('hidden')) any = true; n = n.nextElementSibling; }
+      h.classList.toggle('hidden', !any);
+    });
+  }
+  document.getElementById('search').addEventListener('input', applyFilters);
+  document.getElementById('hideChecked').addEventListener('change', applyFilters);
+
+  function updateFooter() {
+    const ids = Object.keys(checked);
+    document.getElementById('checkedCount').textContent = ids.length;
+    document.getElementById('btnExport').disabled = !ids.length;
+    document.getElementById('btnCopy').disabled = !ids.length;
+    applyFilters();
+  }
+  updateFooter();
+
+  function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 1600); }
+
+  document.getElementById('btnExport').addEventListener('click', () => {
+    const ids = Object.keys(checked);
+    const blob = new Blob([JSON.stringify(ids, null, 1)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'verified-batch.json'; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    toast('downloaded ' + ids.length + ' id(s)');
+  });
+  document.getElementById('btnCopy').addEventListener('click', () => {
+    const text = JSON.stringify(Object.keys(checked));
+    let done = false;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => toast('copied')).catch(() => fallback());
+    } else fallback();
+    function fallback() {
+      const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); toast('copied'); } catch (e) { toast('copy failed — select and Ctrl+C'); }
+      document.body.removeChild(ta);
+    }
+  });
+}).catch(e => { document.getElementById('lead').textContent = 'Could not load terms.enriched.json: ' + e.message; });
+</script>
+</body></html>

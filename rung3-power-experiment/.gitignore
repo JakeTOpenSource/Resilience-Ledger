@@ -1,0 +1,5 @@
+# transient per-run outputs — regenerated every run.
+# the canonical, dated copies live in runs/ and ARE committed.
+power-trace-*.csv
+run-manifest.json
+repeat-trace.csv

@@ -1,0 +1,15 @@
+{
+  "gpu": "NVIDIA GeForce GTX 1660 Ti",
+  "driver_version": "610.47",
+  "power_limit": "[N/A]",
+  "model": "qwen2.5:0.5b",
+  "sample_interval_ms": 100,
+  "quick": false,
+  "scenario_samples": {
+    "idle": 110,
+    "varied": 188,
+    "loop": 191,
+    "decoy": 191
+  },
+  "note": "GPU/driver/power_limit are verbatim nvidia-smi output; warm-up call issued before timing."
+}

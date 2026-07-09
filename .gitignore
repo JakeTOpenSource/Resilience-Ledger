@@ -1,0 +1,42 @@
+# Dependencies (none are required — this catches accidental installs)
+node_modules/
+npm-debug.log*
+
+# Local overlay files (never committed)
+*.local.js
+
+# Local data files (never committed)
+my-days.jsonl
+
+# Local-only tooling and working files (never committed)
+Organization-Dashboard.html
+Design-System.html
+Organizer-Log.md
+.organizer-state.json
+usage.js
+claude-usage.json
+
+# Third-party library optionally downloaded for the offline 3D map (see README-Portability.md)
+three.min.js
+
+# Windows junk
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS junk (for anyone who forks)
+.DS_Store
+
+# Editor litter
+.vscode/
+.idea/
+*.swp
+
+# Scratch and backups
+scratch/
+*.tmp
+*.bak
+*.old
+~$*
+*.local.json

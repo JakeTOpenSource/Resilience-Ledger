@@ -1,0 +1,13 @@
+{
+  "run": "2026-07-05-run4-repeat",
+  "purpose": "repeatability + thermal-drift harness (Phase 2): loop and decoy windows interleaved with cool-downs, logging power/temperature/clock, to test whether the periodicity signal is stable or tracks thermal throttling.",
+  "gpu": "NVIDIA GeForce GTX 1660 Ti",
+  "driver_version": "610.47",
+  "model": "qwen2.5:0.5b",
+  "sample_interval_ms": 100,
+  "rounds": 3,
+  "active_window_ms": 14000,
+  "cooldown_ms": 8000,
+  "data": "2026-07-05-run4-repeat.csv — all samples, label column = cool / loop<n> / decoy<n>",
+  "notes": "Fanless (boost fan disabled) GTX 1660 Ti. Loop clock throttled 1669->1453->1387 MHz as temp rose 51->55C, and loop periodicity fell with it (0.526->0.297->0.385), evidencing that the shape/periodicity channel is thermally driven and not a stable witness. Idle-vs-work (power level) unaffected."
+}

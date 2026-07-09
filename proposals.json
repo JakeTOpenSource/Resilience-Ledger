@@ -1,0 +1,528 @@
+{
+  "schema_version": "1.0",
+  "note": "The Mend Gate register: every proposed change to this project, from any source, is one entry here. Statuses move only via mend-gate.js commands (add, queue, fold, decline); fold/decline require a written reason and are run by a human - a model may ADD proposals, never sort them. Dates are UTC. See State-Delta-Bridge.md.",
+  "proposals": [
+    {
+      "id": "seed-frame-overlay",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (session recommendation)"
+      },
+      "stream": "site-tools",
+      "type": "detector",
+      "title": "Private lexicon overlay (tracer-overlay.local.js) so downloads can be hardened privately",
+      "status": "folded",
+      "gates": {
+        "schema": true,
+        "corpus": "green 11/11 @2026-07-02",
+        "bench": "green @2026-07-02"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "folded",
+          "reason": "Shipped as engine 0.4.0: xt() extender, additive-only overlay, version displayed in UI, --overlay in CLI and corpus. Base corpus unchanged and green; smoke test proves novel private phrase caught only with overlay."
+        }
+      ]
+    },
+    {
+      "id": "mcp-manifest-pinning",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (MCP-vs-API analysis)"
+      },
+      "stream": "mcp",
+      "type": "tool",
+      "title": "mcp-manifest-pin.js: hash-pin MCP tool manifests; any change is a return to sort",
+      "status": "folded",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a (does not touch detector)",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "folded",
+          "reason": "Shipped zero-dep with offline selftest (clean manifest reads clean; reworded tool-poisoning description trips the wire). First Delta Atlas tool pointed at live agent infrastructure."
+        }
+      ]
+    },
+    {
+      "id": "gapcheck-relational-engine",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Gemini (return, sorted: deferred with spec)"
+      },
+      "stream": "site-tools",
+      "type": "detector",
+      "title": "Gap Check relational rule: flag state-changing actions with no validation/approval step attached",
+      "status": "proposed",
+      "gates": {
+        "schema": true,
+        "corpus": "required before fold",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "deferred",
+          "reason": "Spec agreed (deterministic, no new machinery); build not started. Needs its own labeled corpus cases before it ships."
+        }
+      ]
+    },
+    {
+      "id": "canon-regeneration",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (sync audit finding)"
+      },
+      "stream": "site-tools",
+      "type": "data",
+      "title": "Regenerate Delta-Atlas-Canon.md from terms.enriched.json (canon is two versions stale)",
+      "status": "proposed",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "blocked",
+          "reason": "Generator pipeline scripts (shepherd.py etc.) referenced in Skills register are not in this folder - locate or rebuild the generator first. Missing-artifact finding from the sovereign-zero audit."
+        }
+      ]
+    },
+    {
+      "id": "embedded-copy-sync-check",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (sync audit finding)"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Deterministic sync-check: hash terms.enriched.json vs every embedded DATA copy, fail loudly",
+      "status": "proposed",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": []
+    },
+    {
+      "id": "donor-disposition",
+      "date": "2026-07-01",
+      "source": {
+        "kind": "model",
+        "name": "Claude (donor-calibration merge)"
+      },
+      "stream": "site-tools",
+      "type": "decision",
+      "title": "Settle inversion-detector.js: patch-and-publish or log formal retirement",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-01",
+          "action": "noted",
+          "reason": "Three defects catalogued; agent resolution already ported to the Tracer with the passive-voice bug fixed. The standalone must not be silently re-adopted."
+        },
+        {
+          "date": "2026-07-01",
+          "action": "queued"
+        }
+      ]
+    },
+    {
+      "id": "cold-read-18-definitions",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (definition coherence pass)"
+      },
+      "stream": "ledger-candidates",
+      "type": "cold-read",
+      "title": "Cold-read the 18 rewritten definitions (incl. tolerance, demoted reviewed->candidate)",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "queued"
+        }
+      ]
+    },
+    {
+      "id": "cold-read-33-term-candidates",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (term gap analysis)"
+      },
+      "stream": "ledger-candidates",
+      "type": "cold-read",
+      "title": "Cold-read the 33 proposed terms (Delta-Atlas-Term-Candidates.md); fold survivors into terms.enriched.json",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "queued"
+        }
+      ]
+    },
+    {
+      "id": "cold-read-register-9-17",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (skill mining workflow)"
+      },
+      "stream": "ledger-candidates",
+      "type": "cold-read",
+      "title": "Cold-read Skills register entries 9-17 and their calibration next-steps",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "queued"
+        }
+      ]
+    },
+    {
+      "id": "cold-read-operator-protocol",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (drafted from the author's own mechanics)"
+      },
+      "stream": "ledger-candidates",
+      "type": "cold-read",
+      "title": "Cold-read Operator-Protocol.md, then one week of contact with reality; fix the rule, not the operator",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "queued"
+        }
+      ]
+    },
+    {
+      "id": "sort-codex-branch",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "counterparty",
+        "name": "OpenAI Codex (branch codex/improve-resilience-ledger-docs)"
+      },
+      "stream": "ledger-candidates",
+      "type": "return",
+      "title": "Sort the codex branch: repo restructure (experiments/, data/, docs/) - fold, reshape, or decline",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "queued"
+        }
+      ]
+    },
+    {
+      "id": "read-sandbox-500",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "human",
+        "name": "Jake (pre-registered Drift Experiment 01)"
+      },
+      "stream": "ledger-candidates",
+      "type": "cold-read",
+      "title": "Read sandbox-500 results against the four pre-committed outcomes. HUMAN FIRST, per the reading rule: no model discussion before the reading",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "queued"
+        }
+      ]
+    },
+    {
+      "id": "counterparty-agent-class",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (MCP-vs-API analysis)"
+      },
+      "stream": "ledger-candidates",
+      "type": "term",
+      "title": "New agent class 'Counterparty' (outside your governance, inside your loop) - term candidate + possible third class in the Tracer's agent resolver",
+      "status": "proposed",
+      "gates": {
+        "schema": true,
+        "corpus": "required if resolver changes",
+        "bench": "n/a"
+      },
+      "log": []
+    },
+    {
+      "id": "delta-atlas-as-mcp-server",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "human",
+        "name": "Jake (intertwine MCP into the project)"
+      },
+      "stream": "mcp",
+      "type": "tool",
+      "title": "Expose the Tracer/Gap Check as a zero-dep MCP server, so any agent can self-audit its traces locally - the deterministic floor offered TO the flexible layer",
+      "status": "proposed",
+      "gates": {
+        "schema": true,
+        "corpus": "engine unchanged - corpus must stay green",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "noted",
+          "reason": "The other direction of the intertwine: not just consuming MCP safely (manifest pinning) but serving the floor over it. Wrapper around the same analyze() single source of truth; no model at runtime; the server only reads text and returns findings."
+        }
+      ]
+    },
+    {
+      "id": "cold-read-state-delta-bridge",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (framework author of record; the framework must pass its own audit)"
+      },
+      "stream": "site-tools",
+      "type": "cold-read",
+      "title": "Cold-read State-Delta-Bridge.md and the Mend Gate framework itself - the self-test clause",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "queued"
+        }
+      ]
+    },
+    {
+      "id": "cold-read-nine-seams-md-nine-theory-connections",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (theory synthesis return)"
+      },
+      "stream": "ledger-candidates",
+      "type": "return",
+      "title": "Cold-read Nine-Seams.md: nine theory connections beneath the Mend Gate, incl. the precedence-inversion surface and the operator 2x2",
+      "status": "proposed",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": []
+    },
+    {
+      "id": "revise-white-paper-v0-1-deepseek-draft-fix-six-o",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "DeepSeek + Jake (white paper draft)"
+      },
+      "stream": "ledger-candidates",
+      "type": "return",
+      "title": "Revise white paper v0.1 (DeepSeek draft): fix six off-reference definitions, falsified overlay claim, CC BY vs public domain; add measured numbers and adversarial-verification evidence",
+      "status": "proposed",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": []
+    },
+    {
+      "id": "white-paper-html-living-plain-english-legend-pag",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "human",
+        "name": "Jake (direct request); drafted by Claude"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "White-Paper.html: living plain-English legend page - tools, exact ledger meanings, self-governance; nav + offline precache",
+      "status": "folded",
+      "gates": {
+        "schema": true,
+        "corpus": "green @2026-07-02",
+        "bench": "green @2026-07-02"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "folded",
+          "reason": "Author-requested and shipped same day: legend page in house style, zero JS, correct ledger definitions (the anti-drift reference for future model drafting), wired into nav and sw.js precache (v70), browser-verified in the shell with no console errors."
+        }
+      ]
+    },
+    {
+      "id": "homepage-redesign-three-doors-by-what-the-visito",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "human",
+        "name": "Jake (redesign direction) + Claude (mockup)"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Homepage redesign: three doors by what the visitor brings, Tracer flagship, plumb-line hero, bedrock footer, gold seams, layered SVG ivy weaving behind and over low-importance areas",
+      "status": "folded",
+      "gates": {
+        "schema": true,
+        "corpus": "green @2026-07-02",
+        "bench": "green @2026-07-02"
+      },
+      "log": [
+        {
+          "date": "2026-07-02",
+          "action": "folded",
+          "reason": "Direction approved by Jake across three review rounds (mockup, ivy v2, ivy v3 matched to his Pexels reference). Shipped: three-doors IA with Tracer flagship, plumb-line hero, gold seams, bedrock floor, and hedera ivy with pale veins - one diagonal vine, margin cluster, two anchored ruptures, three sprinkles, static only. All page machinery preserved (search, install, share, hash routing verified live); mid-width text collision found in screenshot review and fixed with a 1060px cutoff; mobile hides the hero vine. sw.js v71."
+        }
+      ]
+    },
+    {
+      "id": "nozzle-runtime-gate-around-any-model-call-lagran",
+      "date": "2026-07-03",
+      "source": {
+        "kind": "human",
+        "name": "Jake (concept) + Claude (Nozzle-Study.md)"
+      },
+      "stream": "mcp",
+      "type": "idea",
+      "title": "Nozzle: runtime gate around any model call - Lagrangian dial (T, lambda), shadow-price receipt, canonicalization ingress, extraction-signature egress; local-only, never hosted",
+      "status": "folded",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-03",
+          "action": "folded",
+          "reason": "Built as nozzle.js v0.1.1 (Lagrangian gate + lambda-receipt) and hardened by a 3-way adversarial review: math core declared sound/unrefuted, and every reproduced finding fixed (but-for block causation, Inf-lock receipt, full Cf canonicalization, working --overlay, two PII leaks, filler-resistant extraction, lambda validation). 25/25 selftest green. Local-only by law; never a counterparty. Nozzle.md documents it; Nozzle-Study.md is the theory."
+        }
+      ]
+    },
+    {
+      "id": "readme-durability-the-thirty-year-floor-audit-ar",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (durability return via a fork; proposer never sorts)"
+      },
+      "stream": "site-tools",
+      "type": "return",
+      "title": "README-Durability: the thirty-year floor audit - archival counterparties, mirrors, succession",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-03",
+          "action": "queued"
+        }
+      ]
+    },
+    {
+      "id": "ci-gates-workflow-corpus-bench-register-pin-self",
+      "date": "2026-07-02",
+      "source": {
+        "kind": "model",
+        "name": "Claude (durability return via a fork; proposer never sorts)"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "CI gates workflow: corpus, bench, register, pin selftest on every push - fresh-checkout proof",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-03",
+          "action": "queued"
+        }
+      ]
+    },
+    {
+      "id": "sort-fork-pr-1-bigbirdreturns-axm-fold-or-declin",
+      "date": "2026-07-03",
+      "source": {
+        "kind": "counterparty",
+        "name": "BigBirdReturns (fork operator, AXM) via PR #1"
+      },
+      "stream": "ledger-candidates",
+      "type": "return",
+      "title": "Sort fork PR #1 (BigBirdReturns/AXM): fold or decline the four ascending-cost AXM collaboration moves; the durability+CI commits are already integrated as candidates",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-07-03",
+          "action": "queued"
+        }
+      ]
+    }
+  ]
+}

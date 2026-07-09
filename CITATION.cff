@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use or build on this work, please cite it as below."
+title: "Delta Atlas / Resilience Ledger"
+type: software
+authors:
+  - family-names: Tiller
+    given-names: Jake
+    email: jake.tiller91@gmail.com
+license: CC-BY-4.0
+url: "https://resilience-eval-ai.pages.dev/"
+repository-code: "https://github.com/JakeTOpenSource/Resilience-Ledger"
+date-released: 2026-07-02
+abstract: >-
+  Deterministic, client-side coherence-audit tools: a function-first
+  plain-language glossary of agentic AI and its governance, a framework
+  audit scoring coherence and resilience on eight dimensions, a gap
+  check for plans and policies, and an ordering-drift detector for
+  agent traces, together with the Resilience Ledger method documents
+  and calibration logs. No model or network is required at runtime;
+  all detector lexicons are versioned and openly displayed.
+keywords:
+  - coherence audit
+  - agentic AI governance
+  - ordering drift
+  - deterministic evaluation
+  - plain-language glossary
+  - resilience ledger

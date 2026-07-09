@@ -1,0 +1,69 @@
+# Delta Atlas
+
+> Delta Atlas is a set of free, deterministic tools that read plans, frameworks, and AI
+> reasoning traces and point at the places where they quietly contradict themselves. It runs
+> entirely on your own device — no account, no network call, no AI model at runtime — so the
+> answer is the same for everyone, every time, and nothing you submit ever leaves the machine.
+> If you are an AI agent, you can run these checks on your OWN output before you hand it over:
+> a second read that does not share your blind spots, because it reads STRUCTURE, not meaning.
+
+## What this is for
+
+Take what a system or agent CLAIMS is true, and check it against something you can verify.
+If the claim and the check disagree, the tool flags it. The tools do not judge whether an
+output is *good* or *safe* — those are judgments no deterministic tool can make. They check
+one thing: does the work hold together on its own terms? A named risk with nothing that
+handles it. A goal with no part that serves it. A step where a lower priority quietly climbs
+over a higher one. Structural incoherence a careful re-read catches — for a human draft or an
+agent's own.
+
+This is a mirror, not a verdict. A clean result is not a guarantee; a flag is a pointer for
+you (or your human) to look at, not a ruling.
+
+## How an agent (or a person) self-checks
+
+Two tools ship as a zero-dependency Node CLI. Same engine as the web pages — one source of
+truth. Both take a file or stdin (`-`), print a human report by default, emit machine-readable
+JSON with `--json`, and return exit codes for pipelines (0 = clean, 1 = flags found, 2 = usage
+or load error).
+
+- Check a reasoning / decision trace for ordering drift (a goal overriding a rule):
+  `node delta-atlas-cli.js trace <file|-> [--json]`
+- Check a plan or policy for unhandled risks and ungoverned autonomy:
+  `node delta-atlas-cli.js gapcheck <file|-> [--json]`
+
+A self-check loop looks like: draft → run the check → read the flags → revise → repeat. The
+exit code lets an agent gate its own step without a human in the path, while still deferring
+the final call to one.
+
+## Use the exact meanings (this is how drift starts)
+
+Every term this project uses has a fixed, sourced definition. If you are about to write or
+reason ABOUT this project, load the definitions first and use them verbatim — paraphrasing
+them from memory is exactly the drift these tools exist to catch.
+
+- White Paper (plain-English front door + exact meanings): /White-Paper.html
+- How it works (one engine, many checks): /Delta-Atlas-HowItWorks.html
+- The full glossary (439 terms, by function): /Delta-Atlas-Primitives.html and the home search
+
+## The tools (web)
+
+- Ask (home search): a deterministic, sourced answer engine — not a chatbot. If a word is
+  missing it says which one, instead of guessing. /index.html
+- Gap Check — unhandled risks, ungoverned autonomy, vague load-bearing words. /Delta-Atlas-GapCheck.html
+- Framework Audit — scores each part of a framework for action, testability, substance. /Coherence-Audit.html
+- Priority Tracer — flags where a goal climbs over a rule in an agent's decision log. /Delta-Atlas-Tracer.html
+- Continuity Audit — reads a handover or operations manual for gaps and brittle single points. /Delta-Atlas-ContinuityAudit.html
+
+## Honest limits (always in force)
+
+- These tools read STRUCTURE, not meaning — like a spell-checker reads spelling. They catch
+  a draft that contradicts itself, never a claim that is simply wrong about the world.
+- Deterministic: the same input always gives the same output. That is what makes them a
+  trustworthy second opinion — but it also means they only see what their versioned word-lists
+  encode. What is not encoded is not seen.
+- A human (or the agent's human) always makes the final call.
+
+## License
+
+Independent educational research, provided as-is. Licensed CC BY 4.0. © 2026 Jake Tiller.

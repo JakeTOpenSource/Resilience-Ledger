@@ -1,0 +1,31 @@
+{
+  "name": "Delta Atlas",
+  "short_name": "Delta Atlas",
+  "description": "Delta Atlas: a plain-language, function-first guide to the terms used in AI and its governance. Look up, map, and check what you can trust.",
+  "id": "./",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e3ecf3",
+  "theme_color": "#e3ecf3",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+Agentic AI Governance - Terminology Glossary
+Copyright (c) 2026 Jake Tiller
+
+CONTENT LICENSE
+This work - the glossary content (definitions, relations, groundedness scores),
+the accompanying text, and the tools that present it - is licensed under the
+Creative Commons Attribution 4.0 International License (CC BY 4.0).
+
+You are free to share and adapt the material for any purpose, even commercially,
+provided you give appropriate credit, link to the license, and indicate if changes
+were made.
+
+  Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+  Full legal text:        https://creativecommons.org/licenses/by/4.0/legalcode
+
+DISCLAIMER
+Provided "AS IS", without warranty of any kind, express or implied, including but
+not limited to warranties of accuracy, merchantability, or fitness for a particular
+purpose. This is an independent educational research project. It is NOT legal,
+compliance, or professional advice; do not rely on it for decisions, and verify
+against primary sources and qualified professionals.
+
+NOT AFFILIATED / NO ENDORSEMENT
+This project is independent and is not affiliated with, endorsed by, or representing
+NIST, ISO/IEC, OWASP, Stanford HAI, MIT, NSA/CISA, or any other cited organization.
+Their names, frameworks, and materials are referenced for educational purposes only
+and remain the property of their respective owners. Trademarks belong to their owners.

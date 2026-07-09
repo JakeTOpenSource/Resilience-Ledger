@@ -1,0 +1,10 @@
+{
+  "run": "2026-07-05-run2",
+  "gpu": "NVIDIA GeForce GTX 1660 Ti",
+  "driver_version": "610.47",
+  "power_limit": "N/A",
+  "model": "qwen2.5:0.5b",
+  "sample_interval_ms": 100,
+  "scenario_samples": { "idle": 109, "varied": 186, "loop": 187 },
+  "notes": "GPU/driver/power_limit are the verbatim output of `nvidia-smi --query-gpu=name,driver_version,power.limit --format=csv`. Warm-up call issued before timing so the model cold-load is not recorded. idle window ~12s; varied/loop ~20s each. This manifest was written by hand for run 2 (which predated the auto-manifest feature); later runs write their own."
+}

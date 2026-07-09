@@ -1,0 +1,29 @@
+# The gates, run on every push from a fresh checkout — so "green on my machine"
+# can never be mistaken for green. This workflow is a convenience mirror, not the
+# floor: the floor stays `node tracer-corpus.js` on any machine, no packages,
+# and must keep working if GitHub Actions never runs again.
+# Registered as ci-gates-workflow-corpus-bench-register-pin-self in proposals.json.
+name: gates
+on:
+  push:
+  pull_request:
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Calibration corpus (the labels are the floor)
+        run: node tracer-corpus.js
+      - name: Gap Check corpus (negation guard stays honest)
+        run: node gapcheck-corpus.js
+      - name: Day-ledger corpus (dual attestation, chain integrity)
+        run: node day-ledger-corpus.js
+      - name: Benchmark (scale limits stay reproducible)
+        run: node tracer-bench.js
+      - name: Mend Gate register (validates schema, custody, reasons)
+        run: node mend-gate.js list
+      - name: MCP manifest pin selftest (offline drift tripwire)
+        run: node mcp-manifest-pin.js selftest

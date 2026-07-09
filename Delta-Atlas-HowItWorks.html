@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - How it works</title>
+<meta name="theme-color" content="#e3ecf3"/>
+<link rel="icon" href="favicon.png"/>
+<style>
+ :root{--bg:#e3ecf3;--panel:#ffffff;--line:#cbd7e1;--txt:#1f3147;--dim:#56697d;--accent:#2c6bb0;--win:#5f7d50;--gold:#b8902e;--flag:#b4503c;}
+ *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--txt);line-height:1.6;
+   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;}
+ header{padding:16px 22px;border-bottom:1px solid var(--line);}
+ header .back{display:inline-block;font-size:12px;color:var(--dim);text-decoration:none;margin-bottom:8px;}
+ header .back:hover{color:var(--accent);}
+ header h1{margin:0;font-size:19px;} header p{margin:5px 0 0;color:var(--dim);font-size:12.5px;max-width:860px;}
+ .main{max-width:860px;margin:0 auto;padding:18px 20px 90px;}
+ h2{font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);margin:28px 0 10px;border-bottom:1px solid var(--line);padding-bottom:5px;}
+ .five{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:13px 16px;font-size:14.5px;margin-top:16px;}
+ .rung{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 15px;margin-bottom:9px;border-left:3px solid var(--line);}
+ .rung.r1{border-left-color:var(--dim);} .rung.r2{border-left-color:var(--accent);} .rung.r3{border-left-color:var(--gold);}
+ .rk{font-weight:600;font-size:13.5px;display:block;margin-bottom:3px;}
+ .rk small{font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:.4px;font-size:10.5px;margin-left:7px;}
+ .rung span.body{color:var(--dim);font-size:13.5px;} .rung span.body b{color:var(--txt);}
+ .rung .tools{display:block;margin-top:6px;font-size:11.5px;color:var(--dim);}
+ .route{display:grid;grid-template-columns:1fr;gap:7px;margin-top:4px;}
+ .route a{display:flex;gap:12px;align-items:baseline;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 13px;text-decoration:none;}
+ .route a:hover{border-color:var(--accent);}
+ .route .job{flex:1;font-size:13.5px;color:var(--dim);} .route .job b{color:var(--txt);}
+ .route .to{flex:none;font-size:12.5px;color:var(--accent);font-weight:600;white-space:nowrap;}
+ table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:9px;overflow:hidden;font-size:13px;margin-top:4px;}
+ th,td{padding:7px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+ th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);background:rgba(44,107,176,0.05);}
+ tr:last-child td{border-bottom:none;} td b{font-size:13px;}
+ .dot{display:inline-block;width:9px;height:9px;border-radius:50%;position:relative;top:1px;margin-right:5px;}
+ .d1{background:var(--dim);} .d2{background:var(--accent);} .d3{background:var(--gold);}
+ .exp{font-size:10px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.4px;}
+ .note{color:var(--dim);font-size:13px;background:rgba(95,125,80,0.07);border:1px solid #c2d3b6;border-radius:9px;padding:12px 15px;margin-top:24px;}
+ .note b{color:var(--txt);} .note .true{color:var(--win);font-weight:600;}
+ .vlog{margin-top:26px;font-size:12px;color:var(--dim);} .vlog table{font-size:12px;}
+ a{color:var(--accent);text-decoration:none;} a:hover{text-decoration:underline;}
+</style></head><body>
+<header>
+ <a class="back" href="index.html">&larr; Delta Atlas</a>
+ <h1>How it works</h1>
+ <p>One engine, many checks. What every tool here is actually doing &mdash; and how much each check is worth.</p>
+</header>
+<div class="main">
+
+ <div class="five">
+  <b>Every tool here does the same thing.</b> Take what a system or agent <i>claims</i> is true, and <b>check</b> it against something you can actually verify &mdash; something it can't just make up. If the claim and the check don't match, the tool flags it. We don't read the agent's mind and we don't police its wording; we check whether the story it tells matches something real. The subject changes &mdash; a software dependency, a reasoning trace, a handover manual, the electricity a chip draws &mdash; but the move never does.
+ </div>
+
+ <p style="margin:14px 2px 0;color:var(--dim);font-size:13.5px">One thing we say out loud that most of this field hides: <b style="color:var(--txt)">not all checks are equal.</b> A system that grades its own homework can look perfect and still be lying. So the tools sit on a ladder &mdash; the higher the rung, the harder the check is to fake, and the more a &ldquo;pass&rdquo; is actually worth.</p>
+
+ <h2>Which check fits your job?</h2>
+ <div class="route">
+  <a href="Delta-Atlas-Tracer.html"><span class="job">Auditing an agent's <b>decision or reasoning log</b></span><span class="to">Priority Tracer &rarr;</span></a>
+  <a href="Delta-Atlas-GapCheck.html"><span class="job">Reviewing an <b>AI plan, policy, or system prompt</b></span><span class="to">Gap Check &rarr;</span></a>
+  <a href="Coherence-Audit.html"><span class="job">Checking whether a <b>framework's parts hold up</b></span><span class="to">Framework Audit &rarr;</span></a>
+  <a href="Delta-Atlas-ContinuityAudit.html"><span class="job">Reviewing a <b>handover or operations manual</b></span><span class="to">Continuity Audit &rarr;</span></a>
+  <a href="index.html"><span class="job">Just want a <b>word explained</b></span><span class="to">Ask / glossary &rarr;</span></a>
+ </div>
+ <p style="margin:12px 2px 0;color:var(--dim);font-size:12.5px">Or, if you're an AI agent (or telling one what to do): run these checks from a pipeline on your own output &mdash; see <a href="llms.txt">llms.txt</a>.</p>
+
+ <h2>The ladder &mdash; how much a check is worth</h2>
+
+ <div class="rung r1">
+  <span class="rk">The document against itself <small>Rung 1 &middot; weakest</small></span>
+  <span class="body">The check stays inside one text: does the part that names a risk also name something that handles it? These catch the everyday failure &mdash; a plan with holes &mdash; but they share one blind spot: <b>a careful lie passes.</b> A document that names controls it doesn't really have will still read clean. Cheap, useful, and honestly the weakest rung.</span>
+  <span class="tools">Gap Check &middot; Framework Audit &middot; Priority Tracer &middot; Continuity Audit</span>
+ </div>
+
+ <div class="rung r2">
+  <span class="rk">One thing against a separate thing <small>Rung 2 &middot; stronger</small></span>
+  <span class="body">The check is a second item, made at a different time. Today's server contract against a fingerprint you approved last week. The day you planned against the day you closed &mdash; locked in a chain so neither can be quietly edited after the fact. Now a lie has to fake <b>both</b>, which is much harder &mdash; and if someone tampers, the chain breaks right at the spot they touched.</span>
+  <span class="tools">day-ledger &middot; mcp-manifest-pin</span>
+ </div>
+
+ <div class="rung r3">
+  <span class="rk">Against the physical world <small>Rung 3 &middot; the frontier</small></span>
+  <span class="body">The check comes from outside the software entirely: the power a chip actually drew, or a hardware seal proving what actually ran. This is the rung a lying agent can't beat by writing a tidier log &mdash; <b>as long as the check sits on something the agent can't reach.</b> We've tested the power end and we'll be straight about it: it reliably catches &ldquo;is it working, or just claiming to be,&rdquo; but a single sensor is only as trustworthy as the wire it sits on. The real top of this rung is a check rooted in trusted hardware. <b>We're building toward it &mdash; it isn't done, and we won't pretend it is.</b></span>
+  <span class="tools">Physical footprint <span class="exp">experimental</span></span>
+ </div>
+
+ <h2>Where each tool stands</h2>
+ <table>
+  <tr><th style="width:150px">Tool</th><th style="width:150px">Rung</th><th>What it claims</th><th>What it's checked against</th></tr>
+  <tr><td><b>Gap Check</b></td><td><span class="dot d1"></span>itself</td><td>the risks a document names</td><td>whether that same document names a fix for each</td></tr>
+  <tr><td><b>Framework Audit</b></td><td><span class="dot d1"></span>itself</td><td>a stated goal</td><td>whether the document's own parts have real substance</td></tr>
+  <tr><td><b>Priority Tracer</b></td><td><span class="dot d1"></span>itself</td><td>the priority a trace says it holds</td><td>the order that same trace actually follows</td></tr>
+  <tr><td><b>Continuity Audit</b></td><td><span class="dot d1"></span>itself</td><td>what a handover manual promises</td><td>whether the same manual holds the backups it needs</td></tr>
+  <tr><td><b>day-ledger</b></td><td><span class="dot d2"></span>separate</td><td>the day you planned</td><td>the locked, signed day you closed</td></tr>
+  <tr><td><b>mcp-manifest-pin</b></td><td><span class="dot d2"></span>separate</td><td>the tool contract a server serves today</td><td>the fingerprint you approved earlier</td></tr>
+  <tr><td><b>Physical footprint</b> <span class="exp">exp</span></td><td><span class="dot d3"></span>physical</td><td>a log claiming the machine is idle</td><td>the real power the chip drew</td></tr>
+ </table>
+
+ <div class="note"><b>The rule underneath all of it.</b> We don't check for <i>good</i>; we check for <span class="true">true</span>. &ldquo;Safe&rdquo; is a judgment no meter can read. &ldquo;This machine ran exactly what it said it ran&rdquo; is something you can hold up and check. We only measure the second kind &mdash; and for every tool, we tell you how strong that check really is. That last part is the honest half most of the field leaves out. <b>One more thing, plainly:</b> a check is only as good as how independent it is. Three numbers from the same tool aren't three checks &mdash; they're one check wearing three hats. A real second check comes from a different place that could fail a different way.</div>
+
+ <div class="vlog">
+  <b>This page's own little ledger</b> (it practices what it preaches):
+  <div style="height:6px"></div>
+  <table>
+   <tr><th style="width:90px">Date</th><th>Change</th><th>Reason</th></tr>
+   <tr><td>2026-07-05</td><td>v1: the &ldquo;one engine, many checks&rdquo; explainer &mdash; the ladder, the tool map, the underlying rule.</td><td>To give the whole toolset one plain-English thesis a first-time reader gets on sight, without jargon.</td></tr>
+   <tr><td>(next)</td><td>(update whenever a tool moves rungs or a new check is added)</td><td></td></tr>
+  </table>
+ </div>
+
+</div>
+</body></html>

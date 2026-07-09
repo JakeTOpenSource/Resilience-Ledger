@@ -1,0 +1,1124 @@
+{
+ "primitives": [
+  {
+   "domain": "Zero-Trust Governance Mechanics",
+   "term": "Least-Privilege Access",
+   "def": "Minimizing uncertainty by enforcing accurate, per-request access decisions restricted to the minimum required resources.",
+   "type": "Constraint",
+   "prov": "NIST SP 800-207 Zero Trust Architecture"
+  },
+  {
+   "domain": "Zero-Trust Governance Mechanics",
+   "term": "AI Bill of Materials (AI-BOM)",
+   "def": "Tracking the supply chain lineage from raw datasets to deployed model runtime to pinpoint risk propagation.",
+   "type": "Input",
+   "prov": "NTIA Software Component Procurement Guidelines"
+  },
+  {
+   "domain": "Zero-Trust Governance Mechanics",
+   "term": "Indirect Prompt Injection",
+   "def": "A structural failure where malicious instructions embedded in external data bypass standard firewalls unnoticed.",
+   "type": "Input",
+   "prov": "OWASP Top 10 Framework for LLM Security"
+  },
+  {
+   "domain": "Zero-Trust Governance Mechanics",
+   "term": "Context Manipulation",
+   "def": "An exploit that deliberately corrupts or skews the active data space processed by an AI system.",
+   "type": "Input",
+   "prov": "MITRE ATLAS Framework Matrix"
+  },
+  {
+   "domain": "Zero-Trust Governance Mechanics",
+   "term": "Capability Elicitation",
+   "def": "Tricking an autonomous system into executing functions completely outside its planned scope of governance.",
+   "type": "Accelerator",
+   "prov": "AI Safety Benchmark Specifications"
+  },
+  {
+   "domain": "Zero-Trust Governance Mechanics",
+   "term": "Training Data Exposure",
+   "def": "The unintended leakage or malicious extraction of private data directly from model weights.",
+   "type": "Termination State",
+   "prov": "NIST Trustworthy & Responsible AI Standards"
+  },
+  {
+   "domain": "Zero-Trust Governance Mechanics",
+   "term": "Policy Decision Point (PDP)",
+   "def": "The isolated digital core that evaluates a transaction against active rules to determine compliance.",
+   "type": "Constraint",
+   "prov": "XACML Governance Architecture Specifications"
+  },
+  {
+   "domain": "Zero-Trust Governance Mechanics",
+   "term": "Policy Enforcement Point (PEP)",
+   "def": "The mechanical boundary that executes the block or approval determined by governance rules.",
+   "type": "Constraint",
+   "prov": "RFC 2753 Infrastructure Policy Framework"
+  },
+  {
+   "domain": "Zero-Trust Governance Mechanics",
+   "term": "Continuous Re-Authentication",
+   "def": "Demanding proof of operational permission at every single transaction step, rather than relying on an initial login state.",
+   "type": "Constraint",
+   "prov": "CISA Zero Trust Maturity Model Guidelines"
+  },
+  {
+   "domain": "Zero-Trust Governance Mechanics",
+   "term": "Microsegmentation Isolation",
+   "def": "Dividing a data ecosystem into independent containment zones to prevent a breach in one from bleeding into another.",
+   "type": "Constraint",
+   "prov": "National Security Agency (NSA) Perimeter Guidance"
+  },
+  {
+   "domain": "Open-Source & Model Drift Dynamics",
+   "term": "Model Autophagy Disorder (MAD)",
+   "def": "The structural decay that occurs when models are trained recursively on uncurated synthetic data.",
+   "type": "Feedback Loop",
+   "prov": "Rice / Stanford Academic Research Literature"
+  },
+  {
+   "domain": "Open-Source & Model Drift Dynamics",
+   "term": "Early Model Collapse",
+   "def": "The phase of structural decay where an AI completely loses its grasp on minority or tail data.",
+   "type": "Termination State",
+   "prov": "Oxford / Cambridge Foundational AI Systems Papers"
+  },
+  {
+   "domain": "Open-Source & Model Drift Dynamics",
+   "term": "Late Model Collapse",
+   "def": "The phase where a model completely breaks down, confuses basic concepts, and loses functional variance.",
+   "type": "Termination State",
+   "prov": "UK AI Safety Institute Technical Research Notes"
+  },
+  {
+   "domain": "Open-Source & Model Drift Dynamics",
+   "term": "Functional Approximation Error",
+   "def": "A fundamental breakdown during learning where the model inaccurately maps the true distribution of data.",
+   "type": "Feedback Loop",
+   "prov": "IEEE Transactions on Pattern Analysis & Machine Intelligence"
+  },
+  {
+   "domain": "Open-Source & Model Drift Dynamics",
+   "term": "Weight Accessibility",
+   "def": "The mechanical openness of a model's underlying matrix parameters to external auditing or direct manipulation.",
+   "type": "Input",
+   "prov": "Open-Source AI Definition Core Frameworks"
+  },
+  {
+   "domain": "Open-Source & Model Drift Dynamics",
+   "term": "Forkability Index",
+   "def": "The structural freedom to decouple an open codebase into an independent development track.",
+   "type": "Accelerator",
+   "prov": "GitHub Open Architecture Standards"
+  },
+  {
+   "domain": "Open-Source & Model Drift Dynamics",
+   "term": "Parameter Tampering",
+   "def": "The unauthorized adjustment of structural weights post-deployment, altering system behavior without changing the code.",
+   "type": "Input",
+   "prov": "OWASP LLM08: Excessive Agency Vulnerability Guidelines"
+  },
+  {
+   "domain": "Open-Source & Model Drift Dynamics",
+   "term": "Quantization Fracture",
+   "def": "The exact point where compressing weights to save hardware space strips away critical logic paths.",
+   "type": "Constraint",
+   "prov": "arXiv Hardware Compression & Quantization Research"
+  },
+  {
+   "domain": "Open-Source & Model Drift Dynamics",
+   "term": "Compute Asymmetry",
+   "def": "The design disparity between high-power training environments and restricted local deployment environments.",
+   "type": "Constraint",
+   "prov": "Stanford HAI State of AI Annual Report"
+  },
+  {
+   "domain": "Open-Source & Model Drift Dynamics",
+   "term": "Local Inference Sovereign",
+   "def": "Running operations completely detached from cloud dependencies to maintain absolute local execution control.",
+   "type": "Constraint",
+   "prov": "Sovereign Zero Systems Engineering Manifesto"
+  },
+  {
+   "domain": "Generative Mechanics & Token Topology",
+   "term": "Token Generation Frequency",
+   "def": "The physical rate of output speed at which a model yields discrete character pieces.",
+   "type": "Accelerator",
+   "prov": "MLPerf Hardware Benchmarking Protocols"
+  },
+  {
+   "domain": "Generative Mechanics & Token Topology",
+   "term": "Semantic Entropy",
+   "def": "The statistical randomness of choice in an output stream, flagging when a system is guessing.",
+   "type": "Feedback Loop",
+   "prov": "Journal of Artificial Intelligence Research (JAIR)"
+  },
+  {
+   "domain": "Generative Mechanics & Token Topology",
+   "term": "Stochastic Parrot Effect",
+   "def": "The generation of grammatically perfect text paths based on raw probability instead of functional world models.",
+   "type": "Termination State",
+   "prov": "ACM FAccT Research Literature on Language Models"
+  },
+  {
+   "domain": "Generative Mechanics & Token Topology",
+   "term": "Embedding Space Topology",
+   "def": "The multidimensional coordinate geometry a system uses to calculate structural relationships between distinct terms.",
+   "type": "Input",
+   "prov": "Vector Calculus & Differential Geometry Frameworks"
+  },
+  {
+   "domain": "Generative Mechanics & Token Topology",
+   "term": "Manifold Hypothesis",
+   "def": "The concept that complex data occupies a low-dimensional, highly structured surface area hidden within high-dimensional space.",
+   "type": "Constraint",
+   "prov": "Princeton Mathematical Physics Foundation Guidelines"
+  },
+  {
+   "domain": "Generative Mechanics & Token Topology",
+   "term": "Autoregressive Decay",
+   "def": "The compounding build-up of logical drift that happens when a system feeds its own tokens back into its context window.",
+   "type": "Feedback Loop",
+   "prov": "Cognitive Science Model Drift Theoretical Literature"
+  },
+  {
+   "domain": "Generative Mechanics & Token Topology",
+   "term": "Context Window Saturation",
+   "def": "The physical memory floor where old structural data is dropped to accommodate incoming tokens.",
+   "type": "Termination State",
+   "prov": "DeepMind Core Architecture Specifications"
+  },
+  {
+   "domain": "Generative Mechanics & Token Topology",
+   "term": "Attention Weight Distribution",
+   "def": "The specific mathematical focus assigned to different elements of a text sequence during inference.",
+   "type": "Constraint",
+   "prov": "Transformer Architecture Core Technical Specification"
+  },
+  {
+   "domain": "Generative Mechanics & Token Topology",
+   "term": "Prompt Elicitation Boundary",
+   "def": "The structural syntax limit that reveals hidden behaviors or overrides programmed system constraints.",
+   "type": "Constraint",
+   "prov": "Anthropic Alignment Research Communications"
+  },
+  {
+   "domain": "Generative Mechanics & Token Topology",
+   "term": "Log-Probability Variance",
+   "def": "The metric that measures how much an engine's confidence oscillates between competing logical outputs.",
+   "type": "Feedback Loop",
+   "prov": "Statistical Machine Learning Evaluation Standards"
+  },
+  {
+   "domain": "Recursive Loops & Feedback Dynamics",
+   "term": "Gated Distributional Reweighting",
+   "def": "Using an external quality control layer to filter and adjust data distributions before recursive self-training.",
+   "type": "Constraint",
+   "prov": "MIT Laboratory for Information and Decision Systems"
+  },
+  {
+   "domain": "Recursive Loops & Feedback Dynamics",
+   "term": "Self-Confirming Acceptance Condition",
+   "def": "A breakdown where an AI auditing its own outputs degenerates into a blind, unverified execution loop.",
+   "type": "Feedback Loop",
+   "prov": "AI Governance Board Systemic Risk Audits"
+  },
+  {
+   "domain": "Recursive Loops & Feedback Dynamics",
+   "term": "Spectral Covariance Concentration",
+   "def": "The extreme narrowing of representation-level diversity caused by continuous self-training loops.",
+   "type": "Termination State",
+   "prov": "Journal of Machine Learning Research (JMLR)"
+  },
+  {
+   "domain": "Recursive Loops & Feedback Dynamics",
+   "term": "Fixed-Point Iteration",
+   "def": "Pumping an engine's output directly back as input until the result stabilizes and stops changing.",
+   "type": "Feedback Loop",
+   "prov": "Applied Mathematics & Numerical Analysis Textbooks"
+  },
+  {
+   "domain": "Recursive Loops & Feedback Dynamics",
+   "term": "Self-Referential Collapse",
+   "def": "The functional invalidation that occurs when a validation layer relies on its own logic to evaluate its own health.",
+   "type": "Termination State",
+   "prov": "Gödelian Foundational Logic Model Invariants"
+  },
+  {
+   "domain": "Recursive Loops & Feedback Dynamics",
+   "term": "Loop Amplification",
+   "def": "The geometric scaling of minor tracking errors as they repeatedly clear the same logical circuit.",
+   "type": "Accelerator",
+   "prov": "Systems Dynamics & Feedback Control Engineering"
+  },
+  {
+   "domain": "Recursive Loops & Feedback Dynamics",
+   "term": "Infinite Regress Constraint",
+   "def": "A hard stop engineered into a workflow to kill a self-calling process before memory resource depletion.",
+   "type": "Constraint",
+   "prov": "POSIX Runtime Execution Limit Specifications"
+  },
+  {
+   "domain": "Recursive Loops & Feedback Dynamics",
+   "term": "State-Delta Feedback",
+   "def": "Adjusting a recursive loop based on the measurable physical changes recorded in local environment logs.",
+   "type": "Feedback Loop",
+   "prov": "Delta Atlas Ground Ledger Product Blueprint"
+  },
+  {
+   "domain": "Recursive Loops & Feedback Dynamics",
+   "term": "Convergence Threshold",
+   "def": "The pre-set mathematical line where an iterative process is deemed structurally close enough to stop.",
+   "type": "Termination State",
+   "prov": "Optimization Theory & Convex Numerical Optimization"
+  },
+  {
+   "domain": "Recursive Loops & Feedback Dynamics",
+   "term": "Tail-Distribution Erasure",
+   "def": "The systematic scrubbing of rare or unique edge cases caused by running models in an unmanaged loop.",
+   "type": "Termination State",
+   "prov": "Data Sampling Bias Minimization Frameworks"
+  },
+  {
+   "domain": "Game-Theoretic Optimization & Multi-Agent Math",
+   "term": "Nash Equilibrium Constraint",
+   "def": "A stable system configuration where no single autonomous agent can gain an advantage by shifting strategy alone.",
+   "type": "Constraint",
+   "prov": "Von Neumann-Morgenstern Economic Game Theory"
+  },
+  {
+   "domain": "Game-Theoretic Optimization & Multi-Agent Math",
+   "term": "Pareto Efficiency Line",
+   "def": "An optimization state where no node's performance can be improved without directly hurting another node.",
+   "type": "Constraint",
+   "prov": "Welfare Economics Optimization & Analysis Metrics"
+  },
+  {
+   "domain": "Game-Theoretic Optimization & Multi-Agent Math",
+   "term": "Zero-Sum Boundary",
+   "def": "A hard allocation constraint where one component's operational gain requires an identical operational loss elsewhere.",
+   "type": "Constraint",
+   "prov": "Linear Programming Resource Allocation Proofs"
+  },
+  {
+   "domain": "Game-Theoretic Optimization & Multi-Agent Math",
+   "term": "Dynamic Programming State",
+   "def": "Resolving a vast structural problem by cleanly slicing it into overlapping, time-bound sub-problems.",
+   "type": "Input",
+   "prov": "Bellman Equation Optimization Specifications"
+  },
+  {
+   "domain": "Game-Theoretic Optimization & Multi-Agent Math",
+   "term": "Utility Function Vector",
+   "def": "The hardcoded numerical directive that outlines exactly what an optimization engine is designed to maximize.",
+   "type": "Input",
+   "prov": "Decision Theory Operational Research Frameworks"
+  },
+  {
+   "domain": "Game-Theoretic Optimization & Multi-Agent Math",
+   "term": "Payoff Matrix Mapping",
+   "def": "A deterministic relational matrix tracking system rewards based on combinations of simultaneous agent actions.",
+   "type": "Constraint",
+   "prov": "Algorithmic Game Theory Foundational Protocol Guides"
+  },
+  {
+   "domain": "Game-Theoretic Optimization & Multi-Agent Math",
+   "term": "Adversarial Perturbation",
+   "def": "A minute, calculated input shift designed to trigger maximum optimization failure.",
+   "type": "Input",
+   "prov": "Robust Optimization & Robust Control Systems Guides"
+  },
+  {
+   "domain": "Game-Theoretic Optimization & Multi-Agent Math",
+   "term": "Multi-Agent Coordination Gap",
+   "def": "A latency failure where independent nodes cannot synchronize their local states fast enough to solve shared problems.",
+   "type": "Feedback Loop",
+   "prov": "Distributed Computing Systems Consensus Invariants"
+  },
+  {
+   "domain": "Game-Theoretic Optimization & Multi-Agent Math",
+   "term": "Bounded Rationality Limit",
+   "def": "The absolute processing constraint imposed by real-time hardware limitations and clock cycles.",
+   "type": "Constraint",
+   "prov": "Simon's Behavioral Systems Operational Analysis"
+  },
+  {
+   "domain": "Game-Theoretic Optimization & Multi-Agent Math",
+   "term": "Aggregative Game Stability",
+   "def": "The resilience measurement of a multi-agent system when individual nodes deviate from expected equilibrium paths.",
+   "type": "Constraint",
+   "prov": "Operational Operations Research Framework Standards"
+  },
+  {
+   "domain": "Fluid Dynamics & Bio-Kinetic Constraints",
+   "term": "Viscous Friction",
+   "def": "The internal material drag that actively resists or slows information velocity through a channel.",
+   "type": "Constraint",
+   "prov": "Navier-Stokes Transport & Viscosity Standards"
+  },
+  {
+   "domain": "Fluid Dynamics & Bio-Kinetic Constraints",
+   "term": "Laminar Flow Alignment",
+   "def": "Clean, parallel system paths where variables move in complete alignment without crossing or causing turbulence.",
+   "type": "Accelerator",
+   "prov": "Classical Fluid Mechanics Pipe Design Specs"
+  },
+  {
+   "domain": "Fluid Dynamics & Bio-Kinetic Constraints",
+   "term": "Turbulent Breakdown",
+   "def": "The chaotic structural point where predictable, linear flows shatter into unmanageable eddies.",
+   "type": "Termination State",
+   "prov": "Reynolds Number Transition Boundary Protocols"
+  },
+  {
+   "domain": "Fluid Dynamics & Bio-Kinetic Constraints",
+   "term": "Vascular Pressure Gradient",
+   "def": "The structural force that drives a flow from high-concentration nodes to low-concentration nodes.",
+   "type": "Accelerator",
+   "prov": "Biomechanical Hemodynamic & Flow Transport Standards"
+  },
+  {
+   "domain": "Fluid Dynamics & Bio-Kinetic Constraints",
+   "term": "Shear Stress Threshold",
+   "def": "The lateral friction force applied to a boundary, defining when a material partition will tear.",
+   "type": "Constraint",
+   "prov": "Continuum Mechanics Structural Strength Criteria"
+  },
+  {
+   "domain": "Fluid Dynamics & Bio-Kinetic Constraints",
+   "term": "Homeostatic Regulator",
+   "def": "A dynamic feedback mechanism designed to defend internal equilibrium regardless of external input spikes.",
+   "type": "Feedback Loop",
+   "prov": "Physiological Control Systems Structural Taxonomy"
+  },
+  {
+   "domain": "Fluid Dynamics & Bio-Kinetic Constraints",
+   "term": "Resonant Frequency Sync",
+   "def": "The specific oscillation value where an entire structure absorbs energy and vibrates at peak intensity.",
+   "type": "Accelerator",
+   "prov": "Mechanical Vibration & Resonance Wave Physics"
+  },
+  {
+   "domain": "Fluid Dynamics & Bio-Kinetic Constraints",
+   "term": "Haptic Dissipation",
+   "def": "The structural dampening or decay of physical vibratory feedback across a medium.",
+   "type": "Constraint",
+   "prov": "Viscoelastic Material Attenuation Metrics"
+  },
+  {
+   "domain": "Fluid Dynamics & Bio-Kinetic Constraints",
+   "term": "Osmotic Boundary",
+   "def": "A highly selective filter allowing designated data parameters through while stopping others entirely.",
+   "type": "Constraint",
+   "prov": "Biological Membrane Selectivity & Transport Principles"
+  },
+  {
+   "domain": "Fluid Dynamics & Bio-Kinetic Constraints",
+   "term": "Kinetic Resistance Factor",
+   "def": "The baseline friction force opposing any physical or biological movement within an operational rig.",
+   "type": "Constraint",
+   "prov": "Newtonian Tribology Engineering Invariants"
+  },
+  {
+   "domain": "Structural Ontology Primitives",
+   "term": "Object Type Schema",
+   "def": "The structural definition and master blueprint of real-world entities or events.",
+   "type": "Input",
+   "prov": "Palantir Foundry Object Architecture Documentation"
+  },
+  {
+   "domain": "Structural Ontology Primitives",
+   "term": "Link Type Relationship",
+   "def": "The hardcoded, schema-level relationship mapped between two independent object definitions.",
+   "type": "Input",
+   "prov": "Palantir Enterprise Ontology Core Blueprints"
+  },
+  {
+   "domain": "Structural Ontology Primitives",
+   "term": "Action Type Transaction",
+   "def": "A highly governed edit that alters objects, properties, and links across an enterprise in a single execution.",
+   "type": "Accelerator",
+   "prov": "Foundry Core Transaction Orchestration Guides"
+  },
+  {
+   "domain": "Structural Ontology Primitives",
+   "term": "Polymorphic Interface",
+   "def": "A shared structure that provides common capabilities across distinct object types sharing basic traits.",
+   "type": "Input",
+   "prov": "Object-Oriented Schema Management Standards"
+  },
+  {
+   "domain": "Structural Ontology Primitives",
+   "term": "Ontology Metadata Service (OMS)",
+   "def": "The foundational system layer that acts as the absolute source of truth for the entire structural schema.",
+   "type": "Constraint",
+   "prov": "Master Data Management Systemic Guidelines"
+  },
+  {
+   "domain": "Structural Ontology Primitives",
+   "term": "Object Set Service (OSS)",
+   "def": "The high-speed infrastructure block tasked with executing searches, filters, and reads across data objects.",
+   "type": "Input",
+   "prov": "Distributed Object Indexing Specification Formats"
+  },
+  {
+   "domain": "Structural Ontology Primitives",
+   "term": "Data Funnel Orchestrator",
+   "def": "The ingestion layer that syncs backing datasets to indexed objects, keeping real-time values current.",
+   "type": "Input",
+   "prov": "Real-Time Enterprise Pipeline Synchronization Manuals"
+  },
+  {
+   "domain": "Structural Ontology Primitives",
+   "term": "Object View Widget",
+   "def": "The modular UI component used to display prominent properties or nested links directly to an active operator.",
+   "type": "Input",
+   "prov": "Enterprise Core Application Interface Blueprints"
+  },
+  {
+   "domain": "Structural Ontology Primitives",
+   "term": "Property-Level Visibility Control",
+   "def": "A security protocol gating access to specific object attributes based on user credentials.",
+   "type": "Constraint",
+   "prov": "Attribute-Based Access Control (ABAC) Standards"
+  },
+  {
+   "domain": "Structural Ontology Primitives",
+   "term": "Operational Graph Serialization",
+   "def": "Capturing a live web of business entities and active dependencies into a fixed, verifiable ledger.",
+   "type": "Termination State",
+   "prov": "Immutable State-Graph Ledger Architectures"
+  },
+  {
+   "domain": "Enterprise Cyber & Network Defense",
+   "term": "Identity & Access Management (IAM)",
+   "def": "The structural frame gating user identities, tracking permissions, and forcing operational authentication boundaries.",
+   "type": "Constraint",
+   "prov": "NIST SP 800-63 Digital Identity Guidelines"
+  },
+  {
+   "domain": "Enterprise Cyber & Network Defense",
+   "term": "Public Key Infrastructure (PKI)",
+   "def": "The framework of asymmetric keys, digital certificates, and certificate authorities used to bind digital identities to verifiable entities.",
+   "type": "Input",
+   "prov": "IETF RFC 5280 X.509 Cryptographic Specifications"
+  },
+  {
+   "domain": "Enterprise Cyber & Network Defense",
+   "term": "SIEM Log Aggregation",
+   "def": "The continuous real-time pooling of discrete system events to detect hidden correlation patterns and security breaches.",
+   "type": "Input",
+   "prov": "MITRE Cyber Analytics Repository Infrastructure"
+  },
+  {
+   "domain": "Enterprise Cyber & Network Defense",
+   "term": "Zero-Day Vulnerability",
+   "def": "An unpatched, unexposed flaw in a code structure or system architecture actively exposed to immediate exploitation.",
+   "type": "Input",
+   "prov": "FIRST Common Vulnerability Scoring System (CVSS) Guides"
+  },
+  {
+   "domain": "Enterprise Cyber Network Defense",
+   "term": "Boundary Defense Firewall",
+   "def": "A network traffic filter regulating inbound and outbound packets based on predefined state-matching criteria.",
+   "type": "Constraint",
+   "prov": "PCI DSS Network Security Demarcation Controls"
+  },
+  {
+   "domain": "Enterprise Cyber Network Defense",
+   "term": "Man-in-the-Middle (MitM) Interception",
+   "def": "The strategic breach where an unauthorized node positions itself between two verified endpoints to sniff or corrupt information.",
+   "type": "Accelerator",
+   "prov": "OWASP Application Threat Modeling Frameworks"
+  },
+  {
+   "domain": "Enterprise Cyber Network Defense",
+   "term": "Privilege Escalation Pathway",
+   "def": "An execution path exploit that elevates low-level system access rights to administrative or root-level authority.",
+   "type": "Accelerator",
+   "prov": "MITRE ATT&CK Matrix Structural Technique T1068"
+  },
+  {
+   "domain": "Enterprise Cyber Network Defense",
+   "term": "Air-Gapped Isolation",
+   "def": "The absolute physical separation of a computer system or network from any unsecured external networks.",
+   "type": "Constraint",
+   "prov": "DoD Secure Environment Infrastructure Manuals"
+  },
+  {
+   "domain": "Enterprise Cyber Network Defense",
+   "term": "Endpoint Detection & Response (EDR)",
+   "def": "Continuous monitoring and analysis of local endpoint activity to automatically isolate and neutralize anomalies.",
+   "type": "Feedback Loop",
+   "prov": "CISA Joint Cyber Defense Infrastructure Operational Briefs"
+  },
+  {
+   "domain": "Enterprise Cyber Network Defense",
+   "term": "Threat Vector Surface Area",
+   "def": "The absolute geometric sum of all points where an unauthorized operator can attempt to inject data or execute commands.",
+   "type": "Input",
+   "prov": "NIST SP 800-30 Structural Risk Assessment Standards"
+  },
+  {
+   "domain": "AI Vulnerability Frameworks (NIST/OWASP)",
+   "term": "Training Data Poisoning",
+   "def": "The structural corruption of base datasets before or during training to plant backdoor triggers into model behaviors.",
+   "type": "Input",
+   "prov": "OWASP LLM03 / NIST AI 100-2E Systems Framework"
+  },
+  {
+   "domain": "AI Vulnerability Frameworks (NIST/OWASP)",
+   "term": "Model Inversion Attack",
+   "def": "The algorithmic reverse-engineering of model weights to extract or reconstruct individual sensitive training records.",
+   "type": "Termination State",
+   "prov": "IEEE Security & Privacy Quantitative Cryptanalytic Literature"
+  },
+  {
+   "domain": "AI Vulnerability Frameworks (NIST/OWASP)",
+   "term": "Membership Inference",
+   "def": "An analytical exploit verifying whether a specific data record was part of a model's private training dataset.",
+   "type": "Termination State",
+   "prov": "ACM Conference on Computer and Communications Security (CCS)"
+  },
+  {
+   "domain": "AI Vulnerability Frameworks (NIST/OWASP)",
+   "term": "Adversarial Example Injection",
+   "def": "Modifying an input data string with sub-perceptual mutations designed to force an image or language system into severe classification errors.",
+   "type": "Input",
+   "prov": "arXiv Adversarial Rigidity & Robustness Standards"
+  },
+  {
+   "domain": "AI Vulnerability Frameworks (NIST/OWASP)",
+   "term": "Data Lineage Tracking",
+   "def": "The immutable step-by-step mapping of data origins, processing transformations, and target destinations within an analytical stack.",
+   "type": "Constraint",
+   "prov": "ISO/IEC 38505 Governance of Data Architecture"
+  },
+  {
+   "domain": "AI Vulnerability Frameworks (NIST/OWASP)",
+   "term": "Model Sanitization Boundary",
+   "def": "The rigorous technical partition separating dirty data inputs from safe, pruned parameters entering inference loops.",
+   "type": "Constraint",
+   "prov": "NIST Core Trustworthy & Responsible AI Guidelines"
+  },
+  {
+   "domain": "AI Vulnerability Frameworks (NIST/OWASP)",
+   "term": "Output Guardrail Filtering",
+   "def": "Real-time automated inspection layers that scan, redact, or block outbound model tokens before they execute in terminal UI space.",
+   "type": "Constraint",
+   "prov": "OWASP LLM07: Data Leakage Prevention Controls"
+  },
+  {
+   "domain": "AI Vulnerability Frameworks (NIST/OWASP)",
+   "term": "Supply Chain Dependency Vulnerability",
+   "def": "A security flaw hidden inside third-party modular libraries, open-source models, or nested software packages.",
+   "type": "Input",
+   "prov": "Executive Order 14028 Software Supply Chain Safety Mandates"
+  },
+  {
+   "domain": "AI Vulnerability Frameworks (NIST/OWASP)",
+   "term": "Model Staging Sandboxing",
+   "def": "Isolating experimental model runtimes within restricted, zero-privilege compute containers to avoid system compromise during testing.",
+   "type": "Constraint",
+   "prov": "Cloud Native Computing Foundation (CNCF) Security Guides"
+  },
+  {
+   "domain": "AI Vulnerability Frameworks (NIST/OWASP)",
+   "term": "Automated Red-Teaming",
+   "def": "The deployment of autonomous testing loops tasked with continuously identifying edge failures, vulnerabilities, and alignment drift.",
+   "type": "Feedback Loop",
+   "prov": "AI Safety Open Research Simulation Protocols"
+  },
+  {
+   "domain": "Operational Resilience & Circuit Governance",
+   "term": "Recovery Time Objective (RTO)",
+   "def": "The absolute maximum duration of allowable downtime before system restoration must clear to prevent catastrophic business failure.",
+   "type": "Constraint",
+   "prov": "ISO/IEC 27031 Business Continuity Systems Security"
+  },
+  {
+   "domain": "Operational Resilience & Circuit Governance",
+   "term": "Recovery Point Objective (RPO)",
+   "def": "The maximum allowable age of transactional records lost during an outage, defining baseline data sync intervals.",
+   "type": "Constraint",
+   "prov": "DRI International Professional Systems Standards"
+  },
+  {
+   "domain": "Operational Resilience & Circuit Governance",
+   "term": "Automated Circuit Breaker",
+   "def": "An infrastructure interrupt switch that forcibly halts all active transaction traffic when anomaly frequencies exceed a predefined floor.",
+   "type": "Termination State",
+   "prov": "Netflix Chaos Engineering Runtime Invariants"
+  },
+  {
+   "domain": "Operational Resilience & Circuit Governance",
+   "term": "Fail-Secure Default State",
+   "def": "The programmed fallback condition that cuts off all access and actions immediately upon system power loss or logic fracture.",
+   "type": "Termination State",
+   "prov": "NFPA / UL Integrated Control System Safety Frameworks"
+  },
+  {
+   "domain": "Operational Resilience & Circuit Governance",
+   "term": "Byzantine Fault Tolerance",
+   "def": "The resilience depth of a decentralized consensus structure to function reliably even when arbitrary nodes lie or fail.",
+   "type": "Constraint",
+   "prov": "Lamport-Shostak-Pease Distributed Consensus Core"
+  },
+  {
+   "domain": "Operational Resilience & Circuit Governance",
+   "term": "Cascading System Collapse",
+   "def": "The unmitigated sequential failure of nested dependencies where one local node failure triggers the immediate breakdown of all linked nodes.",
+   "type": "Termination State",
+   "prov": "IEEE Systems Journal Infrastructure Resilience Benchmarks"
+  },
+  {
+   "domain": "Operational Resilience & Circuit Governance",
+   "term": "Split-Brain Configuration",
+   "def": "A state error where redundant cluster nodes decouple, lose connection, and simultaneously assume local primary control, causing data divergence.",
+   "type": "Termination State",
+   "prov": "High-Availability Distributed Cluster Architecture Manuals"
+  },
+  {
+   "domain": "Operational Resilience & Circuit Governance",
+   "term": "Telemetry Drift Signaling",
+   "def": "The early-warning detection of progressive delta variance across system performance logs, flagging silent degradation.",
+   "type": "Feedback Loop",
+   "prov": "Prometheus / Grafana Automated Alerting Invariants"
+  },
+  {
+   "domain": "Operational Resilience & Circuit Governance",
+   "term": "Immutable Audit Trail",
+   "def": "An unalterable, chronological ledger record proving every state modification, asset change, and user request.",
+   "type": "Constraint",
+   "prov": "AICPA SOC 2 Type II Structural Compliance Standards"
+  },
+  {
+   "domain": "Operational Resilience & Circuit Governance",
+   "term": "Hot-Standby Redundancy",
+   "def": "A duplicate, fully live backup infrastructure environment running parallel to primary systems for immediate failover switching.",
+   "type": "Constraint",
+   "prov": "Disaster Recovery Institute High-Availability Blueprints"
+  },
+  {
+   "domain": "Cryptographic Integrity & Primitives",
+   "term": "Homomorphic Encryption",
+   "def": "A cryptographic method enabling high-performance processing and computation directly on encrypted data states without decryption keys.",
+   "type": "Constraint",
+   "prov": "ISO/IEC 18033 Standard Encryption Algorithms"
+  },
+  {
+   "domain": "Cryptographic Integrity & Primitives",
+   "term": "Perfect Forward Secrecy (PFS)",
+   "def": "A security design generating unique, ephemeral session keys for every communication transaction, preventing historical mass decryption if master keys leak.",
+   "type": "Constraint",
+   "prov": "IETF RFC 5246 TLS 1.2/1.3 Functional Specs"
+  },
+  {
+   "domain": "Cryptographic Integrity & Primitives",
+   "term": "Merkle Tree Root Verification",
+   "def": "The cryptographic verification of vast hierarchical datasets by validating a single top-level structural hash.",
+   "type": "Input",
+   "prov": "NIST FIPS 180-4 Secure Hash Core Standards"
+  },
+  {
+   "domain": "Cryptographic Integrity & Primitives",
+   "term": "Cryptographic Salt",
+   "def": "Random character strings appended to data primitives before hashing to secure outputs against brute-force rainbow table calculations.",
+   "type": "Input",
+   "prov": "OWASP Security Password Storage Guidelines"
+  },
+  {
+   "domain": "Cryptographic Integrity & Primitives",
+   "term": "Zero-Knowledge Proof (ZKP)",
+   "def": "A cryptographic protocol enabling one node to mathematically prove a statement is true to another node without revealing the underlying data.",
+   "type": "Constraint",
+   "prov": "IETF Cryptographic Ledger Verification Blueprints"
+  },
+  {
+   "domain": "Cryptographic Integrity & Primitives",
+   "term": "Quantum-Resistant Cryptography",
+   "def": "Cryptographic algorithms explicitly engineered to remain secure against standard and quantum-computing cracking capabilities.",
+   "type": "Constraint",
+   "prov": "NIST Post-Quantum Cryptography Standardization Suite"
+  },
+  {
+   "domain": "Cryptographic Integrity & Primitives",
+   "term": "Entropy Pool Depletion",
+   "def": "The complete loss of high-quality randomness in an operating system kernel, rendering newly generated encryption keys highly predictable.",
+   "type": "Termination State",
+   "prov": "FIPS 140-3 Cryptographic Engineering Performance Core"
+  },
+  {
+   "domain": "Cryptographic Integrity & Primitives",
+   "term": "Side-Channel Leakage",
+   "def": "The unintended broadcast of physical information (power spikes, acoustic fluctuations, processing latency) revealing internal crypto execution data.",
+   "type": "Input",
+   "prov": "CHES Conference Cryptanalytic Research Matrices"
+  },
+  {
+   "domain": "Cryptographic Integrity & Primitives",
+   "term": "Key Derivation Function (KDF)",
+   "def": "A mathematical routine that takes base master data and transforms it into strong, fixed-length cryptographic secret keys.",
+   "type": "Constraint",
+   "prov": "NIST SP 800-108 Key Derivation Technical Specifications"
+  },
+  {
+   "domain": "Cryptographic Integrity & Primitives",
+   "term": "Transport Layer Security (TLS)",
+   "def": "The cryptographic protocol designed to provide secure, tamper-proof communications over an untrusted network infrastructure.",
+   "type": "Constraint",
+   "prov": "IETF RFC 8446 TLS 1.3 Architecture Core"
+  },
+  {
+   "domain": "Quantitative Finance & Market Risk",
+   "term": "Arbitrage Corridor Constraint",
+   "def": "The strict statistical boundaries within which price discrepancies between linked assets are crushed by automated execution engines before becoming profitable.",
+   "type": "Constraint",
+   "prov": "Bank for International Settlements (BIS) / Chicago Mercantile Exchange (CME) Market Surveillance Frameworks."
+  },
+  {
+   "domain": "Quantitative Finance & Market Risk",
+   "term": "Liquidity Cascade Accelerator",
+   "def": "A self-reinforcing market failure where hitting stop-loss thresholds forces systemic asset selloffs, draining cash reserves and driving exponential price drops.",
+   "type": "Accelerator",
+   "prov": "Financial Stability Board (FSB) Macroprudential Risk Taxonomy."
+  },
+  {
+   "domain": "Quantitative Finance & Market Risk",
+   "term": "Margin Call Liquidation Floor",
+   "def": "The minimum net-capital limit triggering mandatory automated asset liquidation when local portfolios fall below required margin thresholds.",
+   "type": "Termination State",
+   "prov": "SEC Rule 431 / FINRA Maintenance Margin Standards."
+  },
+  {
+   "domain": "Quantitative Finance & Market Risk",
+   "term": "Delta-Hedging Rebalancing Loop",
+   "def": "An automated options-position management routine that recursively buys or sells underlying assets to maintain target directional exposures as asset prices drift.",
+   "type": "Feedback Loop",
+   "prov": "Black-Scholes-Merton Dynamic Replication Mechanics."
+  },
+  {
+   "domain": "Quantitative Finance & Market Risk",
+   "term": "Systemic Solvency Threshold",
+   "def": "The macro-prudential capital baseline determining whether an independent financial institution carries sufficient unencumbered assets to meet immediate liability demands.",
+   "type": "Constraint",
+   "prov": "Basel III Framework (Liquidity Coverage Ratio / Net Stable Funding Ratio)."
+  },
+  {
+   "domain": "Quantitative Finance & Market Risk",
+   "term": "Counterparty Settlement Bound",
+   "def": "The hard time-window and margin protocol gating asset transfer execution between two clearing clearing entities to minimize settlement default risk.",
+   "type": "Constraint",
+   "prov": "Committee on Payments and Market Infrastructures (CPMI) Real-Time Gross Settlement (RTGS) Standards."
+  },
+  {
+   "domain": "Quantitative Finance & Market Risk",
+   "term": "Flash-Crash Deflationary Drift",
+   "def": "The instantaneous evaporation of competitive bidding tokens across automated order books, triggering severe pricing breaks without clear fundamental causes.",
+   "type": "Termination State",
+   "prov": "CFTC / SEC Joint Market Anomaly Investigations."
+  },
+  {
+   "domain": "Quantitative Finance & Market Risk",
+   "term": "Capital Adequacy Ratio Baseline",
+   "def": "The regulatory financial structural constraint tracking the core equity buffers of banking entities relative to risk-weighted assets.",
+   "type": "Constraint",
+   "prov": "Federal Reserve Regulation Q / Basel Committee Banking Supervision."
+  },
+  {
+   "domain": "Crypto-Economics & Tokenized State Mechanics",
+   "term": "State Trie Root Validation",
+   "def": "The cryptographic validation of the absolute global status of a distributed ledger by verifying a top-level hierarchical state root.",
+   "type": "Input",
+   "prov": "Ethereum Yellow Paper (Merkle-Patricia Trie Specifications)."
+  },
+  {
+   "domain": "Crypto-Economics & Tokenized State Mechanics",
+   "term": "Oracular Drift Discrepancy",
+   "def": "The logical gap that emerges when external data feeds providing real-world state parameters fall out of sync with native on-chain execution tracks.",
+   "type": "Feedback Loop",
+   "prov": "Decentralized Oracle Network (DON) Consensus Architecture Papers."
+  },
+  {
+   "domain": "Crypto-Economics & Tokenized State Mechanics",
+   "term": "Gas Limit Throughput Boundary",
+   "def": "The absolute block-space resource budget preventing infinite looping or resource exhaustion during execution phases on a shared state engine.",
+   "type": "Constraint",
+   "prov": "EVM (Ethereum Virtual Machine) Execution Specs."
+  },
+  {
+   "domain": "Crypto-Economics & Tokenized State Mechanics",
+   "term": "Slashing Protocol Termination",
+   "def": "The irreversible automated confiscation of native staked capital triggered when validator nodes publish conflicting blocks or sign illegitimate state paths.",
+   "type": "Termination State",
+   "prov": "Proof-of-Stake Consensus Security Specifications (Casper / Tendermint)."
+  },
+  {
+   "domain": "Crypto-Economics & Tokenized State Mechanics",
+   "term": "MEV Slippage Manipulation",
+   "def": "The structural exploit where block-building nodes reorder, frontrun, or backrun transaction payloads to extract arbitrage premiums from pending executions.",
+   "type": "Accelerator",
+   "prov": "Flashbots Research / Miner-Extractable Value Open Taxonomy."
+  },
+  {
+   "domain": "Crypto-Economics & Tokenized State Mechanics",
+   "term": "Layer-2 Batch Commitment",
+   "def": "The structural compression and batching of local off-chain state updates pushed to an underlying base layer ledger for final security settlement.",
+   "type": "Input",
+   "prov": "Optimistic / Zero-Knowledge Rollup Architecture Blueprints."
+  },
+  {
+   "domain": "Crypto-Economics & Tokenized State Mechanics",
+   "term": "Consensus Fork Divergence",
+   "def": "The permanent structural splitting of a single state ledger into two mutually incompatible tracking chains due to unresolvable rule changes.",
+   "type": "Termination State",
+   "prov": "Bitcoin Core / Distributed Ledger Network Partition Metrics."
+  },
+  {
+   "domain": "Crypto-Economics & Tokenized State Mechanics",
+   "term": "Automated Liquidation Engine",
+   "def": "A zero-malice smart contract routine that instantly terminates leveraged positions and claims collateral the moment security ratios cross predefined limits.",
+   "type": "Termination State",
+   "prov": "MakerDAO / Aave Protocol Risk Management Specifications."
+  },
+  {
+   "domain": "Real Estate & Asset Substructure Logistics",
+   "term": "Friction-Pile Shear Degradation",
+   "def": "The structural weakening of skin-friction forces holding non-anchored foundation piles inside marine clay or shifting soil strata.",
+   "type": "Input",
+   "prov": "ASCE (American Society of Civil Engineers) Deep Foundation Design Standards."
+  },
+  {
+   "domain": "Real Estate & Asset Substructure Logistics",
+   "term": "Soil-Structure Settlement Coefficient",
+   "def": "The mathematical calculation tracking structural subsidence rates relative to changing weight shifts and soil compression histories.",
+   "type": "Input",
+   "prov": "International Building Code (IBC) Chapter 18 (Soils and Foundations)."
+  },
+  {
+   "domain": "Real Estate & Asset Substructure Logistics",
+   "term": "Load-Bearing Subsidence Cap",
+   "def": "The maximum allowable physical descent depth of an asset foundation before triggering building condemnation parameters.",
+   "type": "Constraint",
+   "prov": "ASTM International Structural Integrity & Geotechnical Testing Guides."
+  },
+  {
+   "domain": "Real Estate & Asset Substructure Logistics",
+   "term": "Capital Expenditure Depreciation",
+   "def": "The structured decay tracking physical asset wear and tear over operational lifecycles, measuring cash reserve replacement requirements.",
+   "type": "Constraint",
+   "prov": "GAAP / Corporate Real Estate Asset Lifecycle Accounting."
+  },
+  {
+   "domain": "Real Estate & Asset Substructure Logistics",
+   "term": "Asset Revaluation Variance",
+   "def": "The structural margin of error emerging when theoretical model assessments fail to align with hard, transaction-cleared market prices.",
+   "type": "Feedback Loop",
+   "prov": "RICS (Royal Institution of Chartered Surveyors) Valuation Standards."
+  },
+  {
+   "domain": "Real Estate & Asset Substructure Logistics",
+   "term": "Encroachment Boundary Constraint",
+   "def": "The legal and physical zoning partition tracking whether structural footprints or utility lines infringe upon external real property boundaries.",
+   "type": "Constraint",
+   "prov": "ALTA/NSPS Land Title Survey Standards."
+  },
+  {
+   "domain": "Real Estate & Asset Substructure Logistics",
+   "term": "Vacancy Rate Friction Factor",
+   "def": "The systemic friction coefficient measuring the non-earning period between tenancy states, dampening projected cash flow velocities.",
+   "type": "Input",
+   "prov": "BOMA (Building Owners and Managers Association) Operations Metrics."
+  },
+  {
+   "domain": "Real Estate & Asset Substructure Logistics",
+   "term": "Subsurface Geological Anomaly",
+   "def": "Unmapped underground structural formations, silt pockets, or water pockets that alter projected architectural bearing capacities post-construction.",
+   "type": "Input",
+   "prov": "USACE (U.S. Army Corps of Engineers) Geotechnical Site Characterization Manuals."
+  },
+  {
+   "domain": "Commodities & Volumetric Flow Optimization",
+   "term": "Spot-Futures Convergence Arbitrage",
+   "def": "The natural alignment mechanism where localized physical asset market values merge cleanly with financial delivery contracts at expiration dates.",
+   "type": "Feedback Loop",
+   "prov": "CFTC Commodity Exchange Act Regulatory Guidelines."
+  },
+  {
+   "domain": "Commodities & Volumetric Flow Optimization",
+   "term": "Supply Chain Velocity Bottleneck",
+   "def": "The exact transit link or throughput node where physical resource distribution flows collapse due to resource or capacity saturation.",
+   "type": "Constraint",
+   "prov": "APICS / Association for Supply Chain Management Frameworks."
+  },
+  {
+   "domain": "Commodities & Volumetric Flow Optimization",
+   "term": "Contango/Backwardation Structural Shift",
+   "def": "The macro-market inversion tracking whether forward asset deliveries carry a price premium or a discount relative to immediate spot availability.",
+   "type": "Input",
+   "prov": "London Metal Exchange (LME) / NYMEX Pricing Governance Docs."
+  },
+  {
+   "domain": "Commodities & Volumetric Flow Optimization",
+   "term": "Buffer Stock Inventory Floor",
+   "def": "The mandatory reserve minimum of a physical commodity required to sustain operational flow continuity during baseline transit breaks.",
+   "type": "Constraint",
+   "prov": "ISO 28000 Security Management Systems for the Supply Chain."
+  },
+  {
+   "domain": "Commodities & Volumetric Flow Optimization",
+   "term": "Critical Resource Depletion Floor",
+   "def": "The exact state-point where raw input stocks fall below technical extraction limits, forcing the termination of downline production paths.",
+   "type": "Termination State",
+   "prov": "USGS Mineral Resource Data System / Industrial Feedstock Logistics."
+  },
+  {
+   "domain": "Commodities & Volumetric Flow Optimization",
+   "term": "Volumetric Flow Restriction",
+   "def": "The physical cross-sectional throughput limit of a delivery vessel or pipeline restricting raw material movement volume per time unit.",
+   "type": "Constraint",
+   "prov": "ASME B31 (Code for Pressure Piping) Flow Design Mechanics."
+  },
+  {
+   "domain": "Commodities & Volumetric Flow Optimization",
+   "term": "Transport Cost Friction Index",
+   "def": "The baseline economic drag calculation tracing fuel costs, geographic risk premiums, and carrier availability against net delivery margins.",
+   "type": "Input",
+   "prov": "UNCTAD Review of Maritime Transport Indexes."
+  },
+  {
+   "domain": "Commodities & Volumetric Flow Optimization",
+   "term": "Cargo Degradation Parameter",
+   "def": "The strict decay formula tracking product shelf-life, material spoilage, or quality loss across extended operational storage cycles.",
+   "type": "Constraint",
+   "prov": "FDA Food Safety Modernization Act (FSMA) / Cold Chain Integrity Standards."
+  },
+  {
+   "domain": "Tech Economics & Compute Market Infrastructure",
+   "term": "Compute Arbitrage Efficiency",
+   "def": "The optimized redirection of processing jobs between disparate data centers to exploit shifting regional energy costs or underutilized server nodes.",
+   "type": "Accelerator",
+   "prov": "IEEE Cloud Computing Performance Infrastructure Standards."
+  },
+  {
+   "domain": "Tech Economics & Compute Market Infrastructure",
+   "term": "VRAM Allocation Constraint",
+   "def": "The static hardware onboard graphics processing units limiting the parameter scale and active batch sizing of local model executions.",
+   "type": "Constraint",
+   "prov": "NVIDIA CUDA Hardware Memory Architecture Documentation."
+  },
+  {
+   "domain": "Tech Economics & Compute Market Infrastructure",
+   "term": "Edge Inference Unit Economics",
+   "def": "The cost-per-token performance baseline determining the commercial viability of executing models on local devices versus cloud servers.",
+   "type": "Input",
+   "prov": "Gartner Tech Providers Market Analytics Architecture."
+  },
+  {
+   "domain": "Tech Economics & Compute Market Infrastructure",
+   "term": "Hardware Depreciation Cycle",
+   "def": "The rapid structural obsolescence trajectory of processing chips, tracking required capital rotation cycles before processing costs go uncompetitive.",
+   "type": "Constraint",
+   "prov": "Open Compute Project (OCP) Data Center Lifecycle Management."
+  },
+  {
+   "domain": "Tech Economics & Compute Market Infrastructure",
+   "term": "Network Congestion Backoff Loop",
+   "def": "The automated throttling protocol that delays outgoing data packets during high network density states to prevent total packet drop cascades.",
+   "type": "Feedback Loop",
+   "prov": "IETF RFC 793 (TCP Congestion Control Specifications)."
+  },
+  {
+   "domain": "Tech Economics & Compute Market Infrastructure",
+   "term": "Token-Per-Watt Efficiency Metric",
+   "def": "The precise engineering optimization tracking computational work completed per unit of electrical energy consumed by processing clusters.",
+   "type": "Input",
+   "prov": "Green500 Supercomputing Energy Efficiency Metrics."
+  },
+  {
+   "domain": "Tech Economics & Compute Market Infrastructure",
+   "term": "Bandwidth Throttling Boundary",
+   "def": "The programmatic capping of maximum data transmission speeds applied by network operators to maintain aggregate pipe stability.",
+   "type": "Constraint",
+   "prov": "ITU-T Telecommunication Standardization Architecture Specs."
+  },
+  {
+   "domain": "Tech Economics & Compute Market Infrastructure",
+   "term": "Model-Pruning Quantization Loss",
+   "def": "The permanent precision drop and logical drift occurring when matrix dimensions are aggressively compressed to fit tight consumer hardware footprints.",
+   "type": "Constraint",
+   "prov": "MLPerf Inference Benchmark Suite / Tinyml Hardware Constraints."
+  },
+  {
+   "domain": "Defense & Edge AI",
+   "term": "Assured PNT Degraded Baseline",
+   "def": "The fallback operational profile establishing secure alternate Position, Navigation, and Timing pathways when primary satellite signals are jammed or spoofed.",
+   "type": "Constraint",
+   "prov": "DoD JAIC / Army Futures Command"
+  },
+  {
+   "domain": "Defense & Edge AI",
+   "term": "Forward-Deployed Edge Survivability",
+   "def": "How well an offline, local hardware node keeps its decision loops running under battery depletion or physical stress, with no link home.",
+   "type": "Constraint",
+   "prov": "DARPA Tactical Technology Office (TTO)"
+  },
+  {
+   "domain": "Defense & Edge AI",
+   "term": "Adversarial Electronic Spoof Convergence",
+   "def": "The point where an incoming counterfeit signal matches a real tracking profile closely enough to force an immediate local validation lockout.",
+   "type": "Termination State",
+   "prov": "Naval Research Laboratory Electronic Warfare Division"
+  },
+  {
+   "domain": "Aerospace & Satellite Autonomy",
+   "term": "Orbital Ephemeris Telemetry Drift",
+   "def": "The progressive divergence of a satellite's true path from its recorded trajectory model, the same drift pattern seen in software, in orbit.",
+   "type": "Feedback Loop",
+   "prov": "NASA Goddard / Flight Dynamics Facility"
+  },
+  {
+   "domain": "Aerospace & Satellite Autonomy",
+   "term": "Radiation Hardening Threshold",
+   "def": "The cumulative cosmic-radiation dose a chip can absorb before hard logic failure; the physical ceiling on how long deployed compute survives.",
+   "type": "Constraint",
+   "prov": "NASA JPL Space Radiation Laboratory"
+  },
+  {
+   "domain": "Aerospace & Satellite Autonomy",
+   "term": "Closed-Loop Life Support Homeostasis",
+   "def": "The automated self-balancing of gas ratios and fluid recapture in a sealed vehicle; a feedback loop defending equilibrium against any spike.",
+   "type": "Feedback Loop",
+   "prov": "NASA Johnson / Crew and Thermal Systems"
+  },
+  {
+   "domain": "Medical AI & Neural Systems",
+   "term": "In-Silico Clinical Simulation Variance",
+   "def": "The gap that opens when a digital organ model fails to capture the real chemical variance of live tissue; the sim-to-real error, in medicine.",
+   "type": "Feedback Loop",
+   "prov": "Harvard Medical School / Mass General Brigham"
+  },
+  {
+   "domain": "Medical AI & Neural Systems",
+   "term": "Cortical Interface Telemetry Drift",
+   "def": "The slow loss of neural-signal accuracy as scar tissue forms at a brain-computer interface; drift at the human-machine boundary itself.",
+   "type": "Feedback Loop",
+   "prov": "Brown University BrainGate Consortium"
+  },
+  {
+   "domain": "Medical AI & Neural Systems",
+   "term": "Distributed Phenotypic Ledger Invariant",
+   "def": "The baseline that standardizes health-record parameters across decentralized hospital systems; provenance and consistency for medical data.",
+   "type": "Constraint",
+   "prov": "UCLA Health / Institute for Precision Health"
+  },
+  {
+   "domain": "Quantum & Optics",
+   "term": "Entanglement Distribution Decoupling Limit",
+   "def": "The distance and temperature ceiling past which shared quantum state loses coherence and collapses to noise; coherence has a hard breaking point.",
+   "type": "Termination State",
+   "prov": "Quantum networking research (academic consortia)"
+  }
+ ]
+}
