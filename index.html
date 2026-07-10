@@ -2,19 +2,19 @@
 <html lang="en"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Delta Atlas</title>
-<meta name="theme-color" content="#132a1a"/>
+<meta name="theme-color" content="#16301f"/>
 <link rel="manifest" href="manifest.webmanifest"/>
 <link rel="icon" href="favicon.png"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <style>
- :root{--bg:#132a1a;--panel:#274434;--line:#3d5c4a;--txt:#f4f6f1;--dim:#b9c9b6;--accent:#d9b545;--win:#8fc79a;--gold:#d9b545;--flag:#d98a72;}
+ :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--gold:#e3c258;--flag:#ff9d80;}
  *{box-sizing:border-box;} html,body{margin:0;height:100%;}
  body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-   line-height:1.6;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden;}
+   line-height:1.6;font-weight:450;display:flex;flex-direction:column;height:100vh;height:100dvh;overflow:hidden;}
  /* 100dvh tracks iOS Safari's collapsing URL bar so the header is never tucked under it;
     the 100vh line above is the fallback for older browsers. */
  #bar{flex:none;display:flex;align-items:center;gap:6px;padding:9px 16px;border-bottom:1px solid var(--line);
-   background:#0d2012;position:relative;z-index:10;flex-wrap:wrap;}
+   background:#10281a;position:relative;z-index:10;flex-wrap:wrap;}
  #brand{font-weight:700;font-size:14.5px;cursor:pointer;margin-right:8px;letter-spacing:.2px;display:flex;align-items:center;gap:8px;}
  #brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
  .nav{cursor:pointer;border:1px solid transparent;background:transparent;color:var(--dim);font-size:13px;padding:6px 11px;border-radius:8px;}
@@ -199,7 +199,7 @@
   <button class="nav" data-f="Delta-Atlas-GapCheck.html" onclick="nav('Delta-Atlas-GapCheck.html','Gap Check')">Gap Check</button><button class="nav" data-f="Delta-Atlas-Tracer.html" onclick="nav('Delta-Atlas-Tracer.html','Tracer')">Tracer</button><button class="nav" data-f="Coherence-Audit.html" onclick="nav('Coherence-Audit.html','Framework Audit')">Framework Audit</button><button class="nav" data-f="Agentic-AI-Governance-Query.html" onclick="nav('Agentic-AI-Governance-Query.html','Explore')">Explore</button><button class="nav" data-f="Delta-Atlas-Primitives.html" onclick="nav('Delta-Atlas-Primitives.html','Primitives')">Primitives</button><button class="nav" data-f="White-Paper.html" onclick="nav('White-Paper.html','White Paper')">White Paper</button>
   <span class="rightgrp">
    <button class="nav" data-f="Delta-Atlas-Start.html" onclick="nav('Delta-Atlas-Start.html','Start here')">Start here</button>
-   <button class="nav" id="installBtn" style="display:none;color:#8fc79a;border:1px solid #3d5c4a" onclick="doInstall()">Install app</button>
+   <button class="nav" id="installBtn" style="display:none;color:#8fe0a5;border:1px solid #4a6b56" onclick="doInstall()">Install app</button>
    <button class="nav" id="shareBtn" onclick="doShare()">Share</button>
    <a class="nav" href="evaluate.html" target="_blank">For evaluators</a>
    <button class="nav" id="home0" onclick="goHome()">Home</button>
@@ -249,15 +249,15 @@
      </g>
    </svg>
    <svg class="brass brass-wheel" viewBox="0 0 200 200" aria-hidden="true" fill="none" stroke="#a8794f" stroke-width="3">
-  <circle cx="100" cy="100" r="70"/><circle cx="100" cy="100" r="54" stroke-width="2"/><circle cx="100" cy="100" r="13" fill="#3a2d0d" stroke="#d9b545" stroke-width="2.5"/>
+  <circle cx="100" cy="100" r="70"/><circle cx="100" cy="100" r="54" stroke-width="2"/><circle cx="100" cy="100" r="13" fill="#3a2d0d" stroke="#e3c258" stroke-width="2.5"/>
   <g id="wspoke"><line x1="100" y1="46" x2="100" y2="87"/><line x1="100" y1="30" x2="100" y2="8" stroke-width="5" stroke-linecap="round"/><circle cx="100" cy="8" r="3" fill="#a8794f"/></g>
   <use href="#wspoke" transform="rotate(45 100 100)"/><use href="#wspoke" transform="rotate(90 100 100)"/><use href="#wspoke" transform="rotate(135 100 100)"/><use href="#wspoke" transform="rotate(180 100 100)"/><use href="#wspoke" transform="rotate(225 100 100)"/><use href="#wspoke" transform="rotate(270 100 100)"/><use href="#wspoke" transform="rotate(315 100 100)"/>
  </svg>
- <svg class="brass brass-rose" viewBox="0 0 200 200" aria-hidden="true" fill="none" stroke="#d9b545" stroke-width="2">
+ <svg class="brass brass-rose" viewBox="0 0 200 200" aria-hidden="true" fill="none" stroke="#e3c258" stroke-width="2">
   <circle cx="100" cy="100" r="76"/><circle cx="100" cy="100" r="60" stroke="#a8794f"/>
   <path d="M100,16 L110,90 L184,100 L110,110 L100,184 L90,110 L16,100 L90,90 Z" stroke-width="2.5"/>
   <path transform="rotate(45 100 100)" d="M100,42 L106,94 L158,100 L106,106 L100,158 L94,106 L42,100 L94,94 Z" stroke="#a8794f"/>
-  <circle cx="100" cy="100" r="5" fill="#d9b545" stroke="none"/><text x="94" y="12" font-size="13" fill="#d9b545" stroke="none" font-family="Georgia,serif">N</text>
+  <circle cx="100" cy="100" r="5" fill="#e3c258" stroke="none"/><text x="94" y="12" font-size="13" fill="#e3c258" stroke="none" font-family="Georgia,serif">N</text>
  </svg>
  <div class="wrap">
     <div class="hero">
