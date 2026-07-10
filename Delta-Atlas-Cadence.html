@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - The Cadence Dial</title>
+<style>
+ :root{--bg:#e3ecf3;--panel:#ffffff;--line:#cbd7e1;--txt:#1f3147;--dim:#56697d;--accent:#2c6bb0;--green:#5f7d50;--amber:#b8902e;--red:#b4503c;}
+ *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;line-height:1.6;}
+ header{padding:15px 22px;border-bottom:1px solid var(--line);}
+ header h1{margin:0;font-size:18px;} header p{margin:4px 0 0;color:var(--dim);font-size:12.5px;max-width:900px;}
+ main{max-width:860px;margin:0 auto;padding:20px 22px 90px;}
+ h2{font-size:16px;margin:30px 0 8px;}
+ p{max-width:74ch;}
+ .seclbl{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin:26px 0 8px;border-bottom:1px solid var(--line);padding-bottom:5px;}
+ .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0;}
+ .verdict{border-left:3px solid var(--accent);font-size:15px;padding:10px 14px;background:var(--panel);border-radius:0 10px 10px 0;margin:10px 0;}
+ .verdict.freeze{border-left-color:var(--green);} .verdict.harm{border-left-color:var(--red);} .verdict.free{border-left-color:var(--amber);} .verdict.event{border-left-color:var(--green);}
+ input[type=range]{width:100%;accent-color:var(--accent);}
+ .dial-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);margin-top:2px;}
+ .zone-name{font-weight:700;font-size:15px;}
+ select,input[type=text]{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;font-family:inherit;background:var(--panel);color:var(--txt);}
+ input[type=text]{flex:1;min-width:180px;}
+ .row{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap;align-items:center;}
+ .btn{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--txt);font-size:13px;padding:8px 14px;border-radius:9px;}
+ .btn.pri{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600;}
+ .btn:hover{border-color:var(--accent);}
+ .loopitem{border:1px solid var(--line);border-radius:8px;padding:9px 12px;margin:7px 0;font-size:13px;background:var(--panel);display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;}
+ .loopitem b{min-width:130px;}
+ .zpill{border-radius:20px;padding:2px 10px;font-size:11.5px;font-weight:600;color:#fff;}
+ .zpill.freeze,.zpill.event{background:var(--green);} .zpill.harm{background:var(--red);} .zpill.free{background:var(--amber);}
+ .cal{border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:0 10px 10px 0;background:var(--panel);padding:12px 15px;margin:14px 0;font-size:13px;}
+ table{border-collapse:collapse;width:100%;font-size:12.5px;margin:10px 0;}
+ th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--dim);border-bottom:1px solid var(--line);padding:6px 10px 6px 0;}
+ td{border-bottom:1px solid var(--line);padding:7px 10px 7px 0;vertical-align:top;}
+ .note{margin-top:26px;color:var(--dim);font-size:11.5px;border-top:1px solid var(--line);padding-top:12px;max-width:100%;}
+ svg text{font-family:ui-monospace,Menlo,Consolas,monospace;fill:var(--dim);}
+ a{color:var(--accent);}
+</style></head><body>
+<header>
+ <h1>Delta Atlas - The Cadence Dial</h1>
+ <p>How often should you check on a thing? Physics measured the answer, and there is a trap in the middle: watch constantly and the thing freezes, watch rarely and it drifts on its own schedule, watch at the wrong rhythm in between and <b>the checking itself speeds the decay</b>. An interactive lesson. Runs entirely on your device; stores nothing.</p>
+</header>
+<main>
+
+<div class="seclbl">The physics, honestly stated</div>
+<p>In quantum mechanics this is settled, measured law. A state watched continuously cannot decay - the <b>quantum Zeno effect</b>, formalized by Misra and Sudarshan (1977) and observed in trapped ions by Itano and colleagues (1990). The reason is a quirk of short times: survival probability falls off quadratically at first - flat, then steep - so each rapid check pins the state back before the steep part starts.</p>
+<p>The finding most people never reach: the dial has a middle setting that makes decay <b>faster</b>. Kofman and Kurizki (Nature, 2000) showed that at intermediate rhythms - frequent enough to disturb, not frequent enough to pin - observation accelerates the fall. This is the <b>anti-Zeno effect</b>, it is the more common regime in real systems, and both effects were produced in a single experiment just by changing the measurement rhythm (Fischer, Gutierrez-Medina and Raizen, 2001).</p>
+
+<div class="seclbl">Turn the dial</div>
+<div class="panel">
+ <svg viewBox="0 0 560 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Decay rate versus checking interval, with a movable marker">
+  <line x1="50" y1="170" x2="530" y2="170" stroke="var(--line)" stroke-width="1.5"/>
+  <line x1="50" y1="170" x2="50" y2="20" stroke="var(--line)" stroke-width="1.5"/>
+  <text x="150" y="196" font-size="11">checking interval: constant (left) to never (right)</text>
+  <text x="40" y="95" font-size="11" transform="rotate(-90 40 95)">effective decay rate</text>
+  <line x1="50" y1="110" x2="530" y2="110" stroke="var(--dim)" stroke-width="1" stroke-dasharray="3 5"/>
+  <text x="455" y="103" font-size="10">undisturbed rate</text>
+  <path id="curve" d="M 55 163 C 110 161, 140 155, 175 118 C 215 76, 255 45, 300 48 C 350 53, 390 86, 430 104 C 465 116, 500 110, 528 110" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+  <text x="60" y="150" font-size="10" fill="var(--green)">freeze</text>
+  <text x="252" y="36" font-size="10" fill="var(--red)">accelerated decay</text>
+  <text x="446" y="132" font-size="10" fill="var(--amber)">free drift</text>
+  <circle id="marker" cx="55" cy="163" r="7" fill="var(--accent)" stroke="#fff" stroke-width="2"/>
+ </svg>
+ <input type="range" id="dial" min="0" max="100" value="4" aria-label="Checking interval"/>
+ <div class="dial-labels"><span>every moment</span><span>hourly-ish</span><span>daily-ish</span><span>rarely</span><span>never</span></div>
+ <div class="verdict" id="dialVerdict"></div>
+</div>
+
+<div class="seclbl">Locate your own loops</div>
+<p>Name something you monitor - a habit tracker, a team check-in, code review, a rising dough, a portfolio, a teenager - and pick the rhythm you actually use. The verdict applies the dial. Nothing you type leaves this page.</p>
+<div class="panel">
+ <div class="row">
+  <input type="text" id="loopName" placeholder="what you monitor (e.g. team morale, the dough, the dashboard)" maxlength="60"/>
+  <select id="loopCad">
+   <option value="event">when something changes (event-driven)</option>
+   <option value="constant">constantly / always-on</option>
+   <option value="mid">daily-ish / intermediate</option>
+   <option value="rare">weekly, monthly, or rarer</option>
+  </select>
+  <button class="btn pri" id="addLoop">Place it on the dial</button>
+ </div>
+ <div id="loopList"></div>
+ <div class="row" style="margin-top:6px">
+  <button class="btn" id="exBread">Example: proofing dough</button>
+  <button class="btn" id="exReview">Example: code review</button>
+  <button class="btn" id="exHabit">Example: daily self-tracking</button>
+ </div>
+</div>
+
+<div class="seclbl">Design rules that survive the mapping</div>
+<p><b>1. Prefer event-driven checks.</b> A check bound to a transition - the push, the close, the handoff, the oven timer - has no rhythm to get wrong. It fires exactly when state tries to become consequence. This is the safe end of the dial by construction, not by tuning.</p>
+<p><b>2. If a check must run on a clock, run it rare and bound the drift.</b> A rare sweep does not disturb the system; its cost is that drift can accumulate between sweeps, so pair it with a limit on how much can change unseen.</p>
+<p><b>3. The middle is the only setting that owes you proof.</b> Daily-ish monitoring of a system under load - especially a human system, especially yourself - is the one regime where the observation itself is a plausible cause of decline. If a monitoring habit feels like it is making things worse, that is not necessarily weakness of will; it may be the dial. Move to event-driven or rare and watch what changes.</p>
+
+<div class="seclbl">Calibration - what this lesson does and does not claim</div>
+<div class="cal"><b>Fidelity, marked honestly.</b> For quantum systems, the three zones are measured law - see the sources. For kitchens, teams, codebases, and habits, the mapping is an organizing analogy: the same <i>shape</i> of tradeoff, not the same mathematics. A checked dough is not a qubit. What transfers is the design warning - checking rhythm is a real variable with a plausible harm zone in the middle - and the falsifiable habit of asking, for every monitoring loop you run: <i>which zone is this in, and what is my evidence?</i> This page checks structure, not correctness, and it runs entirely in your browser.</div>
+<table>
+ <tr><th>This page's term</th><th>Physics term</th><th>Shared function</th></tr>
+ <tr><td>checking rhythm</td><td>measurement cadence</td><td>observation frequency as a design variable</td></tr>
+ <tr><td>freeze zone</td><td>quantum Zeno regime</td><td>observation pins the state</td></tr>
+ <tr><td>harm zone</td><td>anti-Zeno regime</td><td>observation accelerates decay</td></tr>
+ <tr><td>free drift</td><td>undisturbed evolution</td><td>the system changes on its own schedule</td></tr>
+</table>
+
+<div class="note">
+ <b>Sources.</b> B. Misra &amp; E.C.G. Sudarshan, "The Zeno's paradox in quantum theory," J. Math. Phys. 18, 756 (1977) &middot; W.M. Itano, D.J. Heinzen, J.J. Bollinger &amp; D.J. Wineland, "Quantum Zeno effect," Phys. Rev. A 41, 2295 (1990) &middot; A.G. Kofman &amp; G. Kurizki, "Acceleration of quantum decay processes by frequent observations," Nature 405, 546 (2000) &middot; M.C. Fischer, B. Guti&eacute;rrez-Medina &amp; M.G. Raizen, "Observation of the quantum Zeno and anti-Zeno effects in an unstable system," Phys. Rev. Lett. 87, 040402 (2001).<br/>
+ The curve above is qualitative, drawn after this literature; the dial positions are illustrative. Lesson v0.1 (2026-07-10), part of the Delta Atlas explorable series. CC BY 4.0. <a href="index.html">Back to the atlas</a>.
+</div>
+</main>
+<script>
+(function(){
+ "use strict";
+ var curve = document.getElementById('curve');
+ var marker = document.getElementById('marker');
+ var dial = document.getElementById('dial');
+ var out = document.getElementById('dialVerdict');
+ var LEN = curve.getTotalLength();
+ var ZONES = [
+  {max:14, cls:'freeze', name:'Freeze zone (Zeno)', text:'Checked this often, the state barely moves - including any motion you wanted. Freezing is a tool when holding is the goal, and a cost when growth is.'},
+  {max:62, cls:'harm', name:'Harm zone (anti-Zeno)', text:'Frequent enough to disturb, not frequent enough to pin. In this band the checking itself is a plausible accelerator of decay. The one setting that owes you evidence it is not hurting.'},
+  {max:88, cls:'free', name:'Free drift', text:'The system barely notices you. Drift accumulates between checks on its own schedule, so pair this rhythm with a bound on how much can change unseen.'},
+  {max:101, cls:'free', name:'Unwatched', text:'No observation at all: pure drift. Fine for the stable; blind for the fragile.'}
+ ];
+ function zoneFor(v){ for (var i=0;i<ZONES.length;i++){ if (v < ZONES[i].max) return ZONES[i]; } return ZONES[ZONES.length-1]; }
+ function setDial(){
+  var v = Number(dial.value);
+  var pt = curve.getPointAtLength(LEN * v/100);
+  marker.setAttribute('cx', pt.x); marker.setAttribute('cy', pt.y);
+  var z = zoneFor(v);
+  out.className = 'verdict ' + z.cls;
+  out.innerHTML = '<span class="zone-name">' + z.name + '</span><br/>' + z.text;
+ }
+ dial.addEventListener('input', setDial); setDial();
+
+ var CADS = {
+  event:{cls:'event', pill:'event-driven', text:'Safe by construction: the check fires on transitions, so there is no rhythm to get wrong.'},
+  constant:{cls:'freeze', pill:'freeze zone', text:'Always-on watching pins the state. Deliberate for holding; costly for anything that needs room to move.'},
+  mid:{cls:'harm', pill:'harm zone', text:'Intermediate rhythm: the band where checking plausibly accelerates decay. Owes you evidence it is not hurting; consider event-driven or rare.'},
+  rare:{cls:'free', pill:'free drift', text:'Low-disturbance. Bound the drift: decide how much change between checks is acceptable, and what would trigger an early look.'}
+ };
+ var list = document.getElementById('loopList');
+ function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+ function addLoop(name, cad){
+  if(!name) return;
+  var c = CADS[cad];
+  var d = document.createElement('div');
+  d.className = 'loopitem';
+  d.innerHTML = '<b>' + esc(name) + '</b><span class="zpill ' + c.cls + '">' + c.pill + '</span><span>' + c.text + '</span>';
+  list.appendChild(d);
+ }
+ document.getElementById('addLoop').addEventListener('click', function(){
+  addLoop(document.getElementById('loopName').value.trim(), document.getElementById('loopCad').value);
+  document.getElementById('loopName').value='';
+ });
+ document.getElementById('exBread').addEventListener('click', function(){ addLoop('Proofing dough (poking it every few minutes)', 'mid'); });
+ document.getElementById('exReview').addEventListener('click', function(){ addLoop('Code review (on every merge request)', 'event'); });
+ document.getElementById('exHabit').addEventListener('click', function(){ addLoop('Daily self-tracking of a strained week', 'mid'); });
+})();
+</script>
+</body></html>

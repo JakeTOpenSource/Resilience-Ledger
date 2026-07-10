@@ -54,6 +54,7 @@ them from memory is exactly the drift these tools exist to catch.
 - Framework Audit — scores each part of a framework for action, testability, substance. /Coherence-Audit.html
 - Priority Tracer — flags where a goal climbs over a rule in an agent's decision log. /Delta-Atlas-Tracer.html
 - Continuity Audit — reads a handover or operations manual for gaps and brittle single points. /Delta-Atlas-ContinuityAudit.html
+- The Cadence Dial — explorable lesson on checking rhythms (quantum Zeno / anti-Zeno effects), with an interactive dial and a locate-your-own-loops worksheet. /Delta-Atlas-Cadence.html
 
 ## Honest limits (always in force)
 
