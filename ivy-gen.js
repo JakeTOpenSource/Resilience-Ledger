@@ -128,7 +128,7 @@ function centerlineD(rawSamples) {
 
 /* ---------------- palette / leaf variants ---------------- */
 const SOLID = ["#16401C", "#1E5424", "#27632B", "#2F7031", "#1A5020"];
-const YOUNG = ["#4E8A3E", "#5B9450"];
+const YOUNG = ["#4E8A3E", "#6FAF61"];
 // variant: [bigRef, medRef] href ids
 const VAR = {
   solid: ["#leafB2", "#leafM2"],
@@ -342,7 +342,7 @@ function leafMarkup(lf) {
   // petiole: slight curve
   const mx = lf.sx + Math.cos(lf.petAng * D2R) * lf.petLen * 0.5 + Math.cos((lf.petAng + 90) * D2R) * lf.petLen * 0.16 * lf.sd;
   const my = lf.sy + Math.sin(lf.petAng * D2R) * lf.petLen * 0.5 + Math.sin((lf.petAng + 90) * D2R) * lf.petLen * 0.16 * lf.sd;
-  const pet = `<path d="M${fmt(lf.sx)},${fmt(lf.sy)} Q${fmt(mx)},${fmt(my)} ${fmt(lf.bx)},${fmt(lf.by)}" fill="none" stroke="#4E5A33" stroke-width="${petW}" stroke-linecap="round"/>`;
+  const pet = `<path d="M${fmt(lf.sx)},${fmt(lf.sy)} Q${fmt(mx)},${fmt(my)} ${fmt(lf.bx)},${fmt(lf.by)}" fill="none" stroke="#8FB573" stroke-width="${petW}" stroke-linecap="round"/>`;
   let href, colorAttr = "";
   if (lf.variant === "young") {
     href = lf.big ? VAR.solid[0] : VAR.solid[1];
@@ -362,7 +362,7 @@ function rootletMarkup(samples, count) {
     const p = ptAt(samples, rr(0.08, 0.92) * L);
     const a = p.ang + (rnd() < 0.5 ? 90 : -90) + rr(-25, 25);
     const l = rr(3, 6.5);
-    out.push(`<path d="M${fmt(p.x)},${fmt(p.y)} q${fmt(Math.cos(a * D2R) * l * 0.6)},${fmt(Math.sin(a * D2R) * l * 0.6)} ${fmt(Math.cos(a * D2R) * l)},${fmt(Math.sin(a * D2R) * l)}" fill="none" stroke="#6E4B33" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>`);
+    out.push(`<path d="M${fmt(p.x)},${fmt(p.y)} q${fmt(Math.cos(a * D2R) * l * 0.6)},${fmt(Math.sin(a * D2R) * l * 0.6)} ${fmt(Math.cos(a * D2R) * l)},${fmt(Math.sin(a * D2R) * l)}" fill="none" stroke="#A8794F" stroke-width="0.8" stroke-linecap="round" opacity="0.5"/>`);
   }
   return out.join("");
 }
@@ -382,8 +382,8 @@ function buildVine(vine) {
   const parts = [];
   parts.push(`<path class="ivy-centerline" d="${centerlineD(samples)}" fill="none" stroke="none" data-vine="${vine.id}"/>`);
   parts.push(under.map(l => `<g opacity="0.92">${leafMarkup(l)}</g>`).join(""));
-  parts.push(`<path d="${dark}" fill="#5A3D28"/>`);
-  parts.push(`<path d="${hi}" fill="#82593B" opacity="0.85" transform="translate(-0.6,-0.8)"/>`);
+  parts.push(`<path d="${dark}" fill="#6E4B30"/>`);
+  parts.push(`<path d="${hi}" fill="#9A6B42" opacity="0.85" transform="translate(-0.6,-0.8)"/>`);
   if (vine.rootlets) parts.push(rootletMarkup(samples, Math.round(samples[samples.length - 1].s / 260)));
   parts.push(over.map(leafMarkup).join(""));
   return { markup: parts.join("\n     "), samples, leaves, skipped, ends: [samples[0], samples[samples.length - 1]] };
@@ -467,41 +467,41 @@ const DEFS = `<svg width="0" height="0" style="position:absolute" aria-hidden="t
   </g>
   <g id="leafBig">
     <use href="#pBig" fill="currentColor"/>
-    <rect x="0" y="0" width="50" height="100" fill="#5B9450" opacity="0.22" clip-path="url(#cBig)"/>
+    <rect x="0" y="0" width="50" height="100" fill="#6FAF61" opacity="0.22" clip-path="url(#cBig)"/>
     <use href="#veinsBig"/>
     <use href="#pBig" fill="url(#frost)"/>
-    <use href="#pBig" fill="none" stroke="#0E2B12" stroke-width="1.1"/>
+    <use href="#pBig" fill="none" stroke="#2C5A35" stroke-width="1.1"/>
   </g>
   <g id="leafMed">
     <use href="#pMed" fill="currentColor"/>
-    <rect x="0" y="0" width="50" height="100" fill="#5B9450" opacity="0.2" clip-path="url(#cMed)"/>
+    <rect x="0" y="0" width="50" height="100" fill="#6FAF61" opacity="0.2" clip-path="url(#cMed)"/>
     <use href="#veinsMed"/>
     <use href="#pMed" fill="url(#frost)"/>
-    <use href="#pMed" fill="none" stroke="#0E2B12" stroke-width="1.1"/>
+    <use href="#pMed" fill="none" stroke="#2C5A35" stroke-width="1.1"/>
   </g>
   <g id="leafBigA">
     <use href="#pBig" fill="url(#varSage)"/>
     <use href="#veinsBig"/>
     <use href="#pBig" fill="url(#frost)"/>
-    <use href="#pBig" fill="none" stroke="#14361A" stroke-width="1.05"/>
+    <use href="#pBig" fill="none" stroke="#35673F" stroke-width="1.05"/>
   </g>
   <g id="leafMedA">
     <use href="#pMed" fill="url(#varSage)"/>
     <use href="#veinsMed"/>
     <use href="#pMed" fill="url(#frost)"/>
-    <use href="#pMed" fill="none" stroke="#14361A" stroke-width="1.05"/>
+    <use href="#pMed" fill="none" stroke="#35673F" stroke-width="1.05"/>
   </g>
   <g id="leafBigB">
     <use href="#pBig" fill="url(#varCream)"/>
     <use href="#veinsBig"/>
     <use href="#pBig" fill="url(#frost)"/>
-    <use href="#pBig" fill="none" stroke="#48583A" stroke-width="1"/>
+    <use href="#pBig" fill="none" stroke="#7FA568" stroke-width="1"/>
   </g>
   <g id="leafMedB">
     <use href="#pMed" fill="url(#varCream)"/>
     <use href="#veinsMed"/>
     <use href="#pMed" fill="url(#frost)"/>
-    <use href="#pMed" fill="none" stroke="#48583A" stroke-width="1"/>
+    <use href="#pMed" fill="none" stroke="#7FA568" stroke-width="1"/>
   </g>
   <!-- base-anchored: origin = petiole end (the broad base). translate(x,y) rotate(tip) scale(s) -->
   <g id="leafB2"><use href="#leafBig" transform="translate(-50,-97)"/></g>

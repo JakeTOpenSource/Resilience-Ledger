@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Delta Atlas - White Paper</title>
 <style>
- :root{--bg:#e3ecf3;--panel:#ffffff;--line:#cbd7e1;--txt:#1f3147;--dim:#56697d;--accent:#2c6bb0;--win:#5f7d50;--mid:#b8902e;--bad:#b4503c;--gold:#b8902e;}
+ :root{--bg:#1e3527;--panel:#274434;--line:#3d5c4a;--txt:#f4f6f1;--dim:#b9c9b6;--accent:#d9b545;--win:#8fc79a;--mid:#d9b545;--bad:#d98a72;--gold:#d9b545;}
  *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--txt);line-height:1.6;
    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;}
  header{padding:16px 22px;border-bottom:1px solid var(--line);}
@@ -14,15 +14,15 @@
  .leg{display:grid;grid-template-columns:1fr;gap:6px;}
  .row{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:8px 12px;display:flex;gap:10px;align-items:baseline;}
  .dot{flex:none;width:10px;height:10px;border-radius:50%;position:relative;top:1px;}
- .g-read{background:#378ADD;} .g-plan{background:#5f7d50;} .g-trace{background:#b4503c;} .g-under{background:#7F77DD;} .g-script{background:#56697d;} .g-gov{background:var(--gold);}
+ .g-read{background:#6fa8e8;} .g-plan{background:#8fc79a;} .g-trace{background:#d98a72;} .g-under{background:#9a93e8;} .g-script{background:#93a8b8;} .g-gov{background:var(--gold);}
  .row b{flex:none;min-width:150px;font-size:13.5px;}
  .row span{color:var(--dim);font-size:13px;}
  table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:9px;overflow:hidden;font-size:13px;}
  th,td{padding:7px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
- th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);background:rgba(44,107,176,0.05);}
+ th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);background:rgba(217,181,69,0.08);}
  tr:last-child td{border-bottom:none;}
  td b{font-size:13px;}
- .note{color:var(--dim);font-size:12px;background:rgba(95,125,80,0.07);border:1px solid #c2d3b6;border-radius:9px;padding:11px 14px;margin-top:22px;}
+ .note{color:var(--dim);font-size:12px;background:rgba(143,199,154,0.10);border:1px solid #3d5c4a;border-radius:9px;padding:11px 14px;margin-top:22px;}
  .seam{color:var(--gold);font-weight:600;}
  .vlog{margin-top:26px;font-size:12px;color:var(--dim);}
  .vlog table{font-size:12px;}
@@ -35,7 +35,7 @@
 <div class="main">
 
  <div class="five" style="margin-top:16px">
-  <b>The whole thing in five sentences.</b> Delta Atlas is a set of free tools that read plans, frameworks, and AI decision logs, and point at the places where they quietly contradict themselves. Everything runs on your own device &mdash; no account, no network call, no AI model at runtime &mdash; so the answer is the same for everyone, every time, and nothing you paste ever leaves your machine. The tools don't understand meaning; they read structure, the way a spell-checker reads spelling, and a human always makes the final call. Underneath them is one idea called the Resilience Ledger: systems stay trustworthy by bending without breaking, checking themselves against something outside themselves, and coming back to center. The project runs its own development through the same tools and rules it offers you &mdash; every change is logged, every mistake is mended in the open.
+  <b>The whole thing in five sentences.</b> Delta Atlas is one machine wearing different clothes: every tool takes a <b>claim</b> (what a document, plan, or AI decision log says is true), holds it against a <b>witness</b> (something independently checkable), and records the difference in a ledger that only ever grows. Everything runs on your own device &mdash; no account, no network call, no AI model at runtime &mdash; so the answer is the same for everyone, every time, and nothing you paste ever leaves your machine. The tools don't understand meaning; they read structure, the way a spell-checker reads spelling, and a human always makes the final call &mdash; we check for <b>identity, not virtue</b>: whether a thing matches its own stated reference, never whether it is good. Underneath them is one idea, the Resilience Ledger (its next edition carries the name <b>The Witness Ledger</b>): systems stay trustworthy by bending without breaking, checking themselves against something outside themselves, and coming back to center. The project runs its own development through the same tools and rules it offers you &mdash; every change is logged, every mistake is mended in the open.
  </div>
 
  <h2>Legend &mdash; the tools you click</h2>
@@ -47,6 +47,8 @@
   <div class="row"><span class="dot g-plan"></span><b>Gap Check</b><span>reads a plan or policy and flags what's missing: unhandled risks, ungoverned autonomy, vague words doing load-bearing work.</span></div>
   <div class="row"><span class="dot g-plan"></span><b>Framework Audit</b><span>scores each part of a framework: does it act, can it be tested, does it survive having its buzzwords removed?</span></div>
   <div class="row"><span class="dot g-trace"></span><b>Priority Tracer</b><span>reads an AI agent's decision log and flags the moment a goal quietly climbs over a rule it was supposed to obey. Also credits where the rule held. Its word lists are versioned, shown in the tool, and privately extendable (see the seed frame below).</span></div>
+  <div class="row"><span class="dot g-plan"></span><b>Continuity Audit</b><span>reads an operations manual for resilience: can the goal survive a key person out, a vendor failing, an emergency &mdash; plus risks with no stated control and single points of failure with no documented backup.</span></div>
+  <div class="row"><span class="dot g-read"></span><b>The Cadence Dial</b><span>the first explorable lesson: how often to check on anything. Physics measured three zones (freeze, harm, free drift) &mdash; interactive dial, locate-your-own-loops worksheet, primary sources cited.</span></div>
   <div class="row"><span class="dot g-under"></span><b>Primitives &middot; Field &middot; Ground Truth</b><span>the structures under the vocabulary, an instrument view, and a dashboard of how well-sourced each term is.</span></div>
  </div>
 
@@ -66,6 +68,15 @@
  </table>
  <p style="color:var(--dim);font-size:12.5px;margin-top:8px">One more meaning that matters: the <b>sovereign zero</b> is the neutral center everything is measured from. It is <i>unowned and returned-to</i> &mdash; not incorruptible, not an untainted observer. Nothing here claims to be unfoolable; the claim is that fooling it can't happen <i>silently</i>.</p>
 
+ <h2>Legend &mdash; the witness ladder (how independent is the check?)</h2>
+ <table>
+  <tr><th style="width:130px">Rung</th><th>What the witness is, and its honest floor</th></tr>
+  <tr><td><b>Rung 1 &mdash; self</b></td><td>One document held against its own internal structure (Gap Check, Framework Audit, Priority Tracer, Continuity Audit). Catches incoherence and gaps. Its floor, stated plainly: <i>a coherent lie passes Rung 1.</i></td></tr>
+  <tr><td><b>Rung 2 &mdash; cross-artifact</b></td><td>Two independent artifacts diffed against each other (a live tool manifest against its pinned fingerprint; a plan against a hash-chained close). A lie now has to keep two books consistent, and the books do not share a pen.</td></tr>
+  <tr><td><b>Rung 3 &mdash; physical</b></td><td>A witness in a different substrate entirely (the power a chip draws while it works). Experimental; run, documented, and closed honestly in this repository &mdash; distinguishable is not tamper-proof, and the write-ups say so.</td></tr>
+ </table>
+ <p style="color:var(--dim);font-size:12.5px;margin-top:8px">A rung may be cited as context for a higher rung, never as proof of it. And one design variable cuts across every rung: <b>checking rhythm</b>. Physics measured the tradeoff &mdash; constant watching freezes, rare watching drifts, and the rhythm in between can make things worse. That result, with sources, is the first explorable lesson: <a href="Delta-Atlas-Cadence.html">the Cadence Dial</a>.</p>
+
  <h2>Legend &mdash; the scripts (command line, zero installs beyond Node)</h2>
  <div class="leg">
   <div class="row"><span class="dot g-script"></span><b>tracer-corpus.js</b><span>proves the Tracer still earns its labels: a fixed test corpus where a failing case changes the detector, never the label.</span></div>
@@ -83,7 +94,7 @@
   <div class="row"><span class="dot g-gov"></span><b>The seams</b><span class="seam">mistakes are mended in the open and left visible</span><span> &mdash; a repair you can inspect is worth more than a surface that claims it never broke.</span></div>
  </div>
 
- <div class="note"><b>Honest limit, always in force:</b> these tools read words and structure, not meaning. A flag is a pointer for a human to look at, never a verdict; a clean result is not a guarantee. Deeper reading: <a href="README.md">README</a> &middot; <a href="State-Delta-Bridge.md">State-Delta-Bridge</a> (how changes are governed) &middot; <a href="Delta-Atlas-Tracer-Calibration.md">the calibration log</a> &middot; the Resilience Ledger paper (v0.5) in this folder.</div>
+ <div class="note"><b>Honest limit, always in force:</b> these tools read words and structure, not meaning. A flag is a pointer for a human to look at, never a verdict; a clean result is not a guarantee. Where lessons borrow from physics and mathematics, the mappings are <b>organizing analogies with their fidelity marked</b> &mdash; the same shape of tradeoff, not the same mathematics; a checked document is not a quantum system, and no page here will tell you otherwise. Deeper reading: <a href="README.md">README</a> &middot; <a href="State-Delta-Bridge.md">State-Delta-Bridge</a> (how changes are governed) &middot; <a href="Delta-Atlas-Tracer-Calibration.md">the calibration log</a> &middot; the Resilience Ledger paper (v0.5) in this folder; its next edition, <i>The Witness Ledger</i> (v0.6), is in preparation.</div>
 
  <div class="vlog">
   <b>This page's own little ledger</b> (it practices what it preaches):
@@ -91,6 +102,7 @@
   <table>
    <tr><th style="width:90px">Date</th><th>Change</th><th>Reason</th></tr>
    <tr><td>2026-07-02</td><td>v1 established: five-sentence summary, tool legend, exact ledger meanings, script legend, self-governance legend.</td><td>Requested by the author as the living plain-English front door &mdash; and as the reference to hand any AI model before it writes about this project, after a drafted white paper paraphrased the core definitions from memory and drifted on all six.</td></tr>
+   <tr><td>2026-07-10</td><td>v2: one-engine summary (claim / witness / difference), identity-not-virtue stated, witness-ladder legend added with each rung's honest floor, Continuity Audit and Cadence Dial added to the tool legend, physics-fidelity honest limit added, Witness Ledger v0.6 noted as in preparation. Restyle: forest-green ground, bronze titles, ivy brightened for legibility.</td><td>The framework consolidated (one engine, witness ladder, checking-rhythm result) and the first explorable lesson shipped; the legend updates the same day so it never lags the map.</td></tr>
    <tr><td>(next)</td><td>(update whenever a tool, meaning, or rule changes &mdash; a legend that lags its map is drift wearing a helpful face)</td><td></td></tr>
   </table>
  </div>

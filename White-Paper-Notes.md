@@ -34,3 +34,9 @@
 ## The meta-finding worth logging
 
 The draft's definitional errors are *content drift in the paper's own account of drift*: the definitions left the reference while still sounding right, because the drafting model was never handed the reference. This is the exact failure the Canon exists to prevent ("load this file first; use these exact terms"). Corrective for v0.2: regenerate or revise with the Ledger PDF, the Canon, and State-Delta-Bridge.md in the drafting context, then cold-read against source. The tools' first real publication cycle has already produced their own best case study.
+
+---
+
+## Addendum — 2026-07-10, framework consolidation shipped to the living legend
+
+The site's White Paper page (the living legend) was updated to the consolidated framework ahead of the paper's v0.2 revision: one engine stated plainly (claim / witness / difference), identity-not-virtue named, the witness ladder added with each rung's honest floor ("a coherent lie passes Rung 1"), the checking-rhythm result (quantum Zeno / anti-Zeno, primary sources) linked as the first explorable lesson, and the physics-fidelity limit added (organizing analogies with fidelity marked, never same-mathematics claims). Naming lineage note: the Resilience Ledger's next edition carries the title The Witness Ledger (v0.6, in preparation; forward-only, provenance line preserved). The paper's v0.2 revision should draw its definitions from the updated legend and the v0.6 draft, with the reference documents in the drafting context per the meta-finding above.
