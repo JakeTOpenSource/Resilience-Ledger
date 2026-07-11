@@ -6,7 +6,10 @@
 "use strict";
 const fs = require("fs"), cp = require("child_process");
 const LEGACY = /#e3ecf3|#2c6bb0\b|#1f3147|#cbd7e1|#56697d|#f4f8fc|#5f7d50|#b8902e|#b4503c|#c2d3b6|rgba\(44,\s*107,\s*176/i;
-const files = cp.execSync("git ls-files *.html", { encoding: "utf8" }).trim().split(/\r?\n/).filter(Boolean);
+// tracked HTML plus new-but-not-ignored HTML, so a brand-new page cannot slip the gate
+const tracked = cp.execSync("git ls-files *.html", { encoding: "utf8" }).trim().split(/\r?\n/).filter(Boolean);
+const untracked = cp.execSync("git ls-files --others --exclude-standard *.html", { encoding: "utf8" }).trim().split(/\r?\n/).filter(Boolean);
+const files = [...new Set([...tracked, ...untracked])];
 function lum(h) { const c = [0,2,4].map(i => parseInt(h.substr(i,2),16)/255).map(v => v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4)); return 0.2126*c[0]+0.7152*c[1]+0.0722*c[2]; }
 function cr(a,b){ const [x,y]=[lum(a),lum(b)].sort((p,q)=>q-p); return (x+0.05)/(y+0.05); }
 const fails = [];

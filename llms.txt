@@ -55,6 +55,7 @@ them from memory is exactly the drift these tools exist to catch.
 - Priority Tracer — flags where a goal climbs over a rule in an agent's decision log. /Delta-Atlas-Tracer.html
 - Continuity Audit — reads a handover or operations manual for gaps and brittle single points. /Delta-Atlas-ContinuityAudit.html
 - The Cadence Dial — explorable lesson on checking rhythms (quantum Zeno / anti-Zeno effects), with an interactive dial and a locate-your-own-loops worksheet. /Delta-Atlas-Cadence.html
+- The Basin — explorable lesson on resilience as two numbers (return time and basin width), with a live kick-the-ball simulation, tipping points, and critical-slowing early warning. /Delta-Atlas-Basin.html
 
 ## Honest limits (always in force)
 

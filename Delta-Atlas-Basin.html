@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - The Basin</title>
+<style>
+ :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--green:#8fe0a5;--amber:#f2cd55;--red:#ff9d80;}
+ *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;line-height:1.6;}
+ header{padding:15px 22px;border-bottom:1px solid var(--line);}
+ header h1{margin:0;font-size:18px;} header p{margin:4px 0 0;color:var(--dim);font-size:12.5px;max-width:900px;}
+ main{max-width:860px;margin:0 auto;padding:20px 22px 90px;}
+ h2{font-size:16px;margin:30px 0 8px;}
+ p{max-width:74ch;}
+ .purpose{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:12px 16px;margin:14px 0;font-size:14.5px;}
+ .seclbl{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin:26px 0 8px;border-bottom:1px solid var(--line);padding-bottom:5px;}
+ .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0;}
+ canvas{width:100%;height:auto;display:block;border-radius:8px;background:#10281a;border:1px solid var(--line);}
+ .row{display:flex;gap:8px;margin:12px 0 4px;flex-wrap:wrap;align-items:center;}
+ .btn{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--txt);font-size:13px;padding:8px 14px;border-radius:9px;}
+ .btn.pri{background:var(--accent);color:#1e2b17;border-color:var(--accent);font-weight:600;}
+ .btn.on{background:var(--accent);color:#1e2b17;border-color:var(--accent);font-weight:600;}
+ .btn:hover{border-color:var(--accent);}
+ label.sl{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--dim);flex:1;min-width:220px;}
+ input[type=range]{flex:1;accent-color:var(--accent);}
+ .readout{font-size:15px;margin-top:10px;padding:10px 14px;border-radius:0 10px 10px 0;border-left:3px solid var(--accent);background:var(--panel);}
+ .readout.freeze{border-left-color:var(--green);} .readout.harm{border-left-color:var(--red);} .readout b{color:var(--accent);}
+ .cal{border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:0 10px 10px 0;background:var(--panel);padding:12px 15px;margin:14px 0;font-size:13px;}
+ table{border-collapse:collapse;width:100%;font-size:12.5px;margin:10px 0;}
+ th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--dim);border-bottom:1px solid var(--line);padding:6px 10px 6px 0;}
+ td{border-bottom:1px solid var(--line);padding:7px 10px 7px 0;vertical-align:top;}
+ td:first-child{color:var(--accent);white-space:nowrap;}
+ .note{margin-top:26px;color:var(--dim);font-size:11.5px;border-top:1px solid var(--line);padding-top:12px;max-width:100%;}
+ a{color:var(--accent);}
+ b.k{color:var(--accent);}
+</style></head><body>
+<header>
+ <h1>Delta Atlas - The Basin</h1>
+ <p>A resilient thing is not one that never gets hit. It is one that returns to itself after the hit, and holds a wide enough margin that the hit does not throw it somewhere it cannot come back from. This lesson makes both of those measurable, with a bowl, a ball, and a shock you control. Runs entirely on your device; stores nothing.</p>
+</header>
+<main>
+
+<div class="purpose"><b>What this lesson is for.</b> To give one honest, shared picture behind every tool on this site: a system at rest sits in a <b class="k">basin</b>, a shock knocks it out, and resilience is two separate quantities the basin makes visible: how fast it returns, and how hard a shock it can take before it never returns. Once you can see the basin, the audits that follow stop being jargon.</div>
+
+<div class="seclbl">Two resiliences, not one</div>
+<p>Ecologist C. S. Holling drew the line in 1973 and it still holds. <b>Engineering resilience</b> is the speed of return to normal after a disturbance: the time to zero. <b>Ecological resilience</b> is the size of disturbance a system can absorb before it flips into a different state entirely: the width of the basin. They are different, and a system can be strong in one and fatally weak in the other. A steep narrow bowl returns fast and tips easily. A broad shallow bowl is almost impossible to tip but recovers slowly. Most real fragility is a system optimized for return speed that quietly lost its width.</p>
+
+<div class="seclbl">The instrument</div>
+<div class="panel">
+ <canvas id="cv" width="720" height="300" aria-label="A ball resting in a potential well. Kick it and watch it return, or fail to."></canvas>
+ <div class="row" role="group" aria-label="basin shape">
+  <button class="btn mode on" data-mode="single">One rest state</button>
+  <button class="btn mode" data-mode="double">Two rest states</button>
+  <button class="btn mode" data-mode="losing">Losing stability</button>
+ </div>
+ <div class="row">
+  <label class="sl">Shock size <input type="range" id="shock" min="1" max="100" value="35" aria-label="shock size"></label>
+  <button class="btn pri" id="kick">Kick it</button>
+ </div>
+ <div class="row" id="widthRow">
+  <label class="sl" id="widthLbl">Basin width <input type="range" id="width" min="10" max="100" value="55" aria-label="basin width"></label>
+ </div>
+ <div class="readout" id="out">Kick the ball and watch the time to zero.</div>
+</div>
+
+<div class="seclbl">Read what the modes are telling you</div>
+<p><b>One rest state.</b> Slide the width. A narrow bowl snaps back fast but a big kick clears it. A wide bowl is slow but nearly impossible to eject from. That trade is the whole subject: <b>you cannot maximize both return speed and shock tolerance</b>, and a plan that only measures one has not measured resilience.</p>
+<p><b>Two rest states.</b> There are now two places the ball can settle, with a ridge between them. The ridge is the <b>separatrix</b>. A small kick is absorbed; a kick past the ridge drops the ball into the other basin, and no ordinary nudge brings it back. The second basin is stable too. This is the hard truth behind a health crisis, a bankruptcy, a broken trust: the bad place is not chaos, it is <b>another basin with real walls</b>, which is exactly why "just climb out" is bad physics.</p>
+<p><b>Losing stability.</b> Watch the return time as the basin flattens. It gets longer, and longer, before anything visibly breaks. That lengthening is <b>critical slowing down</b>, and it is a measured early-warning signal in ecosystems, heart rhythms, and markets (Scheffer and colleagues, 2009). A system taking longer each time to recover from the same size shock is a system whose walls are closing in. The slowing is the smoke detector.</p>
+
+<div class="seclbl">Design rules that survive the mapping</div>
+<p><b>1. Measure width, not just speed.</b> Ask of any plan not only "how fast does it recover" but "how big a shock before it cannot." A backup with no stated restore time, or a control with no failure margin, is a speed claim pretending to be a resilience claim.</p>
+<p><b>2. Do not optimize to the razor.</b> The deepest narrowest minimum is the most efficient and the most fragile state you can build. Leave slack on purpose. The slack is what absorption spends.</p>
+<p><b>3. Track the trend, not the moment.</b> One recovery tells you little. Recovery times getting longer across repeated shocks tell you the basin is eroding while there is still time to act.</p>
+
+<div class="cal"><b>Fidelity, marked honestly.</b> For physical and ecological systems the basin, the separatrix, and critical slowing are measured law with the citations below. For a household, a business, a court, or a life, the mapping is an organizing analogy: the same <i>shape</i> of tradeoff, not the same equations. A marriage is not a particle in a potential well. What transfers is the discipline of asking, for anything you care about keeping: how fast does it recover, how hard a hit can it take, and is its recovery getting slower. This page checks structure, not correctness, and it runs entirely in your browser.</div>
+<table>
+ <tr><th>This lesson's word</th><th>The established term</th><th>What it names</th></tr>
+ <tr><td>rest state</td><td>stable equilibrium / attractor</td><td>where a system settles when nothing pushes it</td></tr>
+ <tr><td>basin</td><td>basin of attraction</td><td>the set of states that return to that rest state</td></tr>
+ <tr><td>time to zero</td><td>return / settling time</td><td>engineering resilience</td></tr>
+ <tr><td>basin width</td><td>ecological resilience</td><td>the disturbance absorbed before a flip</td></tr>
+ <tr><td>the ridge</td><td>separatrix</td><td>the boundary past which return fails</td></tr>
+ <tr><td>slowing recovery</td><td>critical slowing down</td><td>an early warning that resilience is eroding</td></tr>
+</table>
+
+<div class="note">
+ <b>Sources.</b> C.S. Holling, "Resilience and stability of ecological systems," Annual Review of Ecology and Systematics 4 (1973) &middot; S.L. Pimm, "The complexity and stability of ecosystems," Nature 307 (1984) &middot; M. Scheffer et al., "Early-warning signals for critical transitions," Nature 461 (2009) &middot; A.M. Lyapunov (1892) on stability via a descending function &middot; S. Strogatz, <i>Nonlinear Dynamics and Chaos</i>, on basins, bifurcation, and synchronization.<br/>
+ The simulation is a damped particle in a potential well, integrated in your browser; it is illustrative of the shapes above, not a model of any specific system. Lesson v0.1 (2026-07-11), part of the Delta Atlas explorable series. CC BY 4.0. <a href="index.html">Back to the atlas</a> &middot; <a href="Delta-Atlas-Cadence.html">Previous lesson: the Cadence Dial</a>.
+</div>
+</main>
+<script>
+(function(){
+ "use strict";
+ var cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+ var W = cv.width, H = cv.height;
+ var css = getComputedStyle(document.documentElement);
+ var C = {
+   accent: css.getPropertyValue('--accent').trim() || '#e3c258',
+   line: css.getPropertyValue('--line').trim() || '#4a6b56',
+   dim: css.getPropertyValue('--dim').trim() || '#d3decf',
+   green: css.getPropertyValue('--green').trim() || '#8fe0a5',
+   red: css.getPropertyValue('--red').trim() || '#ff9d80',
+   txt: css.getPropertyValue('--txt').trim() || '#fafcf7'
+ };
+ var mode = 'single';
+ var widthVal = 55, shockVal = 35;
+ var x = 0, v = 0;            // physics state, x in [-2.5, 2.5]
+ var t = 0, kicked = false, measuring = false, tStart = 0, startWell = 0, lastResult = null;
+ var out = document.getElementById('out');
+
+ // stiffness by mode; narrow bowl = high stiffness. Double well fixed at minima +/-1.
+ function stiff(){ if (mode==='single') return 1.5 + (widthVal/100)*10; if (mode==='double') return 2.0; return 0.1 + (widthVal/100)*5; }
+ // damping scales with sqrt(stiffness) so a stiffer basin settles faster (zeta ~ 0.45, underdamped)
+ function damp(){ return 2*0.45*Math.sqrt(stiff()); }
+
+ // potential gradient dV/dx per mode
+ function grad(xx){
+   if (mode === 'single') return stiff()*xx;
+   if (mode === 'double') return (xx*xx*xx - xx);
+   return stiff()*xx;
+ }
+ function equilibria(){
+   if (mode === 'double') return [-1, 1];
+   return [0];
+ }
+ function nearestEq(xx){ var e = equilibria(), best = e[0]; for (var i=0;i<e.length;i++){ if (Math.abs(e[i]-xx) < Math.abs(best-xx)) best = e[i]; } return best; }
+
+ function potential(xx){
+   if (mode === 'single') return 0.5*stiff()*xx*xx;
+   if (mode === 'double') return 0.25*xx*xx*xx*xx - 0.5*xx*xx;
+   return 0.5*stiff()*xx*xx;
+ }
+
+ function toPx(xx){ return W*0.5 + xx*(W*0.18); }
+ function draw(){
+   ctx.clearRect(0,0,W,H);
+   // potential curve
+   var minV = Infinity, maxV = -Infinity, pts = [];
+   for (var i=0;i<=160;i++){
+     var xx = -2.5 + (i/160)*5.0, vv = potential(xx);
+     pts.push([xx,vv]); if (vv<minV) minV=vv; if (vv>maxV) maxV=vv;
+   }
+   var span = (maxV-minV)||1;
+   function toPy(vv){ return 40 + (1-(vv-minV)/span)*(H-90); }
+   ctx.beginPath();
+   for (var j=0;j<pts.length;j++){ var px=toPx(pts[j][0]), py=toPy(pts[j][1]); if(j===0)ctx.moveTo(px,py); else ctx.lineTo(px,py); }
+   ctx.strokeStyle = C.line; ctx.lineWidth = 2; ctx.stroke();
+   // equilibria markers
+   var eq = equilibria();
+   ctx.strokeStyle = 'rgba(211,222,207,0.25)';
+   for (var m=0;m<eq.length;m++){ var ex=toPx(eq[m]); ctx.beginPath(); ctx.moveTo(ex,30); ctx.lineTo(ex,H-30); ctx.stroke(); }
+   // the ball, sitting on the curve at its x
+   var bx = toPx(x), by = toPy(potential(x));
+   ctx.beginPath(); ctx.arc(bx, by-9, 9, 0, Math.PI*2);
+   ctx.fillStyle = measuring ? C.red : C.accent; ctx.fill();
+   ctx.strokeStyle = C.txt; ctx.lineWidth = 1.5; ctx.stroke();
+   // labels
+   ctx.fillStyle = C.dim; ctx.font = '12px ui-monospace, Consolas, monospace';
+   ctx.fillText('rest state', toPx(eq[0])-26, H-12);
+   if (eq.length>1) ctx.fillText('rest state', toPx(eq[1])-26, H-12);
+   if (mode==='double'){ ctx.fillStyle = C.red; ctx.fillText('the ridge', toPx(0)-24, 24); }
+ }
+
+ var last = 0;
+ function frame(ts){
+   if (!last) last = ts;
+   var dt = Math.min((ts-last)/1000, 0.05); last = ts;
+   // integrate a few substeps for stability
+   var steps = 8, h = dt/steps, c = damp();
+   for (var s=0;s<steps;s++){
+     var F = -grad(x) - c*v;
+     v += F*h; x += v*h;
+     if (x> 2.6){ x=2.6; v=0; } if (x< -2.6){ x=-2.6; v=0; }
+   }
+   if (measuring){
+     t += dt;
+     var eqNow = nearestEq(x);
+     if (Math.abs(x-eqNow) < 0.05 && Math.abs(v) < 0.08){
+       measuring = false;
+       var flipped = (mode==='double') && (Math.sign(eqNow) !== Math.sign(startWell) && startWell!==0);
+       finish(t, flipped);
+     } else if (t > 12){
+       measuring = false; finish(t, 'timeout');
+     }
+   }
+   draw();
+   requestAnimationFrame(frame);
+ }
+
+ function finish(secs, flipped){
+   if (flipped === 'timeout'){
+     out.className = 'readout harm';
+     out.innerHTML = '<b>Did not return.</b> After 12 seconds the ball still has not settled. In "losing stability," a flat basin can take so long to recover that for any practical purpose it does not. That endless drag is critical slowing at its limit.';
+   } else if (flipped){
+     out.className = 'readout harm';
+     out.innerHTML = '<b>Flipped basins.</b> The kick cleared the ridge and the ball settled in the <i>other</i> rest state. It is stable there and will not drift back on its own. The shock exceeded the basin width, so return time is not even the right question anymore: the system changed which zero it belongs to.';
+   } else {
+     var cls = secs < 1.5 ? 'freeze' : '';
+     out.className = 'readout ' + cls;
+     out.innerHTML = 'Returned in <b>' + secs.toFixed(2) + ' s</b>. ' +
+       (mode==='losing'
+         ? 'Flatten the basin further and kick again with the same shock: watch this number climb. Rising return time under a constant shock is the early warning.'
+         : (secs < 1.5 ? 'A steep basin snaps back fast, but try a bigger shock: speed is not safety.' : 'A wider basin recovers slowly and tolerates more. Speed and tolerance trade against each other.'));
+   }
+ }
+
+ document.getElementById('kick').addEventListener('click', function(){
+   startWell = nearestEq(x);
+   var mag = 0.4 + (shockVal/100)*3.0;
+   // push from the current well toward the ridge, so a large enough shock can flip a double well
+   v = (startWell <= 0 ? 1 : -1) * mag;
+   t = 0; measuring = true; out.className='readout'; out.innerHTML = 'Measuring time to zero...';
+ });
+
+ function setMode(mv){
+   mode = mv; measuring = false;
+   var eq = equilibria(); x = eq[0]; v = 0;
+   document.querySelectorAll('.mode').forEach(function(bn){ bn.classList.toggle('on', bn.dataset.mode===mv); });
+   var wl = document.getElementById('widthLbl'), wr = document.getElementById('widthRow');
+   if (mode==='single'){ wr.style.display='flex'; wl.firstChild.textContent='Basin width '; }
+   else if (mode==='losing'){ wr.style.display='flex'; wl.firstChild.textContent='Stability (slide down to flatten) '; }
+   else { wr.style.display='none'; }
+   out.className='readout'; out.innerHTML = 'Kick the ball and watch the time to zero.';
+ }
+ document.querySelectorAll('.mode').forEach(function(bn){ bn.addEventListener('click', function(){ setMode(bn.dataset.mode); }); });
+ document.getElementById('width').addEventListener('input', function(e){ widthVal = Number(e.target.value); });
+ document.getElementById('shock').addEventListener('input', function(e){ shockVal = Number(e.target.value); });
+
+ setMode('single');
+ requestAnimationFrame(frame);
+})();
+</script>
+</body></html>
