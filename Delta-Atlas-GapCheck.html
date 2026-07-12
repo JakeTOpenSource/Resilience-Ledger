@@ -46,6 +46,9 @@
  textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
  button{font-family:inherit;}
  ::placeholder{color:var(--dim);opacity:1;}
+ /* embed mode: when loaded as the homepage hero, hide the page's own header (the home nav is above) */
+ body.embed header{display:none;}
+ body.embed .wrap{min-height:auto;}
 </style></head><body>
 <header>
  <h1>Delta Atlas - Gap Check</h1>
@@ -219,4 +222,10 @@ function batchRender(text){ var out=document.getElementById('out');
   h+='<div class="note">Batch view is a scan. For the full findings and how-to-close on any one plan, turn Batch off and paste it alone.</div>';
   out.innerHTML=h; }
 (function(){try{var p=JSON.parse(localStorage.getItem('delta_prefill')||'null'); if(p&&p.tool==='gap'&&p.text){localStorage.removeItem('delta_prefill'); document.getElementById('src').value=p.text; render(p.text);}}catch(e){}})();
+// embed mode for the homepage hero: prefill a sample AI policy and run the REAL engine so a visitor sees live findings
+(function(){ if(location.hash.indexOf('embed')<0) return;
+  document.body.classList.add('embed');
+  var DEMO="Our AI assistant handles customer refunds automatically.\nThe model can approve refunds up to $500 without human review.\nAll customer data is encrypted at rest.\nWe log every decision the system makes.\nOur chatbot is exposed to prompt injection.";
+  var el=document.getElementById('src'); if(el){ el.value=DEMO; render(DEMO); }
+})();
 </script></body></html>

@@ -49,6 +49,12 @@
  .logo .dot{width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 13px var(--accent);}
  .headline{font-size:21px;font-weight:650;margin:14px 0 4px;}
  .tagline{color:var(--dim);font-size:14px;margin:0 0 22px;}
+ .herodemo{margin:6px auto 26px;max-width:900px;text-align:left;}
+ .demolabel{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);margin-bottom:7px;font-weight:600;text-align:center;}
+ .demoframe{width:100%;height:500px;border:1px solid var(--line);border-radius:12px;background:var(--bg);display:block;}
+ .demonote{font-size:12.5px;color:var(--dim);margin-top:9px;text-align:center;}
+ .demonote .dlink{color:var(--accent);cursor:pointer;}
+ @media (max-width:700px){ .demoframe{height:560px;} }
  .searchwrap{display:flex;gap:8px;max-width:620px;margin:0 auto;}
  #hq{flex:1;padding:14px 19px;border:1px solid var(--line);border-radius:26px;background:var(--panel);color:var(--txt);
    font-size:15.5px;box-shadow:0 1px 4px rgba(0,0,0,0.05);}
@@ -270,6 +276,11 @@
       <div class="logo"><span class="dot"></span>Delta Atlas</div>
       <div class="headline">Check the structure before you trust it.</div>
       <div class="tagline">Paste an AI plan. Get back the risks it names with no control. Each gap links to a sourced, plain-language definition &mdash; 439 of them. Deterministic, on your device; nothing leaves it.</div>
+      <div class="herodemo">
+        <div class="demolabel">Live &middot; the real tool, running on your device</div>
+        <iframe class="demoframe" data-src="Delta-Atlas-GapCheck.html#embed" title="Gap Check running on a sample AI policy" loading="lazy"></iframe>
+        <div class="demonote">Above is Gap Check on a sample AI policy &mdash; it names <b>2 gaps</b> with no control present, and sees the controls that are there. <span class="dlink" onclick="nav('Delta-Atlas-GapCheck.html','Gap Check')">Open it and paste your own &rarr;</span></div>
+      </div>
       <div class="searchwrap">
         <input id="hq" placeholder="Ask anything:  what is a harness?   what defends against prompt injection?" autofocus/>
         <button id="hgo" onclick="heroSearch()">Search</button>
@@ -430,5 +441,10 @@
  window.doInstall=function(){ if(!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.then(function(){ deferredPrompt=null; if(installBtn) installBtn.style.display='none'; }); };
  window.addEventListener('appinstalled',function(){ if(installBtn) installBtn.style.display='none'; });
  if(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches && installBtn){ installBtn.style.display='none'; }
+</script>
+<script>
+ /* defer the hero Gap Check demo so it never blocks the homepage's first paint */
+ (function(){function go(){var f=document.querySelector('.demoframe');if(f&&!f.getAttribute('src')&&f.getAttribute('data-src'))f.setAttribute('src',f.getAttribute('data-src'));}
+  if('requestIdleCallback' in window){requestIdleCallback(go,{timeout:2000});}else{window.addEventListener('load',function(){setTimeout(go,250);});}})();
 </script>
 </body></html>
