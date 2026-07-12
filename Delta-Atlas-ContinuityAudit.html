@@ -44,13 +44,13 @@
 </header>
 <div class="main">
  <label>The goal (one sentence: what is this manual for?)</label>
- <input id="goal" placeholder="e.g. Keep the household running safely and privately whether or not any one staff member is available."/>
+ <input id="goal" placeholder="e.g. Keep the service running whether or not any one team member is available."/>
  <label>The procedures (one per line: steps, controls, responsibilities)</label>
  <textarea id="parts" placeholder="One procedure per line. For example:
-Only the head housekeeper knows the alarm codes and safe combination.
-The chief of staff reconciles the household accounts against receipts every month.
+Only one administrator knows the admin credentials and access keys.
+The operations lead reconciles the operation accounts against receipts every month.
 A new vendor is granted building access after a background check and a signed confidentiality agreement.
-If the principal's schedule changes, only the driver is informed."></textarea>
+If the on-call schedule changes, only one person is informed."></textarea>
  <div class="row">
    <button id="run">Run audit</button>
    <button class="ghost" id="ex1">Strong example</button>
@@ -59,7 +59,7 @@ If the principal's schedule changes, only the driver is informed."></textarea>
  </div>
  <div class="overlaynote" id="overlaynote"></div>
  <div class="res" id="res"></div>
- <div class="note">Honest limit: this reads words and patterns, not meaning or your household's actual arrangements. It flags likely gaps to point you where to look; it does not deliver a verdict, and it cannot see anything you haven't written down. The judgment stays yours. Nothing you type leaves your device. Want to harden this privately with your own real procedures and vendor names? Copy <code>continuity-overlay.sample.js</code> to <code>continuity-overlay.local.js</code> next to this file (gitignored — never published) and this page will load it automatically.</div>
+ <div class="note">Honest limit: this reads words and patterns, not meaning or your operation's actual arrangements. It flags likely gaps to point you where to look; it does not deliver a verdict, and it cannot see anything you haven't written down. The judgment stays yours. Nothing you type leaves your device. Want to harden this privately with your own real procedures and vendor names? Copy <code>continuity-overlay.sample.js</code> to <code>continuity-overlay.local.js</code> next to this file (gitignored — never published) and this page will load it automatically.</div>
 </div>
 <script src="lexicon-engine.js"></script>
 <script src="coherence-score-engine.js"></script>
@@ -67,11 +67,11 @@ If the principal's schedule changes, only the driver is informed."></textarea>
 function esc(s){return String(s==null?'':s).replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
 
 // --- knowledge base: generic, non-client-specific operations-manual risk vocabulary.
-// Craft generalizes; a specific household's real procedures, vendor names, or staff never
+// Craft generalizes; a specific operation's real procedures, vendor names, or staff never
 // belong here — that's exactly what the private overlay below is for.
 const BASE_KB = {
   noControlNoun: 'knowledge base',
-  clusters: ['Succession & Continuity','Principal Security','Access & Vendor Control','Confidentiality','Financial Controls','Emergency Procedures'],
+  clusters: ['Succession & Continuity','Personnel & Site Security','Access & Vendor Control','Confidentiality','Financial Controls','Emergency Procedures'],
   terms: [
     {id:'single-point-of-failure', name:'Single point of failure', purpose:'risk', cluster:'Succession & Continuity', acct:'', aliases:['single point of failure','only one person knows','sole point of contact','nobody else can','no one else knows','no one else can']},
     {id:'staff-turnover-risk', name:'Undocumented staff turnover', purpose:'risk', cluster:'Succession & Continuity', acct:'', aliases:['staff turnover','without notice','sudden departure','no transition plan']},
@@ -81,21 +81,21 @@ const BASE_KB = {
     {id:'succession-plan', name:'Succession plan', purpose:'control', cluster:'Succession & Continuity', acct:'human', aliases:['succession plan','transition plan','continuity plan']},
     {id:'knowledge-handoff', name:'Knowledge handoff', purpose:'control', cluster:'Succession & Continuity', acct:'human', aliases:['handoff checklist','transition checklist','knowledge transfer']},
 
-    {id:'principal-exposure', name:'Principal exposure', purpose:'risk', cluster:'Principal Security', acct:'', aliases:['schedule shared broadly','location shared','travel plans posted','publicly known schedule']},
-    {id:'unvetted-access', name:'Unvetted access granted', purpose:'risk', cluster:'Principal Security', acct:'', aliases:['no background check','without a background check','unvetted','not screened']},
-    {id:'travel-security-protocol', name:'Travel security protocol', purpose:'control', cluster:'Principal Security', acct:'human', aliases:['travel security protocol','need to know schedule','advance security check']},
-    {id:'background-check-policy', name:'Background check policy', purpose:'control', cluster:'Principal Security', acct:'human', aliases:['background check','background screening','vetted before']},
+    {id:'key-person-exposure', name:'Key-person exposure', purpose:'risk', cluster:'Personnel & Site Security', acct:'', aliases:['schedule shared broadly','location shared','travel plans posted','publicly known schedule']},
+    {id:'unvetted-access', name:'Unvetted access granted', purpose:'risk', cluster:'Personnel & Site Security', acct:'', aliases:['no background check','without a background check','unvetted','not screened']},
+    {id:'travel-security-protocol', name:'Travel security protocol', purpose:'control', cluster:'Personnel & Site Security', acct:'human', aliases:['travel security protocol','need to know schedule','advance security check']},
+    {id:'background-check-policy', name:'Background check policy', purpose:'control', cluster:'Personnel & Site Security', acct:'human', aliases:['background check','background screening','vetted before']},
 
-    {id:'vendor-overreach', name:'Vendor access overreach', purpose:'risk', cluster:'Access & Vendor Control', acct:'', aliases:['full access to the property','full access to the house','full access to the home','full access to the residence','full access to the estate','full access to everything','all areas access','unrestricted access','run of the house']},
+    {id:'vendor-overreach', name:'Vendor access overreach', purpose:'risk', cluster:'Access & Vendor Control', acct:'', aliases:['full access to all systems','full access to all facilities','full access to all servers','full access to all accounts','full access to everything','full access to everything','all areas access','unrestricted access','run of the place']},
     {id:'unattended-visitor', name:'Unattended visitor or vendor', purpose:'risk', cluster:'Access & Vendor Control', acct:'', aliases:['left unattended','unsupervised','no escort','without supervision']},
     {id:'least-privilege-access', name:'Least-privilege access', purpose:'control', cluster:'Access & Vendor Control', acct:'human', aliases:['least privilege','only the access needed','scoped access','access limited to','access is limited to']},
     {id:'escort-policy', name:'Escort policy', purpose:'control', cluster:'Access & Vendor Control', acct:'human', aliases:['escorted at all times','always accompanied','staff escort']},
     {id:'vendor-access-log', name:'Vendor access log', purpose:'control', cluster:'Access & Vendor Control', acct:'human', aliases:['visitor access log','vendor access log','sign in log','sign-in sheet','visitor log']},
 
-    {id:'information-leakage', name:'Information leakage', purpose:'risk', cluster:'Confidentiality', acct:'', aliases:['discussed outside','shared with outsiders','posted about the household','talked about publicly']},
-    {id:'device-exposure', name:'Personal device exposure', purpose:'risk', cluster:'Confidentiality', acct:'', aliases:['personal phone','personal device','unencrypted device','personal email for household']},
+    {id:'information-leakage', name:'Information leakage', purpose:'risk', cluster:'Confidentiality', acct:'', aliases:['discussed outside','shared with outsiders','posted about the organization','talked about publicly']},
+    {id:'device-exposure', name:'Personal device exposure', purpose:'risk', cluster:'Confidentiality', acct:'', aliases:['personal phone','personal device','unencrypted device','personal email for company data']},
     {id:'confidentiality-agreement', name:'Confidentiality agreement', purpose:'control', cluster:'Confidentiality', acct:'human', aliases:['confidentiality agreement','signed nda','non disclosure agreement']},
-    {id:'secure-communication-channel', name:'Secure communication channel', purpose:'control', cluster:'Confidentiality', acct:'human', aliases:['secure channel','encrypted communication','household issued device']},
+    {id:'secure-communication-channel', name:'Secure communication channel', purpose:'control', cluster:'Confidentiality', acct:'human', aliases:['secure channel','encrypted communication','company-issued device']},
 
     {id:'unauthorized-expenditure', name:'Unauthorized expenditure', purpose:'risk', cluster:'Financial Controls', acct:'', aliases:['spends without approval','no approval needed','without sign off','discretionary spending']},
     {id:'reconciliation-gap', name:'Financial reconciliation gap', purpose:'risk', cluster:'Financial Controls', acct:'', aliases:['not reconciled','no reconciliation','accounts unchecked']},
@@ -103,7 +103,7 @@ const BASE_KB = {
     {id:'monthly-reconciliation', name:'Regular reconciliation', purpose:'control', cluster:'Financial Controls', acct:'human', aliases:['reconciles monthly','reconciled every month','regular reconciliation','audited quarterly']},
 
     {id:'unclear-emergency-chain', name:'Unclear emergency chain', purpose:'risk', cluster:'Emergency Procedures', acct:'', aliases:['no emergency plan','unclear who to call','no defined chain','not sure who decides']},
-    {id:'single-key-holder', name:'Single key/code holder', purpose:'risk', cluster:'Emergency Procedures', acct:'', aliases:['only one key','one person has the code','single keyholder','only the driver knows']},
+    {id:'single-key-holder', name:'Single key/code holder', purpose:'risk', cluster:'Emergency Procedures', acct:'', aliases:['only one key','one person has the code','single keyholder','only one person knows']},
     {id:'emergency-contact-protocol', name:'Emergency contact protocol', purpose:'control', cluster:'Emergency Procedures', acct:'human', aliases:['emergency contact list','emergency protocol','crisis contact chain']},
     {id:'redundant-access', name:'Redundant emergency access', purpose:'control', cluster:'Emergency Procedures', acct:'human', aliases:['sealed envelope','backup key holder','redundant access','second key holder'] },
 
@@ -113,7 +113,7 @@ const BASE_KB = {
     ['cross-training','single-point-of-failure','mitigates'], ['documented-procedure','single-point-of-failure','mitigates'], ['succession-plan','single-point-of-failure','governs'],
     ['succession-plan','staff-turnover-risk','mitigates'], ['knowledge-handoff','staff-turnover-risk','checks'],
     ['documented-procedure','undocumented-procedure','mitigates'],
-    ['travel-security-protocol','principal-exposure','mitigates'],
+    ['travel-security-protocol','key-person-exposure','mitigates'],
     ['background-check-policy','unvetted-access','mitigates'],
     ['least-privilege-access','vendor-overreach','mitigates'],
     ['escort-policy','unattended-visitor','mitigates'], ['vendor-access-log','unattended-visitor','detects'],
@@ -130,26 +130,26 @@ const BASE_KB = {
     'least-privilege-access': ['need to know basis','need-to-know basis'],
   },
   redFlags: [
-    {t:'Single keyholder for emergency access', d:'Only one person can open the safe, disarm the alarm, or reach emergency medical information. If that person is unreachable, so is the household.',
-     re:/\bonly\s+(?:the\s+)?(?:[a-z]+\s+){0,3}(knows|has|holds)\b[^.]{0,40}\b(safe|combination|alarm|password|passcode|key ?code)\b|\b(held by|known to)\s+(?:exactly |just |only )?one person\b/i},
+    {t:'Single keyholder for emergency access', d:'Only one person can open the safe, disarm the alarm, or reach emergency medical information. If that person is unreachable, so is the operation.',
+     re:/\bonly\s+(?:the\s+)?(?:[a-z]+\s+){0,3}(knows|has|holds)\b[^.]{0,40}\b(safe|combination|alarm|password|passcode|key ?code|credential|credentials|access keys?)\b|\b(held by|known to)\s+(?:exactly |just |only )?one person\b/i},
     {t:'Vendor granted unrestricted access', d:'A vendor or contractor is described with access broader than the job requires, with no stated limit or expiry.',
-     re:/\bmaster key\b|\b(all[- ]areas|unrestricted|unfettered|unlimited)\s+access\b|\bfull\s+access\s+to\s+(the\s+)?(house|home|property|residence|estate|everything)\b|\bkeys?\s+to\s+(every|all|the whole|the entire)\b/i},
-    {t:'Principal schedule or location broadly known', d:'The principal\'s whereabouts or schedule is shared beyond the people who need it to do their job.',
-     re:/\b(schedule|itinerary|location|whereabouts|travel plans?|address)\b[^.]{0,50}\b(posted|shared|visible|known|tagged|geotag\w*)\b[^.]{0,40}\b(publicly|broadly|with everyone|with all staff|online|on social|on instagram|on facebook|to the public)\b|\b(principal|family|children|kids)('s|s')?\b[^.]{0,40}\b(schedule|itinerary|location|whereabouts|travel)\b[^.]{0,40}\b(posted|shared|public|online|social media|instagram)\b/i},
+     re:/\bmaster key\b|\b(all[- ]areas|unrestricted|unfettered|unlimited)\s+access\b|\bfull\s+access\s+to\s+(the\s+|all\s+)?(systems|servers|facilities|accounts|the network|everything)\b|\bkeys?\s+to\s+(every|all|the whole|the entire)\b/i},
+    {t:'Key-person schedule or location broadly known', d:'A key person\'s whereabouts or schedule is shared beyond the people who need it to do their job.',
+     re:/\b(schedule|itinerary|location|whereabouts|travel plans?|address)\b[^.]{0,50}\b(posted|shared|visible|known|tagged|geotag\w*)\b[^.]{0,40}\b(publicly|broadly|with everyone|with all staff|online|on social|on instagram|on facebook|to the public)\b|\bb(executive|leader|key person|manager|director)('s|s')?\b[^.]{0,40}\b(schedule|itinerary|location|whereabouts|travel)\b[^.]{0,40}\b(posted|shared|public|online|social media|instagram)\b/i},
   ],
   groupChecks: [{
     ifGroup: { ids: new Set(['single-point-of-failure','staff-turnover-risk','undocumented-procedure']) },
     unlessGroup: { ids: new Set(['cross-training','documented-procedure','succession-plan','knowledge-handoff']) },
     sev: 'gap',
     title: () => 'Institutional knowledge has no backup',
-    detail: () => 'A task or piece of knowledge is named as resting on one person, and nothing in the text says it is cross-trained, written down, or covered by a succession plan. If that person is unavailable, so is the household.',
+    detail: () => 'A task or piece of knowledge is named as resting on one person, and nothing in the text says it is cross-trained, written down, or covered by a succession plan. If that person is unavailable, so is the operation.',
     sugg: ['cross-training','documented-procedure','succession-plan','knowledge-handoff'],
   }],
 };
 
 // Private overlay (gitignored *.local.js, never published): additive only. Copy
 // continuity-overlay.sample.js to continuity-overlay.local.js and add real terms/relations/redFlags
-// specific to one household — those never belong in the public floor above.
+// specific to one operation — those never belong in the public floor above.
 //
 // SHALLOW copy, never a JSON round-trip: BASE_KB carries a Set (defendRelTypes) and functions
 // (groupChecks[].title/detail, ifGroup.ids) that JSON.stringify silently destroys — a red-team
@@ -184,7 +184,7 @@ const SCORER = CoherenceScoreEngine.makeScorer({
       return 85;
     },
     flagIf: function(v){ return v < 50; }, flagSev:'bad', flagLabel:'no backup named',
-    fixText: function(){ return 'Name who else can do this, or where the procedure is written down, so one person\'s absence does not stop the household.'; },
+    fixText: function(){ return 'Name who else can do this, or where the procedure is written down, so one person\'s absence does not stop the operation.'; },
   }],
 });
 
@@ -193,7 +193,7 @@ function analyze(text){ return LexiconEngine.analyze(text, KB); }
 
 // --- Resilience of the goal: a whole-manual reading (system-level, not per-line — resilience
 // is a property of the whole, per the Resilience Ledger and Holling 1973). It asks whether the
-// manual can keep the household on its stated goal when disrupted, across three functions
+// manual can keep the operation on its stated goal when disrupted, across three functions
 // (Resilience Ledger absorb/check/reset ~ MITRE 2011 withstand/anchor/recover).
 //
 // HARDENED after a red-team found the earlier version certified a maximally BRITTLE manual as
@@ -262,7 +262,7 @@ function run(){
   const R = resilienceReading(A, roll, parts);
   const rv = R.overall>=72?['Reads resilient &mdash; verify against real events','var(--green)'] : R.overall>=52?['Holds, with soft spots','var(--accent)'] : R.overall>=34?['Brittle in places','var(--amber)'] : ['Not yet resilient','var(--red)'];
   h+='<h2>Resilience of the goal</h2>';
-  h+='<div class="slop" style="margin-bottom:8px">Can this manual keep the household on its stated goal when disrupted &mdash; a key person out, a vendor failing, an emergency? <b style="color:'+rv[1]+'">'+R.overall+' &middot; '+rv[0]+'</b></div>';
+  h+='<div class="slop" style="margin-bottom:8px">Can this manual keep the operation on its stated goal when disrupted &mdash; a key person out, a vendor failing, an emergency? <b style="color:'+rv[1]+'">'+R.overall+' &middot; '+rv[0]+'</b></div>';
   [['Withstand','absorbs the hit — named risks have a control',R.withstand],['Anchor','stays true to the goal under stress',R.anchor],['Recover','resets to normal after a disruption',R.recover]].forEach(function(row){
     h+='<div class="dim"><span class="dlbl">'+row[0]+' <span style="color:var(--dim);font-weight:400;font-size:11.5px">'+row[1]+'</span></span><span class="dtrk"><span class="dfill" style="width:'+row[2]+'%;background:'+col(row[2])+'"></span></span><span class="dval">'+row[2]+'</span></div>';
   });
@@ -296,18 +296,18 @@ function run(){
 document.getElementById('run').onclick=run;
 document.getElementById('clr').onclick=function(){document.getElementById('goal').value='';document.getElementById('parts').value='';document.getElementById('res').className='res';};
 function loadEx(goal, parts){ document.getElementById('goal').value=goal; document.getElementById('parts').value=parts.join('\n'); run(); }
-document.getElementById('ex1').onclick=function(){ loadEx("Keep the household running safely and privately whether or not any one staff member is available.",[
-  "The chief of staff and the deputy are both cross-trained on the alarm codes and safe combination, documented in the sealed emergency envelope.",
-  "New vendors are granted access only after a background check and a signed confidentiality agreement, and are escorted at all times on-site.",
-  "The household accounts are reconciled every month by the bookkeeper and reviewed independently each quarter.",
-  "Any expenditure over the threshold requires dual approval from the principal and the chief of staff.",
-  "The emergency contact protocol names three people, in order, for every category of incident."]); };
-document.getElementById('ex2').onclick=function(){ loadEx("Run the household smoothly.",[
-  "Only the head housekeeper knows the alarm codes and safe combination.",
-  "The new landscaping contractor has full access to the property with no supervision.",
-  "The household accounts are not reconciled on any regular schedule.",
-  "Staff can approve purchases without any sign-off from the principal's office.",
-  "If there is an emergency, only the driver knows who to call."]); };
+document.getElementById('ex1').onclick=function(){ loadEx("Keep the service running whether or not any one team member is available.",[
+  "The operations lead and a backup engineer are both cross-trained on the admin credentials and access keys, documented in the recovery runbook.",
+  "New vendors are granted access only after a background check and a signed confidentiality agreement, and that access is time-limited and logged.",
+  "The financial accounts are reconciled every month by finance and reviewed independently each quarter.",
+  "Any expenditure over the threshold requires dual approval from management and the operations lead.",
+  "The incident escalation protocol names three people, in order, for every category of incident."]); };
+document.getElementById('ex2').onclick=function(){ loadEx("Run the operation smoothly.",[
+  "Only one administrator knows the admin credentials and access keys.",
+  "The new contractor has full access to all systems with no supervision.",
+  "The accounts are not reconciled on any regular schedule.",
+  "Anyone can approve purchases without any sign-off from management.",
+  "In an incident, only one person knows who to call."]); };
 fetch('continuity-overlay.local.js').then(function(r){ if(!r.ok) throw 0; return r.text(); }).then(function(src){
   (0,eval)(src); // defines window.CONTINUITY_OVERLAY if present; local file only, never fetched over a network
   if(window.CONTINUITY_OVERLAY){ KB = mergeOverlay(BASE_KB, window.CONTINUITY_OVERLAY); document.getElementById('overlaynote').textContent = 'Private overlay loaded: base + your local rules.'; }

@@ -1,6 +1,6 @@
 // Service worker: enables install + offline. Network-first so fresh deploys show immediately;
 // falls back to cache when offline. Read-only static caching; no tracking, no data collection.
-const CACHE='aaig-v83';
+const CACHE='aaig-v84';
 const CORE=[
  'index.html','manifest.webmanifest','evaluate.html','404.html','terms.enriched.json',
  'Agentic-AI-Governance-Chat.html','Agentic-AI-Governance-GroundTruth.html','Delta-Atlas-Start.html','Delta-Atlas-Field.html',

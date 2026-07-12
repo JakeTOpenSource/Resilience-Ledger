@@ -36,43 +36,43 @@ const GAP_CASES = [
   // agreement between them.
   {
     name: "single point of failure, exact bridge phrase (must flag the KB continuity gap)",
-    text: "Only she knows the alarm codes and safe combination, and no one else is trained.",
+    text: "Only one person knows the admin credentials and access keys, and no one else is trained.",
     mustFlag: [/Institutional knowledge has no backup/i],
   },
   {
     name: "single point of failure, multi-word role — red flag regex generalizes where the KB substring match cannot",
-    text: "Only the head housekeeper knows the alarm codes and safe combination.",
+    text: "Only one administrator knows the admin credentials and access keys.",
     mustFlag: [/Single keyholder for emergency access/i],
   },
   {
     name: "single point of failure WITH cross-training stated (must NOT flag continuity gap)",
-    text: "Only she knows the alarm codes, and the deputy is cross-trained as backup.",
+    text: "Only one person knows the admin credentials, and a colleague is cross-trained as backup.",
     mustFlag: [], mustNot: [/Institutional knowledge has no backup/i],
   },
   {
     name: "vendor overreach red flag (must flag)",
-    text: "The new contractor has full access to the property with no supervision.",
+    text: "The new contractor has full access to all systems with no supervision.",
     mustFlag: [/Vendor granted unrestricted access/i, /Vendor access overreach/i],
   },
   {
     name: "vendor access WITH least-privilege control (must NOT flag the overreach gap)",
-    text: "The contractor has full access to the property, scoped to least privilege for the pool area only, and is always accompanied.",
+    text: "The contractor has full access to all systems, scoped to least privilege for the pool area only, and is always accompanied.",
     mustFlag: [], mustNot: [/Risk named with no control.*Vendor access overreach/i],
   },
   {
     name: "single key holder for emergency access (must flag)",
-    text: "If there is an emergency, only the driver knows who to call.",
+    text: "In an incident, only one person knows who to call.",
     mustFlag: [/Single key.code holder/i],
   },
   {
     name: "clean manual — no gaps (must be empty)",
-    text: "The chief of staff and the deputy are cross-trained on the alarm codes, documented in the sealed emergency envelope. Vendors pass a background check and sign a confidentiality agreement before access. Accounts are reconciled monthly with dual approval on all spending.",
+    text: "The operations lead and a backup are cross-trained on the admin credentials, documented in the sealed emergency envelope. Vendors pass a background check and sign a confidentiality agreement before access. Accounts are reconciled monthly with dual approval on all spending.",
     mustFlag: [], mustNot: [/Risk named with no control/i, /Institutional knowledge has no backup/i],
   },
   // red-team finding 7: 'full access to' over-fired on benign, unrelated prose about children.
   {
     name: "benign 'full access' to a room (must NOT flag vendor overreach)",
-    text: "The children have full access to the playroom and the garden whenever they like.",
+    text: "Employees have full access to the break room and the parking lot whenever they like.",
     mustFlag: [], mustNot: [/Vendor access overreach/i, /Vendor granted unrestricted access/i],
   },
   // red-team finding 9: RF2 required the literal word 'access' after 'master key' and missed this.
@@ -83,9 +83,9 @@ const GAP_CASES = [
   },
   // red-team finding 9: RF3's rigid three-slot pattern missed the common social-media leak.
   {
-    name: "principal location leaked on social media (must flag)",
-    text: "The principal's travel itinerary is posted publicly on the household Instagram.",
-    mustFlag: [/Principal schedule or location broadly known/i],
+    name: "key-person location leaked on social media (must flag)",
+    text: "A senior leader's travel schedule is posted publicly on the company social account.",
+    mustFlag: [/Key-person schedule or location broadly known/i],
   },
 ];
 
@@ -105,8 +105,8 @@ function runGapCases(analyze) {
 }
 
 const SCORE_CASES = [
-  { name: "continuity dimension: multi-word role + no backup scores low", text: "Only the head housekeeper knows the alarm codes and safe combination.", dim: "continuity", maxScore: 49 },
-  { name: "continuity dimension: multi-word role + backup stated scores high", text: "Only the head housekeeper knows the alarm codes, but the deputy is cross-trained and it is documented.", dim: "continuity", minScore: 60 },
+  { name: "continuity dimension: multi-word role + no backup scores low", text: "Only one administrator knows the admin credentials and access keys.", dim: "continuity", maxScore: 49 },
+  { name: "continuity dimension: multi-word role + backup stated scores high", text: "Only one administrator knows the admin credentials, but a colleague is cross-trained and it is documented.", dim: "continuity", minScore: 60 },
   { name: "continuity dimension: no single-point phrasing at all scores high", text: "The accounts are reconciled monthly by the bookkeeper.", dim: "continuity", minScore: 60 },
 ];
 
@@ -122,16 +122,16 @@ function runScoreCases(SCORER, content) {
 }
 
 const STRONG_MANUAL = [
-  "The chief of staff and the deputy are both cross trained on the alarm codes, documented in the sealed emergency envelope.",
+  "The operations lead and a backup engineer are both cross-trained on the admin credentials, documented in the sealed emergency envelope.",
   "New vendors pass a background check and sign a confidentiality agreement before access, and are escorted at all times.",
-  "The bookkeeper reconciles the household accounts every month; any spend over the threshold needs dual approval.",
-  "The emergency contact protocol names three people, in order, for every category of incident.",
+  "Finance reconciles the accounts every month; any spend over the threshold needs dual approval.",
+  "The incident escalation protocol names three people, in order, for every category of incident.",
 ];
 const WEAK_MANUAL = [
-  "Only the head housekeeper knows the alarm codes and safe combination.",
-  "The new contractor has full access to the property with no supervision.",
-  "The household accounts are not reconciled on any regular schedule.",
-  "If there is an emergency, only the driver knows who to call.",
+  "Only one administrator knows the admin credentials and access keys.",
+  "The new contractor has full access to all systems with no supervision.",
+  "The accounts are not reconciled on any regular schedule.",
+  "In an incident, only one person knows who to call.",
 ];
 
 // The red-team's maximal false-positive: a genuinely brittle manual (real single points of
@@ -139,10 +139,10 @@ const WEAK_MANUAL = [
 // reassuring control vocabulary. The un-hardened reading certified this "Resilient" at 84,
 // beating the strong example (70). It must now be clearly brittle and locked out of the top band.
 const ATTACK_MANUAL = [
-  "Keep the household running: payroll rests entirely with Marta, and privately nobody was ever trained to take over, per our succession words.",
-  "Keep the household safely running: the combination lives in Marta's head alone, our backup and contingency being that she is reliable.",
+  "Keep the operation running: payroll rests entirely with one person, and nobody was ever trained to take over, per our succession words.",
+  "Keep the operation running reliably: the credentials live in one person's head alone, our backup and contingency being that the person is reliable.",
   "Privately keep staff available: cross training and handoff and emergency succession are values we cherish, though undone.",
-  "Keep the household running safely and privately: recovery, fallback, and contingency are always in our hearts.",
+  "Keep the operation running reliably: recovery, fallback, and contingency are always in our hearts.",
 ];
 
 function resilienceOf(tools, goal, lines) {
@@ -155,7 +155,7 @@ function resilienceOf(tools, goal, lines) {
 const RES_TOP_BAND = 72; // the UI's "reads resilient" threshold
 
 function runResilienceCases(tools) {
-  const goal = "Keep the household running safely and privately whether or not any one staff member is available.";
+  const goal = "Keep the service running whether or not any one team member is available.";
   const strong = resilienceOf(tools, goal, STRONG_MANUAL);
   const weak = resilienceOf(tools, goal, WEAK_MANUAL);
   const attack = resilienceOf(tools, goal, ATTACK_MANUAL);
