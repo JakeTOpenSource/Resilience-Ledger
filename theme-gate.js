@@ -22,6 +22,11 @@ for (const f of files) {
   if (g && t) { const r = cr(t[1].slice(1), g[1].slice(1)); if (r < 4.5) fails.push(f + `: --txt on --bg only ${r.toFixed(2)}:1`); }
   if (p && t) { const r = cr(t[1].slice(1), p[1].slice(1)); if (r < 4.5) fails.push(f + `: --txt on --panel only ${r.toFixed(2)}:1`); }
   if (p && d) { const r = cr(d[1].slice(1), p[1].slice(1)); if (r < 4.5) fails.push(f + `: --dim on --panel only ${r.toFixed(2)}:1`); }
+  // mobile safety: a percentage-width flex column, or a viewport-height pane that scrolls internally,
+  // traps content on phones unless a media query stacks it. Plain height:100vh centering is fine and not flagged.
+  const hasPctColumn = /width:\s*\d{2}%/.test(s) && /display:\s*flex/.test(s);
+  const hasTrappedScroller = /calc\(100vh/.test(s) && /overflow:\s*(auto|scroll)/.test(s);
+  if ((hasPctColumn || hasTrappedScroller) && !/@media/.test(s)) fails.push(f + ": two-column or full-height-scrolling layout with no media query (traps on mobile)");
 }
 if (fails.length) { console.error("THEME GATE FAILED:\n  " + fails.join("\n  ")); process.exit(1); }
 console.log(`${files.length}/${files.length} pages hold — theme and contrast GREEN`);

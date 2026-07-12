@@ -46,7 +46,14 @@
  .clegend{font-size:11.5px;color:var(--dim);} .clegend b{color:var(--txt);}
  .carea{display:flex;align-items:center;gap:8px;font-size:11.5px;margin:3px 0;color:var(--dim);}
  .carea .an{width:150px;flex:none;color:var(--txt);} .carea .at{flex:1;height:6px;background:#22402e;border-radius:3px;overflow:hidden;}
- .carea .at span{display:block;height:100%;background:#8fe0a5;}</style></head><body>
+ .carea .at span{display:block;height:100%;background:#8fe0a5;}
+ /* mobile: stack the two-column tool layout so nothing is trapped in a fixed-height pane */
+ @media (max-width:720px){
+  .wrap{flex-direction:column;min-height:0;}
+  .in,.side{width:100%!important;min-width:0!important;height:auto!important;max-height:none!important;position:static!important;overflow:visible!important;border-right:none;border-bottom:1px solid var(--line);}
+  main{overflow:visible!important;height:auto!important;min-height:0!important;}
+ }
+</style></head><body>
 <header>
  <h1>Delta Atlas - Curation dashboard</h1>
  <p><b>The author curation view, not a ranking of the words.</b> Every term here is a textbook pillar or a newer idea; the point is not to score them but to keep them honest. This lists which entries are still unreviewed, thin, or resting on a single source, so they can be checked and integrated with the rest. Sorting by source support just surfaces what needs attention first. Correctness is confirmed by human review (the coloured dot), never by this list.</p>

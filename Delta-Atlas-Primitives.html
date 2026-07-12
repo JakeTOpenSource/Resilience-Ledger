@@ -25,6 +25,13 @@
  .dom{color:var(--dim);border-color:var(--line);background:transparent;font-weight:400;}
  .def{font-size:13.5px;margin:6px 0;} .prov{font-size:11.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:6px;margin-top:6px;}
  .clear{cursor:pointer;color:var(--accent);font-size:12px;} .none{color:var(--dim);font-style:italic;padding:20px 0;}
+
+ /* mobile: stack the two-column tool layout so nothing is trapped in a fixed-height pane */
+ @media (max-width:720px){
+  .wrap{flex-direction:column;min-height:0;}
+  .in,.side{width:100%!important;min-width:0!important;height:auto!important;max-height:none!important;position:static!important;overflow:visible!important;border-right:none;border-bottom:1px solid var(--line);}
+  main{overflow:visible!important;height:auto!important;min-height:0!important;}
+ }
 </style></head><body>
 <header>
  <h1>Delta Atlas - Systems Primitives <span style="font-size:11px;color:var(--dim);font-weight:400">companion library</span></h1>

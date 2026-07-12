@@ -48,6 +48,13 @@
  .seclbl2{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin:16px 0 8px;border-bottom:1px solid var(--line);padding-bottom:5px;}
  .method-d{color:#f2cd55;} .method-c{color:var(--win);}
  .sdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle;} .slegend{font-size:11px;color:var(--dim);display:inline-flex;align-items:center;gap:2px;flex-wrap:wrap;} .slegend .sdot{margin:0 3px 0 8px;}
+
+ /* mobile: stack the two-column tool layout so nothing is trapped in a fixed-height pane */
+ @media (max-width:720px){
+  .wrap{flex-direction:column;min-height:0;}
+  .in,.side{width:100%!important;min-width:0!important;height:auto!important;max-height:none!important;position:static!important;overflow:visible!important;border-right:none;border-bottom:1px solid var(--line);}
+  main{overflow:visible!important;height:auto!important;min-height:0!important;}
+ }
 </style></head><body>
 <header>
  <h1>Delta Atlas - Explore</h1>
