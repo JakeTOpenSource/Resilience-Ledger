@@ -30,6 +30,9 @@ for (const f of files) {
   // near-white panel background on a dark theme: light text lands on it and vanishes (the rgba the hex sweep missed)
   const nearWhitePanel = /background:\s*rgba\(\s*2[45][0-9]\s*,\s*2[45][0-9]\s*,\s*2[45][0-9]/i.test(s);
   if (nearWhitePanel) fails.push(f + ": near-white rgba() panel background on the dark theme (light text will be invisible)");
+  // typography consistency: every real page must carry the canonical baseline; redirect stubs are exempt
+  const isRedirect = /http-equiv=["']refresh["']/i.test(s);
+  if (!isRedirect && !/canonical typography/.test(s)) fails.push(f + ": missing the canonical typography baseline (fonts will drift from the rest of the site)");
 }
 if (fails.length) { console.error("THEME GATE FAILED:\n  " + fails.join("\n  ")); process.exit(1); }
 console.log(`${files.length}/${files.length} pages hold — theme and contrast GREEN`);
