@@ -33,6 +33,7 @@ for (const f of files) {
   // typography consistency: every real page must carry the canonical baseline; redirect stubs are exempt
   const isRedirect = /http-equiv=["']refresh["']/i.test(s);
   if (!isRedirect && !/canonical typography/.test(s)) fails.push(f + ": missing the canonical typography baseline (fonts will drift from the rest of the site)");
+  if (!isRedirect && !/textarea,input,select\{font-family:inherit/.test(s)) fails.push(f + ": form controls not normalized to the body font (text boxes will render in an inconsistent/monospace font)");
 }
 if (fails.length) { console.error("THEME GATE FAILED:\n  " + fails.join("\n  ")); process.exit(1); }
 console.log(`${files.length}/${files.length} pages hold — theme and contrast GREEN`);
