@@ -76,7 +76,7 @@ const DATA={"terms":[{"id":"artificial-intelligence","function_statement":"Softw
 const T=DATA.terms, R=DATA.relations;
 const byId={}; T.forEach(t=>byId[t.id]=t);
 function nm(t){return t.names.plain[0]||(t.names.technical[0]&&t.names.technical[0].name)||t.id;}
-function esc(s){return (s==null?'':String(s)).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 const PURP={capability:"capability",absorb:"absorb",check:"check",reset:"reset",center:"center",risk:"risk"};
 const DIR=new Set(["enables","requires","mitigates","detects","causes","checks","governs","instance_of"]);
 
@@ -117,7 +117,7 @@ function buildSide(){
   h+='<div class="adv"><h4>Find connections</h4><div class="advhelp">Show every term that has a chosen relationship to a chosen term.</div><label class="advlab" for="relType">Relationship</label><select id="relType"><option value="">any relationship</option>';
   [['mitigates','defends against'],['detects','detects'],['enables','enables'],['requires','needs'],['causes','can cause'],['checks','checks'],['governs','governs'],['instance_of','is a kind of'],['alias_of','is another name for'],['handoff','hands off to']].forEach(rt=>h+='<option value="'+rt[0]+'">'+rt[1]+' &hellip;</option>');
   h+='</select><label class="advlab" for="relTarget">Term</label><select id="relTarget"><option value="">choose a term</option>';
-  T.slice().sort((a,b)=>nm(a).localeCompare(nm(b))).forEach(t=>h+='<option value="'+t.id+'">'+esc(nm(t))+'</option>');
+  T.slice().sort((a,b)=>nm(a).localeCompare(nm(b))).forEach(t=>h+='<option value="'+esc(t.id)+'">'+esc(nm(t))+'</option>');
   h+='</select><span class="clear" id="clearAll">clear all filters</span></div>';
   s.innerHTML=h;
   s.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{

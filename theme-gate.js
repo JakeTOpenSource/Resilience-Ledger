@@ -27,6 +27,9 @@ for (const f of files) {
   const hasPctColumn = /width:\s*\d{2}%/.test(s) && /display:\s*flex/.test(s);
   const hasTrappedScroller = /calc\(100vh/.test(s) && /overflow:\s*(auto|scroll)/.test(s);
   if ((hasPctColumn || hasTrappedScroller) && !/@media/.test(s)) fails.push(f + ": two-column or full-height-scrolling layout with no media query (traps on mobile)");
+  // near-white panel background on a dark theme: light text lands on it and vanishes (the rgba the hex sweep missed)
+  const nearWhitePanel = /background:\s*rgba\(\s*2[45][0-9]\s*,\s*2[45][0-9]\s*,\s*2[45][0-9]/i.test(s);
+  if (nearWhitePanel) fails.push(f + ": near-white rgba() panel background on the dark theme (light text will be invisible)");
 }
 if (fails.length) { console.error("THEME GATE FAILED:\n  " + fails.join("\n  ")); process.exit(1); }
 console.log(`${files.length}/${files.length} pages hold — theme and contrast GREEN`);
