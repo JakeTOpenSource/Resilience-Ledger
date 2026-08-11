@@ -22,9 +22,16 @@ function readJson(relativePath) {
   }
 }
 
-function sha256(relativePath) {
-  const bytes = fs.readFileSync(path.join(repoRoot, relativePath));
+function sha256Bytes(bytes) {
   return crypto.createHash('sha256').update(bytes).digest('hex');
+}
+
+function canonicalRepositoryText(bytes) {
+  return Buffer.from(bytes.toString('utf8').replace(/\r\n/g, '\n'), 'utf8');
+}
+
+function sha256RepositoryText(relativePath) {
+  return sha256Bytes(canonicalRepositoryText(fs.readFileSync(path.join(repoRoot, relativePath))));
 }
 
 function assert(condition, message) {
@@ -120,11 +127,19 @@ if (deployment) {
   assert(deployment.comparison.semantic_matches + deployment.comparison.semantic_mismatches ===
     deployment.comparison.deployable_paths_checked,
     'deployment receipt: semantic totals must cover every checked path');
+  assert(deployment.comparison.repository_hash_algorithm === 'SHA-256',
+    'deployment receipt: repository hash algorithm must be SHA-256');
+  assert(deployment.comparison.repository_hash_basis ===
+    'UTF-8 repository text with CRLF normalized to LF, matching the committed Git blob bytes for the recorded files.',
+    'deployment receipt: repository hash basis must stay explicit');
+  assert(sha256Bytes(canonicalRepositoryText(Buffer.from('line one\r\nline two\r\n'))) ===
+    sha256Bytes(canonicalRepositoryText(Buffer.from('line one\nline two\n'))),
+    'deployment receipt: CRLF/LF portability regression');
   const mismatchByPath = Object.fromEntries(deployment.comparison.mismatches.map((item) => [item.path, item]));
   for (const required of ['index.html', 'sw.js']) {
     assert(Boolean(mismatchByPath[required]), `deployment receipt: missing drift record for ${required}`);
     if (mismatchByPath[required]) {
-      assert(sha256(required) === mismatchByPath[required].repository_sha256,
+      assert(sha256RepositoryText(required) === mismatchByPath[required].repository_sha256,
         `deployment receipt: repository hash drifted for ${required}; add a new receipt`);
     }
   }

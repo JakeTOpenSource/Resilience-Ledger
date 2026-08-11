@@ -49,6 +49,14 @@ function sha256Bytes(bytes) {
   return crypto.createHash('sha256').update(bytes).digest('hex');
 }
 
+function canonicalTextBytes(bytes) {
+  return Buffer.from(bytes.toString('utf8').replace(/\r\n/g, '\n'), 'utf8');
+}
+
+function sha256CanonicalTextBytes(bytes) {
+  return sha256Bytes(canonicalTextBytes(bytes));
+}
+
 function hashValue(value) {
   return sha256Bytes(Buffer.from(canonicalize(value), 'utf8'));
 }
@@ -230,6 +238,7 @@ module.exports = {
   ledgerRoot,
   repoRoot,
   canonicalize,
+  canonicalTextBytes,
   eventHash,
   hashValue,
   jsonFiles,
@@ -239,6 +248,7 @@ module.exports = {
   projectionRoot,
   replay,
   sha256Bytes,
+  sha256CanonicalTextBytes,
   validateEvent,
   verifyLedger
 };

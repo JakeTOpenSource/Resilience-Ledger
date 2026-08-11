@@ -28,6 +28,10 @@ Schemas and capability policies are versioned immutable files. A new policy is
 added under a new versioned filename; checkpoints pin the policy bytes used to
 authorize their event prefix.
 
+Repository text, event-file, and policy digests normalize CRLF to LF before
+hashing. This binds the committed content without making verification depend on
+the checkout platform's line-ending configuration.
+
 ## Projections
 
 Run the Node replayer to verify committed projections:

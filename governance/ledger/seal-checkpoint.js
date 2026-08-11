@@ -19,7 +19,7 @@ let previous = '';
 if (existing.length) previous = L.loadJson(existing[existing.length - 1]).checkpoint_root;
 const eventFiles = {};
 for (const record of records.sort((a, b) => a.relative.localeCompare(b.relative))) {
-  eventFiles[record.relative] = L.sha256Bytes(fs.readFileSync(record.absolute));
+  eventFiles[record.relative] = L.sha256CanonicalTextBytes(fs.readFileSync(record.absolute));
 }
 const streams = {};
 for (const [stream, entries] of verified.streams) {
@@ -34,10 +34,11 @@ const checkpoint = {
   recorded_at: recordedAt,
   previous_checkpoint_root: previous,
   event_count: records.length,
+  event_file_hash_basis: 'SHA-256 of UTF-8 event JSON with CRLF normalized to LF.',
   event_files: eventFiles,
   streams,
   capability_policy_ref: policyRef,
-  capability_policy_sha256: L.sha256Bytes(fs.readFileSync(policyPath)),
+  capability_policy_sha256: L.sha256CanonicalTextBytes(fs.readFileSync(policyPath)),
   projection_root: L.projectionRoot(L.replay(records)),
   witnesses: [
     {

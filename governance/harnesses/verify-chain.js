@@ -8,6 +8,12 @@ const L = require('../ledger/lib.js');
 
 const records = L.loadEvents();
 const verdict = L.verifyLedger(records);
+if (L.sha256CanonicalTextBytes(Buffer.from('one\r\ntwo\r\n')) ===
+    L.sha256CanonicalTextBytes(Buffer.from('one\ntwo\n'))) {
+  H.pass('checkpoint text hashes are CRLF/LF stable');
+} else {
+  H.fail('checkpoint text hash portability', 'CRLF and LF digests differ');
+}
 if (records.length) H.pass(`${records.length} immutable event files loaded`);
 else H.fail('event inventory', 'no events found');
 if (verdict.ok) H.pass(`${verdict.streams.size} stream chains and cross-references verify`);
@@ -34,10 +40,13 @@ for (const absolute of checkpoints) {
   delete material.checkpoint_root;
   if (checkpoint.previous_checkpoint_root !== previousRoot) checkpointErrors.push(`${path.basename(absolute)}: previous checkpoint root mismatch`);
   if (checkpoint.checkpoint_root !== L.hashValue(material)) checkpointErrors.push(`${path.basename(absolute)}: checkpoint root mismatch`);
+  if (checkpoint.event_file_hash_basis !== 'SHA-256 of UTF-8 event JSON with CRLF normalized to LF.') {
+    checkpointErrors.push(`${path.basename(absolute)}: event file hash basis is missing or changed`);
+  }
   const sealedRecords = [];
   for (const [relative, digest] of Object.entries(checkpoint.event_files || {})) {
     const target = path.join(L.repoRoot, relative);
-    if (!fs.existsSync(target) || L.sha256Bytes(fs.readFileSync(target)) !== digest) {
+    if (!fs.existsSync(target) || L.sha256CanonicalTextBytes(fs.readFileSync(target)) !== digest) {
       checkpointErrors.push(`${path.basename(absolute)}: sealed event changed or missing: ${relative}`);
     } else {
       sealedRecords.push({ absolute: target, relative, event: L.loadJson(target) });
@@ -56,7 +65,7 @@ for (const absolute of checkpoints) {
   }
   const policyRef = checkpoint.capability_policy_ref || '';
   const policy = path.join(L.repoRoot, policyRef);
-  if (!/^governance\/ledger\/policy\/capabilities\.v\d+\.json$/.test(policyRef) || !fs.existsSync(policy) || checkpoint.capability_policy_sha256 !== L.sha256Bytes(fs.readFileSync(policy))) {
+  if (!/^governance\/ledger\/policy\/capabilities\.v\d+\.json$/.test(policyRef) || !fs.existsSync(policy) || checkpoint.capability_policy_sha256 !== L.sha256CanonicalTextBytes(fs.readFileSync(policy))) {
     checkpointErrors.push(`${path.basename(absolute)}: capability policy reference or digest mismatch`);
   }
   previousRoot = checkpoint.checkpoint_root;

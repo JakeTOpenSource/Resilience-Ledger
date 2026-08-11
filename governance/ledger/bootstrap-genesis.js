@@ -11,7 +11,7 @@ const L = require('./lib.js');
 const expectedSeedHashes = {
   'governance/authority-map.json': 'cd97d374f3393fad12fb34c0a93b4fb1cf0d1c40d8dd9485e9e362aaed0d8012',
   'governance/artifact-register.json': 'a199024060b71dcf9e41757542687bd79bb02ff9c873f398d228326c15d3a0c0',
-  'governance/deployment-receipts/2026-08-11-current-production.json': '950a9af5c154d92a40ab1a77e16147706310689c1fcbda1dff61ebb1931ef458',
+  'governance/deployment-receipts/2026-08-11-current-production.json': '4f54f4123928828918244489e62b4598a14d720dce466b3908b5b166dc6d6ede',
   'governance/decision-log/0001-work-packet-0-authority-freeze.md': 'a0e17d3bb1a7b81fc21d44f98341dc7bf158862a8148363870f21b7120bb8e65',
   'governance/data-classification.md': '081b69945e462002e1a4e168c3ff326aee15fd1fc4d1c1e093a960606d93bf78'
 };
@@ -25,7 +25,7 @@ function record(relative) {
 }
 
 for (const [relative, expected] of Object.entries(expectedSeedHashes)) {
-  const actual = L.sha256Bytes(bytes(relative));
+  const actual = L.sha256CanonicalTextBytes(bytes(relative));
   if (actual !== expected) throw new Error(`${relative}: seed digest changed; refuse to rewrite genesis`);
 }
 

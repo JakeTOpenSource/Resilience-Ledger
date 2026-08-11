@@ -35,6 +35,8 @@
     "commit_subject": "Add live Gap Check hero on the homepage (real engine, deferred load); close GitHub/live drift"
   },
   "comparison": {
+    "repository_hash_algorithm": "SHA-256",
+    "repository_hash_basis": "UTF-8 repository text with CRLF normalized to LF, matching the committed Git blob bytes for the recorded files.",
     "deployable_paths_checked": 102,
     "http_200": 102,
     "missing": 0,
@@ -46,14 +48,14 @@
     "mismatches": [
       {
         "path": "index.html",
-        "repository_sha256": "5294efd6954cb1f7187fc546165b22bb460cd50950132086d9a8f059a5ec4fbf",
+        "repository_sha256": "b298fe0607c09d59feac1b928b9770ae3eaaa219929132723aa99e393061649f",
         "live_sha256": "e50662d27d4a08f6187a006b5256da831a6e98262dacab687286cfd4b8c7fff7",
         "observation": "Repository defers the homepage iframe; production loads it immediately and lacks the deferral script.",
         "public_history_relation": "The live Git blob 6a7f71e7f14116477b7fb0549a7d9cd131ad63c7 was not found in the inspected public repository history."
       },
       {
         "path": "sw.js",
-        "repository_sha256": "0d0cb83c9c612ce4fad5e3fa5bb07212c7672421e239f9609ce4e0dc7d8c5708",
+        "repository_sha256": "5acd2a7818a67b6551707e0209b2ebd6cc57168208e55c5a6094a6058a2fbd42",
         "live_sha256": "2e98e8558e832ad711572184faa40b12f823b3bc8f81b13fd14f881b1000381f",
         "observation": "Repository cache name is aaig-v85; production cache name is aaig-v84.",
         "public_history_relation": "The live file matches the version present before commit 7608ce90eb83357e7e9edddb6d0fb80c70b30369, including commit 599c980bc2b35998f7d3d01ff63a4be83ec18b87."
