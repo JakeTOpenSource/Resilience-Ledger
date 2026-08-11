@@ -12,6 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The append-only gate compares the proposed history to the PR base.
+          # A shallow PR merge checkout does not contain origin/<base>.
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
