@@ -14,7 +14,7 @@ const STREAM_ID = /^[a-z][a-z0-9_-]+$/;
 const EVENT_TYPE = /^[a-z][a-z0-9_]+(\.[a-z][a-z0-9_]+)+$/;
 const CONSEQUENCE = ['C0', 'C1', 'C2', 'C3'];
 const DECISIONS = ['OBSERVE', 'ACCEPT', 'ACCEPT_WITH_LIMITS', 'DEFER', 'REJECT', 'SUPERSEDE', 'CORRECT'];
-const AXES = {
+const LEGACY_AXES = {
   evidence: ['VERIFIED', 'UNVERIFIED', 'NOT_OBSERVED', 'NOT_APPLICABLE'],
   authority: ['AUTHORIZED', 'UNVERIFIED', 'NOT_REQUIRED', 'NOT_OBSERVED'],
   preparation: ['PASS', 'FAIL', 'UNKNOWN', 'NOT_APPLICABLE'],
@@ -23,14 +23,40 @@ const AXES = {
   acceptance: ['ACCEPT', 'ACCEPT_WITH_LIMITS', 'DEFER', 'REJECT', 'NOT_APPLICABLE'],
   outcome: ['PASS', 'FAIL', 'UNKNOWN', 'NOT_OBSERVED', 'NOT_APPLICABLE']
 };
+const STP_AXES = {
+  evidence: ['SUPPORTED', 'CONTRADICTED', 'UNRESOLVED', 'UNAVAILABLE', 'INVALID'],
+  authority: ['APPROVED', 'DENIED', 'DEFERRED', 'ESCALATED', 'REVOKED', 'NOT_REQUIRED'],
+  preparation: ['READY', 'BLOCKED', 'STALE', 'CONFLICT', 'EXPIRED'],
+  execution: ['NOT_ATTEMPTED', 'APPLIED', 'PARTIAL', 'FAILED', 'REVERSED'],
+  observation: ['MATCHED', 'MISMATCHED', 'UNAVAILABLE', 'INVALID'],
+  acceptance: ['ACCEPTED', 'PRESERVED', 'PROVISIONAL', 'CONTESTED', 'SUPERSEDED', 'EXPIRED'],
+  outcome: ['MET', 'NOT_MET', 'MIXED', 'TOO_EARLY', 'UNMEASURED']
+};
+const AXES_BY_SCHEMA = {
+  '1.0.0': LEGACY_AXES,
+  '2.0.0': STP_AXES
+};
+const VOCABULARY_BY_SCHEMA = {
+  '1.0.0': 'delta-atlas-legacy-adapter-v1',
+  '2.0.0': 'stp-v1.1-status-axes'
+};
+const POLICY_BY_SCHEMA = {
+  '1.0.0': 'governance/ledger/policy/capabilities.v1.json',
+  '2.0.0': 'governance/ledger/policy/capabilities.v2.json'
+};
 const EFFECTS = ['NONE', 'REPOSITORY_CHANGE', 'DEPLOYMENT', 'EXTERNAL_MESSAGE', 'DELETION'];
-const REQUIRED = [
+const REQUIRED_V1 = [
   'schema_version', 'event_id', 'stream_id', 'sequence', 'event_type', 'occurred_at',
   'recorded_at', 'actor', 'classification', 'consequence_class', 'parents',
   'prev_event_hash', 'payload_hash', 'event_hash', 'read_set', 'write_set',
   'precondition_refs', 'evidence_refs', 'authority_ref', 'idempotency_key',
   'decision', 'status_axes', 'effect', 'supersedes', 'correction_of', 'payload'
 ];
+const REQUIRED_V2 = [...REQUIRED_V1, 'status_vocabulary', 'capability_policy_ref'];
+
+function compareText(left, right) {
+  return left < right ? -1 : left > right ? 1 : 0;
+}
 
 function canonicalize(value) {
   if (value === null || typeof value === 'boolean' || typeof value === 'string') return JSON.stringify(value);
@@ -75,7 +101,7 @@ function jsonFiles(root) {
   if (!fs.existsSync(root)) return [];
   const out = [];
   function walk(current) {
-    for (const item of fs.readdirSync(current, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+    for (const item of fs.readdirSync(current, { withFileTypes: true }).sort((a, b) => compareText(a.name, b.name))) {
       const absolute = path.join(current, item.name);
       if (item.isDirectory()) walk(absolute);
       else if (item.isFile() && item.name.endsWith('.json')) out.push(absolute);
@@ -105,15 +131,58 @@ function uniqueStrings(value) {
   return Array.isArray(value) && value.every((x) => typeof x === 'string') && new Set(value).size === value.length;
 }
 
+function hasUnpairedSurrogate(value) {
+  for (let index = 0; index < value.length; index++) {
+    const code = value.charCodeAt(index);
+    if (code >= 0xD800 && code <= 0xDBFF) {
+      const next = value.charCodeAt(index + 1);
+      if (!(next >= 0xDC00 && next <= 0xDFFF)) return true;
+      index++;
+    } else if (code >= 0xDC00 && code <= 0xDFFF) return true;
+  }
+  return false;
+}
+
+function validateCanonicalDomain(value, trail = '$', errors = []) {
+  if (value === null || typeof value === 'boolean') return errors;
+  if (typeof value === 'string') {
+    if (hasUnpairedSurrogate(value)) errors.push(`${trail}: string contains an unpaired Unicode surrogate`);
+    return errors;
+  }
+  if (typeof value === 'number') {
+    if (!Number.isSafeInteger(value)) errors.push(`${trail}: canonical profile permits safe integers only`);
+    return errors;
+  }
+  if (Array.isArray(value)) {
+    value.forEach((item, index) => validateCanonicalDomain(item, `${trail}[${index}]`, errors));
+    return errors;
+  }
+  if (value && typeof value === 'object') {
+    for (const [key, child] of Object.entries(value)) {
+      if (!/^[A-Za-z0-9_.:-]+$/.test(key)) errors.push(`${trail}: non-ASCII or unsupported object key ${JSON.stringify(key)}`);
+      validateCanonicalDomain(child, `${trail}.${key}`, errors);
+    }
+    return errors;
+  }
+  errors.push(`${trail}: canonical profile refuses ${typeof value}`);
+  return errors;
+}
+
 function validateEvent(event) {
   const errors = [];
   const add = (condition, message) => { if (!condition) errors.push(message); };
   add(event && typeof event === 'object' && !Array.isArray(event), 'event must be an object');
   if (!event || typeof event !== 'object' || Array.isArray(event)) return errors;
-  for (const key of REQUIRED) add(Object.prototype.hasOwnProperty.call(event, key), `missing field ${key}`);
-  const extra = Object.keys(event).filter((key) => !REQUIRED.includes(key));
+  for (const error of validateCanonicalDomain(event)) errors.push(error);
+  const required = event.schema_version === '2.0.0' ? REQUIRED_V2 : REQUIRED_V1;
+  for (const key of required) add(Object.prototype.hasOwnProperty.call(event, key), `missing field ${key}`);
+  const extra = Object.keys(event).filter((key) => !required.includes(key));
   add(extra.length === 0, `unknown fields: ${extra.join(', ')}`);
-  add(event.schema_version === '1.0.0', 'schema_version must be 1.0.0');
+  add(Object.prototype.hasOwnProperty.call(AXES_BY_SCHEMA, event.schema_version), 'schema_version must be 1.0.0 or 2.0.0');
+  if (event.schema_version === '2.0.0') {
+    add(event.status_vocabulary === VOCABULARY_BY_SCHEMA['2.0.0'], 'status_vocabulary must pin STP v1.1 status axes');
+    add(event.capability_policy_ref === POLICY_BY_SCHEMA['2.0.0'], 'capability_policy_ref must pin capabilities.v2.json');
+  }
   add(typeof event.event_id === 'string' && EVENT_ID.test(event.event_id), 'invalid event_id');
   add(typeof event.stream_id === 'string' && STREAM_ID.test(event.stream_id), 'invalid stream_id');
   add(Number.isInteger(event.sequence) && event.sequence >= 1, 'sequence must be a positive integer');
@@ -141,10 +210,11 @@ function validateEvent(event) {
   add(typeof event.idempotency_key === 'string' && event.idempotency_key.length > 0, 'idempotency_key is required');
   add(event.authority_ref === null || typeof event.authority_ref === 'string', 'authority_ref must be a string or null');
   add(DECISIONS.includes(event.decision), 'invalid decision');
-  add(event.status_axes && typeof event.status_axes === 'object', 'status_axes must be an object');
+  const axes = AXES_BY_SCHEMA[event.schema_version];
+  add(event.status_axes && typeof event.status_axes === 'object' && !Array.isArray(event.status_axes), 'status_axes must be an object');
   if (event.status_axes && typeof event.status_axes === 'object') {
-    add(Object.keys(event.status_axes).sort().join(',') === Object.keys(AXES).sort().join(','), 'status_axes keys must be exact');
-    for (const [axis, allowed] of Object.entries(AXES)) add(allowed.includes(event.status_axes[axis]), `invalid status_axes.${axis}`);
+    add(axes && Object.keys(event.status_axes).sort().join(',') === Object.keys(axes).sort().join(','), 'status_axes keys must be exact');
+    if (axes) for (const [axis, allowed] of Object.entries(axes)) add(allowed.includes(event.status_axes[axis]), `invalid status_axes.${axis}`);
   }
   add(event.effect && typeof event.effect === 'object', 'effect must be an object');
   if (event.effect && typeof event.effect === 'object') {
@@ -153,7 +223,12 @@ function validateEvent(event) {
     add(event.effect.target === null || typeof event.effect.target === 'string', 'effect.target must be a string or null');
     add(typeof event.effect.reversible === 'boolean', 'effect.reversible must be boolean');
     add(event.effect.recovery_ref === null || typeof event.effect.recovery_ref === 'string', 'effect.recovery_ref must be a string or null');
-    if (event.effect.kind === 'NONE') add(event.effect.target === null && event.effect.recovery_ref === null, 'NONE effect cannot have target or recovery_ref');
+    if (event.effect.kind === 'NONE') {
+      add(event.effect.target === null && event.effect.recovery_ref === null, 'NONE effect cannot have target or recovery_ref');
+    } else {
+      add(typeof event.effect.target === 'string' && event.effect.target.length > 0, 'external effect requires a target');
+      add(typeof event.effect.recovery_ref === 'string' && event.effect.recovery_ref.length > 0, 'external effect requires recovery_ref');
+    }
   }
   add(Array.isArray(event.evidence_refs), 'evidence_refs must be an array');
   if (Array.isArray(event.evidence_refs)) {
@@ -169,6 +244,53 @@ function validateEvent(event) {
     }
   }
   return errors;
+}
+
+function causalOrder(records) {
+  const byId = new Map(records.map((record) => [record.event.event_id, record]));
+  const incoming = new Map(records.map((record) => [record.event.event_id, new Set()]));
+  const outgoing = new Map(records.map((record) => [record.event.event_id, new Set()]));
+  const compare = (a, b) => compareText(a.event.stream_id, b.event.stream_id) ||
+    a.event.sequence - b.event.sequence || compareText(a.event.event_id, b.event.event_id);
+
+  function edge(fromId, toId) {
+    if (!byId.has(fromId) || !byId.has(toId)) return;
+    if (!incoming.get(toId).has(fromId)) {
+      incoming.get(toId).add(fromId);
+      outgoing.get(fromId).add(toId);
+    }
+  }
+
+  const streams = new Map();
+  for (const record of records) {
+    if (!streams.has(record.event.stream_id)) streams.set(record.event.stream_id, []);
+    streams.get(record.event.stream_id).push(record);
+  }
+  for (const entries of streams.values()) {
+    entries.sort((a, b) => a.event.sequence - b.event.sequence || compareText(a.event.event_id, b.event.event_id));
+    for (let index = 1; index < entries.length; index++) edge(entries[index - 1].event.event_id, entries[index].event.event_id);
+  }
+  for (const record of records) {
+    for (const field of ['parents', 'supersedes', 'correction_of']) {
+      for (const target of record.event[field] || []) edge(target, record.event.event_id);
+    }
+  }
+
+  const ready = records.filter((record) => incoming.get(record.event.event_id).size === 0).sort(compare);
+  const ordered = [];
+  while (ready.length) {
+    const record = ready.shift();
+    ordered.push(record);
+    for (const target of [...outgoing.get(record.event.event_id)].sort()) {
+      incoming.get(target).delete(record.event.event_id);
+      if (incoming.get(target).size === 0) {
+        ready.push(byId.get(target));
+        ready.sort(compare);
+      }
+    }
+  }
+  if (ordered.length !== records.length) throw new Error('causal cycle prevents deterministic replay');
+  return ordered;
 }
 
 function verifyLedger(records) {
@@ -188,7 +310,7 @@ function verifyLedger(records) {
     streams.get(record.event.stream_id).push(record);
   }
   for (const [stream, entries] of streams) {
-    entries.sort((a, b) => a.event.sequence - b.event.sequence || a.event.event_id.localeCompare(b.event.event_id));
+    entries.sort((a, b) => a.event.sequence - b.event.sequence || compareText(a.event.event_id, b.event.event_id));
     let previous = '';
     for (let index = 0; index < entries.length; index++) {
       const record = entries[index];
@@ -203,6 +325,10 @@ function verifyLedger(records) {
       for (const id of record.event[field] || []) if (!ids.has(id)) errors.push(`${record.relative}: ${field} references unknown ${id}`);
     }
   }
+  if (errors.length === 0) {
+    try { causalOrder(records); }
+    catch (error) { errors.push(error.message); }
+  }
   return { ok: errors.length === 0, errors, streams, ids };
 }
 
@@ -211,12 +337,12 @@ function replay(records) {
   if (!verified.ok) throw new Error(verified.errors.join('\n'));
   const projections = {};
   const owners = {};
-  const ordered = [...records].sort((a, b) => a.event.recorded_at.localeCompare(b.event.recorded_at) || a.event.event_id.localeCompare(b.event.event_id));
+  const ordered = causalOrder(records);
   for (const { event, relative } of ordered) {
     const projection = event.payload && event.payload.projection;
     if (!projection) continue;
     if (!projection.path || typeof projection.record !== 'object') throw new Error(`${relative}: invalid projection instruction`);
-    if (!/^governance\/(?:authority-map\.json|artifact-register\.json|external-feedback\.json|deployment-receipts\/[a-z0-9._-]+\.json)$/.test(projection.path)) {
+    if (!/^governance\/(?:authority-map\.json|artifact-register\.json|external-feedback\.json|status-vocabulary-contract\.json|deployment-receipts\/[a-z0-9._-]+\.json)$/.test(projection.path)) {
       throw new Error(`${relative}: projection path is outside the allowlist`);
     }
     if (owners[projection.path] && owners[projection.path] !== event.stream_id) throw new Error(`${relative}: projection path has multiple owning streams`);
@@ -231,14 +357,18 @@ function projectionRoot(projections) {
 }
 
 module.exports = {
-  AXES,
+  AXES_BY_SCHEMA,
   CONSEQUENCE,
   EFFECTS,
+  POLICY_BY_SCHEMA,
+  VOCABULARY_BY_SCHEMA,
   eventsRoot,
   ledgerRoot,
   repoRoot,
   canonicalize,
+  causalOrder,
   canonicalTextBytes,
+  compareText,
   eventHash,
   hashValue,
   jsonFiles,
@@ -250,5 +380,6 @@ module.exports = {
   sha256Bytes,
   sha256CanonicalTextBytes,
   validateEvent,
+  validateCanonicalDomain,
   verifyLedger
 };

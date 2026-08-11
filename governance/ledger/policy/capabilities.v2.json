@@ -1,0 +1,29 @@
+{
+  "schema_version": "2.0.0",
+  "policy_id": "delta-atlas-capabilities-v2",
+  "roles": {
+    "repository_owner": {
+      "max_consequence_class": "C3",
+      "event_types": ["*"],
+      "effect_kinds": ["NONE", "REPOSITORY_CHANGE", "DEPLOYMENT", "EXTERNAL_MESSAGE", "DELETION"]
+    },
+    "agent_observer": {
+      "max_consequence_class": "C1",
+      "event_types": [
+        "research.artifact_search_recorded",
+        "deployment.production_observed",
+        "feedback.external_comment_observed",
+        "semantics.status_vocabulary_observed"
+      ],
+      "effect_kinds": ["NONE"]
+    }
+  },
+  "rules": [
+    "An adapter may record evidence inside its granted scope but may not silently accept it.",
+    "Every event is evaluated against the capability policy selected by its schema version and pinned by a sealing checkpoint.",
+    "Every non-null authority reference must resolve to an event or an allowlisted decision record.",
+    "C2 and C3 events require a resolved authority reference; v2 actor.auth_basis must name that same reference.",
+    "Every non-NONE effect requires a target, a resolved recovery reference, an idempotency key, and role permission.",
+    "A later capability-policy edit does not retroactively authorize an earlier event."
+  ]
+}

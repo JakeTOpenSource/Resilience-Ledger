@@ -1,0 +1,185 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_governance_public_metadata_release_0002",
+  "stream_id": "governance",
+  "sequence": 2,
+  "event_type": "governance.public_metadata_release_accepted",
+  "occurred_at": "2026-08-11T22:44:11Z",
+  "recorded_at": "2026-08-11T22:44:11Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "governance/decision-log/0002-public-metadata-release-acceptance.md"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C2",
+  "parents": [
+    "evt_governance_wp0_authority_freeze_0001"
+  ],
+  "prev_event_hash": "e22e618cae981b357ea6c00d449f84ce51f330830378e6e5d6b59d6f2c818361",
+  "payload_hash": "2427f5e212013a177f9abd6875ac01d64372fd78e9c5c6ca5c2431f2907d3d7c",
+  "event_hash": "a717021b97a8775bf50768f21fece999e59e6322fbf9a50bf0b3d70c76aabaa1",
+  "read_set": [
+    "governance/artifact-register.json",
+    "governance/authority-map.json",
+    "governance/decision-log/0002-public-metadata-release-acceptance.md"
+  ],
+  "write_set": [
+    "governance/authority-map.json"
+  ],
+  "precondition_refs": [
+    "evt_governance_wp0_authority_freeze_0001",
+    "governance/decision-log/0002-public-metadata-release-acceptance.md"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "owner-public-metadata-decision-0002",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "a464cb41a477cb8bca502db48796776a7e7cd36ca4e22b310d1fbb1faaa0c8ee",
+      "source_locator": "governance/decision-log/0002-public-metadata-release-acceptance.md"
+    },
+    {
+      "ref_id": "artifact-register-before-decision-0002",
+      "kind": "prior_projection",
+      "classification": "PUBLIC",
+      "sha256": "a199024060b71dcf9e41757542687bd79bb02ff9c873f398d228326c15d3a0c0",
+      "source_locator": "governance/artifact-register.json"
+    },
+    {
+      "ref_id": "authority-map-before-decision-0002",
+      "kind": "prior_projection",
+      "classification": "PUBLIC",
+      "sha256": "cd97d374f3393fad12fb34c0a93b4fb1cf0d1c40d8dd9485e9e362aaed0d8012",
+      "source_locator": "governance/authority-map.json"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0002-public-metadata-release-acceptance.md",
+  "idempotency_key": "governance:public-metadata-release:2026-08-11:0002",
+  "decision": "ACCEPT_WITH_LIMITS",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "APPLIED",
+    "observation": "MATCHED",
+    "acceptance": "ACCEPTED",
+    "outcome": "UNMEASURED"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "claim_ceiling": "Records a scoped owner decision about metadata already public; it does not authorize raw private content or validate the research artifact.",
+    "accepted_metadata": [
+      "private archive repository name and frozen/non-authoritative disposition",
+      "candidate Ledger filename, media type, byte length, and SHA-256 digest",
+      "bounded local search scope labels",
+      "candidate-versus-asserted Ledger digest mismatch"
+    ],
+    "projection": {
+      "path": "governance/authority-map.json",
+      "record": {
+        "schema_version": "0.2.0",
+        "record_id": "delta-atlas-authority-map-2026-08-11-0002",
+        "recorded_at": "2026-08-11T22:44:11Z",
+        "decision": "ACCEPT_WITH_LIMITS",
+        "decision_ref": "governance/decision-log/0001-work-packet-0-authority-freeze.md",
+        "supplemental_decision_refs": [
+          "governance/decision-log/0002-public-metadata-release-acceptance.md"
+        ],
+        "authorization": {
+          "actor_type": "repository_owner_direction",
+          "actor_identifier": "github:JakeTOpenSource",
+          "evidence": "Owner instructed Codex to proceed with Work Packet 0 and later explicitly accepted the enumerated public metadata.",
+          "cryptographically_verified": false
+        },
+        "scopes": [
+          {
+            "scope": "public_delta_atlas_source",
+            "authority": "github:JakeTOpenSource/Resilience-Ledger@main",
+            "status": "ACCEPT",
+            "rule": "The repository is authoritative for intended public source. A live deployment is not source authority."
+          },
+          {
+            "scope": "transition_method",
+            "authority": "artifact:state-transition-protocol-v1.1-pdf",
+            "status": "ACCEPT_WITH_LIMITS",
+            "rule": "Use the protocol transition spine and independent statuses. Its ledger pin remains unresolved."
+          },
+          {
+            "scope": "calibration_ledger_reference",
+            "authority": null,
+            "status": "DEFER",
+            "rule": "No Calibration Ledger artifact is accepted as the protocol-pinned release until its bytes match the asserted SHA-256 or an amendment supersedes the pin."
+          },
+          {
+            "scope": "published_delta_atlas_canon_v1_8",
+            "authority": "repo:Delta-Atlas-Canon.md and repo:delta-atlas-canon.json at the accepted source commit",
+            "status": "ACCEPT_WITH_LIMITS",
+            "rule": "These files describe the currently published v1.8 canon. They do not yet implement the v1.1 accepted-state semantics and require a typed migration."
+          },
+          {
+            "scope": "observed_production_state",
+            "authority": "cloudflare-pages:resilience-eval-ai deployment 8f6b970f-a09a-4c60-adad-6fe0d1b061ac",
+            "status": "OBSERVED",
+            "rule": "The deployment receipt records what was observed live. It is not accepted as equivalent to repository main while mismatches remain."
+          },
+          {
+            "scope": "private_archive",
+            "authority": "github:JakeTOpenSource/Resilience-Ledger-archive",
+            "status": "FROZEN_NON_AUTHORITATIVE",
+            "rule": "Retain without deletion or development until the owner records a retention and disposal decision."
+          },
+          {
+            "scope": "agent_or_ci_adapter",
+            "authority": null,
+            "status": "NON_AUTHORITATIVE",
+            "rule": "Agents and CI may propose, check, execute within granted scope, and emit receipts. They cannot silently redefine accepted state or authority."
+          },
+          {
+            "scope": "public_research_metadata",
+            "authority": "governance/decision-log/0002-public-metadata-release-acceptance.md",
+            "status": "ACCEPT_WITH_LIMITS",
+            "rule": "Only the metadata enumerated in Decision 0002 is accepted for continued public disclosure; raw artifacts and future metadata remain outside this grant."
+          }
+        ],
+        "public_metadata_release": {
+          "decision": "ACCEPT_WITH_LIMITS",
+          "accepted_set_ref": "governance/decision-log/0002-public-metadata-release-acceptance.md",
+          "excluded": [
+            "raw private repository content",
+            "raw PDF or DOCX bytes",
+            "prompts or transcripts",
+            "credentials or private source code",
+            "absolute local paths",
+            "private analytics",
+            "future research metadata"
+          ]
+        },
+        "invariants": [
+          "Private content never enters the public repository or public receipt.",
+          "A successful command or provider stage is not equivalent to observed or accepted state.",
+          "A source artifact without a verified identity remains candidate evidence.",
+          "The private archive is not deleted, repurposed, or used as an active branch without a new decision.",
+          "Semantic migration uses ALIAS, OVERLAP, RELATED, CONTESTED, or UNKNOWN; ALIAS requires signature equivalence.",
+          "A public metadata grant is exact and scoped; it does not authorize raw artifacts or future disclosures."
+        ],
+        "unknowns": [
+          "The exact artifact identified by the protocol's Calibration Ledger v8 pin.",
+          "The uploader and source commit for each historical Pages deployment.",
+          "Whether another Cloudflare account contains a related Worker.",
+          "The legal or contractual retention, jurisdiction, and no-egress requirements for future private research.",
+          "The final retention period and disposal authority for the private archive."
+        ]
+      }
+    }
+  }
+}

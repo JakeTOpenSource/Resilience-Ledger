@@ -59,18 +59,20 @@ const authority = readJson('governance/authority-map.json');
 const artifacts = readJson('governance/artifact-register.json');
 const deployment = readJson('governance/deployment-receipts/2026-08-11-current-production.json');
 const feedback = readJson('governance/external-feedback.json');
+const vocabulary = readJson('governance/status-vocabulary-contract.json');
 
 for (const [relativePath, record] of [
   ['governance/authority-map.json', authority],
   ['governance/artifact-register.json', artifacts],
   ['governance/deployment-receipts/2026-08-11-current-production.json', deployment],
-  ['governance/external-feedback.json', feedback]
+  ['governance/external-feedback.json', feedback],
+  ['governance/status-vocabulary-contract.json', vocabulary]
 ]) {
   if (record) scanPublicRecord(relativePath, record);
 }
 
 if (authority) {
-  assert(authority.schema_version === '0.1.0', 'authority map: unexpected schema version');
+  assert(authority.schema_version === '0.2.0', 'authority map: unexpected schema version');
   assert(authority.decision === 'ACCEPT_WITH_LIMITS', 'authority map: decision must preserve current limits');
   const scopeNames = authority.scopes.map((entry) => entry.scope);
   assert(new Set(scopeNames).size === scopeNames.length, 'authority map: scopes must be unique');
@@ -80,7 +82,8 @@ if (authority) {
     'calibration_ledger_reference',
     'observed_production_state',
     'private_archive',
-    'agent_or_ci_adapter'
+    'agent_or_ci_adapter',
+    'public_research_metadata'
   ]) {
     assert(scopeNames.includes(required), `authority map: missing scope ${required}`);
   }
@@ -90,6 +93,13 @@ if (authority) {
   const archiveScope = authority.scopes.find((entry) => entry.scope === 'private_archive');
   assert(archiveScope && archiveScope.status === 'FROZEN_NON_AUTHORITATIVE',
     'authority map: private archive must remain frozen and non-authoritative');
+  const publicMetadata = authority.scopes.find((entry) => entry.scope === 'public_research_metadata');
+  assert(publicMetadata && publicMetadata.status === 'ACCEPT_WITH_LIMITS' &&
+    publicMetadata.authority === 'governance/decision-log/0002-public-metadata-release-acceptance.md',
+  'authority map: public research metadata requires the scoped owner decision');
+  assert(Array.isArray(authority.supplemental_decision_refs) &&
+    authority.supplemental_decision_refs.includes('governance/decision-log/0002-public-metadata-release-acceptance.md'),
+  'authority map: owner metadata decision is not linked');
 }
 
 if (artifacts) {
@@ -162,10 +172,42 @@ if (feedback) {
     'feedback register: comment must not be promoted to endorsement');
 }
 
+if (vocabulary) {
+  assert(vocabulary.schema_version === '0.1.0', 'status vocabulary: unexpected schema version');
+  assert(vocabulary.decision === 'DEFER', 'status vocabulary: semantic migration must remain deferred');
+  const legacy = vocabulary.vocabularies && vocabulary.vocabularies['delta-atlas-legacy-adapter-v1'];
+  const stp = vocabulary.vocabularies && vocabulary.vocabularies['stp-v1.1-status-axes'];
+  assert(legacy && legacy.status === 'FROZEN_LEGACY' && legacy.relationship_to_stp_v1_1 === 'UNKNOWN',
+    'status vocabulary: legacy adapter must remain frozen with UNKNOWN STP relation');
+  assert(stp && stp.status === 'LITERAL_TOKENS_PINNED_SEMANTICS_INCOMPLETE',
+    'status vocabulary: literal STP tokens must not imply complete semantics');
+  assert(stp && JSON.stringify(stp.axes.evidence) === JSON.stringify(['SUPPORTED', 'CONTRADICTED', 'UNRESOLVED', 'UNAVAILABLE', 'INVALID']),
+    'status vocabulary: STP evidence tokens drifted');
+  assert(stp && JSON.stringify(stp.axes.authority) === JSON.stringify(['APPROVED', 'DENIED', 'DEFERRED', 'ESCALATED', 'REVOKED', 'NOT_REQUIRED']),
+    'status vocabulary: STP authority tokens drifted');
+  assert(stp && JSON.stringify(stp.axes.preparation) === JSON.stringify(['READY', 'BLOCKED', 'STALE', 'CONFLICT', 'EXPIRED']),
+    'status vocabulary: STP preparation tokens drifted');
+  assert(stp && JSON.stringify(stp.axes.execution) === JSON.stringify(['NOT_ATTEMPTED', 'APPLIED', 'PARTIAL', 'FAILED', 'REVERSED']),
+    'status vocabulary: STP execution tokens drifted');
+  assert(stp && JSON.stringify(stp.axes.observation) === JSON.stringify(['MATCHED', 'MISMATCHED', 'UNAVAILABLE', 'INVALID']),
+    'status vocabulary: STP observation tokens drifted');
+  assert(stp && JSON.stringify(stp.axes.acceptance) === JSON.stringify(['ACCEPTED', 'PRESERVED', 'PROVISIONAL', 'CONTESTED', 'SUPERSEDED', 'EXPIRED']),
+    'status vocabulary: STP acceptance tokens drifted');
+  assert(stp && JSON.stringify(stp.axes.outcome) === JSON.stringify(['MET', 'NOT_MET', 'MIXED', 'TOO_EARLY', 'UNMEASURED']),
+    'status vocabulary: STP outcome tokens drifted');
+  for (const relation of vocabulary.relations || []) {
+    assert(['ALIAS', 'OVERLAP', 'RELATED', 'CONTESTED', 'UNKNOWN'].includes(relation.relation),
+      `status vocabulary: invalid relation ${relation.relation}`);
+    assert(relation.relation !== 'ALIAS', 'status vocabulary: no cross-vocabulary alias has been proven');
+  }
+}
+
 for (const relativePath of [
   'governance/README.md',
   'governance/data-classification.md',
-  'governance/decision-log/0001-work-packet-0-authority-freeze.md'
+  'governance/decision-log/0001-work-packet-0-authority-freeze.md',
+  'governance/decision-log/0002-public-metadata-release-acceptance.md',
+  'governance/decision-log/0003-stp-status-vocabulary-boundary.md'
 ]) {
   assert(fs.existsSync(path.join(repoRoot, relativePath)), `${relativePath}: missing required governance document`);
 }
@@ -177,7 +219,8 @@ if (failures.length) {
 }
 
 console.log('Governance records GREEN');
-console.log('authority scopes: 7');
+console.log(`authority scopes: ${authority.scopes.length}`);
 console.log('research artifacts: 2; unresolved pins: 1');
 console.log('external feedback: 1 observation; independent validations: 0');
-console.log('production paths: 102; semantic matches: 100; deferred mismatches: 2');
+console.log('status vocabularies: legacy frozen; STP literals pinned; semantic migration deferred');
+console.log('recorded production observation: 102 paths; 100 semantic matches; 2 deferred mismatches');

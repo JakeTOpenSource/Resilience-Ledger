@@ -1,13 +1,16 @@
 {
-  "schema_version": "0.1.0",
-  "record_id": "delta-atlas-authority-map-2026-08-11",
-  "recorded_at": "2026-08-11T16:51:15Z",
+  "schema_version": "0.2.0",
+  "record_id": "delta-atlas-authority-map-2026-08-11-0002",
+  "recorded_at": "2026-08-11T22:44:11Z",
   "decision": "ACCEPT_WITH_LIMITS",
   "decision_ref": "governance/decision-log/0001-work-packet-0-authority-freeze.md",
+  "supplemental_decision_refs": [
+    "governance/decision-log/0002-public-metadata-release-acceptance.md"
+  ],
   "authorization": {
     "actor_type": "repository_owner_direction",
     "actor_identifier": "github:JakeTOpenSource",
-    "evidence": "Owner instructed Codex to proceed with Work Packet 0 on 2026-08-11.",
+    "evidence": "Owner instructed Codex to proceed with Work Packet 0 and later explicitly accepted the enumerated public metadata.",
     "cryptographically_verified": false
   },
   "scopes": [
@@ -52,14 +55,34 @@
       "authority": null,
       "status": "NON_AUTHORITATIVE",
       "rule": "Agents and CI may propose, check, execute within granted scope, and emit receipts. They cannot silently redefine accepted state or authority."
+    },
+    {
+      "scope": "public_research_metadata",
+      "authority": "governance/decision-log/0002-public-metadata-release-acceptance.md",
+      "status": "ACCEPT_WITH_LIMITS",
+      "rule": "Only the metadata enumerated in Decision 0002 is accepted for continued public disclosure; raw artifacts and future metadata remain outside this grant."
     }
   ],
+  "public_metadata_release": {
+    "decision": "ACCEPT_WITH_LIMITS",
+    "accepted_set_ref": "governance/decision-log/0002-public-metadata-release-acceptance.md",
+    "excluded": [
+      "raw private repository content",
+      "raw PDF or DOCX bytes",
+      "prompts or transcripts",
+      "credentials or private source code",
+      "absolute local paths",
+      "private analytics",
+      "future research metadata"
+    ]
+  },
   "invariants": [
     "Private content never enters the public repository or public receipt.",
     "A successful command or provider stage is not equivalent to observed or accepted state.",
     "A source artifact without a verified identity remains candidate evidence.",
     "The private archive is not deleted, repurposed, or used as an active branch without a new decision.",
-    "Semantic migration uses ALIAS, OVERLAP, RELATED, CONTESTED, or UNKNOWN; ALIAS requires signature equivalence."
+    "Semantic migration uses ALIAS, OVERLAP, RELATED, CONTESTED, or UNKNOWN; ALIAS requires signature equivalence.",
+    "A public metadata grant is exact and scoped; it does not authorize raw artifacts or future disclosures."
   ],
   "unknowns": [
     "The exact artifact identified by the protocol's Calibration Ledger v8 pin.",
