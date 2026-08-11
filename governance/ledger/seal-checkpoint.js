@@ -26,10 +26,15 @@ for (const [stream, entries] of verified.streams) {
   const head = entries[entries.length - 1].event;
   streams[stream] = { sequence: head.sequence, event_id: head.event_id, event_hash: head.event_hash };
 }
-const policyRef = 'governance/ledger/policy/capabilities.v1.json';
-const policyPath = path.join(L.repoRoot, policyRef);
+const policyRefs = [...new Set(records.map((record) => record.event.capability_policy_ref || L.POLICY_BY_SCHEMA[record.event.schema_version]))].sort();
+const capabilityPolicies = {};
+for (const policyRef of policyRefs) {
+  const policyPath = path.join(L.repoRoot, policyRef);
+  if (!fs.existsSync(policyPath)) throw new Error(`missing capability policy ${policyRef}`);
+  capabilityPolicies[policyRef] = L.sha256CanonicalTextBytes(fs.readFileSync(policyPath));
+}
 const checkpoint = {
-  schema_version: '1.0.0',
+  schema_version: '2.0.0',
   checkpoint_id: id,
   recorded_at: recordedAt,
   previous_checkpoint_root: previous,
@@ -37,8 +42,7 @@ const checkpoint = {
   event_file_hash_basis: 'SHA-256 of UTF-8 event JSON with CRLF normalized to LF.',
   event_files: eventFiles,
   streams,
-  capability_policy_ref: policyRef,
-  capability_policy_sha256: L.sha256CanonicalTextBytes(fs.readFileSync(policyPath)),
+  capability_policies: capabilityPolicies,
   projection_root: L.projectionRoot(L.replay(records)),
   witnesses: [
     {

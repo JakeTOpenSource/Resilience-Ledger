@@ -1,0 +1,148 @@
+{
+  "schema_version": "0.1.0",
+  "record_id": "delta-atlas-status-vocabulary-contract-2026-08-11",
+  "recorded_at": "2026-08-11T22:44:11Z",
+  "decision": "DEFER",
+  "decision_ref": "governance/decision-log/0003-stp-status-vocabulary-boundary.md",
+  "canonical_source": {
+    "artifact_id": "state-transition-protocol-v1.1-pdf",
+    "page": 8,
+    "sha256": "48aad2ce2f660f32c4af54547c189168bec722053a8e06b25946624ad2f30bf2"
+  },
+  "vocabularies": {
+    "delta-atlas-legacy-adapter-v1": {
+      "status": "FROZEN_LEGACY",
+      "schema_ref": "governance/ledger/schemas/event.v1.schema.json",
+      "relationship_to_stp_v1_1": "UNKNOWN",
+      "axes": {
+        "evidence": [
+          "VERIFIED",
+          "UNVERIFIED",
+          "NOT_OBSERVED",
+          "NOT_APPLICABLE"
+        ],
+        "authority": [
+          "AUTHORIZED",
+          "UNVERIFIED",
+          "NOT_REQUIRED",
+          "NOT_OBSERVED"
+        ],
+        "preparation": [
+          "PASS",
+          "FAIL",
+          "UNKNOWN",
+          "NOT_APPLICABLE"
+        ],
+        "execution": [
+          "PASS",
+          "FAIL",
+          "NOT_EXECUTED",
+          "UNKNOWN",
+          "NOT_APPLICABLE"
+        ],
+        "observation": [
+          "OBSERVED",
+          "FAIL",
+          "NOT_OBSERVED",
+          "UNKNOWN",
+          "NOT_APPLICABLE"
+        ],
+        "acceptance": [
+          "ACCEPT",
+          "ACCEPT_WITH_LIMITS",
+          "DEFER",
+          "REJECT",
+          "NOT_APPLICABLE"
+        ],
+        "outcome": [
+          "PASS",
+          "FAIL",
+          "UNKNOWN",
+          "NOT_OBSERVED",
+          "NOT_APPLICABLE"
+        ]
+      }
+    },
+    "stp-v1.1-status-axes": {
+      "status": "LITERAL_TOKENS_PINNED_SEMANTICS_INCOMPLETE",
+      "schema_ref": "governance/ledger/schemas/event.v2.schema.json",
+      "axes": {
+        "evidence": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNRESOLVED",
+          "UNAVAILABLE",
+          "INVALID"
+        ],
+        "authority": [
+          "APPROVED",
+          "DENIED",
+          "DEFERRED",
+          "ESCALATED",
+          "REVOKED",
+          "NOT_REQUIRED"
+        ],
+        "preparation": [
+          "READY",
+          "BLOCKED",
+          "STALE",
+          "CONFLICT",
+          "EXPIRED"
+        ],
+        "execution": [
+          "NOT_ATTEMPTED",
+          "APPLIED",
+          "PARTIAL",
+          "FAILED",
+          "REVERSED"
+        ],
+        "observation": [
+          "MATCHED",
+          "MISMATCHED",
+          "UNAVAILABLE",
+          "INVALID"
+        ],
+        "acceptance": [
+          "ACCEPTED",
+          "PRESERVED",
+          "PROVISIONAL",
+          "CONTESTED",
+          "SUPERSEDED",
+          "EXPIRED"
+        ],
+        "outcome": [
+          "MET",
+          "NOT_MET",
+          "MIXED",
+          "TOO_EARLY",
+          "UNMEASURED"
+        ]
+      }
+    }
+  },
+  "relations": [
+    {
+      "from": "delta-atlas-legacy-adapter-v1",
+      "to": "stp-v1.1-status-axes",
+      "relation": "UNKNOWN",
+      "reason": "Axis names overlap, but values and their missing state-transition semantics have not been proven equivalent."
+    },
+    {
+      "from": "calibration-ledger-v8-attached-docx",
+      "to": "stp-v1.1-status-axes",
+      "relation": "UNKNOWN",
+      "reason": "The attached candidate is not the artifact pinned by STP v1.1 and no supersession or migration has been accepted."
+    }
+  ],
+  "constraints": [
+    "Every displayed status is qualified by axis and vocabulary.",
+    "No PASS-like coercion is permitted across vocabularies.",
+    "Literal token identity does not prove semantic completeness or conformance.",
+    "ALIAS requires scoped behavioral and signature equivalence evidence."
+  ],
+  "open_gaps": [
+    "Status entry and exit predicates are undefined in STP v1.1.",
+    "Allowed transitions, precedence, terminality, and simultaneous-axis constraints are undefined.",
+    "The exact Calibration Ledger artifact pinned by STP v1.1 remains unresolved."
+  ]
+}

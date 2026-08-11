@@ -6,12 +6,22 @@ const path = require('path');
 const H = require('../../corpus-harness.js');
 const L = require('../ledger/lib.js');
 
-const roots = [
-  path.join(L.ledgerRoot, 'events'),
-  path.join(L.ledgerRoot, 'checkpoints'),
-  path.join(L.repoRoot, 'governance')
-];
-const files = [...new Set(roots.flatMap((root) => L.jsonFiles(root)))];
+const governanceRoot = path.join(L.repoRoot, 'governance');
+const allowedExtensions = new Set(['.json', '.md', '.js', '.py']);
+const selfScanningSources = new Set([
+  path.join(governanceRoot, 'governance-validate.js'),
+  path.join(governanceRoot, 'harnesses', 'privacy-boundary.js')
+]);
+const files = [];
+function walkFiles(current) {
+  for (const item of fs.readdirSync(current, { withFileTypes: true })) {
+    const absolute = path.join(current, item.name);
+    if (item.isDirectory()) walkFiles(absolute);
+    else if (item.isFile() && allowedExtensions.has(path.extname(item.name)) && !selfScanningSources.has(absolute)) files.push(absolute);
+  }
+}
+walkFiles(governanceRoot);
+files.sort((a, b) => a.localeCompare(b));
 const errors = [];
 const forbiddenKeys = new Set([
   'account_id', 'api_key', 'authorization_header', 'credential', 'local_path', 'password',
@@ -39,10 +49,17 @@ function scan(node, relative, trail = '$') {
   }
 }
 
+function scanText(text, relative) {
+  for (const [pattern, label] of forbiddenText) if (pattern.test(text)) errors.push(`${relative}: ${label}`);
+}
+
 for (const absolute of files) {
   const relative = path.relative(L.repoRoot, absolute).split(path.sep).join('/');
+  const text = fs.readFileSync(absolute, 'utf8');
+  scanText(text, relative);
+  if (path.extname(absolute) !== '.json') continue;
   let value;
-  try { value = JSON.parse(fs.readFileSync(absolute, 'utf8')); }
+  try { value = JSON.parse(text); }
   catch (error) { errors.push(`${relative}: ${error.message}`); continue; }
   scan(value, relative);
   if (relative.includes('/ledger/events/') && value.classification !== 'PUBLIC') errors.push(`${relative}: a non-public event cannot enter this public ledger`);
@@ -62,6 +79,6 @@ for (const [index, canary] of canaries.entries()) {
 }
 
 if (errors.length) H.fail('public ledger privacy boundary', errors);
-else H.pass(`${files.length} public governance JSON records contain no denied path, key, or secret pattern`);
+else H.pass(`${files.length} public governance JSON, Markdown, JavaScript, and Python records contain no denied path, key, or secret pattern`);
 H.pass(`${canaries.length} synthetic leak canaries are detected`);
 process.exit(H.summarize('PRIVACY BOUNDARY'));

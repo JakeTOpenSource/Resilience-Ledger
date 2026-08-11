@@ -12,15 +12,24 @@ authority, execution, observation, acceptance, and outcome remain separate.
 
 ## Current records
 
-- `authority-map.json` - scope-specific authority and repository disposition.
+- `authority-map.json` - scope-specific authority, public-metadata grant, and
+  repository disposition.
 - `artifact-register.json` - research artifact identities and unresolved pins.
 - `external-feedback.json` - scoped public feedback observations whose
   validation and endorsement statuses remain independent.
+- `status-vocabulary-contract.json` - the frozen legacy adapter vocabulary,
+  literal STP v1.1 tokens, and explicit UNKNOWN cross-vocabulary relations.
 - `data-classification.md` - public/private handling and egress rules.
 - `decision-log/0001-work-packet-0-authority-freeze.md` - the owner-directed
   Work Packet 0 decision and its limits.
-- `deployment-receipts/2026-08-11-current-production.json` - the read-only
-  snapshot of the current Cloudflare Pages production state.
+- `decision-log/0002-public-metadata-release-acceptance.md` - the owner's exact,
+  bounded acceptance of metadata already public in repository history.
+- `decision-log/0003-stp-status-vocabulary-boundary.md` - the v1/v2 namespace
+  boundary and deferred semantic-migration decision.
+- `deployment-receipts/2026-08-11-current-production.json` - the historical
+  read-only Cloudflare Pages observation captured on 2026-08-11. Its filename
+  is retained because the sealed event owns that path; it is not a claim that
+  the receipt describes current repository main.
 - `governance-validate.js` - zero-dependency offline validation.
 - `ledger/` - immutable events, schema, capability policy, checkpoint, replay,
   falsification mutation cases, and harnesses.
@@ -37,7 +46,8 @@ node governance/harnesses/run-all.js
 Do not rewrite a past observation to make it agree with a later state. Add a
 new receipt or decision that links to and supersedes the old record. Never put
 private content, private paths, secrets, or raw private artifact hashes in this
-public directory.
+public directory unless an exact metadata set has a recorded owner release
+decision. A scoped metadata grant never authorizes raw artifact bytes.
 
 Page views, downloads, reactions, and positive comments are useful signals but
 are not silently promoted to consent, methodological review, endorsement,

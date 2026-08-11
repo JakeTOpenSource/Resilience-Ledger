@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://resilience-eval-ai.pages.dev/governance/ledger/schemas/event.v2.schema.json",
+  "title": "Delta Atlas governance event envelope v2",
+  "$comment": "The runtime canonical profile additionally permits safe integers only, ASCII object keys matching [A-Za-z0-9_.:-]+, and Unicode scalar string values.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status_vocabulary", "capability_policy_ref", "event_id",
+    "stream_id", "sequence", "event_type", "occurred_at", "recorded_at",
+    "actor", "classification", "consequence_class", "parents",
+    "prev_event_hash", "payload_hash", "event_hash", "read_set", "write_set",
+    "precondition_refs", "evidence_refs", "authority_ref", "idempotency_key",
+    "decision", "status_axes", "effect", "supersedes", "correction_of", "payload"
+  ],
+  "properties": {
+    "schema_version": { "const": "2.0.0" },
+    "status_vocabulary": { "const": "stp-v1.1-status-axes" },
+    "capability_policy_ref": { "const": "governance/ledger/policy/capabilities.v2.json" },
+    "event_id": { "type": "string", "pattern": "^evt_[a-z0-9][a-z0-9_-]+$" },
+    "stream_id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]+$" },
+    "sequence": { "type": "integer", "minimum": 1 },
+    "event_type": { "type": "string", "pattern": "^[a-z][a-z0-9_]+(\\.[a-z][a-z0-9_]+)+$" },
+    "occurred_at": { "type": ["string", "null"], "format": "date-time" },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "role", "auth_basis"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "minLength": 1 },
+        "auth_basis": { "type": "string", "minLength": 1 }
+      }
+    },
+    "classification": { "const": "PUBLIC" },
+    "consequence_class": { "enum": ["C0", "C1", "C2", "C3"] },
+    "parents": { "$ref": "#/$defs/eventIds" },
+    "prev_event_hash": { "$ref": "#/$defs/hashOrEmpty" },
+    "payload_hash": { "$ref": "#/$defs/hash" },
+    "event_hash": { "$ref": "#/$defs/hash" },
+    "read_set": { "$ref": "#/$defs/stringArray" },
+    "write_set": { "$ref": "#/$defs/stringArray" },
+    "precondition_refs": { "$ref": "#/$defs/stringArray" },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ref_id", "kind", "classification", "sha256", "source_locator"],
+        "properties": {
+          "ref_id": { "type": "string", "minLength": 1 },
+          "kind": { "type": "string", "minLength": 1 },
+          "classification": { "const": "PUBLIC" },
+          "sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+          "source_locator": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "authority_ref": { "type": ["string", "null"] },
+    "idempotency_key": { "type": "string", "minLength": 1 },
+    "decision": { "enum": ["OBSERVE", "ACCEPT", "ACCEPT_WITH_LIMITS", "DEFER", "REJECT", "SUPERSEDE", "CORRECT"] },
+    "status_axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence", "authority", "preparation", "execution", "observation", "acceptance", "outcome"],
+      "properties": {
+        "evidence": { "enum": ["SUPPORTED", "CONTRADICTED", "UNRESOLVED", "UNAVAILABLE", "INVALID"] },
+        "authority": { "enum": ["APPROVED", "DENIED", "DEFERRED", "ESCALATED", "REVOKED", "NOT_REQUIRED"] },
+        "preparation": { "enum": ["READY", "BLOCKED", "STALE", "CONFLICT", "EXPIRED"] },
+        "execution": { "enum": ["NOT_ATTEMPTED", "APPLIED", "PARTIAL", "FAILED", "REVERSED"] },
+        "observation": { "enum": ["MATCHED", "MISMATCHED", "UNAVAILABLE", "INVALID"] },
+        "acceptance": { "enum": ["ACCEPTED", "PRESERVED", "PROVISIONAL", "CONTESTED", "SUPERSEDED", "EXPIRED"] },
+        "outcome": { "enum": ["MET", "NOT_MET", "MIXED", "TOO_EARLY", "UNMEASURED"] }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "target", "reversible", "recovery_ref"],
+      "properties": {
+        "kind": { "enum": ["NONE", "REPOSITORY_CHANGE", "DEPLOYMENT", "EXTERNAL_MESSAGE", "DELETION"] },
+        "target": { "type": ["string", "null"] },
+        "reversible": { "type": "boolean" },
+        "recovery_ref": { "type": ["string", "null"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "NONE" } } },
+          "then": { "properties": { "target": { "const": null }, "recovery_ref": { "const": null } } },
+          "else": { "properties": { "target": { "type": "string", "minLength": 1 }, "recovery_ref": { "type": "string", "minLength": 1 } } }
+        }
+      ]
+    },
+    "supersedes": { "$ref": "#/$defs/eventIds" },
+    "correction_of": { "$ref": "#/$defs/eventIds" },
+    "payload": { "type": "object" }
+  },
+  "$defs": {
+    "hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "hashOrEmpty": { "type": "string", "pattern": "^$|^[0-9a-f]{64}$" },
+    "stringArray": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "eventIds": { "type": "array", "items": { "type": "string", "pattern": "^evt_[a-z0-9][a-z0-9_-]+$" }, "uniqueItems": true }
+  }
+}

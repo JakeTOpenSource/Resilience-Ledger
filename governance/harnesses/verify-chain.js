@@ -34,8 +34,13 @@ const checkpointDir = path.join(L.ledgerRoot, 'checkpoints');
 const checkpoints = L.jsonFiles(checkpointDir);
 const checkpointErrors = [];
 let previousRoot = '';
-for (const absolute of checkpoints) {
+let previousEventFiles = {};
+for (const [checkpointIndex, absolute] of checkpoints.entries()) {
   const checkpoint = L.loadJson(absolute);
+  const expectedId = `checkpoint-${String(checkpointIndex + 1).padStart(6, '0')}`;
+  if (path.basename(absolute) !== `${expectedId}.json` || checkpoint.checkpoint_id !== expectedId) {
+    checkpointErrors.push(`${path.basename(absolute)}: checkpoint filename/id is not the next canonical sequence`);
+  }
   const material = { ...checkpoint };
   delete material.checkpoint_root;
   if (checkpoint.previous_checkpoint_root !== previousRoot) checkpointErrors.push(`${path.basename(absolute)}: previous checkpoint root mismatch`);
@@ -52,6 +57,9 @@ for (const absolute of checkpoints) {
       sealedRecords.push({ absolute: target, relative, event: L.loadJson(target) });
     }
   }
+  for (const [relative, digest] of Object.entries(previousEventFiles)) {
+    if (checkpoint.event_files[relative] !== digest) checkpointErrors.push(`${path.basename(absolute)}: later checkpoint omits or changes prior event ${relative}`);
+  }
   if (checkpoint.event_count !== sealedRecords.length) checkpointErrors.push(`${path.basename(absolute)}: event_count differs from sealed event inventory`);
   if (sealedRecords.length && checkpoint.projection_root !== L.projectionRoot(L.replay(sealedRecords))) checkpointErrors.push(`${path.basename(absolute)}: historical projection root mismatch`);
   const sealedVerdict = L.verifyLedger(sealedRecords);
@@ -63,12 +71,22 @@ for (const absolute of checkpoints) {
   if (!sealedVerdict.ok || L.canonicalize(checkpoint.streams) !== L.canonicalize(sealedStreams)) {
     checkpointErrors.push(`${path.basename(absolute)}: declared stream heads differ from sealed event prefix`);
   }
-  const policyRef = checkpoint.capability_policy_ref || '';
-  const policy = path.join(L.repoRoot, policyRef);
-  if (!/^governance\/ledger\/policy\/capabilities\.v\d+\.json$/.test(policyRef) || !fs.existsSync(policy) || checkpoint.capability_policy_sha256 !== L.sha256CanonicalTextBytes(fs.readFileSync(policy))) {
-    checkpointErrors.push(`${path.basename(absolute)}: capability policy reference or digest mismatch`);
+  const policyEntries = checkpoint.schema_version === '1.0.0'
+    ? [[checkpoint.capability_policy_ref || '', checkpoint.capability_policy_sha256]]
+    : Object.entries(checkpoint.capability_policies || {});
+  if (!policyEntries.length) checkpointErrors.push(`${path.basename(absolute)}: no capability policy is pinned`);
+  for (const [policyRef, digest] of policyEntries) {
+    const policy = path.join(L.repoRoot, policyRef);
+    if (!/^governance\/ledger\/policy\/capabilities\.v\d+\.json$/.test(policyRef) || !fs.existsSync(policy) || digest !== L.sha256CanonicalTextBytes(fs.readFileSync(policy))) {
+      checkpointErrors.push(`${path.basename(absolute)}: capability policy reference or digest mismatch: ${policyRef}`);
+    }
   }
   previousRoot = checkpoint.checkpoint_root;
+  previousEventFiles = checkpoint.event_files || {};
+}
+const currentEventFiles = Object.fromEntries(records.map((record) => [record.relative, L.sha256CanonicalTextBytes(fs.readFileSync(record.absolute))]));
+if (checkpoints.length && L.canonicalize(previousEventFiles) !== L.canonicalize(currentEventFiles)) {
+  checkpointErrors.push('latest checkpoint does not seal the complete current event inventory');
 }
 if (!checkpoints.length) H.fail('checkpoint inventory', 'no checkpoint exists');
 else if (checkpointErrors.length) H.fail('sealed checkpoints', checkpointErrors);

@@ -19,18 +19,29 @@ After an event is accepted into the protected base branch, it is never edited,
 renamed, or deleted. A mistake is handled with a new `CORRECT` event linked by
 `correction_of`. A replacement decision uses `SUPERSEDE` and `supersedes`.
 
-Sequence establishes stream order. Timestamps are evidence and may be unknown;
-they are not used as a substitute for ordering. Every event seals its payload,
+Sequence establishes stream order. Cross-stream parents, supersession links,
+and correction links establish causal precedence. Replay uses a stable
+topological order with stream, sequence, and event identity only as the tie
+breaker between concurrently ready events. Timestamps are evidence and may be
+unknown; they are never ordering authority. Every event seals its payload,
 full envelope, previous stream event, authority basis, evidence references,
 idempotency key, and intended read/write boundary.
 
-Schemas and capability policies are versioned immutable files. A new policy is
-added under a new versioned filename; checkpoints pin the policy bytes used to
-authorize their event prefix.
+Schemas and capability policies are versioned immutable files. Schema v1 is a
+frozen legacy adapter vocabulary and is not an alias of State Transition
+Protocol v1.1. Schema v2 pins the literal STP v1.1 page 8 status tokens, while
+the missing transition semantics and conformance profile remain deferred. A
+new policy is added under a new versioned filename; checkpoints pin every
+policy needed to authorize their event inventory.
 
 Repository text, event-file, and policy digests normalize CRLF to LF before
 hashing. This binds the committed content without making verification depend on
 the checkout platform's line-ending configuration.
+
+The event canonicalization profile permits safe integers only, ASCII object
+keys, and Unicode scalar string values. This deliberately narrow domain keeps
+the zero-dependency Node and Python encoders byte-equivalent; floats, oversized
+integers, and unpaired Unicode surrogates are rejected instead of guessed.
 
 ## Projections
 
@@ -52,6 +63,7 @@ The current generated paths are:
 - `governance/artifact-register.json`
 - `governance/deployment-receipts/*.json`
 - `governance/external-feedback.json`
+- `governance/status-vocabulary-contract.json`
 
 These files are useful views, not independent authorities.
 
@@ -60,10 +72,12 @@ These files are useful views, not independent authorities.
 `node governance/harnesses/run-all.js` runs:
 
 - Git-base append-only history enforcement;
+- schema/runtime vocabulary agreement;
 - envelope, hash-chain, cross-reference, and checkpoint verification;
 - deterministic projection replay;
 - public/private boundary scanning with leak canaries;
-- role and consequence-class capability checks;
+- role and consequence-class capability checks, including digest-pinned
+  authority and recovery-reference resolution;
 - deliberate corruption cases that the validator must reject; and
 - independent Node and Python replay agreement.
 

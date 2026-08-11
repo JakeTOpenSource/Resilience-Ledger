@@ -101,18 +101,22 @@ Exit codes: `0` clean, `1` flags found, `2` usage or load error. A zero exit is 
 ## Authority, research custody, and privacy
 
 The append-only event ledger, generated authority map, research artifact and
-feedback registers, current production receipt, and public/private handling
+feedback registers, recorded production receipt, and public/private handling
 floor live in [`governance/`](governance/). Run
 `node governance/governance-validate.js` and
 `node governance/harnesses/run-all.js` to check those records offline. The
 second gate independently replays projections in Node and Python and requires
 the resulting roots to agree.
 
-The current authority freeze deliberately leaves two things unresolved rather
+The recorded authority state deliberately leaves two things unresolved rather
 than guessing: the exact Calibration Ledger v8 artifact pinned by State
 Transition Protocol v1.1, and the commit that produced the current Cloudflare
 Pages deployment. A provider-reported successful deployment is not accepted as
 equivalent to repository `main` until an independent manifest comparison holds.
+The Cloudflare receipt is a historical observation from 2026-08-11, not a
+moving statement about current `main`. The status-vocabulary contract keeps
+the original ledger enum as a frozen legacy adapter and does not claim it is
+semantically equivalent to the State Transition Protocol vocabulary.
 
 ## The seed frame: download it and harden it privately
 

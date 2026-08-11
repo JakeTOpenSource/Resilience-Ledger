@@ -6,10 +6,12 @@ const path = require('path');
 
 const scripts = [
   'append-only-history.js',
+  'verify-schema-contract.js',
   'verify-chain.js',
   'replay.js',
   'privacy-boundary.js',
   'verify-authority.js',
+  'authority-falsification.js',
   'falsification.js',
   'verify-replayers.js'
 ];

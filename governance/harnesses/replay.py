@@ -3,6 +3,7 @@
 
 import argparse
 import hashlib
+import heapq
 import json
 import pathlib
 import re
@@ -11,8 +12,10 @@ import sys
 REPO = pathlib.Path(__file__).resolve().parents[2]
 EVENTS = REPO / "governance" / "ledger" / "events"
 HASH = re.compile(r"^[0-9a-f]{64}$")
+KEY = re.compile(r"^[A-Za-z0-9_.:-]+$")
+MAX_SAFE_INTEGER = 9007199254740991
 ALLOWED_PROJECTION = re.compile(
-    r"^governance/(authority-map\.json|artifact-register\.json|external-feedback\.json|deployment-receipts/[a-z0-9._-]+\.json)$"
+    r"^governance/(authority-map\.json|artifact-register\.json|external-feedback\.json|status-vocabulary-contract\.json|deployment-receipts/[a-z0-9._-]+\.json)$"
 )
 
 
@@ -31,12 +34,44 @@ def load_events():
     return rows
 
 
+def validate_canonical_domain(value, trail="$", errors=None):
+    if errors is None:
+        errors = []
+    if value is None or isinstance(value, bool):
+        return errors
+    if isinstance(value, str):
+        if any(0xD800 <= ord(char) <= 0xDFFF for char in value):
+            errors.append(f"{trail}: string contains an unpaired Unicode surrogate")
+        return errors
+    if isinstance(value, int):
+        if abs(value) > MAX_SAFE_INTEGER:
+            errors.append(f"{trail}: canonical profile permits safe integers only")
+        return errors
+    if isinstance(value, float):
+        errors.append(f"{trail}: canonical profile permits safe integers only")
+        return errors
+    if isinstance(value, list):
+        for index, item in enumerate(value):
+            validate_canonical_domain(item, f"{trail}[{index}]", errors)
+        return errors
+    if isinstance(value, dict):
+        for key, child in value.items():
+            if not KEY.match(key):
+                errors.append(f"{trail}: non-ASCII or unsupported object key {key!r}")
+            validate_canonical_domain(child, f"{trail}.{key}", errors)
+        return errors
+    errors.append(f"{trail}: canonical profile refuses {type(value).__name__}")
+    return errors
+
+
 def validate(rows):
     errors = []
     ids = {}
     idempotency = {}
     streams = {}
     for relative, event in rows:
+        for error in validate_canonical_domain(event):
+            errors.append(f"{relative}: {error}")
         if event.get("event_id") in ids:
             errors.append(f"{relative}: duplicate event_id")
         ids[event.get("event_id")] = relative
@@ -66,13 +101,59 @@ def validate(rows):
             for target in event.get(field, []):
                 if target not in ids:
                     errors.append(f"{relative}: {field} references unknown {target}")
+    if not errors:
+        try:
+            causal_order(rows)
+        except ValueError as error:
+            errors.append(str(error))
     return errors
+
+
+def causal_order(rows):
+    by_id = {event["event_id"]: (relative, event) for relative, event in rows}
+    incoming = {event_id: set() for event_id in by_id}
+    outgoing = {event_id: set() for event_id in by_id}
+
+    def edge(source, target):
+        if source not in by_id or target not in by_id or source in incoming[target]:
+            return
+        incoming[target].add(source)
+        outgoing[source].add(target)
+
+    streams = {}
+    for relative, event in rows:
+        streams.setdefault(event["stream_id"], []).append((relative, event))
+    for entries in streams.values():
+        entries.sort(key=lambda row: (row[1]["sequence"], row[1]["event_id"]))
+        for index in range(1, len(entries)):
+            edge(entries[index - 1][1]["event_id"], entries[index][1]["event_id"])
+    for _, event in rows:
+        for field in ("parents", "supersedes", "correction_of"):
+            for target in event.get(field, []):
+                edge(target, event["event_id"])
+
+    ready = []
+    for event_id, (_, event) in by_id.items():
+        if not incoming[event_id]:
+            heapq.heappush(ready, (event["stream_id"], event["sequence"], event_id))
+    ordered = []
+    while ready:
+        _, _, event_id = heapq.heappop(ready)
+        ordered.append(by_id[event_id])
+        for target in sorted(outgoing[event_id]):
+            incoming[target].remove(event_id)
+            if not incoming[target]:
+                event = by_id[target][1]
+                heapq.heappush(ready, (event["stream_id"], event["sequence"], target))
+    if len(ordered) != len(rows):
+        raise ValueError("causal cycle prevents deterministic replay")
+    return ordered
 
 
 def replay(rows):
     projections = {}
     owners = {}
-    ordered = sorted(rows, key=lambda row: (row[1]["recorded_at"], row[1]["event_id"]))
+    ordered = causal_order(rows)
     for relative, event in ordered:
         projection = event.get("payload", {}).get("projection")
         if not projection:
