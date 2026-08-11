@@ -15,6 +15,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Calibration corpus (the labels are the floor)
         run: node tracer-corpus.js
       - name: Gap Check corpus (negation guard stays honest)
@@ -27,3 +30,7 @@ jobs:
         run: node mend-gate.js list
       - name: MCP manifest pin selftest (offline drift tripwire)
         run: node mcp-manifest-pin.js selftest
+      - name: Governance authority freeze (offline records and hashes)
+        run: node governance/governance-validate.js
+      - name: Governance ledger (append-only, replay, privacy, falsification)
+        run: node governance/harnesses/run-all.js

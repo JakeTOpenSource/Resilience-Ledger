@@ -98,6 +98,22 @@ type myplan.txt | node delta-atlas-cli.js gapcheck -  pipe from stdin (cat on Ma
 
 Exit codes: `0` clean, `1` flags found, `2` usage or load error. A zero exit is not a safety guarantee — the engines read structure, not meaning. A human (or the agent's human) still confirms anything that matters. See `llms.txt` for the agent-facing entry point.
 
+## Authority, research custody, and privacy
+
+The append-only event ledger, generated authority map, research artifact and
+feedback registers, current production receipt, and public/private handling
+floor live in [`governance/`](governance/). Run
+`node governance/governance-validate.js` and
+`node governance/harnesses/run-all.js` to check those records offline. The
+second gate independently replays projections in Node and Python and requires
+the resulting roots to agree.
+
+The current authority freeze deliberately leaves two things unresolved rather
+than guessing: the exact Calibration Ledger v8 artifact pinned by State
+Transition Protocol v1.1, and the commit that produced the current Cloudflare
+Pages deployment. A provider-reported successful deployment is not accepted as
+equivalent to repository `main` until an independent manifest comparison holds.
+
 ## The seed frame: download it and harden it privately
 
 The public lexicon here is deliberately the general floor. If you run these detectors on real work, the strongest move is to take the folder and harden it privately: add your own domain's invariants, euphemisms, and corpus cases in a private overlay, so nobody can read your tripwires from the public repo.

@@ -1,0 +1,62 @@
+{
+  "schema_version": "0.1.0",
+  "register_id": "delta-atlas-research-artifacts-2026-08-11",
+  "recorded_at": "2026-08-11T16:51:15Z",
+  "hash_algorithm": "SHA-256",
+  "artifacts": [
+    {
+      "artifact_id": "state-transition-protocol-v1.1-pdf",
+      "display_name": "State Transition Protocol v1.1.pdf",
+      "media_type": "application/pdf",
+      "byte_length": 889709,
+      "sha256": "48aad2ce2f660f32c4af54547c189168bec722053a8e06b25946624ad2f30bf2",
+      "classification": "PUBLIC",
+      "classification_basis": "The artifact publication record states open source independent research under CC BY 4.0.",
+      "source": "owner_supplied_attachment",
+      "repository_state": "not_committed",
+      "acceptance_status": "ACCEPT_WITH_LIMITS",
+      "limits": [
+        "The release-provenance ledger pin does not resolve to an artifact found in the bounded local search."
+      ]
+    },
+    {
+      "artifact_id": "calibration-ledger-v8-attached-docx",
+      "display_name": "Calibration Ledger v8 -.docx",
+      "media_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "byte_length": 48858,
+      "sha256": "17916bcf43158c6c875cd08352bc2d3c72c84844ff43dc8e86ee9621f4866927",
+      "classification": "PUBLIC",
+      "classification_basis": "The artifact front matter states OPEN SOURCE WORKING SPECIFICATION under CC BY 4.0.",
+      "source": "owner_supplied_attachment",
+      "repository_state": "not_committed",
+      "acceptance_status": "CANDIDATE",
+      "limits": [
+        "Its byte hash does not match the protocol's asserted Calibration Ledger v8 hash.",
+        "It is not accepted as the pinned ledger release."
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "stp-v1.1-calibration-ledger-v8-pin",
+      "source_artifact_id": "state-transition-protocol-v1.1-pdf",
+      "target_label": "Calibration Ledger v8",
+      "asserted_sha256": "32f0159d34ee012c3fc009f905b9f557cf4767f7eaf1e1de05404ae5792a19da",
+      "relation_status": "UNVERIFIED",
+      "decision": "DEFER",
+      "reason": "The asserted hash differs from the attached DOCX and no exact match was found in the bounded local search."
+    }
+  ],
+  "bounded_search_evidence": {
+    "searched_at": "2026-08-11T16:51:15Z",
+    "scope_labels": [
+      "owner Downloads tree",
+      "2026-08-09 research workspace"
+    ],
+    "files_hashed": 452,
+    "read_errors": 0,
+    "exact_matches_for_asserted_hash": 0,
+    "decision": "DEFER",
+    "next_evidence": "Provide the exact artifact whose bytes hash to the asserted value, or publish a typed amendment that supersedes the pin."
+  }
+}

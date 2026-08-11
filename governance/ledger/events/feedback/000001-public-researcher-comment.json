@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0.0",
+  "event_id": "evt_feedback_public_researcher_comment_0001",
+  "stream_id": "feedback",
+  "sequence": 1,
+  "event_type": "feedback.external_comment_observed",
+  "occurred_at": null,
+  "recorded_at": "2026-08-11T17:18:41Z",
+  "actor": {
+    "id": "adapter:codex",
+    "role": "agent_observer",
+    "auth_basis": "Repository owner supplied a screenshot and directed that the public feedback be taken into account."
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C0",
+  "parents": [
+    "evt_governance_wp0_authority_freeze_0001"
+  ],
+  "prev_event_hash": "",
+  "payload_hash": "4920c24a7ae0caf05516a3b246d5031933967509042b73e085a4e879e284bf7d",
+  "event_hash": "d30d65d43a51491bb51d08538d8e6e5ba7621a0461cc65f7ff633b4393774435",
+  "read_set": [
+    "owner-supplied screenshot of a public professional-network comment"
+  ],
+  "write_set": [
+    "governance/external-feedback.json"
+  ],
+  "precondition_refs": [
+    "public-comment-visible-in-owner-supplied-capture"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "public-linkedin-comment-2026-08",
+      "kind": "public_source_locator",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://www.linkedin.com/feed/update/urn:li:activity:7492563640110227456/"
+    }
+  ],
+  "authority_ref": "evt_governance_wp0_authority_freeze_0001",
+  "idempotency_key": "wp0.5:feedback:genesis:public-researcher-comment",
+  "decision": "OBSERVE",
+  "status_axes": {
+    "evidence": "VERIFIED",
+    "authority": "UNVERIFIED",
+    "preparation": "NOT_APPLICABLE",
+    "execution": "NOT_APPLICABLE",
+    "observation": "OBSERVED",
+    "acceptance": "NOT_APPLICABLE",
+    "outcome": "UNKNOWN"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "projection": {
+      "path": "governance/external-feedback.json",
+      "record": {
+        "schema_version": "0.1.0",
+        "register_id": "delta-atlas-external-feedback-2026-08-11",
+        "recorded_at": "2026-08-11T17:18:41Z",
+        "observations": [
+          {
+            "feedback_id": "public-researcher-comment-0001",
+            "classification": "PUBLIC",
+            "source_type": "public_professional_network_comment",
+            "source_locator": "https://www.linkedin.com/feed/update/urn:li:activity:7492563640110227456/",
+            "source_time": null,
+            "source_time_precision": "The supplied capture displayed a relative age of one day; an exact timestamp was not established.",
+            "public_attribution": {
+              "display_name": "Nicolai Hyllested",
+              "displayed_scope": "AI Security; measuring LLM behavior, drift, and manipulation"
+            },
+            "verbatim_feedback": "Very cool piece of work :)",
+            "interpretation": "Positive qualitative feedback from a researcher working in an adjacent field.",
+            "independent_validation": "NOT_OBSERVED",
+            "methodological_review": "NOT_OBSERVED",
+            "endorsement": "NOT_OBSERVED",
+            "limits": [
+              "A positive comment is not evidence that the protocol was independently reproduced or validated.",
+              "The supplied screenshot, local path, account chrome, and analytics were deliberately excluded from the public ledger."
+            ]
+          }
+        ]
+      }
+    },
+    "claim_ceiling": "This event establishes that public positive feedback was observed; it does not establish independent validation, endorsement, or representative user sentiment."
+  }
+}

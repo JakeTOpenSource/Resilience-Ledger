@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0.0",
+  "event_id": "evt_governance_wp0_authority_freeze_0001",
+  "stream_id": "governance",
+  "sequence": 1,
+  "event_type": "governance.authority_freeze_recorded",
+  "occurred_at": "2026-08-11T16:51:15Z",
+  "recorded_at": "2026-08-11T16:51:15Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "Authenticated owner direction recorded in Decision 0001; cryptographic signature not present."
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C2",
+  "parents": [],
+  "prev_event_hash": "",
+  "payload_hash": "7d570bac57cfa86b6987b8a14407332d8e8df62adea07de6e805a140107a9302",
+  "event_hash": "e22e618cae981b357ea6c00d449f84ce51f330830378e6e5d6b59d6f2c818361",
+  "read_set": [
+    "governance/decision-log/0001-work-packet-0-authority-freeze.md",
+    "governance/data-classification.md",
+    "governance/authority-map.json"
+  ],
+  "write_set": [
+    "governance/authority-map.json"
+  ],
+  "precondition_refs": [
+    "owner-direction:proceed-work-packet-0"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "decision-0001",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "a0e17d3bb1a7b81fc21d44f98341dc7bf158862a8148363870f21b7120bb8e65",
+      "source_locator": "governance/decision-log/0001-work-packet-0-authority-freeze.md"
+    },
+    {
+      "ref_id": "data-classification-wp0",
+      "kind": "policy_record",
+      "classification": "PUBLIC",
+      "sha256": "081b69945e462002e1a4e168c3ff326aee15fd1fc4d1c1e093a960606d93bf78",
+      "source_locator": "governance/data-classification.md"
+    },
+    {
+      "ref_id": "authority-map-pre-ledger-snapshot",
+      "kind": "pre_ledger_snapshot",
+      "classification": "PUBLIC",
+      "sha256": "cd97d374f3393fad12fb34c0a93b4fb1cf0d1c40d8dd9485e9e362aaed0d8012",
+      "source_locator": "governance/authority-map.json"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0001-work-packet-0-authority-freeze.md",
+  "idempotency_key": "wp0.5:governance:genesis:authority-freeze",
+  "decision": "ACCEPT_WITH_LIMITS",
+  "status_axes": {
+    "evidence": "VERIFIED",
+    "authority": "UNVERIFIED",
+    "preparation": "PASS",
+    "execution": "PASS",
+    "observation": "OBSERVED",
+    "acceptance": "ACCEPT_WITH_LIMITS",
+    "outcome": "UNKNOWN"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "projection": {
+      "path": "governance/authority-map.json",
+      "record": {
+        "schema_version": "0.1.0",
+        "record_id": "delta-atlas-authority-map-2026-08-11",
+        "recorded_at": "2026-08-11T16:51:15Z",
+        "decision": "ACCEPT_WITH_LIMITS",
+        "decision_ref": "governance/decision-log/0001-work-packet-0-authority-freeze.md",
+        "authorization": {
+          "actor_type": "repository_owner_direction",
+          "actor_identifier": "github:JakeTOpenSource",
+          "evidence": "Owner instructed Codex to proceed with Work Packet 0 on 2026-08-11.",
+          "cryptographically_verified": false
+        },
+        "scopes": [
+          {
+            "scope": "public_delta_atlas_source",
+            "authority": "github:JakeTOpenSource/Resilience-Ledger@main",
+            "status": "ACCEPT",
+            "rule": "The repository is authoritative for intended public source. A live deployment is not source authority."
+          },
+          {
+            "scope": "transition_method",
+            "authority": "artifact:state-transition-protocol-v1.1-pdf",
+            "status": "ACCEPT_WITH_LIMITS",
+            "rule": "Use the protocol transition spine and independent statuses. Its ledger pin remains unresolved."
+          },
+          {
+            "scope": "calibration_ledger_reference",
+            "authority": null,
+            "status": "DEFER",
+            "rule": "No Calibration Ledger artifact is accepted as the protocol-pinned release until its bytes match the asserted SHA-256 or an amendment supersedes the pin."
+          },
+          {
+            "scope": "published_delta_atlas_canon_v1_8",
+            "authority": "repo:Delta-Atlas-Canon.md and repo:delta-atlas-canon.json at the accepted source commit",
+            "status": "ACCEPT_WITH_LIMITS",
+            "rule": "These files describe the currently published v1.8 canon. They do not yet implement the v1.1 accepted-state semantics and require a typed migration."
+          },
+          {
+            "scope": "observed_production_state",
+            "authority": "cloudflare-pages:resilience-eval-ai deployment 8f6b970f-a09a-4c60-adad-6fe0d1b061ac",
+            "status": "OBSERVED",
+            "rule": "The deployment receipt records what was observed live. It is not accepted as equivalent to repository main while mismatches remain."
+          },
+          {
+            "scope": "private_archive",
+            "authority": "github:JakeTOpenSource/Resilience-Ledger-archive",
+            "status": "FROZEN_NON_AUTHORITATIVE",
+            "rule": "Retain without deletion or development until the owner records a retention and disposal decision."
+          },
+          {
+            "scope": "agent_or_ci_adapter",
+            "authority": null,
+            "status": "NON_AUTHORITATIVE",
+            "rule": "Agents and CI may propose, check, execute within granted scope, and emit receipts. They cannot silently redefine accepted state or authority."
+          }
+        ],
+        "invariants": [
+          "Private content never enters the public repository or public receipt.",
+          "A successful command or provider stage is not equivalent to observed or accepted state.",
+          "A source artifact without a verified identity remains candidate evidence.",
+          "The private archive is not deleted, repurposed, or used as an active branch without a new decision.",
+          "Semantic migration uses ALIAS, OVERLAP, RELATED, CONTESTED, or UNKNOWN; ALIAS requires signature equivalence."
+        ],
+        "unknowns": [
+          "The exact artifact identified by the protocol's Calibration Ledger v8 pin.",
+          "The uploader and source commit for each historical Pages deployment.",
+          "Whether another Cloudflare account contains a related Worker.",
+          "The legal or contractual retention, jurisdiction, and no-egress requirements for future private research.",
+          "The final retention period and disposal authority for the private archive."
+        ]
+      }
+    },
+    "limits": [
+      "Owner direction is recorded but is not cryptographically signed.",
+      "This event records the freeze; it does not publish, deploy, delete, or grant production authority."
+    ]
+  }
+}

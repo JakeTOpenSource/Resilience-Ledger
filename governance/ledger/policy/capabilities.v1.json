@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "roles": {
+    "repository_owner": {
+      "max_consequence_class": "C3",
+      "event_types": ["*"],
+      "effect_kinds": ["NONE", "REPOSITORY_CHANGE", "DEPLOYMENT", "EXTERNAL_MESSAGE", "DELETION"]
+    },
+    "agent_observer": {
+      "max_consequence_class": "C1",
+      "event_types": [
+        "research.artifact_search_recorded",
+        "deployment.production_observed",
+        "feedback.external_comment_observed"
+      ],
+      "effect_kinds": ["NONE"]
+    }
+  },
+  "rules": [
+    "An adapter may record evidence inside its granted scope but may not silently accept it.",
+    "C2 and C3 events require an explicit authority_ref.",
+    "External effects require an idempotency key, recovery metadata, and role permission.",
+    "A later capability-policy edit does not retroactively authorize an earlier event."
+  ]
+}

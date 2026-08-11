@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "checkpoint_id": "checkpoint-000001",
+  "recorded_at": "2026-08-11T17:18:41Z",
+  "previous_checkpoint_root": "",
+  "event_count": 4,
+  "event_files": {
+    "governance/ledger/events/deployment/000001-wp0-production-observation.json": "17b743c721b48d7ccf2c2f743893acbf8f142cb3588be76f15c0577864705210",
+    "governance/ledger/events/feedback/000001-public-researcher-comment.json": "ba6c14fee16552d485c8343e07fe29aa5bfee295bdd854367a44dc27904183ed",
+    "governance/ledger/events/governance/000001-wp0-authority-freeze.json": "8179bbd5216dfaf91e7b5dd10a04722f4928fd8a9ae9ff2acd834f904ebdc337",
+    "governance/ledger/events/research/000001-wp0-artifact-search.json": "f9997b300db7ac4181bcc2755c872c206fbab838c3012c26930cb469a4afee29"
+  },
+  "streams": {
+    "deployment": {
+      "sequence": 1,
+      "event_id": "evt_deployment_wp0_production_observation_0001",
+      "event_hash": "8216f1dc25b11913fd60c61cae6ab20559caf0973f308400805c675e917427c1"
+    },
+    "feedback": {
+      "sequence": 1,
+      "event_id": "evt_feedback_public_researcher_comment_0001",
+      "event_hash": "d30d65d43a51491bb51d08538d8e6e5ba7621a0461cc65f7ff633b4393774435"
+    },
+    "governance": {
+      "sequence": 1,
+      "event_id": "evt_governance_wp0_authority_freeze_0001",
+      "event_hash": "e22e618cae981b357ea6c00d449f84ce51f330830378e6e5d6b59d6f2c818361"
+    },
+    "research": {
+      "sequence": 1,
+      "event_id": "evt_research_wp0_artifact_register_0001",
+      "event_hash": "b8661fda03f6da05e89507eb632c81a42bbdbe287c507ef66b9b8cb4074d105a"
+    }
+  },
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v1.json",
+  "capability_policy_sha256": "8d144987a039561ccf80f6c8c703901150b32061843db2f48d9dcde2c78cd2d4",
+  "projection_root": "93e50ff4d11f40dc05e125af67909b07ca5a29771009cd65ec8eb65510ab7afb",
+  "witnesses": [
+    {
+      "kind": "git_commit_or_release",
+      "status": "NOT_OBSERVED",
+      "locator": null,
+      "limit": "The checkpoint is internally sealed but has not yet been anchored by a protected signed ref or independent witness."
+    }
+  ],
+  "checkpoint_root": "241ec09598a612c6604b7d1c75c01794c18edf8d617a821801faa3bb6080e5d8"
+}

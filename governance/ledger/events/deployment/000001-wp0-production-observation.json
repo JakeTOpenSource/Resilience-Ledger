@@ -1,0 +1,146 @@
+{
+  "schema_version": "1.0.0",
+  "event_id": "evt_deployment_wp0_production_observation_0001",
+  "stream_id": "deployment",
+  "sequence": 1,
+  "event_type": "deployment.production_observed",
+  "occurred_at": "2026-08-11T16:51:15Z",
+  "recorded_at": "2026-08-11T16:51:15Z",
+  "actor": {
+    "id": "adapter:codex",
+    "role": "agent_observer",
+    "auth_basis": "Repository owner directed a read-only comparison of public source and observed production."
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C1",
+  "parents": [
+    "evt_governance_wp0_authority_freeze_0001"
+  ],
+  "prev_event_hash": "",
+  "payload_hash": "7accef210ce4c97bc71f6b8928ef86bd90a70fc0701d1a121cdd65e528aac975",
+  "event_hash": "8216f1dc25b11913fd60c61cae6ab20559caf0973f308400805c675e917427c1",
+  "read_set": [
+    "public repository deployable paths",
+    "public Cloudflare Pages deployment"
+  ],
+  "write_set": [
+    "governance/deployment-receipts/2026-08-11-current-production.json"
+  ],
+  "precondition_refs": [
+    "read-only-production-audit"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "production-receipt-pre-ledger-snapshot",
+      "kind": "pre_ledger_snapshot",
+      "classification": "PUBLIC",
+      "sha256": "950a9af5c154d92a40ab1a77e16147706310689c1fcbda1dff61ebb1931ef458",
+      "source_locator": "governance/deployment-receipts/2026-08-11-current-production.json"
+    }
+  ],
+  "authority_ref": "evt_governance_wp0_authority_freeze_0001",
+  "idempotency_key": "wp0.5:deployment:genesis:production-observation",
+  "decision": "DEFER",
+  "status_axes": {
+    "evidence": "VERIFIED",
+    "authority": "UNVERIFIED",
+    "preparation": "UNKNOWN",
+    "execution": "PASS",
+    "observation": "FAIL",
+    "acceptance": "DEFER",
+    "outcome": "UNKNOWN"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "projection": {
+      "path": "governance/deployment-receipts/2026-08-11-current-production.json",
+      "record": {
+        "schema_version": "0.1.0",
+        "receipt_type": "observed_production_state",
+        "receipt_id": "cloudflare-pages-resilience-eval-ai-2026-08-11",
+        "captured_at": "2026-08-11T16:51:15Z",
+        "environment": "production",
+        "provider": {
+          "name": "Cloudflare Pages",
+          "account_alias": "JT",
+          "project": "resilience-eval-ai",
+          "canonical_url": "https://resilience-eval-ai.pages.dev/",
+          "source_type": null,
+          "production_branch_label": "main",
+          "deployment_count": 74
+        },
+        "deployment": {
+          "id": "8f6b970f-a09a-4c60-adad-6fe0d1b061ac",
+          "short_id": "8f6b970f",
+          "url": "https://8f6b970f.resilience-eval-ai.pages.dev",
+          "created_at": "2026-07-12T20:02:26.906385Z",
+          "modified_at": "2026-07-12T20:02:28.236712Z",
+          "provider_stage": "deploy",
+          "provider_status": "success",
+          "trigger_type": "ad_hoc",
+          "reported_branch": "main",
+          "reported_commit_hash": "",
+          "source_commit_relationship": "UNKNOWN",
+          "temporal_observation": "The deployment completed about 10 minutes before the current main commit was created; the current main commit cannot be its recorded source."
+        },
+        "repository": {
+          "name": "JakeTOpenSource/Resilience-Ledger",
+          "branch": "main",
+          "commit": "7608ce90eb83357e7e9edddb6d0fb80c70b30369",
+          "commit_time": "2026-07-12T20:12:48Z",
+          "commit_subject": "Add live Gap Check hero on the homepage (real engine, deferred load); close GitHub/live drift"
+        },
+        "comparison": {
+          "deployable_paths_checked": 102,
+          "http_200": 102,
+          "missing": 0,
+          "semantic_matches": 100,
+          "semantic_mismatches": 2,
+          "line_ending_only_differences": [
+            "CITATION.cff"
+          ],
+          "mismatches": [
+            {
+              "path": "index.html",
+              "repository_sha256": "5294efd6954cb1f7187fc546165b22bb460cd50950132086d9a8f059a5ec4fbf",
+              "live_sha256": "e50662d27d4a08f6187a006b5256da831a6e98262dacab687286cfd4b8c7fff7",
+              "observation": "Repository defers the homepage iframe; production loads it immediately and lacks the deferral script.",
+              "public_history_relation": "The live Git blob 6a7f71e7f14116477b7fb0549a7d9cd131ad63c7 was not found in the inspected public repository history."
+            },
+            {
+              "path": "sw.js",
+              "repository_sha256": "0d0cb83c9c612ce4fad5e3fa5bb07212c7672421e239f9609ce4e0dc7d8c5708",
+              "live_sha256": "2e98e8558e832ad711572184faa40b12f823b3bc8f81b13fd14f881b1000381f",
+              "observation": "Repository cache name is aaig-v85; production cache name is aaig-v84.",
+              "public_history_relation": "The live file matches the version present before commit 7608ce90eb83357e7e9edddb6d0fb80c70b30369, including commit 599c980bc2b35998f7d3d01ff63a4be83ec18b87."
+            }
+          ]
+        },
+        "statuses": {
+          "evidence": "PASS",
+          "authority": "PASS_WITH_LIMITS",
+          "preparation": "UNKNOWN",
+          "execution": "PASS",
+          "observation": "FAIL",
+          "acceptance": "DEFER",
+          "outcome": "UNKNOWN"
+        },
+        "decision": "DEFER",
+        "reason": "The provider reports a successful deployment, but the source commit is absent and two production files differ semantically from repository main.",
+        "next_evidence": [
+          "Identify the uploader and artifact used for this deployment.",
+          "Choose the authoritative index.html and sw.js versions.",
+          "Produce a release manifest from an immutable commit, deploy it, and independently compare production."
+        ]
+      }
+    },
+    "claim_ceiling": "Provider success and HTTP reachability do not establish source identity, semantic equivalence, acceptance, or outcome."
+  }
+}
