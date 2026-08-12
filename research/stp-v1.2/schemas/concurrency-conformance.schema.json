@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://delta-atlas.example/schemas/concurrency-conformance.v2.json",
+  "title": "Concurrency, effect, and capacity conformance fixtures",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "batch_cases", "effect_cases", "capacity_cases"],
+  "properties": {
+    "schema_version": { "const": "concurrency-conformance.v2" },
+    "profile": { "$ref": "#/$defs/profile" },
+    "batch_cases": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/batchCase" } },
+    "effect_cases": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/effectCase" } },
+    "capacity_cases": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/capacityCase" } }
+  },
+  "$defs": {
+    "identifier": { "type": "string", "minLength": 1 },
+    "caseId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "resultStatus": { "enum": ["PASS", "FAIL", "UNKNOWN"] },
+    "reasonCode": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+    "nonnegativeNumber": { "type": "number", "minimum": 0 },
+    "primitive": { "type": ["boolean", "number", "string", "null"] },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject_id", "policy_id", "policy_generation", "causal_frontier", "limits", "effect_policy"],
+      "properties": {
+        "subject_id": { "$ref": "#/$defs/identifier" },
+        "policy_id": { "$ref": "#/$defs/identifier" },
+        "policy_generation": { "type": "integer", "minimum": 1 },
+        "causal_frontier": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/identifier" } },
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["budget_used", "capacity_unit", "buffers"],
+          "properties": {
+            "budget_used": { "$ref": "#/$defs/nonnegativeNumber" },
+            "capacity_unit": { "$ref": "#/$defs/identifier" },
+            "buffers": { "$ref": "#/$defs/lanes" }
+          }
+        },
+        "effect_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["dedupe_retention_steps"],
+          "properties": { "dedupe_retention_steps": { "type": "integer", "minimum": 0 } }
+        }
+      }
+    },
+    "lanes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation", "settlement", "recovery"],
+      "properties": {
+        "observation": { "$ref": "#/$defs/nonnegativeNumber" },
+        "settlement": { "$ref": "#/$defs/nonnegativeNumber" },
+        "recovery": { "$ref": "#/$defs/nonnegativeNumber" }
+      }
+    },
+    "laneSeries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation", "settlement", "recovery"],
+      "properties": {
+        "observation": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonnegativeNumber" } },
+        "settlement": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonnegativeNumber" } },
+        "recovery": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonnegativeNumber" } }
+      }
+    },
+    "delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["delta_id", "subject_id", "policy_id", "policy_generation", "causal_parents", "reads", "predicate_reads", "writes", "increments", "effects"],
+      "properties": {
+        "delta_id": { "$ref": "#/$defs/identifier" },
+        "subject_id": { "$ref": "#/$defs/identifier" },
+        "policy_id": { "$ref": "#/$defs/identifier" },
+        "policy_generation": { "type": "integer", "minimum": 1 },
+        "causal_parents": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/identifier" } },
+        "reads": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/identifier" } },
+        "predicate_reads": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/predicate" } },
+        "writes": { "type": "object", "additionalProperties": { "$ref": "#/$defs/primitive" } },
+        "increments": { "type": "object", "additionalProperties": { "type": "number" } },
+        "effects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["effect_id", "idempotency_key"],
+            "properties": {
+              "effect_id": { "$ref": "#/$defs/identifier" },
+              "idempotency_key": { "$ref": "#/$defs/identifier" }
+            }
+          }
+        }
+      }
+    },
+    "predicate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field", "operator", "value"],
+      "properties": {
+        "field": { "$ref": "#/$defs/identifier" },
+        "operator": { "enum": ["EQ", "NE", "LT", "LTE", "GT", "GTE", "EXISTS"] },
+        "value": { "$ref": "#/$defs/primitive" }
+      }
+    },
+    "batchExpected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason_code", "schedule_count", "pairwise_all_commute"],
+      "properties": {
+        "status": { "$ref": "#/$defs/resultStatus" },
+        "reason_code": { "$ref": "#/$defs/reasonCode" },
+        "schedule_count": { "type": "integer", "minimum": 0 },
+        "pairwise_all_commute": { "type": "boolean" }
+      }
+    },
+    "batchCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_id", "termination_evidence", "base_state", "deltas", "expected"],
+      "properties": {
+        "case_id": { "$ref": "#/$defs/caseId" },
+        "termination_evidence": { "enum": ["FINITE_ENUMERATION", "ABSENT"] },
+        "base_state": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["values"],
+          "properties": { "values": { "type": "object", "additionalProperties": { "$ref": "#/$defs/primitive" } } }
+        },
+        "deltas": { "type": "array", "minItems": 1, "maxItems": 8, "items": { "$ref": "#/$defs/delta" } },
+        "expected": { "$ref": "#/$defs/batchExpected" }
+      }
+    },
+    "effectEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sequence", "previous_sequence", "effect_step", "type", "effect_id", "idempotency_key", "policy_generation"],
+      "properties": {
+        "sequence": { "type": "integer", "minimum": 1 },
+        "previous_sequence": { "type": ["integer", "null"], "minimum": 1 },
+        "effect_step": { "type": "integer", "minimum": 1 },
+        "type": { "enum": ["PREPARE", "DISPATCH", "DEDUPE_CONFIRM", "TIMEOUT", "OBSERVE", "SETTLE", "REVOKE"] },
+        "effect_id": { "$ref": "#/$defs/identifier" },
+        "idempotency_key": { "$ref": "#/$defs/identifier" },
+        "policy_generation": { "type": "integer", "minimum": 1 },
+        "outcome": { "enum": ["SUCCEEDED", "FAILED", "NO_CHANGE_DETECTED"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "OBSERVE" } }, "required": ["type"] },
+          "then": { "required": ["outcome"] },
+          "else": { "not": { "required": ["outcome"] } }
+        }
+      ]
+    },
+    "effectExpected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason_code", "effect_count"],
+      "properties": {
+        "status": { "$ref": "#/$defs/resultStatus" },
+        "reason_code": { "$ref": "#/$defs/reasonCode" },
+        "effect_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "effectCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_id", "events", "expected"],
+      "properties": {
+        "case_id": { "$ref": "#/$defs/caseId" },
+        "events": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/effectEvent" } },
+        "expected": { "$ref": "#/$defs/effectExpected" }
+      }
+    },
+    "capacityExpected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason_code", "max_backlog"],
+      "properties": {
+        "status": { "$ref": "#/$defs/resultStatus" },
+        "reason_code": { "$ref": "#/$defs/reasonCode" },
+        "max_backlog": { "oneOf": [{ "$ref": "#/$defs/lanes" }, { "type": "null" }] }
+      }
+    },
+    "capacityCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_id", "unit", "initial", "arrivals", "service", "expected"],
+      "properties": {
+        "case_id": { "$ref": "#/$defs/caseId" },
+        "unit": { "$ref": "#/$defs/identifier" },
+        "initial": { "$ref": "#/$defs/lanes" },
+        "arrivals": { "$ref": "#/$defs/laneSeries" },
+        "service": { "$ref": "#/$defs/laneSeries" },
+        "expected": { "$ref": "#/$defs/capacityExpected" }
+      }
+    }
+  }
+}

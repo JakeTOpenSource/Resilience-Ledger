@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://delta-atlas.example/schemas/instrument-event.v1.json",
+  "title": "Typed instrument lifecycle event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "event_id", "sequence", "previous_event_id", "previous_hash", "event_hash", "event_type",
+    "instrument_id", "instrument_version", "subject_id", "policy_id",
+    "policy_generation", "state_before", "state_after"
+  ],
+  "properties": {
+    "schema_version": { "const": "instrument-event.v1" },
+    "event_id": { "type": "string", "minLength": 1 },
+    "sequence": { "type": "integer", "minimum": 1 },
+    "previous_event_id": { "type": ["string", "null"], "minLength": 1 },
+    "previous_hash": { "type": ["string", "null"], "pattern": "^sha256:[a-f0-9]{64}$" },
+    "event_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "event_type": { "enum": ["PLAN", "AUTHORIZE", "INVOKE", "COMMIT", "SENSING_EFFECT", "OBSERVE", "SETTLE"] },
+    "instrument_id": { "type": "string", "pattern": "^urn:delta-atlas:instrument:[a-z0-9][a-z0-9._-]*$" },
+    "instrument_version": { "type": "integer", "minimum": 1 },
+    "subject_id": { "type": "string", "minLength": 1 },
+    "policy_id": { "type": "string", "minLength": 1 },
+    "policy_generation": { "type": "integer", "minimum": 1 },
+    "state_before": { "type": "string", "minLength": 1 },
+    "state_after": { "type": "string", "minLength": 1 },
+    "observation": { "$ref": "#/$defs/observation" },
+    "sensing_effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["footprint_ids", "recording_status", "evidence_ref"],
+      "properties": {
+        "footprint_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "recording_status": { "const": "RECORDED" },
+        "evidence_ref": { "type": "string", "minLength": 1 }
+      }
+    },
+    "sensing_effect_ref": { "type": "string", "minLength": 1 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "event_type": { "const": "OBSERVE" } }, "required": ["event_type"] },
+      "then": { "required": ["observation"] },
+      "else": { "not": { "required": ["observation"] } }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "OBSERVE" } }, "required": ["event_type"] },
+      "else": { "not": { "required": ["sensing_effect_ref"] } }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "SENSING_EFFECT" } }, "required": ["event_type"] },
+      "then": { "required": ["sensing_effect"] },
+      "else": { "not": { "required": ["sensing_effect"] } }
+    }
+  ],
+  "$defs": {
+    "quantity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "unit"],
+      "properties": {
+        "value": { "type": "number", "minimum": 0 },
+        "unit": { "type": "string", "minLength": 1 }
+      }
+    },
+    "window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start_step", "end_step"],
+      "properties": {
+        "start_step": { "type": "integer", "minimum": 0 },
+        "end_step": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "conditionResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["condition_id", "status", "evidence_ref"],
+        "properties": {
+          "condition_id": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["PASS", "FAIL", "UNKNOWN"] },
+          "evidence_ref": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "measurementBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["procedure_ref", "result_schema_ref", "unit", "result_validation_status", "result_validation_ref", "calibration_ref", "calibration_status", "calibration_evidence_ref"],
+      "properties": {
+        "procedure_ref": { "type": "string", "format": "uri" },
+        "result_schema_ref": { "type": "string", "format": "uri" },
+        "unit": { "type": "string", "minLength": 1 },
+        "result_validation_status": { "enum": ["PASS", "FAIL", "UNKNOWN"] },
+        "result_validation_ref": { "type": "string", "minLength": 1 },
+        "calibration_ref": { "type": "string", "minLength": 1 },
+        "calibration_status": { "enum": ["PASS", "FAIL", "UNKNOWN"] },
+        "calibration_evidence_ref": { "type": "string", "minLength": 1 }
+      }
+    },
+    "observation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["presence", "kind", "value", "measurement_binding", "operating_condition_results"],
+          "properties": {
+            "presence": { "const": "PRESENT" },
+            "kind": { "const": "DOMAIN_VALUE" },
+            "value": { "not": { "type": "null" } },
+            "measurement_binding": { "$ref": "#/$defs/measurementBinding" },
+            "operating_condition_results": { "$ref": "#/$defs/conditionResults" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["presence", "kind", "value", "measurement_binding", "operating_condition_results"],
+          "properties": {
+            "presence": { "const": "PRESENT" },
+            "kind": { "const": "DOMAIN_NULL" },
+            "value": { "type": "null" },
+            "measurement_binding": { "$ref": "#/$defs/measurementBinding" },
+            "operating_condition_results": { "$ref": "#/$defs/conditionResults" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["presence", "kind", "resolution", "window", "measurement_binding", "operating_condition_results"],
+          "properties": {
+            "presence": { "const": "PRESENT" },
+            "kind": { "const": "NO_CHANGE_DETECTED" },
+            "resolution": { "$ref": "#/$defs/quantity" },
+            "window": { "$ref": "#/$defs/window" },
+            "measurement_binding": { "$ref": "#/$defs/measurementBinding" },
+            "operating_condition_results": { "$ref": "#/$defs/conditionResults" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["presence", "absent_reason"],
+          "properties": {
+            "presence": { "const": "ABSENT" },
+            "absent_reason": { "enum": ["NOT_PERFORMED", "TIMEOUT", "SENSOR_ERROR", "MASKED", "UNSUPPORTED", "UNKNOWN"] }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["presence", "censor_reason", "window"],
+          "properties": {
+            "presence": { "const": "CENSORED" },
+            "censor_reason": { "enum": ["RIGHT_CENSORED", "INTERVAL_CENSORED", "BOUND_REACHED"] },
+            "window": { "$ref": "#/$defs/window" }
+          }
+        }
+      ]
+    }
+  }
+}

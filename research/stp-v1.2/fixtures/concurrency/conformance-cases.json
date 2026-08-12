@@ -1,0 +1,335 @@
+{
+  "schema_version": "concurrency-conformance.v2",
+  "profile": {
+    "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+    "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+    "policy_generation": 1,
+    "causal_frontier": ["urn:delta-atlas:event:base-0"],
+    "limits": {
+      "budget_used": 100,
+      "capacity_unit": "consequence-unit",
+      "buffers": { "observation": 6, "settlement": 6, "recovery": 6 }
+    },
+    "effect_policy": { "dedupe_retention_steps": 3 }
+  },
+  "batch_cases": [
+    {
+      "case_id": "disjoint-writes-commute",
+      "termination_evidence": "FINITE_ENUMERATION",
+      "base_state": { "values": {} },
+      "deltas": [
+        {
+          "delta_id": "delta-a",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": [], "predicate_reads": [], "writes": { "flag.alpha": true }, "increments": {}, "effects": []
+        },
+        {
+          "delta_id": "delta-b",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": [], "predicate_reads": [], "writes": { "flag.beta": true }, "increments": {}, "effects": []
+        }
+      ],
+      "expected": { "status": "PASS", "reason_code": "COMMUTES", "schedule_count": 2, "pairwise_all_commute": true }
+    },
+    {
+      "case_id": "same-key-order-required",
+      "termination_evidence": "FINITE_ENUMERATION",
+      "base_state": { "values": {} },
+      "deltas": [
+        {
+          "delta_id": "delta-a",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": ["mode"], "predicate_reads": [], "writes": { "mode": "A" }, "increments": {}, "effects": []
+        },
+        {
+          "delta_id": "delta-b",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": ["mode"], "predicate_reads": [], "writes": { "mode": "B" }, "increments": {}, "effects": []
+        }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "ORDER_REQUIRED", "schedule_count": 2, "pairwise_all_commute": false }
+    },
+    {
+      "case_id": "triple-budget-pairwise-insufficient",
+      "termination_evidence": "FINITE_ENUMERATION",
+      "base_state": { "values": { "budget_used": 0 } },
+      "deltas": [
+        {
+          "delta_id": "alloc-a",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": ["budget_used"], "predicate_reads": [{ "field": "budget_used", "operator": "LTE", "value": 60 }], "writes": {}, "increments": { "budget_used": 40 }, "effects": []
+        },
+        {
+          "delta_id": "alloc-b",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": ["budget_used"], "predicate_reads": [{ "field": "budget_used", "operator": "LTE", "value": 60 }], "writes": {}, "increments": { "budget_used": 40 }, "effects": []
+        },
+        {
+          "delta_id": "alloc-c",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": ["budget_used"], "predicate_reads": [{ "field": "budget_used", "operator": "LTE", "value": 60 }], "writes": {}, "increments": { "budget_used": 40 }, "effects": []
+        }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "PAIRWISE_INSUFFICIENT", "schedule_count": 6, "pairwise_all_commute": true }
+    },
+    {
+      "case_id": "same-projection-different-effects",
+      "termination_evidence": "FINITE_ENUMERATION",
+      "base_state": { "values": {} },
+      "deltas": [
+        {
+          "delta_id": "effect-a",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": [], "predicate_reads": [], "writes": {}, "increments": {},
+          "effects": [{ "effect_id": "send-a", "idempotency_key": "key-a" }]
+        },
+        {
+          "delta_id": "effect-b",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": [], "predicate_reads": [], "writes": {}, "increments": {},
+          "effects": [{ "effect_id": "send-b", "idempotency_key": "key-b" }]
+        }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "EFFECT_ORDER_REQUIRED", "schedule_count": 2, "pairwise_all_commute": false }
+    },
+    {
+      "case_id": "reject-failed-precondition",
+      "termination_evidence": "FINITE_ENUMERATION",
+      "base_state": { "values": { "armed": false } },
+      "deltas": [
+        {
+          "delta_id": "delta-guarded",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": ["armed"],
+          "predicate_reads": [{ "field": "armed", "operator": "EQ", "value": true }],
+          "writes": { "launched": true },
+          "increments": {},
+          "effects": []
+        }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "PRECONDITION_FAILED", "schedule_count": 0, "pairwise_all_commute": false }
+    },
+    {
+      "case_id": "broken-causal-frontier",
+      "termination_evidence": "FINITE_ENUMERATION",
+      "base_state": { "values": {} },
+      "deltas": [
+        {
+          "delta_id": "delta-orphan",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:missing"],
+          "reads": [], "predicate_reads": [], "writes": { "flag": true }, "increments": {}, "effects": []
+        }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "CAUSAL_FRONTIER_MISMATCH", "schedule_count": 0, "pairwise_all_commute": false }
+    },
+    {
+      "case_id": "policy-generation-mismatch",
+      "termination_evidence": "FINITE_ENUMERATION",
+      "base_state": { "values": {} },
+      "deltas": [
+        {
+          "delta_id": "delta-stale-policy",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 2,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": [], "predicate_reads": [], "writes": { "flag": true }, "increments": {}, "effects": []
+        }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "POLICY_BINDING_MISMATCH", "schedule_count": 0, "pairwise_all_commute": false }
+    },
+    {
+      "case_id": "nonterminating-rebase-not-proven",
+      "termination_evidence": "ABSENT",
+      "base_state": { "values": {} },
+      "deltas": [
+        {
+          "delta_id": "delta-loop",
+          "subject_id": "urn:delta-atlas:subject:synthetic-concurrency",
+          "policy_id": "urn:delta-atlas:policy:concurrency-candidate",
+          "policy_generation": 1,
+          "causal_parents": ["urn:delta-atlas:event:base-0"],
+          "reads": [], "predicate_reads": [], "writes": {}, "increments": {}, "effects": []
+        }
+      ],
+      "expected": { "status": "UNKNOWN", "reason_code": "TERMINATION_NOT_PROVEN", "schedule_count": 0, "pairwise_all_commute": false }
+    }
+  ],
+  "effect_cases": [
+    {
+      "case_id": "effect-settled",
+      "events": [
+        { "sequence": 1, "previous_sequence": null, "effect_step": 1, "type": "PREPARE", "effect_id": "effect-1", "idempotency_key": "key-1", "policy_generation": 1 },
+        { "sequence": 2, "previous_sequence": 1, "effect_step": 2, "type": "DISPATCH", "effect_id": "effect-1", "idempotency_key": "key-1", "policy_generation": 1 },
+        { "sequence": 3, "previous_sequence": 2, "effect_step": 3, "type": "OBSERVE", "effect_id": "effect-1", "idempotency_key": "key-1", "policy_generation": 1, "outcome": "SUCCEEDED" },
+        { "sequence": 4, "previous_sequence": 3, "effect_step": 4, "type": "SETTLE", "effect_id": "effect-1", "idempotency_key": "key-1", "policy_generation": 1 }
+      ],
+      "expected": { "status": "PASS", "reason_code": "SETTLED", "effect_count": 1 }
+    },
+    {
+      "case_id": "timeout-after-dispatch",
+      "events": [
+        { "sequence": 1, "previous_sequence": null, "effect_step": 1, "type": "PREPARE", "effect_id": "effect-2", "idempotency_key": "key-2", "policy_generation": 1 },
+        { "sequence": 2, "previous_sequence": 1, "effect_step": 2, "type": "DISPATCH", "effect_id": "effect-2", "idempotency_key": "key-2", "policy_generation": 1 },
+        { "sequence": 3, "previous_sequence": 2, "effect_step": 3, "type": "TIMEOUT", "effect_id": "effect-2", "idempotency_key": "key-2", "policy_generation": 1 }
+      ],
+      "expected": { "status": "UNKNOWN", "reason_code": "EFFECT_UNKNOWN", "effect_count": 1 }
+    },
+    {
+      "case_id": "duplicate-within-retention",
+      "events": [
+        { "sequence": 1, "previous_sequence": null, "effect_step": 1, "type": "PREPARE", "effect_id": "effect-3", "idempotency_key": "key-3", "policy_generation": 1 },
+        { "sequence": 2, "previous_sequence": 1, "effect_step": 2, "type": "DISPATCH", "effect_id": "effect-3", "idempotency_key": "key-3", "policy_generation": 1 },
+        { "sequence": 3, "previous_sequence": 2, "effect_step": 3, "type": "DISPATCH", "effect_id": "effect-3", "idempotency_key": "key-3", "policy_generation": 1 },
+        { "sequence": 4, "previous_sequence": 3, "effect_step": 4, "type": "DEDUPE_CONFIRM", "effect_id": "effect-3", "idempotency_key": "key-3", "policy_generation": 1 }
+      ],
+      "expected": { "status": "PASS", "reason_code": "DUPLICATE_DEDUPED", "effect_count": 1 }
+    },
+    {
+      "case_id": "duplicate-after-retention",
+      "events": [
+        { "sequence": 1, "previous_sequence": null, "effect_step": 1, "type": "PREPARE", "effect_id": "effect-4", "idempotency_key": "key-4", "policy_generation": 1 },
+        { "sequence": 2, "previous_sequence": 1, "effect_step": 2, "type": "DISPATCH", "effect_id": "effect-4", "idempotency_key": "key-4", "policy_generation": 1 },
+        { "sequence": 3, "previous_sequence": 2, "effect_step": 6, "type": "DISPATCH", "effect_id": "effect-4", "idempotency_key": "key-4", "policy_generation": 1 }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "DUPLICATE_RISK", "effect_count": 2 }
+    },
+    {
+      "case_id": "stale-observation",
+      "events": [
+        { "sequence": 1, "previous_sequence": null, "effect_step": 1, "type": "PREPARE", "effect_id": "effect-5", "idempotency_key": "key-5", "policy_generation": 1 },
+        { "sequence": 2, "previous_sequence": 1, "effect_step": 2, "type": "DISPATCH", "effect_id": "effect-5", "idempotency_key": "key-5", "policy_generation": 1 },
+        { "sequence": 3, "previous_sequence": 2, "effect_step": 3, "type": "OBSERVE", "effect_id": "effect-5", "idempotency_key": "key-5", "policy_generation": 2, "outcome": "SUCCEEDED" }
+      ],
+      "expected": { "status": "UNKNOWN", "reason_code": "OBSERVATION_STALE", "effect_count": 1 }
+    },
+    {
+      "case_id": "conflicting-observations",
+      "events": [
+        { "sequence": 1, "previous_sequence": null, "effect_step": 1, "type": "PREPARE", "effect_id": "effect-6", "idempotency_key": "key-6", "policy_generation": 1 },
+        { "sequence": 2, "previous_sequence": 1, "effect_step": 2, "type": "DISPATCH", "effect_id": "effect-6", "idempotency_key": "key-6", "policy_generation": 1 },
+        { "sequence": 3, "previous_sequence": 2, "effect_step": 3, "type": "OBSERVE", "effect_id": "effect-6", "idempotency_key": "key-6", "policy_generation": 1, "outcome": "SUCCEEDED" },
+        { "sequence": 4, "previous_sequence": 3, "effect_step": 4, "type": "OBSERVE", "effect_id": "effect-6", "idempotency_key": "key-6", "policy_generation": 1, "outcome": "FAILED" }
+      ],
+      "expected": { "status": "UNKNOWN", "reason_code": "OBSERVATION_CONFLICT", "effect_count": 1 }
+    },
+    {
+      "case_id": "revocation-after-dispatch",
+      "events": [
+        { "sequence": 1, "previous_sequence": null, "effect_step": 1, "type": "PREPARE", "effect_id": "effect-7", "idempotency_key": "key-7", "policy_generation": 1 },
+        { "sequence": 2, "previous_sequence": 1, "effect_step": 2, "type": "DISPATCH", "effect_id": "effect-7", "idempotency_key": "key-7", "policy_generation": 1 },
+        { "sequence": 3, "previous_sequence": 2, "effect_step": 3, "type": "REVOKE", "effect_id": "effect-7", "idempotency_key": "key-7", "policy_generation": 1 }
+      ],
+      "expected": { "status": "UNKNOWN", "reason_code": "AUTHORITY_REVOKED_AFTER_DISPATCH", "effect_count": 1 }
+    },
+    {
+      "case_id": "reject-observe-before-dispatch",
+      "events": [
+        { "sequence": 1, "previous_sequence": null, "effect_step": 1, "type": "OBSERVE", "effect_id": "effect-8", "idempotency_key": "key-8", "policy_generation": 1, "outcome": "SUCCEEDED" }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "ILLEGAL_EFFECT_TRANSITION", "effect_count": 0 }
+    },
+    {
+      "case_id": "reject-cross-effect-settlement",
+      "events": [
+        { "sequence": 1, "previous_sequence": null, "effect_step": 1, "type": "PREPARE", "effect_id": "effect-9", "idempotency_key": "key-9", "policy_generation": 1 },
+        { "sequence": 2, "previous_sequence": 1, "effect_step": 2, "type": "DISPATCH", "effect_id": "effect-9", "idempotency_key": "key-9", "policy_generation": 1 },
+        { "sequence": 3, "previous_sequence": 2, "effect_step": 3, "type": "OBSERVE", "effect_id": "effect-other", "idempotency_key": "key-other", "policy_generation": 1, "outcome": "SUCCEEDED" }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "EFFECT_ID_MISMATCH", "effect_count": 1 }
+    },
+    {
+      "case_id": "reject-noncontiguous-sequence",
+      "events": [
+        { "sequence": 2, "previous_sequence": null, "effect_step": 1, "type": "PREPARE", "effect_id": "effect-10", "idempotency_key": "key-10", "policy_generation": 1 }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "NONCONTIGUOUS_EFFECT_SEQUENCE", "effect_count": 0 }
+    },
+    {
+      "case_id": "reject-finality-regression",
+      "events": [
+        { "sequence": 1, "previous_sequence": null, "effect_step": 1, "type": "PREPARE", "effect_id": "effect-11", "idempotency_key": "key-11", "policy_generation": 1 },
+        { "sequence": 2, "previous_sequence": 1, "effect_step": 2, "type": "DISPATCH", "effect_id": "effect-11", "idempotency_key": "key-11", "policy_generation": 1 },
+        { "sequence": 3, "previous_sequence": 2, "effect_step": 3, "type": "OBSERVE", "effect_id": "effect-11", "idempotency_key": "key-11", "policy_generation": 1, "outcome": "SUCCEEDED" },
+        { "sequence": 4, "previous_sequence": 3, "effect_step": 4, "type": "SETTLE", "effect_id": "effect-11", "idempotency_key": "key-11", "policy_generation": 1 },
+        { "sequence": 5, "previous_sequence": 4, "effect_step": 5, "type": "PREPARE", "effect_id": "effect-11", "idempotency_key": "key-11", "policy_generation": 1 }
+      ],
+      "expected": { "status": "FAIL", "reason_code": "ILLEGAL_EFFECT_TRANSITION", "effect_count": 1 }
+    }
+  ],
+  "capacity_cases": [
+    {
+      "case_id": "capacity-within-bounds",
+      "unit": "consequence-unit",
+      "initial": { "observation": 0, "settlement": 0, "recovery": 0 },
+      "arrivals": { "observation": [3, 4, 2], "settlement": [3, 4, 2], "recovery": [3, 4, 2] },
+      "service": { "observation": [3, 4, 2], "settlement": [4, 4, 2], "recovery": [5, 4, 3] },
+      "expected": { "status": "PASS", "reason_code": "CAPACITY_WITHIN_BOUNDS", "max_backlog": { "observation": 0, "settlement": 0, "recovery": 0 } }
+    },
+    {
+      "case_id": "observation-backlog-exceeded",
+      "unit": "consequence-unit",
+      "initial": { "observation": 0, "settlement": 0, "recovery": 0 },
+      "arrivals": { "observation": [5, 5, 5], "settlement": [5, 5, 5], "recovery": [5, 5, 5] },
+      "service": { "observation": [2, 2, 2], "settlement": [5, 5, 5], "recovery": [5, 5, 5] },
+      "expected": { "status": "FAIL", "reason_code": "CAPACITY_EXCEEDED", "max_backlog": { "observation": 9, "settlement": 0, "recovery": 0 } }
+    },
+    {
+      "case_id": "recovery-lane-cannot-be-masked",
+      "unit": "consequence-unit",
+      "initial": { "observation": 0, "settlement": 0, "recovery": 0 },
+      "arrivals": { "observation": [4, 4], "settlement": [4, 4], "recovery": [4, 4] },
+      "service": { "observation": [8, 8], "settlement": [8, 8], "recovery": [0, 0] },
+      "expected": { "status": "FAIL", "reason_code": "CAPACITY_EXCEEDED", "max_backlog": { "observation": 0, "settlement": 0, "recovery": 8 } }
+    },
+    {
+      "case_id": "capacity-unit-mismatch",
+      "unit": "token",
+      "initial": { "observation": 0, "settlement": 0, "recovery": 0 },
+      "arrivals": { "observation": [1], "settlement": [1], "recovery": [1] },
+      "service": { "observation": [1], "settlement": [1], "recovery": [1] },
+      "expected": { "status": "FAIL", "reason_code": "CAPACITY_UNIT_MISMATCH", "max_backlog": null }
+    },
+    {
+      "case_id": "capacity-shape-mismatch",
+      "unit": "consequence-unit",
+      "initial": { "observation": 0, "settlement": 0, "recovery": 0 },
+      "arrivals": { "observation": [1, 1], "settlement": [1, 1], "recovery": [1, 1] },
+      "service": { "observation": [1], "settlement": [1, 1], "recovery": [1, 1] },
+      "expected": { "status": "FAIL", "reason_code": "CAPACITY_SHAPE_MISMATCH", "max_backlog": null }
+    }
+  ]
+}

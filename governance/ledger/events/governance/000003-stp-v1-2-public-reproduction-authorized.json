@@ -1,0 +1,103 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_governance_stp_v1_2_public_release_0003",
+  "stream_id": "governance",
+  "sequence": 3,
+  "event_type": "governance.public_reproduction_release_accepted",
+  "occurred_at": "2026-08-12T17:23:00Z",
+  "recorded_at": "2026-08-12T17:23:00Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "governance/decision-log/0004-stp-v1.2-public-reproduction-release.md"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C2",
+  "parents": [
+    "evt_governance_public_metadata_release_0002",
+    "evt_semantics_status_vocabulary_boundary_0001"
+  ],
+  "prev_event_hash": "a717021b97a8775bf50768f21fece999e59e6322fbf9a50bf0b3d70c76aabaa1",
+  "payload_hash": "2d2b361479af99aa325e9d7b2324c5d9647f65295b5f04385398b6679ba377cc",
+  "event_hash": "a173c542fb92d2fb84146fc414d1d0be6671d8ed407b424c5f6a9c1cb4f20f1a",
+  "read_set": [
+    "governance/data-classification.md",
+    "governance/decision-log/0004-stp-v1.2-public-reproduction-release.md",
+    "research/stp-v1.2/release-manifest.json",
+    "research/stp-v1.2/sources.json"
+  ],
+  "write_set": [
+    "research/stp-v1.2/"
+  ],
+  "precondition_refs": [
+    "evt_governance_public_metadata_release_0002",
+    "evt_semantics_status_vocabulary_boundary_0001",
+    "governance/decision-log/0004-stp-v1.2-public-reproduction-release.md",
+    "research/stp-v1.2/release-manifest.json"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "stp-v1.2-public-release-decision-0004",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "69e55eb3b24e2c44f6474af090406c98ce8e581ff3e9852bdbe6d9d3de9e243d",
+      "source_locator": "governance/decision-log/0004-stp-v1.2-public-reproduction-release.md"
+    },
+    {
+      "ref_id": "stp-v1.2-public-release-manifest-0001",
+      "kind": "release_manifest",
+      "classification": "PUBLIC",
+      "sha256": "2f95ed233a20060d1cbca3fae555410732242b26d9fb08afe482bc3390077704",
+      "source_locator": "research/stp-v1.2/release-manifest.json"
+    },
+    {
+      "ref_id": "stp-v1.2-public-source-register-0001",
+      "kind": "source_register",
+      "classification": "PUBLIC",
+      "sha256": "45cedbdf2eb7229ad299587bf00268e976fb1cd94cb652ff8a4f3f6eb7692c82",
+      "source_locator": "research/stp-v1.2/sources.json"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0004-stp-v1.2-public-reproduction-release.md",
+  "idempotency_key": "governance:stp-v1.2-public-reproduction:2026-08-12:0003",
+  "decision": "ACCEPT_WITH_LIMITS",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "NOT_ATTEMPTED",
+    "observation": "UNAVAILABLE",
+    "acceptance": "ACCEPTED",
+    "outcome": "UNMEASURED"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "release_id": "stp-v1.2-public-reproduction-0001",
+    "release_path": "research/stp-v1.2",
+    "release_manifest_sha256": "2f95ed233a20060d1cbca3fae555410732242b26d9fb08afe482bc3390077704",
+    "allowlisted_file_count": 20,
+    "classification": "PUBLIC",
+    "protocol_status": "PROPOSED",
+    "publication_decision": "ACCEPT_WITH_LIMITS",
+    "execution_status": "NOT_ATTEMPTED",
+    "excluded_classes": [
+      "private artifact bytes and digests",
+      "private source code and repository identifiers",
+      "absolute local paths",
+      "prompts and transcripts",
+      "credentials",
+      "screenshots and private analytics",
+      "internal development journal"
+    ],
+    "claim_ceiling": "Authorizes the exact minimized packet for protected-branch publication. It does not record a completed merge, accept STP v1.2 as a protocol, validate live tools, establish source truth, or prove statistical or unbounded guarantees."
+  }
+}
