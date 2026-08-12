@@ -28,6 +28,9 @@ authority, execution, observation, acceptance, and outcome remain separate.
   boundary and deferred semantic-migration decision.
 - `decision-log/0004-stp-v1.2-public-reproduction-release.md` - the exact,
   privacy-minimized public release boundary for the executable candidate packet.
+- `ledger/events/publication/000001-stp-v1-2-public-release-observed.json` - the
+  post-merge observation binding the accepted manifest to public `main` and its
+  passing protected-branch check, without promoting research outcome.
 - `deployment-receipts/2026-08-11-current-production.json` - the historical
   read-only Cloudflare Pages observation captured on 2026-08-11. Its filename
   is retained because the sealed event owns that path; it is not a claim that

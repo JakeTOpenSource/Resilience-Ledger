@@ -1,0 +1,111 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_publication_stp_v1_2_release_0001",
+  "stream_id": "publication",
+  "sequence": 1,
+  "event_type": "publication.public_release_observed",
+  "occurred_at": "2026-08-12T17:36:09Z",
+  "recorded_at": "2026-08-12T17:37:33Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "governance/decision-log/0004-stp-v1.2-public-reproduction-release.md"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C1",
+  "parents": [
+    "evt_governance_stp_v1_2_public_release_0003"
+  ],
+  "prev_event_hash": "",
+  "payload_hash": "c4ee83420a16feba9666f4918468c9e8e444c7a8278a51c2489691f7ab68beae",
+  "event_hash": "91cb238abfda22b2fdea65f56f0e4515e1b8df8c9a512569d9302c59a0901534",
+  "read_set": [
+    "github:JakeTOpenSource/Resilience-Ledger@main",
+    "github:JakeTOpenSource/Resilience-Ledger#4",
+    "research/stp-v1.2/release-manifest.json"
+  ],
+  "write_set": [
+    "governance/ledger/events/publication/"
+  ],
+  "precondition_refs": [
+    "evt_governance_stp_v1_2_public_release_0003",
+    "governance/decision-log/0004-stp-v1.2-public-reproduction-release.md",
+    "research/stp-v1.2/release-manifest.json"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "stp-v1.2-public-release-decision-0004",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "69e55eb3b24e2c44f6474af090406c98ce8e581ff3e9852bdbe6d9d3de9e243d",
+      "source_locator": "governance/decision-log/0004-stp-v1.2-public-reproduction-release.md"
+    },
+    {
+      "ref_id": "public-main-merge-6fe529f",
+      "kind": "git_commit_object",
+      "classification": "PUBLIC",
+      "sha256": "39f1acc8d75f839f630bd56b46729e196f662dce96acf689cf523ca410865dbc",
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/commit/6fe529fb56c849ba596aa2a872a45ce8453ead1e"
+    },
+    {
+      "ref_id": "public-main-release-manifest-6fe529f",
+      "kind": "release_manifest",
+      "classification": "PUBLIC",
+      "sha256": "2f95ed233a20060d1cbca3fae555410732242b26d9fb08afe482bc3390077704",
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/blob/6fe529fb56c849ba596aa2a872a45ce8453ead1e/research/stp-v1.2/release-manifest.json"
+    },
+    {
+      "ref_id": "public-release-pr-4",
+      "kind": "pull_request",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/pull/4"
+    },
+    {
+      "ref_id": "public-release-pr-4-gates",
+      "kind": "ci_run",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/actions/runs/31623212264"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0004-stp-v1.2-public-reproduction-release.md",
+  "idempotency_key": "publication:stp-v1.2-public-reproduction:main:6fe529f",
+  "decision": "OBSERVE",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "APPLIED",
+    "observation": "MATCHED",
+    "acceptance": "ACCEPTED",
+    "outcome": "UNMEASURED"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "release_id": "stp-v1.2-public-reproduction-0001",
+    "repository": "github:JakeTOpenSource/Resilience-Ledger",
+    "repository_visibility": "PUBLIC",
+    "branch": "main",
+    "merge_commit": "6fe529fb56c849ba596aa2a872a45ce8453ead1e",
+    "merge_commit_object_sha256": "39f1acc8d75f839f630bd56b46729e196f662dce96acf689cf523ca410865dbc",
+    "manifest_path": "research/stp-v1.2/release-manifest.json",
+    "manifest_git_blob": "87fc1bb57d8669494c59bab72b168cf068a1b3c2",
+    "manifest_sha256": "2f95ed233a20060d1cbca3fae555410732242b26d9fb08afe482bc3390077704",
+    "required_check": "gates",
+    "required_check_status": "PASS",
+    "protocol_status": "PROPOSED",
+    "publication_status": "OBSERVED_ON_PUBLIC_MAIN",
+    "outcome_status": "UNMEASURED",
+    "claim_ceiling": "Records that the accepted manifest bytes were observed at the named public main commit after the protected pull-request gates passed. It does not prove independent reproduction, live deployment, source truth, protocol validity, or research outcome."
+  }
+}
