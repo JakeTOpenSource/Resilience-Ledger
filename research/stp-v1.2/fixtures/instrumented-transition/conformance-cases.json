@@ -1,0 +1,2348 @@
+{
+  "schema_version": "instrumented-transition-conformance.v1",
+  "profile": {
+    "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+    "subject_type": "synthetic-state-machine",
+    "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+    "policy_generation": 1
+  },
+  "state_model": {
+    "states": [
+      {
+        "state_id": "NOMINAL",
+        "legal": true,
+        "safe": true,
+        "essential": true
+      },
+      {
+        "state_id": "DEGRADED",
+        "legal": true,
+        "safe": true,
+        "essential": true
+      },
+      {
+        "state_id": "RECOVERING",
+        "legal": true,
+        "safe": true,
+        "essential": true
+      },
+      {
+        "state_id": "CONTAINED",
+        "legal": true,
+        "safe": true,
+        "essential": false
+      },
+      {
+        "state_id": "LOST",
+        "legal": true,
+        "safe": false,
+        "essential": false
+      },
+      {
+        "state_id": "ILLEGAL",
+        "legal": false,
+        "safe": false,
+        "essential": false
+      }
+    ],
+    "transitions": [
+      {
+        "transition_id": "control-hold-nominal",
+        "from": "NOMINAL",
+        "to": "NOMINAL",
+        "kind": "CONTROL"
+      },
+      {
+        "transition_id": "control-recover",
+        "from": "DEGRADED",
+        "to": "RECOVERING",
+        "kind": "CONTROL"
+      },
+      {
+        "transition_id": "control-stabilize",
+        "from": "RECOVERING",
+        "to": "NOMINAL",
+        "kind": "CONTROL"
+      },
+      {
+        "transition_id": "disturb-friction",
+        "from": "NOMINAL",
+        "to": "DEGRADED",
+        "kind": "DISTURBANCE"
+      },
+      {
+        "transition_id": "disturb-escalate",
+        "from": "DEGRADED",
+        "to": "LOST",
+        "kind": "DISTURBANCE"
+      },
+      {
+        "transition_id": "instrument-null-click",
+        "from": "NOMINAL",
+        "to": "NOMINAL",
+        "kind": "INSTRUMENT",
+        "instrument_id": "urn:delta-atlas:instrument:null-click"
+      },
+      {
+        "transition_id": "instrument-invasiveness",
+        "from": "NOMINAL",
+        "to": "DEGRADED",
+        "kind": "INSTRUMENT",
+        "instrument_id": "urn:delta-atlas:instrument:invasive-probe"
+      },
+      {
+        "transition_id": "instrument-invasiveness-commit",
+        "from": "NOMINAL",
+        "to": "NOMINAL",
+        "kind": "INSTRUMENT",
+        "instrument_id": "urn:delta-atlas:instrument:invasive-probe"
+      }
+    ]
+  },
+  "instrument_profiles": [
+    {
+      "schema_version": "instrument-profile.v1",
+      "instrument_id": "urn:delta-atlas:instrument:null-click",
+      "instrument_version": 1,
+      "subject_type": "synthetic-state-machine",
+      "allowed_states": [
+        "NOMINAL",
+        "DEGRADED"
+      ],
+      "input_schema_ref": "https://delta-atlas.example/schemas/synthetic-click-input.v1.json",
+      "state_read_set": [
+        "ui.state"
+      ],
+      "state_write_set": [
+        "ui.last-invocation"
+      ],
+      "effect_footprint": [
+        "synthetic.request"
+      ],
+      "sensing_effect_footprint": [],
+      "consequence_class": "REVERSIBLE",
+      "authority_required": true,
+      "measurement": {
+        "procedure_ref": "https://delta-atlas.example/procedures/synthetic-response.v1",
+        "measurand_id": "synthetic.response",
+        "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-response.v1.json",
+        "unit": "event",
+        "resolution": 1,
+        "dead_band": 0,
+        "detection_limit": 1,
+        "response_window_steps": 3,
+        "operating_conditions": [
+          "fixture-only"
+        ],
+        "calibration_ref": "urn:delta-atlas:calibration:synthetic-null-click-v1",
+        "domain_null_allowed": true
+      },
+      "resource_bound": {
+        "irreversibility": 1,
+        "invasiveness": 0,
+        "external_tool_calls": 0,
+        "local_tool_calls": 1,
+        "bytes_read": 64,
+        "egress_bytes": 0,
+        "token_ceiling": 0,
+        "wall_time_ms": 10
+      },
+      "privacy": {
+        "access_class": "OWNER_PRIVATE",
+        "egress_allowed": false,
+        "max_egress_bytes": 0
+      }
+    },
+    {
+      "schema_version": "instrument-profile.v1",
+      "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+      "instrument_version": 1,
+      "subject_type": "synthetic-state-machine",
+      "allowed_states": [
+        "NOMINAL",
+        "DEGRADED"
+      ],
+      "input_schema_ref": "https://delta-atlas.example/schemas/synthetic-probe-input.v1.json",
+      "state_read_set": [
+        "system.signal"
+      ],
+      "state_write_set": [
+        "system.probe-count"
+      ],
+      "effect_footprint": [
+        "synthetic.probe"
+      ],
+      "sensing_effect_footprint": [
+        "system.temperature"
+      ],
+      "consequence_class": "COMPENSATABLE",
+      "authority_required": true,
+      "measurement": {
+        "procedure_ref": "https://delta-atlas.example/procedures/synthetic-invasive-probe.v1",
+        "measurand_id": "system.signal",
+        "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-signal.v1.json",
+        "unit": "signal-unit",
+        "resolution": 0.1,
+        "dead_band": 0.05,
+        "detection_limit": 0.2,
+        "response_window_steps": 2,
+        "operating_conditions": [
+          "fixture-only",
+          "temperature-bounded"
+        ],
+        "calibration_ref": "urn:delta-atlas:calibration:synthetic-invasive-probe-v1",
+        "domain_null_allowed": false
+      },
+      "resource_bound": {
+        "irreversibility": 2,
+        "invasiveness": 3,
+        "external_tool_calls": 1,
+        "local_tool_calls": 1,
+        "bytes_read": 2048,
+        "egress_bytes": 0,
+        "token_ceiling": 0,
+        "wall_time_ms": 1000
+      },
+      "privacy": {
+        "access_class": "OWNER_PRIVATE",
+        "egress_allowed": false,
+        "max_egress_bytes": 0
+      }
+    },
+    {
+      "schema_version": "instrument-profile.v1",
+      "instrument_id": "urn:delta-atlas:instrument:local-schema-check",
+      "instrument_version": 1,
+      "subject_type": "synthetic-state-machine",
+      "allowed_states": [
+        "NOMINAL",
+        "DEGRADED",
+        "RECOVERING"
+      ],
+      "input_schema_ref": "https://delta-atlas.example/schemas/local-schema-check-input.v1.json",
+      "state_read_set": [
+        "artifact.schema"
+      ],
+      "state_write_set": [],
+      "effect_footprint": [],
+      "sensing_effect_footprint": [],
+      "consequence_class": "READ_ONLY",
+      "authority_required": false,
+      "measurement": {
+        "procedure_ref": "https://delta-atlas.example/procedures/local-schema-validation.v1",
+        "measurand_id": "schema.conformance",
+        "result_schema_ref": "https://delta-atlas.example/schemas/check-result.v1.json",
+        "unit": "predicate",
+        "resolution": null,
+        "dead_band": null,
+        "detection_limit": null,
+        "response_window_steps": 1,
+        "operating_conditions": [
+          "local-bytes-available"
+        ],
+        "calibration_ref": "urn:delta-atlas:calibration:ajv-8.20.0",
+        "domain_null_allowed": false
+      },
+      "resource_bound": {
+        "irreversibility": 0,
+        "invasiveness": 0,
+        "external_tool_calls": 0,
+        "local_tool_calls": 1,
+        "bytes_read": 4096,
+        "egress_bytes": 0,
+        "token_ceiling": 0,
+        "wall_time_ms": 100
+      },
+      "privacy": {
+        "access_class": "OWNER_PRIVATE",
+        "egress_allowed": false,
+        "max_egress_bytes": 0
+      }
+    },
+    {
+      "schema_version": "instrument-profile.v1",
+      "instrument_id": "urn:delta-atlas:instrument:remote-schema-probe",
+      "instrument_version": 1,
+      "subject_type": "synthetic-state-machine",
+      "allowed_states": [
+        "NOMINAL",
+        "DEGRADED"
+      ],
+      "input_schema_ref": "https://delta-atlas.example/schemas/remote-schema-probe-input.v1.json",
+      "state_read_set": [
+        "artifact.schema"
+      ],
+      "state_write_set": [],
+      "effect_footprint": [
+        "remote.request"
+      ],
+      "sensing_effect_footprint": [],
+      "consequence_class": "REVERSIBLE",
+      "authority_required": true,
+      "measurement": {
+        "procedure_ref": "https://delta-atlas.example/procedures/remote-schema-validation.v1",
+        "measurand_id": "schema.conformance",
+        "result_schema_ref": "https://delta-atlas.example/schemas/check-result.v1.json",
+        "unit": "predicate",
+        "resolution": null,
+        "dead_band": null,
+        "detection_limit": null,
+        "response_window_steps": 10,
+        "operating_conditions": [
+          "network-available",
+          "egress-authorized"
+        ],
+        "calibration_ref": "urn:delta-atlas:calibration:remote-schema-probe-v1",
+        "domain_null_allowed": false
+      },
+      "resource_bound": {
+        "irreversibility": 1,
+        "invasiveness": 1,
+        "external_tool_calls": 1,
+        "local_tool_calls": 0,
+        "bytes_read": 4096,
+        "egress_bytes": 4096,
+        "token_ceiling": 512,
+        "wall_time_ms": 5000
+      },
+      "privacy": {
+        "access_class": "OWNER_PRIVATE",
+        "egress_allowed": true,
+        "max_egress_bytes": 4096
+      }
+    },
+    {
+      "schema_version": "instrument-profile.v1",
+      "instrument_id": "urn:delta-atlas:instrument:wrong-subject-check",
+      "instrument_version": 1,
+      "subject_type": "different-synthetic-state-machine",
+      "allowed_states": [
+        "NOMINAL",
+        "DEGRADED",
+        "RECOVERING"
+      ],
+      "input_schema_ref": "https://delta-atlas.example/schemas/local-schema-check-input.v1.json",
+      "state_read_set": [
+        "artifact.schema"
+      ],
+      "state_write_set": [],
+      "effect_footprint": [],
+      "sensing_effect_footprint": [],
+      "consequence_class": "READ_ONLY",
+      "authority_required": false,
+      "measurement": {
+        "procedure_ref": "https://delta-atlas.example/procedures/local-schema-validation.v1",
+        "measurand_id": "schema.conformance",
+        "result_schema_ref": "https://delta-atlas.example/schemas/check-result.v1.json",
+        "unit": "predicate",
+        "resolution": null,
+        "dead_band": null,
+        "detection_limit": null,
+        "response_window_steps": 1,
+        "operating_conditions": [
+          "local-bytes-available"
+        ],
+        "calibration_ref": "urn:delta-atlas:calibration:ajv-8.20.0",
+        "domain_null_allowed": false
+      },
+      "resource_bound": {
+        "irreversibility": 0,
+        "invasiveness": 0,
+        "external_tool_calls": 0,
+        "local_tool_calls": 1,
+        "bytes_read": 4096,
+        "egress_bytes": 0,
+        "token_ceiling": 0,
+        "wall_time_ms": 100
+      },
+      "privacy": {
+        "access_class": "OWNER_PRIVATE",
+        "egress_allowed": false,
+        "max_egress_bytes": 0
+      }
+    },
+    {
+      "schema_version": "instrument-profile.v1",
+      "instrument_id": "urn:delta-atlas:instrument:undeclared-effect",
+      "instrument_version": 1,
+      "subject_type": "synthetic-state-machine",
+      "allowed_states": [
+        "NOMINAL",
+        "DEGRADED"
+      ],
+      "input_schema_ref": "https://delta-atlas.example/schemas/synthetic-click-input.v1.json",
+      "state_read_set": [
+        "ui.state"
+      ],
+      "state_write_set": [
+        "ui.last-invocation"
+      ],
+      "effect_footprint": [
+        "synthetic.request"
+      ],
+      "sensing_effect_footprint": [],
+      "consequence_class": "REVERSIBLE",
+      "authority_required": true,
+      "measurement": {
+        "procedure_ref": "https://delta-atlas.example/procedures/synthetic-response.v1",
+        "measurand_id": "synthetic.response",
+        "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-response.v1.json",
+        "unit": "event",
+        "resolution": 1,
+        "dead_band": 0,
+        "detection_limit": 1,
+        "response_window_steps": 3,
+        "operating_conditions": [
+          "fixture-only"
+        ],
+        "calibration_ref": "urn:delta-atlas:calibration:synthetic-undeclared-effect-v1",
+        "domain_null_allowed": true
+      },
+      "resource_bound": {
+        "irreversibility": 1,
+        "invasiveness": 0,
+        "external_tool_calls": 0,
+        "local_tool_calls": 1,
+        "bytes_read": 64,
+        "egress_bytes": 0,
+        "token_ceiling": 0,
+        "wall_time_ms": 10
+      },
+      "privacy": {
+        "access_class": "OWNER_PRIVATE",
+        "egress_allowed": false,
+        "max_egress_bytes": 0
+      }
+    },
+    {
+      "schema_version": "instrument-profile.v1",
+      "instrument_id": "urn:delta-atlas:instrument:privacy-contradiction",
+      "instrument_version": 1,
+      "subject_type": "synthetic-state-machine",
+      "allowed_states": [
+        "NOMINAL",
+        "DEGRADED",
+        "RECOVERING"
+      ],
+      "input_schema_ref": "https://delta-atlas.example/schemas/local-schema-check-input.v1.json",
+      "state_read_set": [
+        "artifact.schema"
+      ],
+      "state_write_set": [],
+      "effect_footprint": [],
+      "sensing_effect_footprint": [],
+      "consequence_class": "READ_ONLY",
+      "authority_required": false,
+      "measurement": {
+        "procedure_ref": "https://delta-atlas.example/procedures/local-schema-validation.v1",
+        "measurand_id": "schema.conformance",
+        "result_schema_ref": "https://delta-atlas.example/schemas/check-result.v1.json",
+        "unit": "predicate",
+        "resolution": null,
+        "dead_band": null,
+        "detection_limit": null,
+        "response_window_steps": 1,
+        "operating_conditions": [
+          "local-bytes-available"
+        ],
+        "calibration_ref": "urn:delta-atlas:calibration:ajv-8.20.0",
+        "domain_null_allowed": false
+      },
+      "resource_bound": {
+        "irreversibility": 0,
+        "invasiveness": 0,
+        "external_tool_calls": 0,
+        "local_tool_calls": 1,
+        "bytes_read": 4096,
+        "egress_bytes": 1,
+        "token_ceiling": 0,
+        "wall_time_ms": 100
+      },
+      "privacy": {
+        "access_class": "OWNER_PRIVATE",
+        "egress_allowed": false,
+        "max_egress_bytes": 0
+      }
+    }
+  ],
+  "measurement_map": [
+    {
+      "instrument_id": "urn:delta-atlas:instrument:null-click",
+      "check_ids": [
+        "urn:delta-atlas:check:click-response"
+      ]
+    },
+    {
+      "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+      "check_ids": [
+        "urn:delta-atlas:check:deep-integrity"
+      ]
+    },
+    {
+      "instrument_id": "urn:delta-atlas:instrument:local-schema-check",
+      "check_ids": [
+        "urn:delta-atlas:check:schema-conformance"
+      ]
+    },
+    {
+      "instrument_id": "urn:delta-atlas:instrument:remote-schema-probe",
+      "check_ids": [
+        "urn:delta-atlas:check:schema-conformance"
+      ]
+    },
+    {
+      "instrument_id": "urn:delta-atlas:instrument:wrong-subject-check",
+      "check_ids": [
+        "urn:delta-atlas:check:wrong-subject"
+      ]
+    },
+    {
+      "instrument_id": "urn:delta-atlas:instrument:undeclared-effect",
+      "check_ids": [
+        "urn:delta-atlas:check:undeclared-effect"
+      ]
+    },
+    {
+      "instrument_id": "urn:delta-atlas:instrument:privacy-contradiction",
+      "check_ids": [
+        "urn:delta-atlas:check:privacy-contract"
+      ]
+    }
+  ],
+  "resource_priority": [
+    "irreversibility",
+    "egress_bytes",
+    "invasiveness",
+    "external_tool_calls",
+    "local_tool_calls",
+    "bytes_read",
+    "token_ceiling",
+    "wall_time_ms"
+  ],
+  "instrument_cases": [
+    {
+      "case_id": "present-domain-null-is-measurement",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": null,
+          "event_hash": "sha256:bd562d3e93ab6fe82e42abf86d430044f1ac63116d3d0f7bdb3a5396c3065b7d"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-2",
+          "sequence": 2,
+          "previous_event_id": "null-1",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:bd562d3e93ab6fe82e42abf86d430044f1ac63116d3d0f7bdb3a5396c3065b7d",
+          "event_hash": "sha256:8f397e285214b924a787473e475be9a20e6d9b4b3885b170171dda361acc266f"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-3",
+          "sequence": 3,
+          "previous_event_id": "null-2",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:8f397e285214b924a787473e475be9a20e6d9b4b3885b170171dda361acc266f",
+          "event_hash": "sha256:2c9132022e8ed989920603b9a6ed2837b05bc6eec1bc34695d64c0d251e7dc1f"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-4",
+          "sequence": 4,
+          "previous_event_id": "null-3",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:2c9132022e8ed989920603b9a6ed2837b05bc6eec1bc34695d64c0d251e7dc1f",
+          "event_hash": "sha256:54ff138eea3c389fc9861386a17c67c38082a752a04c32aa190ba29cc00dbde0"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-5",
+          "sequence": 5,
+          "previous_event_id": "null-4",
+          "event_type": "OBSERVE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "observation": {
+            "presence": "PRESENT",
+            "kind": "DOMAIN_NULL",
+            "value": null,
+            "measurement_binding": {
+              "procedure_ref": "https://delta-atlas.example/procedures/synthetic-response.v1",
+              "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-response.v1.json",
+              "unit": "event",
+              "result_validation_status": "PASS",
+              "result_validation_ref": "urn:delta-atlas:fixture:result-validation:null-click",
+              "calibration_ref": "urn:delta-atlas:calibration:synthetic-null-click-v1",
+              "calibration_status": "PASS",
+              "calibration_evidence_ref": "urn:delta-atlas:fixture:calibration:null-click"
+            },
+            "operating_condition_results": [
+              {
+                "condition_id": "fixture-only",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:fixture-only"
+              }
+            ]
+          },
+          "previous_hash": "sha256:54ff138eea3c389fc9861386a17c67c38082a752a04c32aa190ba29cc00dbde0",
+          "event_hash": "sha256:45b535f04e943ead2fc7c03fb3cad822306f3b0f247980c6368251e7021cacbd"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-6",
+          "sequence": 6,
+          "previous_event_id": "null-5",
+          "event_type": "SETTLE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:45b535f04e943ead2fc7c03fb3cad822306f3b0f247980c6368251e7021cacbd",
+          "event_hash": "sha256:e10a69397dc93d807d02f3dfcd43a0631359e609af907144fd7ffa13a8111a80"
+        }
+      ],
+      "expected": {
+        "status": "PASS",
+        "reason_code": "SETTLED_OBSERVED_NULL",
+        "final_state": "NOMINAL"
+      }
+    },
+    {
+      "case_id": "absent-measurement-remains-unknown",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "absent-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": null,
+          "event_hash": "sha256:624d74384a2e2181187939d9082d3ce9b665cf232c40db52ff04ff01de3af5ff"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "absent-2",
+          "sequence": 2,
+          "previous_event_id": "absent-1",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:624d74384a2e2181187939d9082d3ce9b665cf232c40db52ff04ff01de3af5ff",
+          "event_hash": "sha256:9ebfda1007ae42bf222ae48aa3c10542be5981b932ec77037ec3d1933109da45"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "absent-3",
+          "sequence": 3,
+          "previous_event_id": "absent-2",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:9ebfda1007ae42bf222ae48aa3c10542be5981b932ec77037ec3d1933109da45",
+          "event_hash": "sha256:cb219a9e244859a77ceb18a6ff82c5dbf896968f4f3f76ee5b854969d1976f68"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "absent-4",
+          "sequence": 4,
+          "previous_event_id": "absent-3",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:cb219a9e244859a77ceb18a6ff82c5dbf896968f4f3f76ee5b854969d1976f68",
+          "event_hash": "sha256:cae625b51163d715818f96f543d23959fd0d09e9d8c9aed68297cb8db85b8e74"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "absent-5",
+          "sequence": 5,
+          "previous_event_id": "absent-4",
+          "event_type": "OBSERVE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "observation": {
+            "presence": "ABSENT",
+            "absent_reason": "TIMEOUT"
+          },
+          "previous_hash": "sha256:cae625b51163d715818f96f543d23959fd0d09e9d8c9aed68297cb8db85b8e74",
+          "event_hash": "sha256:e0aead8c2ab63a5055e76282e38ca084ca6c98a3cd89d62a84f1ea572884eae3"
+        }
+      ],
+      "expected": {
+        "status": "UNKNOWN",
+        "reason_code": "OBSERVATION_ABSENT",
+        "final_state": "NOMINAL"
+      }
+    },
+    {
+      "case_id": "bounded-no-change-is-not-absence",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "nochange-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": null,
+          "event_hash": "sha256:22504adb6148c097d88b30375e97a000fd56f67d3d4db4a9140e116c7ff05e35"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "nochange-2",
+          "sequence": 2,
+          "previous_event_id": "nochange-1",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:22504adb6148c097d88b30375e97a000fd56f67d3d4db4a9140e116c7ff05e35",
+          "event_hash": "sha256:6e50bc381276f7c655dd8a4497cc1426d2357c67c581526877a23452c19d9b14"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "nochange-3",
+          "sequence": 3,
+          "previous_event_id": "nochange-2",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:6e50bc381276f7c655dd8a4497cc1426d2357c67c581526877a23452c19d9b14",
+          "event_hash": "sha256:49a19f86d891997cd0073ea475bc6e8c53e57fa6a329556eab21d99b046afe05"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "nochange-4",
+          "sequence": 4,
+          "previous_event_id": "nochange-3",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:49a19f86d891997cd0073ea475bc6e8c53e57fa6a329556eab21d99b046afe05",
+          "event_hash": "sha256:37855c6a83981a164c59282537a3d536cdf09fbd3a56869f06b30c6c8b3a2461"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "nochange-5",
+          "sequence": 5,
+          "previous_event_id": "nochange-4",
+          "event_type": "OBSERVE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "observation": {
+            "presence": "PRESENT",
+            "kind": "NO_CHANGE_DETECTED",
+            "resolution": {
+              "value": 1,
+              "unit": "event"
+            },
+            "window": {
+              "start_step": 4,
+              "end_step": 5
+            },
+            "measurement_binding": {
+              "procedure_ref": "https://delta-atlas.example/procedures/synthetic-response.v1",
+              "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-response.v1.json",
+              "unit": "event",
+              "result_validation_status": "PASS",
+              "result_validation_ref": "urn:delta-atlas:fixture:result-validation:null-click",
+              "calibration_ref": "urn:delta-atlas:calibration:synthetic-null-click-v1",
+              "calibration_status": "PASS",
+              "calibration_evidence_ref": "urn:delta-atlas:fixture:calibration:null-click"
+            },
+            "operating_condition_results": [
+              {
+                "condition_id": "fixture-only",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:fixture-only"
+              }
+            ]
+          },
+          "previous_hash": "sha256:37855c6a83981a164c59282537a3d536cdf09fbd3a56869f06b30c6c8b3a2461",
+          "event_hash": "sha256:b1d472d1d060e4a2c92001abb20b9faf3fa537515aa499bdebabc87c78d2b3cb"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "nochange-6",
+          "sequence": 6,
+          "previous_event_id": "nochange-5",
+          "event_type": "SETTLE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:b1d472d1d060e4a2c92001abb20b9faf3fa537515aa499bdebabc87c78d2b3cb",
+          "event_hash": "sha256:66d8d3ce00a0d3036c42d975a4a02313b6ca2facab2053c61b5d1b1994362bc0"
+        }
+      ],
+      "expected": {
+        "status": "PASS",
+        "reason_code": "SETTLED_NO_CHANGE_DETECTED",
+        "final_state": "NOMINAL"
+      }
+    },
+    {
+      "case_id": "invasive-sensing-must-record-own-effect",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "probe-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": null,
+          "event_hash": "sha256:53926c916cdc523af3aae0929ca4eadad3a42773d0c78e1e17363230440e5bf7"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "probe-2",
+          "sequence": 2,
+          "previous_event_id": "probe-1",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:53926c916cdc523af3aae0929ca4eadad3a42773d0c78e1e17363230440e5bf7",
+          "event_hash": "sha256:c443a0810e1f01f1cfcbf2c767fb34244337a74e7fa509093e4b6d804a6ad6c1"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "probe-3",
+          "sequence": 3,
+          "previous_event_id": "probe-2",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:c443a0810e1f01f1cfcbf2c767fb34244337a74e7fa509093e4b6d804a6ad6c1",
+          "event_hash": "sha256:e652503aedce7b21303f4d6ee9063ffc30947e23e06f7cc1d35da0345fe8b48b"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "probe-4",
+          "sequence": 4,
+          "previous_event_id": "probe-3",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:e652503aedce7b21303f4d6ee9063ffc30947e23e06f7cc1d35da0345fe8b48b",
+          "event_hash": "sha256:8bc3941b8fb6ef90b779e63b9e0ea37dd320ec5f5948220c77cbc418b3749174"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "probe-5",
+          "sequence": 5,
+          "previous_event_id": "probe-4",
+          "event_type": "OBSERVE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "observation": {
+            "presence": "PRESENT",
+            "kind": "DOMAIN_VALUE",
+            "value": 4.2,
+            "measurement_binding": {
+              "procedure_ref": "https://delta-atlas.example/procedures/synthetic-invasive-probe.v1",
+              "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-signal.v1.json",
+              "unit": "signal-unit",
+              "result_validation_status": "PASS",
+              "result_validation_ref": "urn:delta-atlas:fixture:result-validation:invasive-probe",
+              "calibration_ref": "urn:delta-atlas:calibration:synthetic-invasive-probe-v1",
+              "calibration_status": "PASS",
+              "calibration_evidence_ref": "urn:delta-atlas:fixture:calibration:invasive-probe"
+            },
+            "operating_condition_results": [
+              {
+                "condition_id": "fixture-only",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:fixture-only"
+              },
+              {
+                "condition_id": "temperature-bounded",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:temperature-bounded"
+              }
+            ]
+          },
+          "previous_hash": "sha256:8bc3941b8fb6ef90b779e63b9e0ea37dd320ec5f5948220c77cbc418b3749174",
+          "event_hash": "sha256:2361493fcf330f744bfc29a63555291c20fecdd8e0187e9e282f8fbf8ae17ebf"
+        }
+      ],
+      "expected": {
+        "status": "FAIL",
+        "reason_code": "SENSING_EFFECT_UNRECORDED",
+        "final_state": "NOMINAL"
+      }
+    },
+    {
+      "case_id": "instrument-incompatible-with-lost-state",
+      "initial_state": "LOST",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "lost-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "LOST",
+          "state_after": "LOST",
+          "previous_hash": null,
+          "event_hash": "sha256:89c74017cf1540495b1f12100cd4478b9864d140c484f6b39036be1805e3e1f3"
+        }
+      ],
+      "expected": {
+        "status": "FAIL",
+        "reason_code": "INSTRUMENT_STATE_INCOMPATIBLE",
+        "final_state": "LOST"
+      }
+    },
+    {
+      "case_id": "invasive-sensing-qualified-receipt",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "previous_hash": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:44499e7c140e223f974c7e45fcacd690271be44de6c560cff86160ace866ee19"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-2",
+          "sequence": 2,
+          "previous_event_id": "qualified-1",
+          "previous_hash": "sha256:44499e7c140e223f974c7e45fcacd690271be44de6c560cff86160ace866ee19",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:64447433ff53f21f8b607a9428378c52513020c88ae962323d005f1e9cfd2e5d"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-3",
+          "sequence": 3,
+          "previous_event_id": "qualified-2",
+          "previous_hash": "sha256:64447433ff53f21f8b607a9428378c52513020c88ae962323d005f1e9cfd2e5d",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:a45b941d4500dde101ea4b9b1fc6e90035a6a1fa0415423bd8dfc483ee8e1275"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-4",
+          "sequence": 4,
+          "previous_event_id": "qualified-3",
+          "previous_hash": "sha256:a45b941d4500dde101ea4b9b1fc6e90035a6a1fa0415423bd8dfc483ee8e1275",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:3ec54f66d8a8873274a729326d393d956e15e6ed4de565b5621ef5539183d811"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-5",
+          "sequence": 5,
+          "previous_event_id": "qualified-4",
+          "previous_hash": "sha256:3ec54f66d8a8873274a729326d393d956e15e6ed4de565b5621ef5539183d811",
+          "event_type": "SENSING_EFFECT",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "DEGRADED",
+          "sensing_effect": {
+            "footprint_ids": [
+              "system.temperature"
+            ],
+            "recording_status": "RECORDED",
+            "evidence_ref": "urn:delta-atlas:fixture:sensing-effect:qualified-5"
+          },
+          "event_hash": "sha256:15f7646e5239cb2afe077105ee923ae7b6bf0fed80656a8737557dfe54a14104"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-6",
+          "sequence": 6,
+          "previous_event_id": "qualified-5",
+          "previous_hash": "sha256:15f7646e5239cb2afe077105ee923ae7b6bf0fed80656a8737557dfe54a14104",
+          "event_type": "OBSERVE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "DEGRADED",
+          "state_after": "DEGRADED",
+          "sensing_effect_ref": "qualified-5",
+          "observation": {
+            "presence": "PRESENT",
+            "kind": "DOMAIN_VALUE",
+            "value": 4.2,
+            "measurement_binding": {
+              "procedure_ref": "https://delta-atlas.example/procedures/synthetic-invasive-probe.v1",
+              "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-signal.v1.json",
+              "unit": "signal-unit",
+              "result_validation_status": "PASS",
+              "result_validation_ref": "urn:delta-atlas:fixture:result-validation:invasive-probe",
+              "calibration_ref": "urn:delta-atlas:calibration:synthetic-invasive-probe-v1",
+              "calibration_status": "PASS",
+              "calibration_evidence_ref": "urn:delta-atlas:fixture:calibration:invasive-probe"
+            },
+            "operating_condition_results": [
+              {
+                "condition_id": "fixture-only",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:fixture-only"
+              },
+              {
+                "condition_id": "temperature-bounded",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:temperature-bounded"
+              }
+            ]
+          },
+          "event_hash": "sha256:9f21e8e992c5818dfe9a6da6c0e8391b8ee455423940c2049d23f7eb7138f5c5"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-7",
+          "sequence": 7,
+          "previous_event_id": "qualified-6",
+          "previous_hash": "sha256:9f21e8e992c5818dfe9a6da6c0e8391b8ee455423940c2049d23f7eb7138f5c5",
+          "event_type": "SETTLE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "DEGRADED",
+          "state_after": "DEGRADED",
+          "event_hash": "sha256:bcbbe32b58e38231386cf76cad732f8bc4769a9601e0f058d84ffd9f2a244998"
+        }
+      ],
+      "expected": {
+        "status": "PASS",
+        "reason_code": "SETTLED_OBSERVED_VALUE",
+        "final_state": "DEGRADED"
+      }
+    },
+    {
+      "case_id": "forged-sensing-effect-reference-rejected",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "probe-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": null,
+          "event_hash": "sha256:53926c916cdc523af3aae0929ca4eadad3a42773d0c78e1e17363230440e5bf7"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "probe-2",
+          "sequence": 2,
+          "previous_event_id": "probe-1",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:53926c916cdc523af3aae0929ca4eadad3a42773d0c78e1e17363230440e5bf7",
+          "event_hash": "sha256:c443a0810e1f01f1cfcbf2c767fb34244337a74e7fa509093e4b6d804a6ad6c1"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "probe-3",
+          "sequence": 3,
+          "previous_event_id": "probe-2",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:c443a0810e1f01f1cfcbf2c767fb34244337a74e7fa509093e4b6d804a6ad6c1",
+          "event_hash": "sha256:e652503aedce7b21303f4d6ee9063ffc30947e23e06f7cc1d35da0345fe8b48b"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "probe-4",
+          "sequence": 4,
+          "previous_event_id": "probe-3",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:e652503aedce7b21303f4d6ee9063ffc30947e23e06f7cc1d35da0345fe8b48b",
+          "event_hash": "sha256:8bc3941b8fb6ef90b779e63b9e0ea37dd320ec5f5948220c77cbc418b3749174"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "probe-5",
+          "sequence": 5,
+          "previous_event_id": "probe-4",
+          "event_type": "OBSERVE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "observation": {
+            "presence": "PRESENT",
+            "kind": "DOMAIN_VALUE",
+            "value": 4.2,
+            "measurement_binding": {
+              "procedure_ref": "https://delta-atlas.example/procedures/synthetic-invasive-probe.v1",
+              "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-signal.v1.json",
+              "unit": "signal-unit",
+              "result_validation_status": "PASS",
+              "result_validation_ref": "urn:delta-atlas:fixture:result-validation:invasive-probe",
+              "calibration_ref": "urn:delta-atlas:calibration:synthetic-invasive-probe-v1",
+              "calibration_status": "PASS",
+              "calibration_evidence_ref": "urn:delta-atlas:fixture:calibration:invasive-probe"
+            },
+            "operating_condition_results": [
+              {
+                "condition_id": "fixture-only",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:fixture-only"
+              },
+              {
+                "condition_id": "temperature-bounded",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:temperature-bounded"
+              }
+            ]
+          },
+          "sensing_effect_ref": "unresolved-effect-receipt",
+          "previous_hash": "sha256:8bc3941b8fb6ef90b779e63b9e0ea37dd320ec5f5948220c77cbc418b3749174",
+          "event_hash": "sha256:2062a6af770c233cf737cf6898d0f3e85d01604539a1fdbd0fe969c8e7b1824f"
+        }
+      ],
+      "expected": {
+        "status": "FAIL",
+        "reason_code": "SENSING_EFFECT_REFERENCE_UNRESOLVED",
+        "final_state": "NOMINAL"
+      }
+    },
+    {
+      "case_id": "unresolved-operating-condition-holds-unknown",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": null,
+          "event_hash": "sha256:bd562d3e93ab6fe82e42abf86d430044f1ac63116d3d0f7bdb3a5396c3065b7d"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-2",
+          "sequence": 2,
+          "previous_event_id": "null-1",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:bd562d3e93ab6fe82e42abf86d430044f1ac63116d3d0f7bdb3a5396c3065b7d",
+          "event_hash": "sha256:8f397e285214b924a787473e475be9a20e6d9b4b3885b170171dda361acc266f"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-3",
+          "sequence": 3,
+          "previous_event_id": "null-2",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:8f397e285214b924a787473e475be9a20e6d9b4b3885b170171dda361acc266f",
+          "event_hash": "sha256:2c9132022e8ed989920603b9a6ed2837b05bc6eec1bc34695d64c0d251e7dc1f"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-4",
+          "sequence": 4,
+          "previous_event_id": "null-3",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:2c9132022e8ed989920603b9a6ed2837b05bc6eec1bc34695d64c0d251e7dc1f",
+          "event_hash": "sha256:54ff138eea3c389fc9861386a17c67c38082a752a04c32aa190ba29cc00dbde0"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-5",
+          "sequence": 5,
+          "previous_event_id": "null-4",
+          "event_type": "OBSERVE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "observation": {
+            "presence": "PRESENT",
+            "kind": "DOMAIN_NULL",
+            "value": null,
+            "measurement_binding": {
+              "procedure_ref": "https://delta-atlas.example/procedures/synthetic-response.v1",
+              "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-response.v1.json",
+              "unit": "event",
+              "result_validation_status": "PASS",
+              "result_validation_ref": "urn:delta-atlas:fixture:result-validation:null-click",
+              "calibration_ref": "urn:delta-atlas:calibration:synthetic-null-click-v1",
+              "calibration_status": "PASS",
+              "calibration_evidence_ref": "urn:delta-atlas:fixture:calibration:null-click"
+            },
+            "operating_condition_results": [
+              {
+                "condition_id": "fixture-only",
+                "status": "UNKNOWN",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:fixture-only"
+              }
+            ]
+          },
+          "previous_hash": "sha256:54ff138eea3c389fc9861386a17c67c38082a752a04c32aa190ba29cc00dbde0",
+          "event_hash": "sha256:29ce0a189780becc6c5bf59cb5b906c200a9eb469ff8052af4bf5f001ded1cc8"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-6",
+          "sequence": 6,
+          "previous_event_id": "null-5",
+          "event_type": "SETTLE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:29ce0a189780becc6c5bf59cb5b906c200a9eb469ff8052af4bf5f001ded1cc8",
+          "event_hash": "sha256:a96be14d4f69ac7e37f8aaf1c2106518a84ee403f42f618878f2d204f9eaec37"
+        }
+      ],
+      "expected": {
+        "status": "UNKNOWN",
+        "reason_code": "OPERATING_CONDITIONS_UNRESOLVED",
+        "final_state": "NOMINAL"
+      }
+    },
+    {
+      "case_id": "duplicate-instrument-event-id-rejected",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": null,
+          "event_hash": "sha256:bd562d3e93ab6fe82e42abf86d430044f1ac63116d3d0f7bdb3a5396c3065b7d"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-1",
+          "sequence": 2,
+          "previous_event_id": "null-1",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:bd562d3e93ab6fe82e42abf86d430044f1ac63116d3d0f7bdb3a5396c3065b7d",
+          "event_hash": "sha256:a6d7024d8153a92a65c017bcf9ef16a00207f6848b7932b1fa7b1fb9b10b1c7f"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-3",
+          "sequence": 3,
+          "previous_event_id": "null-1",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:a6d7024d8153a92a65c017bcf9ef16a00207f6848b7932b1fa7b1fb9b10b1c7f",
+          "event_hash": "sha256:00f4bcbb93329bc8669aaf3a7d1dc974f4885bc2476687fb39aea0cb08c0dff8"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-4",
+          "sequence": 4,
+          "previous_event_id": "null-3",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:00f4bcbb93329bc8669aaf3a7d1dc974f4885bc2476687fb39aea0cb08c0dff8",
+          "event_hash": "sha256:13350c3ee054b683fcd5ba6a77cc63b00cdf74046733323653627b1af90f6fee"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-5",
+          "sequence": 5,
+          "previous_event_id": "null-4",
+          "event_type": "OBSERVE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "observation": {
+            "presence": "PRESENT",
+            "kind": "DOMAIN_NULL",
+            "value": null,
+            "measurement_binding": {
+              "procedure_ref": "https://delta-atlas.example/procedures/synthetic-response.v1",
+              "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-response.v1.json",
+              "unit": "event",
+              "result_validation_status": "PASS",
+              "result_validation_ref": "urn:delta-atlas:fixture:result-validation:null-click",
+              "calibration_ref": "urn:delta-atlas:calibration:synthetic-null-click-v1",
+              "calibration_status": "PASS",
+              "calibration_evidence_ref": "urn:delta-atlas:fixture:calibration:null-click"
+            },
+            "operating_condition_results": [
+              {
+                "condition_id": "fixture-only",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:fixture-only"
+              }
+            ]
+          },
+          "previous_hash": "sha256:13350c3ee054b683fcd5ba6a77cc63b00cdf74046733323653627b1af90f6fee",
+          "event_hash": "sha256:3abb623a74e929cf3a07f42be5a13f692614c99842aedfc71026934918f0ff9c"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-6",
+          "sequence": 6,
+          "previous_event_id": "null-5",
+          "event_type": "SETTLE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:3abb623a74e929cf3a07f42be5a13f692614c99842aedfc71026934918f0ff9c",
+          "event_hash": "sha256:6ff3a4cee16be1b3d944b2b8b413365c5c58291ed8f348b4e23d4f192337551c"
+        }
+      ],
+      "expected": {
+        "status": "FAIL",
+        "reason_code": "DUPLICATE_INSTRUMENT_EVENT_ID",
+        "final_state": "NOMINAL"
+      }
+    },
+    {
+      "case_id": "instrument-subject-type-mismatch-rejected",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "wrong-subject-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "previous_hash": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:wrong-subject-check",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:3dcaa44e2a59e30146d1ae0304c45daec4cefdbf40b40644cd4cab78889bc008"
+        }
+      ],
+      "expected": {
+        "status": "FAIL",
+        "reason_code": "INSTRUMENT_SUBJECT_TYPE_MISMATCH",
+        "final_state": "NOMINAL"
+      }
+    },
+    {
+      "case_id": "undeclared-effect-transition-rejected",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "undeclared-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "previous_hash": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:undeclared-effect",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:c7562665f0622aedddada010a6a10b9c55d3050a2d2b2a30112028e9dcda4276"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "undeclared-2",
+          "sequence": 2,
+          "previous_event_id": "undeclared-1",
+          "previous_hash": "sha256:c7562665f0622aedddada010a6a10b9c55d3050a2d2b2a30112028e9dcda4276",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:undeclared-effect",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:bdee6ea6b48c7b31ace1e15e9b90f18a1853882ce4326fa48edfdbef6b4face6"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "undeclared-3",
+          "sequence": 3,
+          "previous_event_id": "undeclared-2",
+          "previous_hash": "sha256:bdee6ea6b48c7b31ace1e15e9b90f18a1853882ce4326fa48edfdbef6b4face6",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:undeclared-effect",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:a7bc245ce15ddb202603467c883889148f958dda683cf37d28d7c891aea1e74a"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "undeclared-4",
+          "sequence": 4,
+          "previous_event_id": "undeclared-3",
+          "previous_hash": "sha256:a7bc245ce15ddb202603467c883889148f958dda683cf37d28d7c891aea1e74a",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:undeclared-effect",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:15a67bf4b1818dcd2a007c814018a57bcc51b138c208a728b6c9494da3a4aa79"
+        }
+      ],
+      "expected": {
+        "status": "FAIL",
+        "reason_code": "UNDECLARED_INSTRUMENT_TRANSITION",
+        "final_state": "NOMINAL"
+      }
+    },
+    {
+      "case_id": "tampered-instrument-event-rejected",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "DEGRADED",
+          "previous_hash": null,
+          "event_hash": "sha256:bd562d3e93ab6fe82e42abf86d430044f1ac63116d3d0f7bdb3a5396c3065b7d"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-2",
+          "sequence": 2,
+          "previous_event_id": "null-1",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:bd562d3e93ab6fe82e42abf86d430044f1ac63116d3d0f7bdb3a5396c3065b7d",
+          "event_hash": "sha256:8f397e285214b924a787473e475be9a20e6d9b4b3885b170171dda361acc266f"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-3",
+          "sequence": 3,
+          "previous_event_id": "null-2",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:8f397e285214b924a787473e475be9a20e6d9b4b3885b170171dda361acc266f",
+          "event_hash": "sha256:2c9132022e8ed989920603b9a6ed2837b05bc6eec1bc34695d64c0d251e7dc1f"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-4",
+          "sequence": 4,
+          "previous_event_id": "null-3",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:2c9132022e8ed989920603b9a6ed2837b05bc6eec1bc34695d64c0d251e7dc1f",
+          "event_hash": "sha256:54ff138eea3c389fc9861386a17c67c38082a752a04c32aa190ba29cc00dbde0"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-5",
+          "sequence": 5,
+          "previous_event_id": "null-4",
+          "event_type": "OBSERVE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "observation": {
+            "presence": "PRESENT",
+            "kind": "DOMAIN_NULL",
+            "value": null,
+            "measurement_binding": {
+              "procedure_ref": "https://delta-atlas.example/procedures/synthetic-response.v1",
+              "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-response.v1.json",
+              "unit": "event",
+              "result_validation_status": "PASS",
+              "result_validation_ref": "urn:delta-atlas:fixture:result-validation:null-click",
+              "calibration_ref": "urn:delta-atlas:calibration:synthetic-null-click-v1",
+              "calibration_status": "PASS",
+              "calibration_evidence_ref": "urn:delta-atlas:fixture:calibration:null-click"
+            },
+            "operating_condition_results": [
+              {
+                "condition_id": "fixture-only",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:fixture-only"
+              }
+            ]
+          },
+          "previous_hash": "sha256:54ff138eea3c389fc9861386a17c67c38082a752a04c32aa190ba29cc00dbde0",
+          "event_hash": "sha256:45b535f04e943ead2fc7c03fb3cad822306f3b0f247980c6368251e7021cacbd"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "null-6",
+          "sequence": 6,
+          "previous_event_id": "null-5",
+          "event_type": "SETTLE",
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "previous_hash": "sha256:45b535f04e943ead2fc7c03fb3cad822306f3b0f247980c6368251e7021cacbd",
+          "event_hash": "sha256:e10a69397dc93d807d02f3dfcd43a0631359e609af907144fd7ffa13a8111a80"
+        }
+      ],
+      "expected": {
+        "status": "FAIL",
+        "reason_code": "INSTRUMENT_EVENT_HASH_MISMATCH",
+        "final_state": "NOMINAL"
+      }
+    },
+    {
+      "case_id": "sensing-effect-footprint-mismatch-rejected",
+      "initial_state": "NOMINAL",
+      "events": [
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-1",
+          "sequence": 1,
+          "previous_event_id": null,
+          "previous_hash": null,
+          "event_type": "PLAN",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:44499e7c140e223f974c7e45fcacd690271be44de6c560cff86160ace866ee19"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-2",
+          "sequence": 2,
+          "previous_event_id": "qualified-1",
+          "previous_hash": "sha256:44499e7c140e223f974c7e45fcacd690271be44de6c560cff86160ace866ee19",
+          "event_type": "AUTHORIZE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:64447433ff53f21f8b607a9428378c52513020c88ae962323d005f1e9cfd2e5d"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-3",
+          "sequence": 3,
+          "previous_event_id": "qualified-2",
+          "previous_hash": "sha256:64447433ff53f21f8b607a9428378c52513020c88ae962323d005f1e9cfd2e5d",
+          "event_type": "INVOKE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:a45b941d4500dde101ea4b9b1fc6e90035a6a1fa0415423bd8dfc483ee8e1275"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-4",
+          "sequence": 4,
+          "previous_event_id": "qualified-3",
+          "previous_hash": "sha256:a45b941d4500dde101ea4b9b1fc6e90035a6a1fa0415423bd8dfc483ee8e1275",
+          "event_type": "COMMIT",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "NOMINAL",
+          "event_hash": "sha256:3ec54f66d8a8873274a729326d393d956e15e6ed4de565b5621ef5539183d811"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-5",
+          "sequence": 5,
+          "previous_event_id": "qualified-4",
+          "previous_hash": "sha256:3ec54f66d8a8873274a729326d393d956e15e6ed4de565b5621ef5539183d811",
+          "event_type": "SENSING_EFFECT",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "NOMINAL",
+          "state_after": "DEGRADED",
+          "sensing_effect": {
+            "footprint_ids": [
+              "foreign.temperature"
+            ],
+            "recording_status": "RECORDED",
+            "evidence_ref": "urn:delta-atlas:fixture:sensing-effect:qualified-5"
+          },
+          "event_hash": "sha256:f970a85605e3714a271ad3557e0ca2e0938888bcec6548716842552b9cd36393"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-6",
+          "sequence": 6,
+          "previous_event_id": "qualified-5",
+          "previous_hash": "sha256:f970a85605e3714a271ad3557e0ca2e0938888bcec6548716842552b9cd36393",
+          "event_type": "OBSERVE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "DEGRADED",
+          "state_after": "DEGRADED",
+          "sensing_effect_ref": "qualified-5",
+          "observation": {
+            "presence": "PRESENT",
+            "kind": "DOMAIN_VALUE",
+            "value": 4.2,
+            "measurement_binding": {
+              "procedure_ref": "https://delta-atlas.example/procedures/synthetic-invasive-probe.v1",
+              "result_schema_ref": "https://delta-atlas.example/schemas/synthetic-signal.v1.json",
+              "unit": "signal-unit",
+              "result_validation_status": "PASS",
+              "result_validation_ref": "urn:delta-atlas:fixture:result-validation:invasive-probe",
+              "calibration_ref": "urn:delta-atlas:calibration:synthetic-invasive-probe-v1",
+              "calibration_status": "PASS",
+              "calibration_evidence_ref": "urn:delta-atlas:fixture:calibration:invasive-probe"
+            },
+            "operating_condition_results": [
+              {
+                "condition_id": "fixture-only",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:fixture-only"
+              },
+              {
+                "condition_id": "temperature-bounded",
+                "status": "PASS",
+                "evidence_ref": "urn:delta-atlas:fixture:condition:temperature-bounded"
+              }
+            ]
+          },
+          "event_hash": "sha256:85b71b2bdd6b14fb5c4530a53add7e40c52c42e54ed01c0a58e591a49a444fc0"
+        },
+        {
+          "schema_version": "instrument-event.v1",
+          "event_id": "qualified-7",
+          "sequence": 7,
+          "previous_event_id": "qualified-6",
+          "previous_hash": "sha256:85b71b2bdd6b14fb5c4530a53add7e40c52c42e54ed01c0a58e591a49a444fc0",
+          "event_type": "SETTLE",
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "instrument_version": 1,
+          "subject_id": "urn:delta-atlas:subject:synthetic-instrumented-transition",
+          "policy_id": "urn:delta-atlas:policy:instrumented-transition-candidate",
+          "policy_generation": 1,
+          "state_before": "DEGRADED",
+          "state_after": "DEGRADED",
+          "event_hash": "sha256:5d76b8f52171f79df01e4c2678586bf3701e776031b1233aa11e7b1f7537dc84"
+        }
+      ],
+      "expected": {
+        "status": "FAIL",
+        "reason_code": "SENSING_EFFECT_FOOTPRINT_MISMATCH",
+        "final_state": "DEGRADED"
+      }
+    }
+  ],
+  "survivability_cases": [
+    {
+      "case_id": "bounded-recovery-under-friction",
+      "initial_state": "NOMINAL",
+      "horizon": 2,
+      "recovery_target_states": [
+        "NOMINAL",
+        "RECOVERING"
+      ],
+      "disturbance_transition_ids": [
+        "disturb-friction"
+      ],
+      "controller": [
+        {
+          "state_id": "NOMINAL",
+          "transition_id": "control-hold-nominal"
+        },
+        {
+          "state_id": "DEGRADED",
+          "transition_id": "control-recover"
+        },
+        {
+          "state_id": "RECOVERING",
+          "transition_id": "control-stabilize"
+        }
+      ],
+      "traversal_limits": {
+        "max_states": 8,
+        "max_transitions": 16,
+        "max_depth": 2
+      },
+      "expected": {
+        "status": "PASS",
+        "reason_code": "SURVIVAL_PROVEN_BOUNDED"
+      }
+    },
+    {
+      "case_id": "disturbance-counterexample",
+      "initial_state": "DEGRADED",
+      "horizon": 1,
+      "recovery_target_states": [
+        "NOMINAL",
+        "RECOVERING"
+      ],
+      "disturbance_transition_ids": [
+        "disturb-escalate"
+      ],
+      "controller": [
+        {
+          "state_id": "DEGRADED",
+          "transition_id": "control-recover"
+        },
+        {
+          "state_id": "RECOVERING",
+          "transition_id": "control-stabilize"
+        }
+      ],
+      "traversal_limits": {
+        "max_states": 8,
+        "max_transitions": 16,
+        "max_depth": 1
+      },
+      "expected": {
+        "status": "FAIL",
+        "reason_code": "SURVIVAL_FALSIFIED"
+      }
+    },
+    {
+      "case_id": "traversal-budget-prevents-proof",
+      "initial_state": "NOMINAL",
+      "horizon": 2,
+      "recovery_target_states": [
+        "NOMINAL",
+        "RECOVERING"
+      ],
+      "disturbance_transition_ids": [
+        "disturb-friction"
+      ],
+      "controller": [
+        {
+          "state_id": "NOMINAL",
+          "transition_id": "control-hold-nominal"
+        },
+        {
+          "state_id": "DEGRADED",
+          "transition_id": "control-recover"
+        },
+        {
+          "state_id": "RECOVERING",
+          "transition_id": "control-stabilize"
+        }
+      ],
+      "traversal_limits": {
+        "max_states": 1,
+        "max_transitions": 2,
+        "max_depth": 2
+      },
+      "expected": {
+        "status": "UNKNOWN",
+        "reason_code": "TRAVERSAL_BOUND_REACHED"
+      }
+    },
+    {
+      "case_id": "undefined-controller-holds-unknown",
+      "initial_state": "RECOVERING",
+      "horizon": 1,
+      "recovery_target_states": [
+        "NOMINAL"
+      ],
+      "disturbance_transition_ids": [
+        "disturb-friction"
+      ],
+      "controller": [
+        {
+          "state_id": "NOMINAL",
+          "transition_id": "control-hold-nominal"
+        }
+      ],
+      "traversal_limits": {
+        "max_states": 8,
+        "max_transitions": 16,
+        "max_depth": 1
+      },
+      "expected": {
+        "status": "UNKNOWN",
+        "reason_code": "CONTROLLER_UNDEFINED"
+      }
+    }
+  ],
+  "economy_cases": [
+    {
+      "case_id": "fresh-decisive-evidence-needs-no-tool",
+      "required_check_id": "urn:delta-atlas:check:schema-conformance",
+      "current_evidence": [
+        {
+          "check_id": "urn:delta-atlas:check:schema-conformance",
+          "result": "PASS",
+          "fresh": true
+        }
+      ],
+      "initial_state": "NOMINAL",
+      "candidate_instrument_ids": [
+        "urn:delta-atlas:instrument:local-schema-check"
+      ],
+      "authorized_consequence_classes": [
+        "READ_ONLY"
+      ],
+      "budget": {
+        "irreversibility": 0,
+        "invasiveness": 0,
+        "external_tool_calls": 0,
+        "local_tool_calls": 1,
+        "bytes_read": 4096,
+        "egress_bytes": 0,
+        "token_ceiling": 0,
+        "wall_time_ms": 100
+      },
+      "expected": {
+        "status": "PASS",
+        "reason_code": "EVIDENCE_ALREADY_DECISIVE",
+        "selected_instrument_id": null
+      },
+      "instrument_assessments": [
+        {
+          "instrument_id": "urn:delta-atlas:instrument:local-schema-check",
+          "guard_status": "PASS",
+          "authority_status": "NOT_REQUIRED",
+          "observability_status": "PASS",
+          "recoverability_status": "NOT_REQUIRED",
+          "evidence_refs": [
+            "urn:delta-atlas:fixture:eligibility:fresh-decisive-evidence-needs-no-tool:local-schema-check"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "local-check-dominates-remote-probe",
+      "required_check_id": "urn:delta-atlas:check:schema-conformance",
+      "current_evidence": [
+        {
+          "check_id": "urn:delta-atlas:check:schema-conformance",
+          "result": "UNKNOWN",
+          "fresh": true
+        }
+      ],
+      "initial_state": "NOMINAL",
+      "candidate_instrument_ids": [
+        "urn:delta-atlas:instrument:remote-schema-probe",
+        "urn:delta-atlas:instrument:local-schema-check"
+      ],
+      "authorized_consequence_classes": [
+        "READ_ONLY",
+        "REVERSIBLE"
+      ],
+      "budget": {
+        "irreversibility": 1,
+        "invasiveness": 1,
+        "external_tool_calls": 1,
+        "local_tool_calls": 1,
+        "bytes_read": 4096,
+        "egress_bytes": 4096,
+        "token_ceiling": 512,
+        "wall_time_ms": 5000
+      },
+      "expected": {
+        "status": "PASS",
+        "reason_code": "LEAST_COST_INSTRUMENT_SELECTED",
+        "selected_instrument_id": "urn:delta-atlas:instrument:local-schema-check"
+      },
+      "instrument_assessments": [
+        {
+          "instrument_id": "urn:delta-atlas:instrument:remote-schema-probe",
+          "guard_status": "PASS",
+          "authority_status": "PASS",
+          "observability_status": "PASS",
+          "recoverability_status": "PASS",
+          "evidence_refs": [
+            "urn:delta-atlas:fixture:eligibility:local-check-dominates-remote-probe:remote-schema-probe"
+          ]
+        },
+        {
+          "instrument_id": "urn:delta-atlas:instrument:local-schema-check",
+          "guard_status": "PASS",
+          "authority_status": "NOT_REQUIRED",
+          "observability_status": "PASS",
+          "recoverability_status": "NOT_REQUIRED",
+          "evidence_refs": [
+            "urn:delta-atlas:fixture:eligibility:local-check-dominates-remote-probe:local-schema-check"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "resource-bound-holds-unknown",
+      "required_check_id": "urn:delta-atlas:check:schema-conformance",
+      "current_evidence": [
+        {
+          "check_id": "urn:delta-atlas:check:schema-conformance",
+          "result": "UNKNOWN",
+          "fresh": true
+        }
+      ],
+      "initial_state": "NOMINAL",
+      "candidate_instrument_ids": [
+        "urn:delta-atlas:instrument:remote-schema-probe"
+      ],
+      "authorized_consequence_classes": [
+        "REVERSIBLE"
+      ],
+      "budget": {
+        "irreversibility": 1,
+        "invasiveness": 1,
+        "external_tool_calls": 0,
+        "local_tool_calls": 0,
+        "bytes_read": 4096,
+        "egress_bytes": 0,
+        "token_ceiling": 0,
+        "wall_time_ms": 5000
+      },
+      "expected": {
+        "status": "UNKNOWN",
+        "reason_code": "RESOURCE_BOUND",
+        "selected_instrument_id": null
+      },
+      "instrument_assessments": [
+        {
+          "instrument_id": "urn:delta-atlas:instrument:remote-schema-probe",
+          "guard_status": "PASS",
+          "authority_status": "PASS",
+          "observability_status": "PASS",
+          "recoverability_status": "PASS",
+          "evidence_refs": [
+            "urn:delta-atlas:fixture:eligibility:resource-bound-holds-unknown:remote-schema-probe"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "unauthorized-invasiveness-holds-unknown",
+      "required_check_id": "urn:delta-atlas:check:deep-integrity",
+      "current_evidence": [],
+      "initial_state": "NOMINAL",
+      "candidate_instrument_ids": [
+        "urn:delta-atlas:instrument:invasive-probe"
+      ],
+      "authorized_consequence_classes": [
+        "READ_ONLY"
+      ],
+      "budget": {
+        "irreversibility": 3,
+        "invasiveness": 3,
+        "external_tool_calls": 2,
+        "local_tool_calls": 2,
+        "bytes_read": 4096,
+        "egress_bytes": 0,
+        "token_ceiling": 0,
+        "wall_time_ms": 5000
+      },
+      "expected": {
+        "status": "UNKNOWN",
+        "reason_code": "NO_AUTHORIZED_INSTRUMENT",
+        "selected_instrument_id": null
+      },
+      "instrument_assessments": [
+        {
+          "instrument_id": "urn:delta-atlas:instrument:invasive-probe",
+          "guard_status": "PASS",
+          "authority_status": "PASS",
+          "observability_status": "PASS",
+          "recoverability_status": "PASS",
+          "evidence_refs": [
+            "urn:delta-atlas:fixture:eligibility:unauthorized-invasiveness-holds-unknown:invasive-probe"
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "recoverability-unresolved-holds-unknown",
+      "required_check_id": "urn:delta-atlas:check:click-response",
+      "current_evidence": [],
+      "initial_state": "NOMINAL",
+      "candidate_instrument_ids": [
+        "urn:delta-atlas:instrument:null-click"
+      ],
+      "authorized_consequence_classes": [
+        "REVERSIBLE"
+      ],
+      "instrument_assessments": [
+        {
+          "instrument_id": "urn:delta-atlas:instrument:null-click",
+          "guard_status": "PASS",
+          "authority_status": "PASS",
+          "observability_status": "PASS",
+          "recoverability_status": "UNKNOWN",
+          "evidence_refs": [
+            "urn:delta-atlas:fixture:eligibility:recoverability-unresolved-holds-unknown:null-click"
+          ]
+        }
+      ],
+      "budget": {
+        "irreversibility": 1,
+        "invasiveness": 0,
+        "external_tool_calls": 0,
+        "local_tool_calls": 1,
+        "bytes_read": 64,
+        "egress_bytes": 0,
+        "token_ceiling": 0,
+        "wall_time_ms": 10
+      },
+      "expected": {
+        "status": "UNKNOWN",
+        "reason_code": "COMPATIBILITY_UNRESOLVED",
+        "selected_instrument_id": null
+      }
+    },
+    {
+      "case_id": "privacy-contradiction-holds-unknown",
+      "required_check_id": "urn:delta-atlas:check:privacy-contract",
+      "current_evidence": [],
+      "initial_state": "NOMINAL",
+      "candidate_instrument_ids": [
+        "urn:delta-atlas:instrument:privacy-contradiction"
+      ],
+      "authorized_consequence_classes": [
+        "READ_ONLY"
+      ],
+      "instrument_assessments": [
+        {
+          "instrument_id": "urn:delta-atlas:instrument:privacy-contradiction",
+          "guard_status": "PASS",
+          "authority_status": "NOT_REQUIRED",
+          "observability_status": "PASS",
+          "recoverability_status": "NOT_REQUIRED",
+          "evidence_refs": [
+            "urn:delta-atlas:fixture:eligibility:privacy-contradiction-holds-unknown:privacy-contradiction"
+          ]
+        }
+      ],
+      "budget": {
+        "irreversibility": 0,
+        "invasiveness": 0,
+        "external_tool_calls": 0,
+        "local_tool_calls": 1,
+        "bytes_read": 4096,
+        "egress_bytes": 1,
+        "token_ceiling": 0,
+        "wall_time_ms": 100
+      },
+      "expected": {
+        "status": "UNKNOWN",
+        "reason_code": "INSTRUMENT_PRIVACY_CONTRACT_INVALID",
+        "selected_instrument_id": null
+      }
+    }
+  ]
+}

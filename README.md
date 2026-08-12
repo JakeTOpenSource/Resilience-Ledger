@@ -118,6 +118,20 @@ moving statement about current `main`. The status-vocabulary contract keeps
 the original ledger enum as a frozen legacy adapter and does not claim it is
 semantically equivalent to the State Transition Protocol vocabulary.
 
+### STP v1.2 public reproduction packet
+
+[`research/stp-v1.2/`](research/stp-v1.2/) is an owner-authorized,
+privacy-minimized candidate packet for instrumented transitions, explicit null
+versus absence, invasive sensing receipts, bounded survivability, concurrency,
+effect finality, and resource-economical evidence acquisition. It contains
+only public sources, schemas, synthetic fixtures, and independent JavaScript
+and Python reducers. Its exact files are sealed by a release manifest and the
+governance ledger.
+
+The packet remains proposed research. A passing run proves agreement on its
+enumerated synthetic cases; it does not prove live calibration, external event
+truth, statistical reliability, unbounded safety, or protocol acceptance.
+
 ## The seed frame: download it and harden it privately
 
 The public lexicon here is deliberately the general floor. If you run these detectors on real work, the strongest move is to take the folder and harden it privately: add your own domain's invariants, euphemisms, and corpus cases in a private overlay, so nobody can read your tripwires from the public repo.

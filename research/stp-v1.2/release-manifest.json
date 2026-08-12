@@ -1,0 +1,94 @@
+{
+  "schema_version": "public-release-manifest.v1",
+  "recorded_at": "2026-08-12",
+  "release_id": "stp-v1.2-public-reproduction-0001",
+  "classification": "PUBLIC",
+  "decision_ref": "governance/decision-log/0004-stp-v1.2-public-reproduction-release.md",
+  "hash_basis": "SHA-256 of UTF-8 file bytes with CRLF normalized to LF",
+  "excludes": [
+    "release-manifest.json self-reference",
+    "node_modules"
+  ],
+  "files": {
+    "fixtures/concurrency/conformance-cases.json": {
+      "sha256": "e54249286a62b98c46cb64a0bd36a75b68c9dc91e995ecdc1f2df7c4f7d69830",
+      "byte_length": 18895
+    },
+    "fixtures/instrumented-transition/conformance-cases.json": {
+      "sha256": "1d1299f84b63d41c4e006382e5dec1c7780c1b1295a85a49b28146486fa99d58",
+      "byte_length": 92110
+    },
+    "package.json": {
+      "sha256": "0c496ca01e29e57a009c5aafa4072552458200b7d57e944b6ff17f4f2315d404",
+      "byte_length": 514
+    },
+    "package-lock.json": {
+      "sha256": "347a02ba4e201f5502be96fb2e0c9ba0f7ba5d28bc05650ed228a9ad6be78b65",
+      "byte_length": 2958
+    },
+    "README.md": {
+      "sha256": "7e33ab7e67ed0dbd892fba02a8034de16ef398258032fb40dc05839c51bd9844",
+      "byte_length": 3249
+    },
+    "schemas/concurrency-conformance.schema.json": {
+      "sha256": "120b1daddbd0416618961fd5e259efbcebaad7c31a23be98fb3aa1615b2876e8",
+      "byte_length": 8870
+    },
+    "schemas/instrumented-transition-conformance.schema.json": {
+      "sha256": "91607036e97b997b1844d9b411a4a1993c685c1bdfaad6e1ebc003ffc196f0b3",
+      "byte_length": 9384
+    },
+    "schemas/instrument-event.schema.json": {
+      "sha256": "ea07469e5ce4207c1ce1e280cf9d4de6d96c17431b0ab772bbae6e0696671df8",
+      "byte_length": 7015
+    },
+    "schemas/instrument-profile.schema.json": {
+      "sha256": "bb367259a2329f6e942e8b856d91a407b64c8485bb10e7e953da44ca397f36a6",
+      "byte_length": 3895
+    },
+    "sources.json": {
+      "sha256": "45cedbdf2eb7229ad299587bf00268e976fb1cd94cb652ff8a4f3f6eb7692c82",
+      "byte_length": 4394
+    },
+    "specs/CONCURRENCY_EFFECT_PROFILE.md": {
+      "sha256": "96260d84a1e381043ff363d3deb94e26fdad46bbdbb2875e2e998671eb6cb5fd",
+      "byte_length": 3584
+    },
+    "specs/INSTRUMENTED_TRANSITION_AND_SURVIVABILITY_PROFILE.md": {
+      "sha256": "861dac0567de08663cd411ecc8500c37deba1759587ea2fe89233ba36e46172c",
+      "byte_length": 10924
+    },
+    "tools/concurrency.mjs": {
+      "sha256": "9edda6fc2ef435a8f73f2f1ae413b01f173908158f6e44a396aa575287239fbc",
+      "byte_length": 12578
+    },
+    "tools/concurrency.py": {
+      "sha256": "8875c7bfa98c285e34570db64078a569b1bd87412657802b107db20abc7e7bee",
+      "byte_length": 12242
+    },
+    "tools/instrumented_transition.py": {
+      "sha256": "17c98c5f8b232842ddc15c1155ab3f8f9d9341fb0fc882b748195adb274c17e3",
+      "byte_length": 19336
+    },
+    "tools/instrumented-transition.mjs": {
+      "sha256": "8a9d0883e86153e08b10d429850cabfbc00526f590fa6c2b80512c0c2e65a352",
+      "byte_length": 18138
+    },
+    "tools/verify-concurrency.mjs": {
+      "sha256": "ca81fed232e8f760aa223feb16b3b5ac99df7054549257537c2df24c0a554fb6",
+      "byte_length": 1618
+    },
+    "tools/verify-instrumented-transition.mjs": {
+      "sha256": "76a474db4c22b7792eafd986b07fb4e2b2158f4c4a035e1ead783e3d00efcdd7",
+      "byte_length": 1715
+    },
+    "tools/verify-release.mjs": {
+      "sha256": "73f3ba693fe6791475e0f3e8c284d36785e6073502cdfab7ecb3022ec4bb092b",
+      "byte_length": 3354
+    },
+    "tools/verify-schemas.mjs": {
+      "sha256": "d7af1e49b73d83c2c8f52faec4398c7370c43be9927db28343bf74da0a9b674f",
+      "byte_length": 2796
+    }
+  }
+}
