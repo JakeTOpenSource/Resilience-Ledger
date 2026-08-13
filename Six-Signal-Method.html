@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="A plain-English method for separating six kinds of system evidence without inventing a status.">
+  <title>Six-Signal Method — Delta Atlas</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --paper: #f4f0e7;
+      --ink: #172019;
+      --muted: #526058;
+      --line: #9aa69d;
+      --card: #fffdf8;
+      --accent: #174c35;
+      --soft: #e3ebe4;
+      --focus: #8b2be2;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--paper); color: var(--ink); font: 100%/1.55 system-ui, sans-serif; }
+    body { margin: 0; }
+    main { width: min(72rem, 100%); margin: 0 auto; padding: clamp(1rem, 4vw, 3.5rem); }
+    header { border-bottom: .25rem solid var(--ink); padding-bottom: 1.25rem; }
+    .eyebrow { color: var(--accent); font-size: .78rem; font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+    h1 { font-size: clamp(2.25rem, 8vw, 5.25rem); letter-spacing: -.055em; line-height: .94; margin: .35rem 0 1rem; max-width: 12ch; }
+    .lede { font-size: clamp(1.05rem, 2.5vw, 1.35rem); max-width: 48rem; }
+    .scope-notice { background: var(--ink); color: var(--paper); border-radius: .35rem; font-weight: 700; margin: 1.4rem 0 0; padding: 1rem 1.1rem; }
+    .method { margin: 2.5rem 0 1rem; }
+    .method h2, .reproduce h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); margin-bottom: .4rem; }
+    .signal-grid { counter-reset: signal; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); list-style: none; margin: 1.5rem 0 0; padding: 0; }
+    .signal-card { background: var(--card); border: 1px solid var(--line); border-radius: .55rem; min-width: 0; padding: 1.25rem; position: relative; }
+    .signal-card::before { counter-increment: signal; content: counter(signal, decimal-leading-zero); display: inline-grid; place-items: center; width: 2.7rem; height: 2.7rem; border: .15rem solid currentColor; border-radius: 50%; font-weight: 800; }
+    .signal-card h3 { font-size: 1.45rem; margin: .75rem 0 .5rem; }
+    .signal-card dl { margin: 0; }
+    .signal-card dt { font-size: .74rem; font-weight: 800; letter-spacing: .08em; margin-top: .85rem; text-transform: uppercase; }
+    .signal-card dd { color: var(--muted); margin: .2rem 0 0; }
+    .unknown { border-left: .35rem dashed var(--accent); padding-left: 1rem; }
+    .unknown strong { color: var(--accent); }
+    .reproduce { background: var(--soft); border-radius: .55rem; margin-top: 2.5rem; padding: clamp(1.25rem, 4vw, 2rem); }
+    code { overflow-wrap: anywhere; }
+    a { color: var(--accent); font-weight: 700; text-underline-offset: .18em; }
+    a:focus-visible { outline: .2rem solid var(--focus); outline-offset: .25rem; }
+    footer { border-top: 1px solid var(--line); color: var(--muted); margin-top: 2.5rem; padding-top: 1.25rem; }
+    @media (prefers-color-scheme: dark) {
+      :root { --paper: #121713; --ink: #eef3ed; --muted: #c0cbc3; --line: #667268; --card: #1c241e; --accent: #9edcb4; --soft: #202c24; --focus: #ffcc4d; }
+    }
+    @media (forced-colors: active) {
+      .signal-card, .scope-notice { border: 2px solid CanvasText; }
+      .unknown { border-left-style: dashed; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p><a href="index.html" target="_top">Back to Delta Atlas</a></p>
+    <p class="eyebrow">Delta Atlas · public method note</p>
+    <h1>One light cannot tell the whole truth.</h1>
+    <p class="lede">The Six-Signal Method keeps different questions separate. It makes missing evidence visible, limits what each answer can mean, and prevents a convenient color from becoming a claim the records do not support.</p>
+    <p class="scope-notice">Educational method only. This page reads no inputs and reports no status about a system, site, AI, person, or deployment.</p>
+  </header>
+
+  <section class="method" aria-labelledby="signals-title">
+    <h2 id="signals-title">Six questions, held apart</h2>
+    <p>A real implementation needs typed evidence and a named policy for every answer. If that basis is absent, the honest result is <strong>UNKNOWN</strong>—not a guessed pass, failure, or confidence score.</p>
+    <ol class="signal-grid">
+      <li><article class="signal-card" data-signal="CALIBRATION">
+        <h3>Calibration</h3>
+        <dl>
+          <dt>Can establish</dt><dd>Whether every required check, observation, ripple check, and response check passed under one named policy.</dd>
+          <dt>UNKNOWN means</dt><dd>At least one required input is missing, stale, incompatible, or undecided.</dd>
+          <dt>Cannot establish</dt><dd>Universal safety, correctness outside the declared scope, or future behavior.</dd>
+        </dl>
+      </article></li>
+      <li><article class="signal-card" data-signal="CONSEQUENCE">
+        <h3>Consequence</h3>
+        <dl>
+          <dt>Can establish</dt><dd>Whether a named, bounded consequence is supported and whether the next consequential step requires an explicit hold.</dd>
+          <dt>UNKNOWN means</dt><dd>No qualified consequence observation and policy binding are available.</dd>
+          <dt>Cannot establish</dt><dd>Permission, acknowledgement, or authority to perform the next action.</dd>
+        </dl>
+      </article></li>
+      <li><article class="signal-card" data-signal="EVIDENCE">
+        <h3>Evidence</h3>
+        <dl>
+          <dt>Can establish</dt><dd>Whether the declared evidence set is present, attributable, and sufficient for the named check.</dd>
+          <dt>UNKNOWN means</dt><dd>Coverage, provenance, or an applicable decision rule is incomplete.</dd>
+          <dt>Cannot establish</dt><dd>That a claim is true merely because many records or citations exist.</dd>
+        </dl>
+      </article></li>
+      <li><article class="signal-card" data-signal="INTEGRITY">
+        <h3>Integrity</h3>
+        <dl>
+          <dt>Can establish</dt><dd>Whether selected bytes, hashes, sequence links, and deterministic replay agree with their declared records.</dd>
+          <dt>UNKNOWN means</dt><dd>The required binding, replay, or independent check was not completed.</dd>
+          <dt>Cannot establish</dt><dd>Semantic truth, authorship, safety, or correctness of intact content.</dd>
+        </dl>
+      </article></li>
+      <li><article class="signal-card" data-signal="PRIVACY">
+        <h3>Privacy</h3>
+        <dl>
+          <dt>Can establish</dt><dd>Whether specified storage, disclosure, and egress checks passed inside an explicit boundary.</dd>
+          <dt>UNKNOWN means</dt><dd>The applicable data flow or control has not been completely observed and verified.</dd>
+          <dt>Cannot establish</dt><dd>General privacy, legal compliance, or safety beyond the inspected scope.</dd>
+        </dl>
+      </article></li>
+      <li><article class="signal-card" data-signal="ACTIVITY">
+        <h3>Activity</h3>
+        <dl>
+          <dt>Can establish</dt><dd>Whether a named, bounded process is observed as pending, running, complete, or otherwise explicitly recorded.</dd>
+          <dt>UNKNOWN means</dt><dd>No qualified activity observation exists; silence is not evidence of idleness.</dd>
+          <dt>Cannot establish</dt><dd>System health, user intent, or successful outcome by itself.</dd>
+        </dl>
+      </article></li>
+    </ol>
+  </section>
+
+  <aside class="unknown" aria-label="Unknown rule">
+    <p><strong>UNKNOWN is a result.</strong> It preserves the difference between “we measured a null,” “this does not apply,” and “we did not observe it.” Those states must not collapse into the same empty field.</p>
+  </aside>
+
+  <section class="reproduce" aria-labelledby="reproduce-title">
+    <h2 id="reproduce-title">A small reproducible example</h2>
+    <p>The companion <a href="research/atlas-snapshot-read-only/README.md">Pinned Snapshot Card</a> names seven already-public files at one public Git commit and records their Git object IDs, SHA-256 digests, and byte lengths. Its verifier checks identity only. It deliberately publishes no private evaluation, lamp state, or live result.</p>
+    <p><a href="research/atlas-snapshot-read-only/snapshot-card.json">Inspect the machine-readable card</a>.</p>
+  </section>
+
+  <footer>
+    <p>This method is a candidate research interface, not a standard or certification. Each implementation must publish its own policy, evidence boundary, rejection tests, and claim ceiling.</p>
+  </footer>
+</main>
+</body>
+</html>

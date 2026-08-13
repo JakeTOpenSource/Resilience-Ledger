@@ -1,0 +1,113 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_governance_six_signal_public_method_0004",
+  "stream_id": "governance",
+  "sequence": 4,
+  "event_type": "governance.public_reproduction_release_accepted",
+  "occurred_at": "2026-08-13T02:15:00Z",
+  "recorded_at": "2026-08-13T02:15:00Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "governance/decision-log/0005-six-signal-public-method-release.md"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C2",
+  "parents": [
+    "evt_governance_stp_v1_2_public_release_0003",
+    "evt_semantics_status_vocabulary_boundary_0001"
+  ],
+  "prev_event_hash": "a173c542fb92d2fb84146fc414d1d0be6671d8ed407b424c5f6a9c1cb4f20f1a",
+  "payload_hash": "ee6fd0b66e12757843a02390303094819761d1cb4a25e6d1333b19cda377444c",
+  "event_hash": "4d5652b768877cac6765f12aa83019a15cfdc02ba8e2e92533b362e31ff1b2ba",
+  "read_set": [
+    "governance/data-classification.md",
+    "governance/decision-log/0005-six-signal-public-method-release.md",
+    "research/atlas-snapshot-read-only/release-manifest.json",
+    "research/atlas-snapshot-read-only/snapshot-card.json"
+  ],
+  "write_set": [
+    "Six-Signal-Method.html",
+    "research/atlas-snapshot-read-only/"
+  ],
+  "precondition_refs": [
+    "evt_governance_stp_v1_2_public_release_0003",
+    "evt_semantics_status_vocabulary_boundary_0001",
+    "governance/decision-log/0005-six-signal-public-method-release.md",
+    "research/atlas-snapshot-read-only/release-manifest.json"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "six-signal-public-release-decision-0005",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "ea26d94b835438a6c38e95a6177e89c1d6ef2217ce2a3c556ff7349d0923d290",
+      "source_locator": "governance/decision-log/0005-six-signal-public-method-release.md"
+    },
+    {
+      "ref_id": "atlas-snapshot-public-release-manifest-0001",
+      "kind": "release_manifest",
+      "classification": "PUBLIC",
+      "sha256": "e689511384e0b22a61547fa2760a4305987a2aef7a0720f3c8c94c09affb98fd",
+      "source_locator": "research/atlas-snapshot-read-only/release-manifest.json"
+    },
+    {
+      "ref_id": "atlas-snapshot-public-card-0001",
+      "kind": "reproduction_card",
+      "classification": "PUBLIC",
+      "sha256": "2bde94189785606cd631a126dc8076d1a576c38aef3dc9c520b5c2c330ceaa64",
+      "source_locator": "research/atlas-snapshot-read-only/snapshot-card.json"
+    },
+    {
+      "ref_id": "six-signal-public-method-page-0001",
+      "kind": "educational_surface",
+      "classification": "PUBLIC",
+      "sha256": "5f70cfeb8f76eff49e292e106b23edea7ac53076b16b97d0f8bb0b44957c2567",
+      "source_locator": "Six-Signal-Method.html"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0005-six-signal-public-method-release.md",
+  "idempotency_key": "governance:six-signal-public-method:2026-08-12:0004",
+  "decision": "ACCEPT_WITH_LIMITS",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "NOT_ATTEMPTED",
+    "observation": "UNAVAILABLE",
+    "acceptance": "ACCEPTED",
+    "outcome": "UNMEASURED"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "release_id": "six-signal-public-method-and-card-0001",
+    "release_path": "research/atlas-snapshot-read-only",
+    "release_manifest_sha256": "e689511384e0b22a61547fa2760a4305987a2aef7a0720f3c8c94c09affb98fd",
+    "package_file_count": 3,
+    "pinned_public_source_object_count": 7,
+    "classification": "PUBLIC",
+    "card_status": "PROPOSED_REPRODUCTION_CARD",
+    "publication_decision": "ACCEPT_WITH_LIMITS",
+    "execution_status": "NOT_ATTEMPTED",
+    "deployment_status": "NOT_ATTEMPTED",
+    "excluded_classes": [
+      "private repository and commit identifiers",
+      "private evaluation and lamp results",
+      "private receipts and development history",
+      "absolute local paths",
+      "prompts and transcripts",
+      "credentials",
+      "screenshots and private analytics"
+    ],
+    "claim_ceiling": "Authorizes a protected public pull request for the educational no-input method page and public byte-identity card. It does not establish current repository or deployment identity, live health, semantic truth, independent reproduction, privacy certification, calibration, or authority for any effect."
+  }
+}

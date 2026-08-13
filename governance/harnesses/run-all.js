@@ -10,6 +10,7 @@ const scripts = [
   'verify-chain.js',
   'replay.js',
   'privacy-boundary.js',
+  'verify-six-signal-surface.js',
   'verify-authority.js',
   'authority-falsification.js',
   'falsification.js',

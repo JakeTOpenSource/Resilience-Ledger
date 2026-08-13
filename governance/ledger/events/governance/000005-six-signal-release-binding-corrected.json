@@ -1,0 +1,97 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_governance_six_signal_release_binding_0005",
+  "stream_id": "governance",
+  "sequence": 5,
+  "event_type": "governance.public_reproduction_release_corrected",
+  "occurred_at": "2026-08-13T02:30:00Z",
+  "recorded_at": "2026-08-13T02:30:00Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "governance/decision-log/0006-six-signal-release-binding-correction.md"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C2",
+  "parents": [
+    "evt_governance_six_signal_public_method_0004",
+    "evt_semantics_status_vocabulary_boundary_0001"
+  ],
+  "prev_event_hash": "4d5652b768877cac6765f12aa83019a15cfdc02ba8e2e92533b362e31ff1b2ba",
+  "payload_hash": "22bb974fde7fd955c504fb65d209c3dbb8e5eb599237a92efef3a32bbbcfe72c",
+  "event_hash": "1e51fdd079c80add2030baf1002e6d33a9e1411ca1e84327508ed9765906dc06",
+  "read_set": [
+    "governance/decision-log/0005-six-signal-public-method-release.md",
+    "governance/decision-log/0006-six-signal-release-binding-correction.md",
+    "governance/ledger/checkpoints/checkpoint-000005.json",
+    "governance/ledger/events/governance/000004-six-signal-public-method-authorized.json",
+    "research/atlas-snapshot-read-only/release-manifest.json"
+  ],
+  "write_set": [
+    "research/atlas-snapshot-read-only/release-manifest.json"
+  ],
+  "precondition_refs": [
+    "evt_governance_six_signal_public_method_0004",
+    "governance/decision-log/0006-six-signal-release-binding-correction.md",
+    "governance/ledger/checkpoints/checkpoint-000005.json"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "six-signal-release-binding-correction-decision-0006",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "a211b95bbf7c9ea5b7b28a9ec147109b53cd94431fdab31f26455dcb2cc88bda",
+      "source_locator": "governance/decision-log/0006-six-signal-release-binding-correction.md"
+    },
+    {
+      "ref_id": "six-signal-corrected-public-release-manifest-0002",
+      "kind": "release_manifest",
+      "classification": "PUBLIC",
+      "sha256": "1a2cafb690bd5be048a8d2280e0c8ffb190ca913c33ed2fb7a311c6cbc27b8b0",
+      "source_locator": "research/atlas-snapshot-read-only/release-manifest.json"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0006-six-signal-release-binding-correction.md",
+  "idempotency_key": "governance:six-signal-release-binding-correction:2026-08-12:0005",
+  "decision": "CORRECT",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "NOT_ATTEMPTED",
+    "observation": "UNAVAILABLE",
+    "acceptance": "ACCEPTED",
+    "outcome": "UNMEASURED"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [
+    "evt_governance_six_signal_public_method_0004"
+  ],
+  "payload": {
+    "release_id": "six-signal-public-method-and-card-0002",
+    "corrects_release_id": "six-signal-public-method-and-card-0001",
+    "release_manifest_sha256": "1a2cafb690bd5be048a8d2280e0c8ffb190ca913c33ed2fb7a311c6cbc27b8b0",
+    "exact_release_file_count": 9,
+    "exact_pull_request_path_count": 16,
+    "pinned_public_source_object_count": 7,
+    "tamper_canary_count": 3,
+    "classification": "PUBLIC",
+    "publication_decision": "CORRECT",
+    "execution_status": "NOT_ATTEMPTED",
+    "deployment_status": "NOT_ATTEMPTED",
+    "preserved_records": [
+      "governance/decision-log/0005-six-signal-public-method-release.md",
+      "governance/ledger/events/governance/000004-six-signal-public-method-authorized.json",
+      "governance/ledger/checkpoints/checkpoint-000005.json"
+    ],
+    "claim_ceiling": "Corrects only the byte binding of the already-authorized public pull-request payload. It does not broaden publication scope or establish current repository or deployment identity, live health, semantic truth, independent reproduction, privacy certification, calibration, or authority for any effect."
+  }
+}

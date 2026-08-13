@@ -1,0 +1,75 @@
+{
+  "schema_version": "delta-atlas-public-snapshot-card.v1",
+  "card_id": "delta-atlas-public-pinned-snapshot-2026-08-12-0001",
+  "classification": "PUBLIC",
+  "status": "PROPOSED_REPRODUCTION_CARD",
+  "mode": [
+    "PINNED",
+    "READ_ONLY",
+    "NON_LIVE"
+  ],
+  "source": {
+    "repository": "https://github.com/JakeTOpenSource/Resilience-Ledger",
+    "commit": "9802e5460248c69d2b08049182a36994f9a660e0"
+  },
+  "hash_basis": {
+    "git_blob_sha1": "Git blob object ID for the path at the pinned commit",
+    "sha256": "SHA-256 of raw Git blob bytes",
+    "byte_length": "length of raw Git blob bytes"
+  },
+  "selected_files": [
+    {
+      "path": "governance/artifact-register.json",
+      "git_blob_sha1": "93b26e1dcd512685842511b5151f0d957eaddbe1",
+      "sha256": "a199024060b71dcf9e41757542687bd79bb02ff9c873f398d228326c15d3a0c0",
+      "byte_length": 2609
+    },
+    {
+      "path": "governance/authority-map.json",
+      "git_blob_sha1": "b0c7eb7fa5171b05e581f6fea0f3f4bb86899afd",
+      "sha256": "91f8744080aa063d1d7f20e193491dccf6b812d67a7d0630ffa138336c458077",
+      "byte_length": 4588
+    },
+    {
+      "path": "governance/deployment-receipts/2026-08-11-current-production.json",
+      "git_blob_sha1": "2d3166dd9c715c1f34090b41510ec00d806fa647",
+      "sha256": "4f54f4123928828918244489e62b4598a14d720dce466b3908b5b166dc6d6ede",
+      "byte_length": 3573
+    },
+    {
+      "path": "governance/ledger/checkpoints/checkpoint-000004.json",
+      "git_blob_sha1": "f56c72cbd987d13c5ccc96d868a8b584ac949c60",
+      "sha256": "0c041c1f0a916f76542f6db4f27a57bb6c9ba958aee972892d26b44c823b8138",
+      "byte_length": 3471
+    },
+    {
+      "path": "governance/ledger/events/research/000001-wp0-artifact-search.json",
+      "git_blob_sha1": "f26c5b597c9cbad7d13afede57c89bea7ace80f2",
+      "sha256": "f9997b300db7ac4181bcc2755c872c206fbab838c3012c26930cb469a4afee29",
+      "byte_length": 5340
+    },
+    {
+      "path": "governance/ledger/events/semantics/000001-status-vocabulary-boundary.json",
+      "git_blob_sha1": "aa8c63c6fd597208c4dd3f200b27d5aa5c4d510f",
+      "sha256": "407c36c1c412f1c3d6f8eecda2bcd1a9ddcf5069f2e5febb9d0dacee70415fe5",
+      "byte_length": 6629
+    },
+    {
+      "path": "governance/status-vocabulary-contract.json",
+      "git_blob_sha1": "a594d452143ed878e4ca43f9b5936cfb4a16102e",
+      "sha256": "dee0f9726a7eb726ba61936b0e814730815a08eb93f87efe51f7026134e8bac8",
+      "byte_length": 3991
+    }
+  ],
+  "result_claim": "NOT_RECORDED",
+  "claim_ceiling": [
+    "BYTE_IDENTITY_AT_PINNED_PUBLIC_COMMIT_ONLY",
+    "NOT_CURRENT_REPOSITORY_STATE",
+    "NOT_DEPLOYMENT_IDENTITY",
+    "NOT_LIVE_HEALTH",
+    "NOT_SEMANTIC_TRUTH",
+    "NOT_INDEPENDENT_REPRODUCTION",
+    "NOT_PRIVACY_CERTIFICATION",
+    "NOT_RELEASE_OR_EFFECT_AUTHORITY"
+  ]
+}
