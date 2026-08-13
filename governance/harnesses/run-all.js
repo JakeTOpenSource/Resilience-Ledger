@@ -14,6 +14,7 @@ const scripts = [
   'verify-atlas-data-materialization.js',
   'verify-atlas-runtime.js',
   'verify-home-surface.js',
+  'verify-public-explanation-surfaces.js',
   'verify-atlas-foundational-repair.js',
   'verify-six-signal-surface.js',
   'verify-authority.js',

@@ -10,6 +10,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const child = require('child_process');
 const H = require('../../corpus-harness.js');
 const L = require('../ledger/lib.js');
 
@@ -18,6 +19,7 @@ const V1_CONTRACT_PATH = path.join(L.repoRoot, 'governance', 'contracts', 'atlas
 const V1_CONTRACT_SHA256 = '45cb718d137cf38b15cd849475faabe10a10df155eff0db0bfb71dca62070821';
 const CORRECTION_EVENT_PATH = path.join(L.repoRoot, 'governance', 'ledger', 'events', 'governance',
   '000008-atlas-data-sync-portability-corrected.json');
+const CORRECTION_RECORDING_COMMIT = '2a9e5f30451b1e5f3ac0c3cf86f9c4e5f96fa425';
 const REQUIRED_PROJECTION_KEYS = ['expected', 'id', 'kind', 'path'];
 
 function readJson(relative) {
@@ -28,8 +30,24 @@ function canonicalTextHash(text) {
   return L.sha256CanonicalTextBytes(Buffer.from(text, 'utf8'));
 }
 
+function historicalBytes(relative) {
+  try {
+    return child.execFileSync('git', ['-c', `safe.directory=${L.repoRoot}`, 'show',
+      `${CORRECTION_RECORDING_COMMIT}:${relative}`], {
+      cwd: L.repoRoot, encoding: null, maxBuffer: 64 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'pipe']
+    });
+  } catch (error) {
+    throw new Error(`${relative}: cannot resolve portability-correction evidence at its recording commit`);
+  }
+}
+
 function verifyCorrectionBindings() {
   const event = JSON.parse(fs.readFileSync(CORRECTION_EVENT_PATH, 'utf8'));
+  if (L.sha256CanonicalTextBytes(historicalBytes(path.relative(L.repoRoot, CORRECTION_EVENT_PATH).replace(/\\/g, '/'))) !==
+      L.sha256CanonicalTextBytes(fs.readFileSync(CORRECTION_EVENT_PATH))) {
+    throw new Error('portability correction event differs from its recording commit');
+  }
   if (event.event_id !== 'evt_governance_atlas_data_sync_portability_correction_0008' ||
       event.decision !== 'CORRECT' || event.payload?.semantic_data_changed !== false ||
       event.payload?.data_migration !== 'DEFER') {
@@ -41,12 +59,11 @@ function verifyCorrectionBindings() {
         ref.source_locator.split(/[\\/]/).includes('..')) {
       throw new Error(`${ref.ref_id}: unsafe or missing correction evidence locator`);
     }
-    const absolute = path.resolve(L.repoRoot, ref.source_locator);
-    if (!absolute.startsWith(`${path.resolve(L.repoRoot)}${path.sep}`) || !fs.existsSync(absolute)) {
-      throw new Error(`${ref.ref_id}: correction evidence file is missing or outside the repository`);
+    if (!path.resolve(L.repoRoot, ref.source_locator).startsWith(`${path.resolve(L.repoRoot)}${path.sep}`)) {
+      throw new Error(`${ref.ref_id}: correction evidence file is outside the repository`);
     }
-    if (L.sha256CanonicalTextBytes(fs.readFileSync(absolute)) !== ref.sha256) {
-      throw new Error(`${ref.ref_id}: correction evidence digest mismatch`);
+    if (L.sha256CanonicalTextBytes(historicalBytes(ref.source_locator)) !== ref.sha256) {
+      throw new Error(`${ref.ref_id}: historical correction evidence digest mismatch`);
     }
   }
 }

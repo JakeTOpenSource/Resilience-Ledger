@@ -1,117 +1,131 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Delta Atlas - White Paper</title>
+<title>Delta Atlas - Project Guide and Evidence Boundaries</title>
 <style>
- :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--mid:#e3c258;--bad:#ff9d80;--gold:#e3c258;}
- *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--txt);line-height:1.6;
-   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;}
+ :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--gold:#e3c258;}
+ /* canonical typography: one baseline across every page (added 2026-07-11) */
+ *{box-sizing:border-box;} html{scroll-behavior:smooth;} body{margin:0;background:var(--bg);color:var(--txt);line-height:1.6;
+   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;}
+ textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5} button{font-family:inherit}
  header{padding:16px 22px;border-bottom:1px solid var(--line);}
- header h1{margin:0;font-size:19px;} header p{margin:5px 0 0;color:var(--dim);font-size:12.5px;max-width:860px;}
- .main{max-width:860px;margin:0 auto;padding:18px 20px 90px;}
- h2{font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);margin:26px 0 10px;border-bottom:1px solid var(--line);padding-bottom:5px;}
+ header h1{margin:0;font-size:21px;} header p{margin:5px 0 0;color:var(--dim);font-size:13px;max-width:860px;}
+ nav{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;} nav a{border:1px solid var(--line);border-radius:8px;padding:6px 10px;}
+ main{max-width:860px;margin:0 auto;padding:18px 20px 90px;}
+ h2{font-size:13px;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);margin:28px 0 10px;border-bottom:1px solid var(--line);padding-bottom:5px;}
+ h3{font-size:14px;margin:20px 0 6px;}
  .five{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:13px 16px;font-size:14.5px;}
  .leg{display:grid;grid-template-columns:1fr;gap:6px;}
  .row{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:8px 12px;display:flex;gap:10px;align-items:baseline;}
  .dot{flex:none;width:10px;height:10px;border-radius:50%;position:relative;top:1px;}
- .g-read{background:#4db2ff;} .g-plan{background:#3fe07f;} .g-trace{background:#ff7a4d;} .g-under{background:#b08cff;} .g-script{background:#3fd6e0;} .g-gov{background:#ffd23f;}
- .row b{flex:none;min-width:150px;font-size:13.5px;}
- .row span{color:var(--dim);font-size:13px;}
- table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:9px;overflow:hidden;font-size:13px;}
- th,td{padding:7px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
- th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);background:rgba(217,181,69,0.08);}
- tr:last-child td{border-bottom:none;}
- td b{font-size:13px;}
- .note{color:var(--dim);font-size:12px;background:rgba(143,199,154,0.10);border:1px solid #4a6b56;border-radius:9px;padding:11px 14px;margin-top:22px;}
- .seam{color:var(--gold);font-weight:600;}
- .vlog{margin-top:26px;font-size:12px;color:var(--dim);}
- .vlog table{font-size:12px;}
- a{color:var(--accent);text-decoration:none;} a:hover{text-decoration:underline;}
-
- /* canonical typography: one baseline across every page (added 2026-07-11) */
- body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;line-height:1.6;}
- textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
- button{font-family:inherit;}
- ::placeholder{color:var(--dim);opacity:1;}
+ .g-read{background:#4db2ff}.g-plan{background:#3fe07f}.g-trace{background:#ff7a4d}.g-under{background:#b08cff}.g-script{background:#3fd6e0}.g-gov{background:#ffd23f}
+ .row b{flex:none;min-width:155px;font-size:13.5px}.row span{color:var(--dim);font-size:13px}
+ table{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);font-size:13px;}
+ caption{text-align:left;color:var(--dim);padding:0 0 7px;font-size:12.5px;}
+ th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+ th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);background:rgba(217,181,69,.08)} tr:last-child td{border-bottom:none}
+ .note{color:var(--dim);font-size:12.5px;background:rgba(143,199,154,.10);border:1px solid var(--line);border-radius:9px;padding:11px 14px;margin-top:22px;}
+ .status{border-left-color:var(--win)} .seam{color:var(--gold);font-weight:600}.vlog{margin-top:28px;font-size:12px;color:var(--dim)}
+ a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline} a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+ .skip{position:absolute;left:12px;top:-60px;z-index:20;background:var(--accent);color:#1e2b17;padding:8px 12px;border-radius:6px;font-weight:700}.skip:focus{top:12px}
+ td,.row span,.note,li,code{overflow-wrap:anywhere}
+ @media(max-width:620px){.row{display:block}.row .dot{display:inline-block;margin-right:7px}.row b{min-width:0}.row span:last-child{display:block;margin-top:4px}th,td{padding:7px 8px}}
+ @media print{body{background:#fff;color:#111}header,main{max-width:none}.five,.row,table,.note{background:#fff;color:#111;border-color:#777}.row span,header p,caption,.note,.vlog,h2{color:#333}a{color:#111;text-decoration:underline}nav,.skip{display:none}}
 </style></head><body>
+<a class="skip" href="#guide">Skip to project guide</a>
 <header>
- <h1>Delta Atlas &mdash; White Paper</h1>
- <p>The living, plain-English ledger of what this project is, what each piece does, and how it keeps itself honest. This page is kept current on purpose: if you are a person, start here; if you are an AI model about to write or reason about this project, <b>load this page first and use these exact meanings</b> &mdash; every definition here matches the Resilience Ledger, and paraphrasing them from memory is how drift starts.</p>
+ <h1>Delta Atlas &mdash; Project Guide and Evidence Boundaries</h1>
+ <p>A dated, maintained public guide to what the project currently contains, what its tools can establish, and where evidence is still incomplete. This page is explanatory, not an authority receipt or a replacement for the linked source records.</p>
+ <nav aria-label="Guide navigation"><a href="index.html" target="_top">Back to Delta Atlas</a><a href="#tools">Tools</a><a href="#terms">Exact terms</a><a href="#evidence">Evidence status</a><a href="#sources">Sources</a></nav>
 </header>
-<div class="main">
-
- <div class="five" style="margin-top:16px">
-  <b>The whole thing in five sentences.</b> Delta Atlas is one machine wearing different clothes: every tool takes a <b>claim</b> (what a document, plan, or AI decision log says is true), holds it against a <b>witness</b> (something independently checkable), and records the difference in a ledger that only ever grows. Everything runs on your own device &mdash; no account, no network call, no AI model at runtime &mdash; so the answer is the same for everyone, every time, and nothing you paste ever leaves your machine. The tools don't understand meaning; they read structure, the way a spell-checker reads spelling, and a human always makes the final call &mdash; we check for <b>identity, not virtue</b>: whether a thing matches its own stated reference, never whether it is good. Underneath them is one idea, the Resilience Ledger (its next edition carries the name <b>The Witness Ledger</b>): systems stay trustworthy by bending without breaking, checking themselves against something outside themselves, and coming back to center. The project runs its own development through the same tools and rules it offers you &mdash; every change is logged, every mistake is mended in the open.
+<main id="guide" tabindex="-1">
+ <div class="five">
+  <b>The whole project in five sentences.</b> Delta Atlas is a collection of deterministic, browser-side tools and recorded data snapshots for examining stated structure in AI plans, traces, frameworks, and terminology. Each tool applies explicit rules to supplied text; it does not understand meaning, observe the outside world, or authorize action. With the same pinned engine, snapshot, and input, tested behavior is reproducible within the stated scope, but different public pages still contain different snapshots. User text is processed locally by these tools and is not sent to an AI model or application API; <a href="https://developers.cloudflare.com/speed/observatory/rum-beacon/" target="_blank" rel="noopener noreferrer">Cloudflare may separately receive ordinary request metadata and page-performance or visit measurements (opens in a new tab)</a>. A human remains responsible for interpreting every flag, checking primary sources, and deciding what happens next.
  </div>
 
- <h2>Legend &mdash; the tools you click</h2>
+ <h2 id="tools">Public tools and their bounded roles</h2>
  <div class="leg">
-  <div class="row"><span class="dot g-read"></span><b>Start here</b><span>the two-minute guide for someone brand new to AI words.</span></div>
-  <div class="row"><span class="dot g-read"></span><b>Ask (home search)</b><span>type a question, get a sourced plain-English answer. A deterministic search engine, not a chatbot &mdash; if a word isn't in the model, it says exactly which one is missing instead of guessing.</span></div>
-  <div class="row"><span class="dot g-read"></span><b>Explore</b><span>browse all 439 terms and how they connect &mdash; what defends against what, what needs what.</span></div>
-  <div class="row"><span class="dot g-plan"></span><b>Quick check</b><span>compares a one-line goal against its parts in about a minute: do the parts actually serve the goal?</span></div>
-  <div class="row"><span class="dot g-plan"></span><b>Gap Check</b><span>reads a plan or policy and flags what's missing: unhandled risks, ungoverned autonomy, vague words doing load-bearing work.</span></div>
-  <div class="row"><span class="dot g-plan"></span><b>Framework Audit</b><span>scores each part of a framework: does it act, can it be tested, does it survive having its buzzwords removed?</span></div>
-  <div class="row"><span class="dot g-trace"></span><b>Priority Tracer</b><span>reads an AI agent's decision log and flags the moment a goal quietly climbs over a rule it was supposed to obey. Also credits where the rule held. Its word lists are versioned, shown in the tool, and privately extendable (see the seed frame below).</span></div>
-  <div class="row"><span class="dot g-plan"></span><b>Continuity Audit</b><span>reads an operations manual for resilience: can the goal survive a key person out, a vendor failing, an emergency &mdash; plus risks with no stated control and single points of failure with no documented backup.</span></div>
-  <div class="row"><span class="dot g-read"></span><b>The Cadence Dial</b><span>the first explorable lesson: how often to check on anything. Physics measured three zones (freeze, harm, free drift) &mdash; interactive dial, locate-your-own-loops worksheet, primary sources cited.</span></div>
-  <div class="row"><span class="dot g-read"></span><b>The Basin</b><span>the second explorable lesson: resilience as two separate quantities, return time and basin width (Holling 1973), with a live kick-the-ball simulation, tipping points, and critical-slowing early warning. Sources cited, fidelity marked.</span></div>
-  <div class="row"><span class="dot g-under"></span><b>Primitives &middot; Field &middot; Ground Truth</b><span>the structures under the vocabulary, an instrument view, and a dashboard of how well-sourced each term is.</span></div>
+  <div class="row"><span class="dot g-read"></span><b>Start here</b><span>a two-minute orientation to common AI terms.</span></div>
+  <div class="row"><span class="dot g-read"></span><b>Ask (home search)</b><span>a deterministic lookup over a 435-term embedded snapshot. It can return recorded source labels, but those labels are not complete per-term source receipts.</span></div>
+  <div class="row"><span class="dot g-read"></span><b>Explore</b><span>browses and filters the same 435-term public snapshot. The candidate source inventory contains 439 records; the <a href="governance/contracts/atlas-data-sync-baseline.md">data-sync baseline</a> records the four missing IDs and status differences.</span></div>
+  <div class="row"><span class="dot g-plan"></span><b>Quick check</b><span>compares a short goal with its stated parts. It is a structural prompt, not a correctness or safety judgment.</span></div>
+  <div class="row"><span class="dot g-plan"></span><b>Gap Check</b><span>applies fixed phrase and structure rules to a plan or policy. The current embedded snapshot has 433 terms; a flag points to text for human review.</span></div>
+  <div class="row"><span class="dot g-plan"></span><b>Framework Audit</b><span>checks whether stated framework parts are actionable and testable. Its score is a heuristic over text, not enforcement or certification.</span></div>
+  <div class="row"><span class="dot g-trace"></span><b>Priority Tracer</b><span>flags recorded language associated with a goal outranking a stated rule, and marks language associated with the rule holding. Its labeled fixtures bound what has been tested.</span></div>
+  <div class="row"><span class="dot g-plan"></span><b>Continuity Audit</b><span>checks an operations document for named risks without stated controls and single points of failure without documented backup.</span></div>
+  <div class="row"><span class="dot g-read"></span><b>The Cadence Dial</b><span>an interactive analogy grounded in specific quantum Zeno and anti-Zeno experiments. Applying that shape to software or human monitoring is a design hypothesis, not a transferred physical law.</span></div>
+  <div class="row"><span class="dot g-read"></span><b>The Basin</b><span>an interactive dynamical-systems analogy separating return speed from disturbance tolerance. Early-warning signals are conditional indicators, not universal diagnoses.</span></div>
+  <div class="row"><span class="dot g-under"></span><b>Primitives &middot; Field &middot; Curation</b><span>a separate 160-record primitives library, an experimental visualization, and a curation view built from an older vocabulary snapshot.</span></div>
  </div>
 
- <h2>Legend &mdash; the ledger underneath (the exact meanings)</h2>
+ <h2 id="terms">Ledger terms: archival source and current usage</h2>
  <table>
-  <tr><th style="width:130px">Three functions</th><th>What each one does</th></tr>
-  <tr><td><b>Absorb</b></td><td>Takes a survivable hit and bends instead of breaking. It is a shock absorber for errors and costs &mdash; <i>not</i> "taking in information."</td></tr>
-  <tr><td><b>Check</b></td><td>Compares every claim against a reference that sits <i>outside</i> the system and is held still during the check &mdash; and is exactly as hard on claims it likes as on claims it doesn't.</td></tr>
-  <tr><td><b>Return</b></td><td>Comes back to baseline after a stop or a fix, keeping an append-only record so a real repair can always be told apart from damage.</td></tr>
+  <caption>The exact v0.5 function names. Aliases are preserved rather than silently substituted.</caption>
+  <thead><tr><th scope="col" style="width:180px">Function</th><th scope="col">Bounded meaning</th></tr></thead>
+  <tbody>
+   <tr><th scope="row">Absorb load <small>(alias: Buffer)</small></th><td>Takes survivable error and deforms without ending the system. It is not a claim that every load is survivable.</td></tr>
+   <tr><th scope="row">Check against a fixed reference <small>(alias: Floor)</small></th><td>Compares a claim with a reference it did not generate and cannot edit during the check. This does not make the reference correct or independent by itself.</td></tr>
+   <tr><th scope="row"><b>Reset to baseline</b> <small>(alias: Return)</small></th><td>Records a recovery and stops a changed state from silently becoming the baseline. This is the exact v0.5 name; “Return” is its stated alias.</td></tr>
+  </tbody>
  </table>
- <div style="height:10px"></div>
- <table>
-  <tr><th style="width:130px">Three drifts</th><th>What each one is</th></tr>
-  <tr><td><b>Content drift</b></td><td>A claim wanders away from the reference. The easy one &mdash; checking against the reference catches it.</td></tr>
-  <tr><td><b>Thermal drift</b></td><td>The <i>judge</i> wears down under sustained load &mdash; every individual claim can still pass while the ability to tell signal from noise erodes. The slowest-recovering judge in any loop is the human, so protection is calibrated to the human. Rest fixes this; more checking does not.</td></tr>
-  <tr><td><b>Ordering drift</b></td><td>The priority flips: the goal quietly outranks the rule while every single step still looks fine. The rule gets reinterpreted, rewritten, or cited after the fact instead of obeyed. This is the hardest drift to see and the one the Priority Tracer hunts.</td></tr>
- </table>
- <p style="color:var(--dim);font-size:12.5px;margin-top:8px">One more meaning that matters: the <b>sovereign zero</b> is the neutral center everything is measured from. It is <i>unowned and returned-to</i> &mdash; not incorruptible, not an untainted observer. Nothing here claims to be unfoolable; the claim is that fooling it can't happen <i>silently</i>.</p>
+ <p class="note">The archival <a href="Resilience%20Ledger%20v0%204.pdf" target="_blank" rel="noopener noreferrer">v0.4 PDF (opens in a new tab)</a> and <a href="Resilience%20Ledger%20v0%205.pdf" target="_blank" rel="noopener noreferrer">v0.5 PDF (opens in a new tab)</a> remain unchanged. v0.5 labels itself <b>rolling, unsealed, and candidate</b>; visual and text review confirms the names above. Both PDFs have known pagination defects where repeated table headers or continued rows crowd the page header; this guide does not hide or repair those archival bytes. No v0.6 or “Witness Ledger” artifact is present in this repository, so this page makes no claim that one exists or is scheduled.</p>
 
- <h2>Legend &mdash; the witness ladder (how independent is the check?)</h2>
+ <h2>Three drift labels used by the project</h2>
  <table>
-  <tr><th style="width:130px">Rung</th><th>What the witness is, and its honest floor</th></tr>
-  <tr><td><b>Rung 1 &mdash; self</b></td><td>One document held against its own internal structure (Gap Check, Framework Audit, Priority Tracer, Continuity Audit). Catches incoherence and gaps. Its floor, stated plainly: <i>a coherent lie passes Rung 1.</i></td></tr>
-  <tr><td><b>Rung 2 &mdash; cross-artifact</b></td><td>Two independent artifacts diffed against each other (a live tool manifest against its pinned fingerprint; a plan against a hash-chained close). A lie now has to keep two books consistent, and the books do not share a pen.</td></tr>
-  <tr><td><b>Rung 3 &mdash; physical</b></td><td>A witness in a different substrate entirely (the power a chip draws while it works). Experimental; run, documented, and closed honestly in this repository &mdash; distinguishable is not tamper-proof, and the write-ups say so.</td></tr>
+  <caption>Project vocabulary, not universal or independently validated state classes.</caption>
+  <thead><tr><th scope="col" style="width:180px">Label</th><th scope="col">How this project uses it</th></tr></thead>
+  <tbody>
+   <tr><th scope="row">Content drift</th><td>A recorded claim departs from its declared reference.</td></tr>
+   <tr><th scope="row">Thermal drift</th><td>The evaluator degrades under sustained load. The site currently offers no direct physiological or cognitive measurement of this condition.</td></tr>
+   <tr><th scope="row">Ordering drift</th><td>A stated purpose is treated as outranking a stated constraint. The Tracer checks text patterns associated with this condition; it does not observe hidden priorities.</td></tr>
+  </tbody>
  </table>
- <p style="color:var(--dim);font-size:12.5px;margin-top:8px">A rung may be cited as context for a higher rung, never as proof of it. And one design variable cuts across every rung: <b>checking rhythm</b>. Physics measured the tradeoff &mdash; constant watching freezes, rare watching drifts, and the rhythm in between can make things worse. That result, with sources, is the first explorable lesson: <a href="Delta-Atlas-Cadence.html">the Cadence Dial</a>.</p>
 
- <h2>Legend &mdash; the scripts (command line, zero installs beyond Node)</h2>
+ <h2 id="evidence">Evidence status and witness boundaries</h2>
+ <table>
+  <caption>What each evidence layer can and cannot establish.</caption>
+  <thead><tr><th scope="col" style="width:180px">Layer</th><th scope="col">Supported claim and ceiling</th></tr></thead>
+  <tbody>
+   <tr><th scope="row">Self / one artifact</th><td>Can expose internal gaps or contradictions under fixed rules. A coherent falsehood can pass.</td></tr>
+   <tr><th scope="row">Cross-artifact</th><td>Can compare independently identified bytes, manifests, or receipts. Independence must be established; two files do not become independent merely because both exist.</td></tr>
+   <tr><th scope="row">Different substrate</th><td>Can add an observation from a different measurement channel. The repository's power experiment is explicitly experimental and does not prove tamper resistance.</td></tr>
+  </tbody>
+ </table>
+ <div class="five status" style="margin-top:16px"><b>Current vocabulary boundary.</b> The candidate source file contains 439 records and labels all 439 “reviewed.” That label is not receipt-grade review evidence: reviewer identity, review date, exact locator, and digest are not consistently recorded per term. Ask, Explore, and Curation embed 435 records; Gap Check embeds 433. Until an owner accepts a materialization policy, this page reports both states and treats neither difference as silently resolved.</div>
+
+ <h2>Scripts and governance surfaces</h2>
  <div class="leg">
-  <div class="row"><span class="dot g-script"></span><b>tracer-corpus.js</b><span>proves the Tracer still earns its labels: a fixed test corpus where a failing case changes the detector, never the label.</span></div>
-  <div class="row"><span class="dot g-script"></span><b>tracer-bench.js</b><span>keeps the measured speed limits reproducible and fails loudly if the engine ever gets slow in the dangerous way again.</span></div>
-  <div class="row"><span class="dot g-script"></span><b>delta-atlas-cli.js</b><span>the checks for pipelines, or for an agent on its own output: <b>trace</b> a decision log or <b>gapcheck</b> a plan &mdash; findings, JSON, and an exit code. See llms.txt.</span></div>
-  <div class="row"><span class="dot g-gov"></span><b>mend-gate.js</b><span>the change register: every proposed change to this project, from any source, gets logged, gated, and sorted by a human with a written reason. Models may propose; only a person decides.</span></div>
-  <div class="row"><span class="dot g-gov"></span><b>mcp-manifest-pin.js</b><span>freezes an MCP server's tool descriptions in a fingerprint the day you approve them; if the server quietly changes the contract later, the change becomes visible and waits for your decision.</span></div>
-  <div class="row"><span class="dot g-script"></span><b>tracer-overlay.sample.js</b><span>the seed frame: copy it to a private file, add your own domain's words, and the tools harden locally without ever leaking your additions &mdash; the public floor stays public, your tripwires stay yours.</span></div>
+  <div class="row"><span class="dot g-script"></span><b>Corpus harnesses</b><span>replay labeled fixtures and reject known mutations. Passing proves only the specified cases for the checked bytes.</span></div>
+  <div class="row"><span class="dot g-script"></span><b>CLI tools</b><span>run selected checks in a pipeline and return findings, JSON, and exit codes. An exit code is an operational result, not a truth certificate.</span></div>
+  <div class="row"><span class="dot g-gov"></span><b>Append-only governance</b><span><code>governance/ledger/events</code> records decisions and evidence hashes; <code>governance/ledger/checkpoints</code> seals counted prefixes. Local hashing detects byte changes; without an external witness it does not prevent authorized history replacement.</span></div>
+  <div class="row"><span class="dot g-gov"></span><b>Historical register</b><span><code>proposals.json</code> and older calibration notes remain historical project artifacts. They are not the current acceptance authority.</span></div>
+  <div class="row"><span class="dot g-gov"></span><b>The seams</b><span class="seam">corrections are appended and left inspectable</span><span>&mdash; but publication, a hash, or a passing harness does not make a claim semantically true.</span></div>
  </div>
 
- <h2>Legend &mdash; how the project governs itself</h2>
- <div class="leg">
-  <div class="row"><span class="dot g-gov"></span><b>The register</b><span>proposals.json &mdash; every suggested change, its source, and its fate (folded or declined, reason attached).</span></div>
-  <div class="row"><span class="dot g-gov"></span><b>The logs</b><span>every detector change, every outside review, and every correction is dated and reasoned in the calibration log. Silence in the log means nothing moved.</span></div>
-  <div class="row"><span class="dot g-gov"></span><b>The seams</b><span class="seam">mistakes are mended in the open and left visible</span><span> &mdash; a repair you can inspect is worth more than a surface that claims it never broke.</span></div>
- </div>
-
- <div class="note"><b>Honest limit, always in force:</b> these tools read words and structure, not meaning. A flag is a pointer for a human to look at, never a verdict; a clean result is not a guarantee. Where lessons borrow from physics and mathematics, the mappings are <b>organizing analogies with their fidelity marked</b> &mdash; the same shape of tradeoff, not the same mathematics; a checked document is not a quantum system, and no page here will tell you otherwise. Deeper reading: <a href="README.md">README</a> &middot; <a href="State-Delta-Bridge.md">State-Delta-Bridge</a> (how changes are governed) &middot; <a href="Delta-Atlas-Tracer-Calibration.md">the calibration log</a> &middot; the Resilience Ledger paper (v0.5) in this folder; its next edition, <i>The Witness Ledger</i> (v0.6), is in preparation.</div>
+ <h2 id="sources">Primary sources behind the two analogies</h2>
+ <p>The <a href="Delta-Atlas-Cadence.html">Cadence Dial</a> and <a href="Delta-Atlas-Basin.html">Basin</a> pages apply these sources as explicitly bounded analogies. Primary-source DOI links below open in a new tab.</p>
+ <ul>
+  <li>Misra and Sudarshan, “The Zeno's Paradox in Quantum Theory” (1977), <a href="https://doi.org/10.1063/1.523304" target="_blank" rel="noopener noreferrer">DOI 10.1063/1.523304</a>.</li>
+  <li>Itano et al., “Quantum Zeno Effect” (1990), <a href="https://doi.org/10.1103/PhysRevA.41.2295" target="_blank" rel="noopener noreferrer">DOI 10.1103/PhysRevA.41.2295</a>.</li>
+  <li>Kofman and Kurizki, “Acceleration of quantum decay processes by frequent observations” (2000), <a href="https://doi.org/10.1038/35014537" target="_blank" rel="noopener noreferrer">DOI 10.1038/35014537</a>.</li>
+  <li>Fischer, Guti&eacute;rrez-Medina, and Raizen, “Observation of the Quantum Zeno and Anti-Zeno Effects in an Unstable System” (2001), <a href="https://doi.org/10.1103/PhysRevLett.87.040402" target="_blank" rel="noopener noreferrer">DOI 10.1103/PhysRevLett.87.040402</a>.</li>
+  <li>Holling, “Resilience and Stability of Ecological Systems” (1973), <a href="https://doi.org/10.1146/annurev.es.04.110173.000245" target="_blank" rel="noopener noreferrer">DOI 10.1146/annurev.es.04.110173.000245</a>.</li>
+  <li>Pimm, “The complexity and stability of ecosystems” (1984), <a href="https://doi.org/10.1038/307321a0" target="_blank" rel="noopener noreferrer">DOI 10.1038/307321a0</a>.</li>
+  <li>Scheffer et al., “Early-warning signals for critical transitions” (2009), <a href="https://doi.org/10.1038/nature08227" target="_blank" rel="noopener noreferrer">DOI 10.1038/nature08227</a>.</li>
+ </ul>
+ <div class="note"><b>Claim ceiling.</b> These sources establish results in their stated physical, experimental, ecological, or modeled domains. Delta Atlas uses them to motivate questions about observation, recovery, and disturbance. They do not prove that a particular monitoring schedule, “basin,” or warning signal transfers unchanged to AI systems, organizations, or people.</div>
 
  <div class="vlog">
-  <b>This page's own little ledger</b> (it practices what it preaches):
-  <div style="height:6px"></div>
+  <b>This page's dated change record</b>
   <table>
-   <tr><th style="width:90px">Date</th><th>Change</th><th>Reason</th></tr>
-   <tr><td>2026-07-02</td><td>v1 established: five-sentence summary, tool legend, exact ledger meanings, script legend, self-governance legend.</td><td>Requested by the author as the living plain-English front door &mdash; and as the reference to hand any AI model before it writes about this project, after a drafted white paper paraphrased the core definitions from memory and drifted on all six.</td></tr>
-   <tr><td>2026-07-10</td><td>v2: one-engine summary (claim / witness / difference), identity-not-virtue, witness-ladder legend with each rung's honest floor, Continuity Audit and Cadence Dial added to the legend, physics-fidelity limit, Witness Ledger v0.6 noted as in preparation. Full restyle: forest ground, bronze titles, five tool pages joining the theme, ivy brightened and regenerated, every color pair contrast-checked; same-day contrast bugs (author's note, stat lines, search button) caught by a deterministic eval and screenshots, fixed, seams visible.</td><td>Framework consolidated and the first explorable lesson shipped; the legend updates the same day it changes.</td></tr>
-   <tr><td>(next)</td><td>(update whenever a tool, meaning, or rule changes &mdash; a legend that lags its map is drift wearing a helpful face)</td><td></td></tr>
+   <caption>Presentation history. Load-bearing repository decisions are recorded separately under <code>governance/</code>.</caption>
+   <thead><tr><th scope="col" style="width:105px">Date</th><th scope="col">Change</th><th scope="col">Reason</th></tr></thead>
+   <tbody>
+    <tr><td>2026-07-02</td><td>Initial plain-English project legend.</td><td>Created an accessible front door to the tools and project terms.</td></tr>
+    <tr><td>2026-07-10</td><td>Added tool, witness-ladder, and analogy summaries.</td><td>Expanded the map as new public pages appeared.</td></tr>
+    <tr><td>2026-08-13</td><td>Corrected privacy, reproducibility, snapshot, terminology, citation, and governance claims; added accessible structure and an explicit source list.</td><td>Repository and production audits found that the July page overclaimed currentness, network isolation, uniform data, physical transfer, and evidence strength. The archival PDFs remain unchanged.</td></tr>
+   </tbody>
   </table>
  </div>
-</div>
+</main>
 </body></html>

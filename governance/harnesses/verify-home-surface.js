@@ -23,6 +23,8 @@ check(/<nav\b[^>]*aria-label="Primary navigation"/.test(html), 'primary navigati
 check(/<main\b[^>]*id="stage"/.test(html), 'semantic main exists');
 check(/<footer\b[^>]*class="floor"/.test(html), 'semantic footer exists');
 check((html.match(/<h1\b/g) || []).length === 1, 'exactly one h1 exists');
+check(/<a class="skip" href="#stage">/.test(html) && /<main\b[^>]*id="stage"[^>]*tabindex="-1"/.test(html),
+  'skip link targets the focusable main landmark');
 check(!/<(?:div|span|a)\b[^>]*\bonclick=/.test(html), 'no click-only div, span, or anchor controls remain');
 check(!/nothing leaves it|no tracking/i.test(html), 'unsupported absolute privacy copy is absent');
 check(/Cloudflare Web Analytics/.test(html) && /plan and search text are (?:analyzed|processed) locally/i.test(html) &&
@@ -34,6 +36,20 @@ check(/Object\.freeze\(\{/.test(html) && /NAV_ROUTES/.test(html) && /hasOwnPrope
 check(/Paste a plan into Gap Check/.test(html) && html.indexOf('Paste a plan into Gap Check') < html.indexOf('<details class="sample">'), 'primary plan action precedes optional sample');
 check(/sample\.addEventListener\('toggle'/.test(html) && /data-src="Delta-Atlas-GapCheck\.html#embed"/.test(html), 'sample frame is opt-in');
 check(/min-height:44px/.test(html) && /@media \(max-width:700px\)/.test(html), 'mobile touch and navigation rules exist');
+check(!/THE ONE NOBODY ELSE HAS/.test(html), 'unsupported competitive superlative is absent');
+check(/Candidate source inventory: 439 vocabulary records/.test(html) && /Ask and Explore snapshot: <b>435 records<\/b>/.test(html),
+  'source inventory and embedded projection counts remain distinct');
+check(/160 recorded cross-domain primitives/.test(html), 'primitive count matches the recorded library');
+check(!/\b150 cross-domain primitives\b/.test(html), 'stale primitive count is absent');
+check(/These are the six topic filters available inside Explore/.test(html) &&
+  (html.match(/<button class="area"/g) || []).length === 0 &&
+  /Open Explore and choose an area/.test(html),
+  'area summaries do not pretend to deep-link to an unselected filter');
+check(/design hypothesis, not a transferred law/.test(html) && /conditional indicators, not diagnoses/.test(html),
+  'analogy cards preserve their scientific claim ceilings');
+check(/role="status" aria-live="polite"/.test(html) && /frame\.focus\(\)/.test(html),
+  'embedded route loading is announced and focus is moved');
+check(!/every change logged with its reason|every seam on record/i.test(html), 'absolute history-coverage copy is absent');
 for (const tag of html.matchAll(/<a\b[^>]*target="_blank"[^>]*>/g)) {
   check(/rel="[^"]*noopener/.test(tag[0]), `new-tab link has noopener: ${tag[0].slice(0, 100)}`);
 }

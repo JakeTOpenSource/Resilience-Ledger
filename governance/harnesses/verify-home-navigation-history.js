@@ -4,16 +4,31 @@
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
+const child = require('child_process');
 const L = require('../ledger/lib.js');
 
 const root = path.resolve(__dirname, '..', '..');
+const recordingCommit = '12b31befb0731a2e511672d108d9696c80f0f32b';
+const eventPath = 'governance/ledger/events/governance/000009-atlas-navigation-history-corrected.json';
+const contractPath = 'governance/contracts/atlas-navigation-history.contract.v1.json';
+const observationPath = 'governance/observations/2026-08-13-atlas-navigation-local-browser.json';
 const source = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-const contract = JSON.parse(fs.readFileSync(
-  path.join(root, 'governance', 'contracts', 'atlas-navigation-history.contract.v1.json'), 'utf8'));
-const event = JSON.parse(fs.readFileSync(path.join(root, 'governance', 'ledger', 'events', 'governance',
-  '000009-atlas-navigation-history-corrected.json'), 'utf8'));
-const browserObservation = JSON.parse(fs.readFileSync(path.join(root, 'governance', 'observations',
-  '2026-08-13-atlas-navigation-local-browser.json'), 'utf8'));
+
+function historicalBytes(relative) {
+  try {
+    return child.execFileSync('git', ['-c', `safe.directory=${root}`, 'show', `${recordingCommit}:${relative}`], {
+      cwd: root, encoding: null, maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe']
+    });
+  } catch (error) {
+    throw new Error(`${relative}: cannot resolve navigation evidence at its recording commit`);
+  }
+}
+
+const historicalEventBytes = historicalBytes(eventPath);
+const currentEventBytes = fs.readFileSync(path.join(root, eventPath));
+const contract = JSON.parse(historicalBytes(contractPath).toString('utf8'));
+const event = JSON.parse(currentEventBytes.toString('utf8'));
+const browserObservation = JSON.parse(historicalBytes(observationPath).toString('utf8'));
 
 function extractFunction(text, name) {
   const start = text.indexOf(`function ${name}(`);
@@ -244,6 +259,9 @@ function failuresFor(text) {
 }
 
 const errors = [];
+if (L.sha256CanonicalTextBytes(currentEventBytes) !== L.sha256CanonicalTextBytes(historicalEventBytes)) {
+  errors.push('navigation correction event differs from its recording commit');
+}
 if (contract.schema_version !== 'atlas-navigation-history-contract.v1' ||
     contract.status !== 'PROPOSED_CORRECTION' ||
     !contract.claim_ceiling.includes('OWNER_MERGE_REQUIRED')) {
@@ -255,7 +273,7 @@ if (event.event_id !== 'evt_governance_atlas_navigation_history_corrected_0009' 
   errors.push('navigation correction event boundary is invalid');
 }
 if (browserObservation.schema_version !== 'atlas-browser-observation.v1' ||
-    browserObservation.subject.source_sha256 !== L.sha256CanonicalTextBytes(fs.readFileSync(path.join(root, 'index.html'))) ||
+    browserObservation.subject.source_sha256 !== L.sha256CanonicalTextBytes(historicalBytes('index.html')) ||
     browserObservation.subject.source_state !== 'UNCOMMITTED_WORKTREE_CANDIDATE' ||
     browserObservation.instrument.profile_or_session_data_collected !== false ||
     browserObservation.result !== 'MATCHED' || browserObservation.cases.some((item) => item.result !== 'MATCHED') ||
@@ -270,9 +288,12 @@ for (const reference of event.evidence_refs) {
     continue;
   }
   const absolute = path.resolve(root, locator);
-  if (!absolute.startsWith(`${root}${path.sep}`) || !fs.existsSync(absolute) ||
-      L.sha256CanonicalTextBytes(fs.readFileSync(absolute)) !== reference.sha256) {
-    errors.push(`${reference.ref_id}: evidence digest mismatch`);
+  if (!absolute.startsWith(`${root}${path.sep}`)) {
+    errors.push(`${reference.ref_id}: evidence locator is outside the repository`);
+    continue;
+  }
+  if (L.sha256CanonicalTextBytes(historicalBytes(locator)) !== reference.sha256) {
+    errors.push(`${reference.ref_id}: historical evidence digest mismatch`);
   }
 }
 errors.push(...failuresFor(source));
@@ -284,7 +305,7 @@ const canaries = [
   source.replace("replaceFrameLocation(frame,'about:blank')", "replaceFrameLocation(frame,'Delta-Atlas-GapCheck.html')"),
   source.replace("return Object.prototype.hasOwnProperty.call(NAV_ROUTES,h)?h:null;",
     'return h||null;'),
-  source.replace("}catch(e){return false;}}\n   frame.onload", "}catch(e){}}\n   frame.onload"),
+  source.replace("}catch(e){return false;}}\n    loading.textContent", "}catch(e){}}\n    loading.textContent"),
   source.replace("if(!replaceFrameLocation(fr,'Agentic-AI-Governance-Chat.html#embed')){fr.onload=null; return;}",
     "fr.src='Agentic-AI-Governance-Chat.html#embed';"),
   source.replace("if(!replaceFrameLocation(fr,'about:blank')) return false;",
@@ -294,7 +315,8 @@ const canaries = [
   source.replaceAll("if(writeHistory!==false){try{history.back();}catch(e){}} return false;", 'return false;')
 ];
 for (const [index, mutated] of canaries.entries()) {
-  if (failuresFor(mutated).length === 0) errors.push(`navigation mutation ${index + 1} was not rejected`);
+  if (mutated === source) errors.push(`navigation mutation ${index + 1} did not alter source`);
+  else if (failuresFor(mutated).length === 0) errors.push(`navigation mutation ${index + 1} was not rejected`);
 }
 
 if (errors.length) {

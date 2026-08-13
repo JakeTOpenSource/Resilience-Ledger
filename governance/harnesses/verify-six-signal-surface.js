@@ -142,7 +142,9 @@ function navigationFailures(source) {
     failures.push('visible Six Signals navigation item is missing');
   }
   if (!navigationTargets.every((target) => routes.has(target))) failures.push('a navigation target bypasses the fixed route allowlist');
-  if (!source.includes('<iframe id="frame" title="Delta Atlas content"></iframe>')) failures.push('iframe fallback title is missing');
+  if (!/<iframe\b(?=[^>]*\bid="frame")(?=[^>]*\btitle="Delta Atlas content")[^>]*><\/iframe>/.test(source)) {
+    failures.push('iframe fallback title is missing');
+  }
 
   const programStart = source.indexOf('var NAV_ROUTES=Object.freeze(');
   const programEnd = source.indexOf('function goHome(', programStart);
