@@ -36,10 +36,16 @@ mustFail('non-portable numeric payloads are rejected', (rows) => {
   rows[0].event.event_hash = L.eventHash(rows[0].event);
 }, 'canonical profile permits safe integers only');
 mustFail('causal cycles are rejected', (rows) => {
-  rows[0].event.parents = [rows[1].event.event_id];
-  rows[1].event.parents = [rows[0].event.event_id];
-  rows[0].event.event_hash = L.eventHash(rows[0].event);
-  rows[1].event.event_hash = L.eventHash(rows[1].event);
+  const heads = new Map();
+  for (const row of rows) {
+    const prior = heads.get(row.event.stream_id);
+    if (!prior || row.event.sequence > prior.event.sequence) heads.set(row.event.stream_id, row);
+  }
+  const [left, right] = [...heads.values()].slice(0, 2);
+  left.event.parents = [right.event.event_id];
+  right.event.parents = [left.event.event_id];
+  left.event.event_hash = L.eventHash(left.event);
+  right.event.event_hash = L.eventHash(right.event);
 }, 'causal cycle prevents deterministic replay');
 
 {

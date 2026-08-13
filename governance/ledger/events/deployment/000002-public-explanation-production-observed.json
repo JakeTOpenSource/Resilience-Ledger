@@ -1,0 +1,246 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_deployment_public_explanation_production_observed_0002",
+  "stream_id": "deployment",
+  "sequence": 2,
+  "event_type": "deployment.production_observed",
+  "occurred_at": "2026-08-13T19:21:46Z",
+  "recorded_at": "2026-08-13T19:21:46Z",
+  "actor": {
+    "id": "adapter:codex",
+    "role": "agent_observer",
+    "auth_basis": "evt_governance_public_explanation_surfaces_prepared_0010"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C1",
+  "parents": [
+    "evt_governance_public_explanation_surfaces_prepared_0010"
+  ],
+  "prev_event_hash": "20c74580f8c1cdc436490d340105ff0e4918c0901c675bc46ab608d0206fda88",
+  "payload_hash": "eabeec0aedc41891ade743e46bc3d813ba03ce904f6f59fcf4d0061ae950e4a0",
+  "event_hash": "636df04813901f3168bc62366e496a152e14096c27683a668c441b5488cc80a3",
+  "read_set": [
+    "github:JakeTOpenSource/Resilience-Ledger#10",
+    "git:commit:f08dd60e4c4070d2cd5a1d8f0b88d780fb67fff6",
+    "git:commit:637fdda30ed6a4775dc1b225dcff3d037f022d19",
+    "github-actions:run:31734497117",
+    "github-actions:run:31734551541",
+    "cloudflare-pages:deployment:b0c23e2d-32ae-46b8-9df8-787b416f44b2",
+    "https://resilience-eval-ai.pages.dev/",
+    "https://resilience-eval-ai.pages.dev/White-Paper"
+  ],
+  "write_set": [
+    "governance/harnesses/falsification.js",
+    "governance/ledger/events/deployment/"
+  ],
+  "precondition_refs": [
+    "evt_governance_public_explanation_surfaces_prepared_0010",
+    "github:JakeTOpenSource/Resilience-Ledger#10",
+    "git:commit:637fdda30ed6a4775dc1b225dcff3d037f022d19"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "public-explanation-preparation-event-0010",
+      "kind": "governance_event",
+      "classification": "PUBLIC",
+      "sha256": "0f04bbd6b8cf08180365363d040f95c6d0cd1053ab8bfa1f4996d527df3de865",
+      "source_locator": "governance/ledger/events/governance/000010-public-explanation-surfaces-prepared.json"
+    },
+    {
+      "ref_id": "public-explanation-source-head-f08dd60",
+      "kind": "git_commit",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/commit/f08dd60e4c4070d2cd5a1d8f0b88d780fb67fff6"
+    },
+    {
+      "ref_id": "public-explanation-merge-637fdda",
+      "kind": "git_commit",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/commit/637fdda30ed6a4775dc1b225dcff3d037f022d19"
+    },
+    {
+      "ref_id": "public-explanation-pr-10",
+      "kind": "pull_request",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/pull/10"
+    },
+    {
+      "ref_id": "public-explanation-pr-gates-31734497117",
+      "kind": "ci_run",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/actions/runs/31734497117"
+    },
+    {
+      "ref_id": "public-explanation-main-gates-31734551541",
+      "kind": "ci_run",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/actions/runs/31734551541"
+    },
+    {
+      "ref_id": "public-explanation-cloudflare-production-b0c23e2d",
+      "kind": "provider_deployment",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://b0c23e2d.resilience-eval-ai.pages.dev"
+    },
+    {
+      "ref_id": "public-home-source-637fdda",
+      "kind": "git_blob_bytes",
+      "classification": "PUBLIC",
+      "sha256": "fa44d8d834598bb5e459bee99bace552571b00f68cbd80d4e1b04322546bd49b",
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/blob/637fdda30ed6a4775dc1b225dcff3d037f022d19/index.html"
+    },
+    {
+      "ref_id": "public-guide-source-637fdda",
+      "kind": "git_blob_bytes",
+      "classification": "PUBLIC",
+      "sha256": "ae92595e4ab3515229c824a4ecaa5c2dc366088d11005e29328b1044019dfd55",
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/blob/637fdda30ed6a4775dc1b225dcff3d037f022d19/White-Paper.html"
+    },
+    {
+      "ref_id": "cross-stream-cycle-canary-maintenance-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "9707f6555a0fb3b585d0ffb67889112e6b4d50dd679886bf15b090ae32afe8f8",
+      "source_locator": "governance/harnesses/falsification.js"
+    },
+    {
+      "ref_id": "public-home-live-response-2026-08-13",
+      "kind": "http_response_bytes",
+      "classification": "PUBLIC",
+      "sha256": "5a2780014a43d86c9914d8b39c81d4bc1bdf135084290b2a4377dbd301dce89e",
+      "source_locator": "https://resilience-eval-ai.pages.dev/"
+    },
+    {
+      "ref_id": "public-guide-live-response-2026-08-13",
+      "kind": "http_response_bytes",
+      "classification": "PUBLIC",
+      "sha256": "ea9da8cd5e26e0496dfe026bfe69b4b5523102c61c10ce6ce6abf1687ea05615",
+      "source_locator": "https://resilience-eval-ai.pages.dev/White-Paper"
+    }
+  ],
+  "authority_ref": "evt_governance_public_explanation_surfaces_prepared_0010",
+  "idempotency_key": "deployment:public-explanation-surfaces:production:b0c23e2d-32ae-46b8-9df8-787b416f44b2:637fdda30ed6a4775dc1b225dcff3d037f022d19",
+  "decision": "OBSERVE",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "APPLIED",
+    "observation": "MATCHED",
+    "acceptance": "PRESERVED",
+    "outcome": "UNMEASURED"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "observation_id": "public-explanation-production-observation-0002",
+    "owner_action": {
+      "pull_request": 10,
+      "pull_request_state": "MERGED",
+      "source_head": "f08dd60e4c4070d2cd5a1d8f0b88d780fb67fff6",
+      "base_before_merge": "3e809fc1596491cb252723d3ba694e7b73047f71",
+      "merge_commit": "637fdda30ed6a4775dc1b225dcff3d037f022d19",
+      "merge_commit_signature": "GITHUB_VERIFIED_VALID",
+      "merge_parents_match_base_and_head": true
+    },
+    "verification": {
+      "pull_request_gates_run": 31734497117,
+      "pull_request_gates_status": "PASS",
+      "main_push_gates_run": 31734551541,
+      "main_push_gates_status": "PASS"
+    },
+    "deployment": {
+      "provider": "Cloudflare Pages",
+      "project": "resilience-eval-ai",
+      "deployment_id": "b0c23e2d-32ae-46b8-9df8-787b416f44b2",
+      "deployment_url": "https://b0c23e2d.resilience-eval-ai.pages.dev",
+      "environment": "production",
+      "trigger": "github:push",
+      "reported_branch": "main",
+      "reported_commit": "637fdda30ed6a4775dc1b225dcff3d037f022d19",
+      "reported_commit_dirty": false,
+      "provider_stage": "deploy",
+      "provider_status": "success",
+      "created_at": "2026-08-13T19:11:05.199189Z",
+      "completed_at": "2026-08-13T19:11:23.560189Z",
+      "source_commit_relationship": "EXACT"
+    },
+    "http_observations": [
+      {
+        "route": "/",
+        "canonical_url": "https://resilience-eval-ai.pages.dev/",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "cache_control": "public, max-age=0, must-revalidate",
+        "referrer_policy": "strict-origin-when-cross-origin",
+        "x_frame_options": "SAMEORIGIN",
+        "content_security_policy": "NOT_PRESENT",
+        "source_bytes": 94440,
+        "source_sha256": "fa44d8d834598bb5e459bee99bace552571b00f68cbd80d4e1b04322546bd49b",
+        "live_bytes": 94654,
+        "live_sha256": "5a2780014a43d86c9914d8b39c81d4bc1bdf135084290b2a4377dbd301dce89e",
+        "raw_byte_identity": "MISMATCHED",
+        "declared_transform_relationship": "MATCHED_SINGLE_CLOUDFLARE_PAGES_ANALYTICS_INSERTION"
+      },
+      {
+        "route": "/White-Paper",
+        "canonical_url": "https://resilience-eval-ai.pages.dev/White-Paper",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "cache_control": "public, max-age=0, must-revalidate",
+        "referrer_policy": "strict-origin-when-cross-origin",
+        "x_frame_options": "SAMEORIGIN",
+        "content_security_policy": "NOT_PRESENT",
+        "source_bytes": 16581,
+        "source_sha256": "ae92595e4ab3515229c824a4ecaa5c2dc366088d11005e29328b1044019dfd55",
+        "live_bytes": 16795,
+        "live_sha256": "ea9da8cd5e26e0496dfe026bfe69b4b5523102c61c10ce6ce6abf1687ea05615",
+        "raw_byte_identity": "MISMATCHED",
+        "declared_transform_relationship": "MATCHED_SINGLE_CLOUDFLARE_PAGES_ANALYTICS_INSERTION"
+      }
+    ],
+    "response_transform": {
+      "inserted_bytes": 214,
+      "inserted_region_sha256": "c16454e41e87700ac6465d875af6aa2e06c992b887458162cf6ce2de32200aed",
+      "insertion_description": "One Cloudflare Pages Analytics script element inserted immediately before the final closing body and html bytes.",
+      "home_common_prefix_bytes": 94426,
+      "guide_common_prefix_bytes": 16567,
+      "common_suffix_bytes": 14,
+      "source_bytes_removed": 0
+    },
+    "browser_observation": {
+      "surface": "Chrome with the ChatGPT browser extension",
+      "live_home_and_guide_semantics": "MATCHED_DECLARED_CONTENT",
+      "navigation_sequence": "HOME_TO_GAP_TO_TRACER_TO_BACK_GAP_TO_BACK_HOME",
+      "navigation_result": "PASS",
+      "console_errors_observed": 0
+    },
+    "historical_relation": {
+      "prior_observation_event": "evt_deployment_wp0_production_observation_0001",
+      "prior_deployment_source_relationship": "UNKNOWN",
+      "current_deployment_source_relationship": "EXACT",
+      "historical_receipt_modified": false
+    },
+    "harness_maintenance": {
+      "path": "governance/harnesses/falsification.js",
+      "reason": "The causal-cycle canary now selects the head of two distinct streams so adding a second event to one stream cannot mask the intended cycle with an unrelated previous-hash failure.",
+      "semantic_scope": "TEST_SELECTION_ONLY"
+    },
+    "receipt_loop_policy": "This is an exception-triggered reconciliation of a prior source-identity gap. It does not require a receipt after every pull request or after this receipt's own publication.",
+    "claim_ceiling": "This event establishes only that the named owner merge, CI runs, Cloudflare production deployment metadata, two HTTP response byte observations, the declared single-insertion response transform, and one bounded Chrome navigation replay were observed at the recorded time. It does not establish every deployed asset, global edge convergence, installed-PWA cache state, accessibility, privacy, security, offline completeness, semantic truth, external validation, durability, user outcome, live health, or any future production state."
+  }
+}
