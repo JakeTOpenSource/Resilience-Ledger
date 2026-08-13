@@ -1,0 +1,35 @@
+{
+  "type": "delta-atlas-continuity-overlay",
+  "version": 1,
+  "terms": [
+    {
+      "id": "example-vendor-risk",
+      "name": "Example vendor access risk",
+      "purpose": "risk",
+      "cluster": "Access & Vendor Control",
+      "acct": "human",
+      "aliases": ["example contractor access"]
+    },
+    {
+      "id": "example-vendor-escort",
+      "name": "Example vendor escort control",
+      "purpose": "control",
+      "cluster": "Access & Vendor Control",
+      "acct": "human",
+      "aliases": ["example escorted contractor"]
+    }
+  ],
+  "relations": [
+    ["example-vendor-escort", "example-vendor-risk", "mitigates"]
+  ],
+  "redFlags": [
+    {
+      "t": "Example vendor named without an escort requirement",
+      "d": "Replace this generic example with a private, operation-specific description.",
+      "phrases": ["example contractor access"]
+    }
+  ],
+  "bridge": {
+    "example-vendor-escort": ["example accompanied contractor"]
+  }
+}

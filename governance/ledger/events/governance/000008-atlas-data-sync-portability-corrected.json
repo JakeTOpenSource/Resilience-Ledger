@@ -1,0 +1,120 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_governance_atlas_data_sync_portability_correction_0008",
+  "stream_id": "governance",
+  "sequence": 8,
+  "event_type": "governance.atlas_data_sync_portability_corrected",
+  "occurred_at": "2026-08-13T16:01:01Z",
+  "recorded_at": "2026-08-13T16:01:01Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "governance/decision-log/0009-atlas-data-sync-portability-correction.md"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C1",
+  "parents": [
+    "evt_governance_atlas_foundational_repair_0007"
+  ],
+  "prev_event_hash": "55d9f68e9a5718e14bc2ef13db622207681b9b4fcfc66c95a6c7734a1a252433",
+  "payload_hash": "9bf36d1c0f24bd534af1acb1a9ece93818d7682420f480f02777ddf58f7ff21c",
+  "event_hash": "ba3487d1acbc46fef01b71ef0a5012841f6b9e347e83bcc8dc49af92c28e0f50",
+  "read_set": [
+    "governance/contracts/atlas-data-sync.contract.v1.json",
+    "governance/harnesses/verify-atlas-data-sync.js",
+    "https://github.com/JakeTOpenSource/Resilience-Ledger/actions/runs/31718167911"
+  ],
+  "write_set": [
+    "governance/decision-log/0009-atlas-data-sync-portability-correction.md",
+    "governance/contracts/atlas-data-sync.contract.v2.json",
+    "governance/harnesses/verify-atlas-data-sync-v2.js",
+    "governance/harnesses/run-all.js"
+  ],
+  "precondition_refs": [
+    "evt_governance_atlas_foundational_repair_0007",
+    "governance/contracts/atlas-data-sync.contract.v1.json"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "atlas-data-sync-portability-decision-0009",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "0d8914484d3e095b6a6abddc7dbc0c704daef75b25e9b906b1ef0dd0a7b7a7d2",
+      "source_locator": "governance/decision-log/0009-atlas-data-sync-portability-correction.md"
+    },
+    {
+      "ref_id": "atlas-data-sync-contract-v1-preserved",
+      "kind": "superseded_contract",
+      "classification": "PUBLIC",
+      "sha256": "45cb718d137cf38b15cd849475faabe10a10df155eff0db0bfb71dca62070821",
+      "source_locator": "governance/contracts/atlas-data-sync.contract.v1.json"
+    },
+    {
+      "ref_id": "atlas-data-sync-contract-v2-portable",
+      "kind": "data_contract",
+      "classification": "PUBLIC",
+      "sha256": "7366c7042ec2e40a501fe091f9367eb5e8e8449763b69afadf29762864d58263",
+      "source_locator": "governance/contracts/atlas-data-sync.contract.v2.json"
+    },
+    {
+      "ref_id": "atlas-data-sync-harness-v2-portable",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "3fbc70114a68af6aeccfbeaa6fbd0e55f87c58355ea98eda4e59775d1aae0586",
+      "source_locator": "governance/harnesses/verify-atlas-data-sync-v2.js"
+    },
+    {
+      "ref_id": "atlas-governance-suite-v2-binding",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "be50d8023f1d4eee23bb54bd0f792d9f92423f9ee0cfed5f7f2cda12dbc89f4d",
+      "source_locator": "governance/harnesses/run-all.js"
+    },
+    {
+      "ref_id": "github-actions-portability-failure-31718167911",
+      "kind": "external_observation",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://github.com/JakeTOpenSource/Resilience-Ledger/actions/runs/31718167911"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0009-atlas-data-sync-portability-correction.md",
+  "idempotency_key": "governance:atlas-data-sync-portability-correction:2026-08-13:0008",
+  "decision": "CORRECT",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "NOT_ATTEMPTED",
+    "observation": "UNAVAILABLE",
+    "acceptance": "ACCEPTED",
+    "outcome": "UNMEASURED"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [
+    "evt_governance_atlas_foundational_repair_0007"
+  ],
+  "payload": {
+    "correction_id": "atlas-data-sync-portability-v2",
+    "failed_run_id": 31718167911,
+    "v1_contract_sha256": "45cb718d137cf38b15cd849475faabe10a10df155eff0db0bfb71dca62070821",
+    "canonical_text_sha256": "9f8f02fc97d41f505f48ef54f29332ba56bb2452d8fec30589ebf32aebfc290c",
+    "windows_native_text_byte_length": 39286,
+    "linux_native_text_byte_length": 38971,
+    "v2_canonical_text_byte_length": 38971,
+    "normalization": "CRLF_TO_LF_UTF8",
+    "semantic_data_changed": false,
+    "data_migration": "DEFER",
+    "production_deployment": "NOT_ATTEMPTED",
+    "remote_correction_observation": "NOT_YET_OBSERVED",
+    "claim_ceiling": "Corrects only the cross-platform byte-length basis of the public data-sync baseline. It does not change corpus semantics, select a source of truth, prove review, authorize merge or deployment, or establish accessibility, privacy, performance, calibration, or live health."
+  }
+}

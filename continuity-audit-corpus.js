@@ -13,8 +13,8 @@ function loadTools() {
   const html = fs.readFileSync(path.join(__dirname, "Delta-Atlas-ContinuityAudit.html"), "utf8");
   const scripts = [...html.matchAll(/<script(?: src="([^"]+)")?>([\s\S]*?)<\/script>/g)];
   const inline = scripts.find(m => !m[1] && /BASE_KB/.test(m[2]))[2];
-  const cut = inline.indexOf("fetch('continuity-overlay.local.js')"); // definitions only; skip the overlay fetch/eval
-  if (cut < 0) throw new Error("continuity-audit-corpus: overlay-fetch marker moved; update the loader (never slice(0,-1), which would keep the runtime eval path)");
+  const cut = inline.indexOf('// RUNTIME_BINDING_START'); // definitions only; skip browser file-picker binding
+  if (cut < 0) throw new Error("continuity-audit-corpus: runtime binding marker moved; update the loader and keep browser effects outside the corpus scope");
   const pure = inline.slice(0, cut);
   const LexiconEngine = require("./lexicon-engine.js");
   const CoherenceScoreEngine = require("./coherence-score-engine.js");

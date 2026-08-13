@@ -1,0 +1,223 @@
+{
+  "schema_version": "2.0.0",
+  "contract_id": "delta-atlas-public-data-sync-v2",
+  "classification": "PUBLIC",
+  "decision": "DEFER",
+  "purpose": "Read-only, deterministic inventory of the public Atlas vocabulary source and selected public projections. This contract detects drift; it does not accept any definition, source, review label, relation, score, or generated projection as semantic truth.",
+  "authority_boundary": {
+    "candidate_source_of_truth": {
+      "path": "terms.enriched.json",
+      "declared_role": "CANDIDATE_SOURCE_OF_TRUTH",
+      "basis": "Repository documentation calls this file the vocabulary source of truth, but its review and provenance semantics are not accepted by this contract.",
+      "accepted_as_semantic_truth": false
+    },
+    "projection_rule": "A matching digest proves only byte-level or canonical-JSON agreement with this recorded baseline. A mismatch is a return to sort, not a proof that either side is correct.",
+    "status_rule": "Term status, relation status, source support, detector output, and STP status axes are distinct vocabularies. No PASS-like, reviewed-like, or candidate-like value is translated across them here.",
+    "out_of_scope": [
+      "term-definition correctness",
+      "source validity or availability",
+      "human-review identity or authority",
+      "STP accepted state",
+      "live-site deployment identity",
+      "private overlays, local browser storage, or private research"
+    ]
+  },
+  "candidate_source": {
+    "path": "terms.enriched.json",
+    "expected": {
+      "canonical_json_sha256": "2dabd09aacb6896dda5a535350fe258b80aee781a676eda8b0699d2475a5de35",
+      "canonical_text_sha256": "0a57277ffbdcfa00771ae05777f0c7b8782edeaee10b90ed5242430ecd4e2413",
+      "terms": {
+        "count": 439,
+        "ordered_ids_sha256": "d5cd6fc4346d9569a83e3bc65d4f5a51148f9ee0bfc2befb305682b08f436cf5",
+        "status_counts": {
+          "reviewed": 439
+        }
+      },
+      "sources_count": 193,
+      "relations_count": 360
+    }
+  },
+  "projections": [
+    {
+      "id": "ask-inline-data",
+      "path": "Agentic-AI-Governance-Chat.html",
+      "kind": "INLINE_CONST_DATA",
+      "marker": "const DATA=",
+      "term_key": "terms",
+      "source_key": "sources",
+      "relation_key": "relations",
+      "expected": {
+        "canonical_json_sha256": "b5a5b0af4ba9925f40544a6971415ad43bcc4bd1bbd302486cf5d1951259d811",
+        "terms": {
+          "count": 435,
+          "ordered_ids_sha256": "3596a416dbdd3b0d36604f25d016cf3955523a0a245d37affc7eea38cdece871",
+          "status_counts": {
+            "candidate": 258,
+            "reviewed": 177
+          }
+        },
+        "sources_count": 51,
+        "relations_count": 360,
+        "comparison_to_candidate_source": {
+          "shared_term_count": 435,
+          "identical_term_record_count": 0,
+          "different_term_record_count": 435,
+          "candidate_ids_missing_from_projection_count": 4,
+          "candidate_ids_missing_from_projection_sha256": "c1987e03c6b0a13404b4fc2c9b2a933ce2ee5971e9a0c4e831528a3e51babe3e",
+          "projection_ids_missing_from_candidate_count": 0,
+          "projection_ids_missing_from_candidate_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "common_status_mismatch_count": 258,
+          "common_status_mismatch_ids_sha256": "53a7f34c5bd2b41dd6f39a2a5fa127445c94b42835e5b47adff1d5db7ecd6d4c"
+        }
+      }
+    },
+    {
+      "id": "ground-truth-inline-data",
+      "path": "Agentic-AI-Governance-GroundTruth.html",
+      "kind": "INLINE_CONST_DATA",
+      "marker": "const DATA=",
+      "term_key": "terms",
+      "source_key": "sources",
+      "relation_key": "relations",
+      "expected": {
+        "canonical_json_sha256": "b5a5b0af4ba9925f40544a6971415ad43bcc4bd1bbd302486cf5d1951259d811",
+        "terms": {
+          "count": 435,
+          "ordered_ids_sha256": "3596a416dbdd3b0d36604f25d016cf3955523a0a245d37affc7eea38cdece871",
+          "status_counts": {
+            "candidate": 258,
+            "reviewed": 177
+          }
+        },
+        "sources_count": 51,
+        "relations_count": 360,
+        "comparison_to_candidate_source": {
+          "shared_term_count": 435,
+          "identical_term_record_count": 0,
+          "different_term_record_count": 435,
+          "candidate_ids_missing_from_projection_count": 4,
+          "candidate_ids_missing_from_projection_sha256": "c1987e03c6b0a13404b4fc2c9b2a933ce2ee5971e9a0c4e831528a3e51babe3e",
+          "projection_ids_missing_from_candidate_count": 0,
+          "projection_ids_missing_from_candidate_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "common_status_mismatch_count": 258,
+          "common_status_mismatch_ids_sha256": "53a7f34c5bd2b41dd6f39a2a5fa127445c94b42835e5b47adff1d5db7ecd6d4c"
+        }
+      }
+    },
+    {
+      "id": "explore-inline-data",
+      "path": "Agentic-AI-Governance-Query.html",
+      "kind": "INLINE_CONST_DATA",
+      "marker": "const DATA=",
+      "term_key": "terms",
+      "source_key": null,
+      "relation_key": "relations",
+      "expected": {
+        "canonical_json_sha256": "abafe22798ca2c29bf0f1aa07cc32279949f44e63e869d515704086f19367ece",
+        "terms": {
+          "count": 435,
+          "ordered_ids_sha256": "3596a416dbdd3b0d36604f25d016cf3955523a0a245d37affc7eea38cdece871",
+          "status_counts": {
+            "candidate": 258,
+            "reviewed": 177
+          }
+        },
+        "sources_count": null,
+        "relations_count": 360,
+        "comparison_to_candidate_source": {
+          "shared_term_count": 435,
+          "identical_term_record_count": 125,
+          "different_term_record_count": 310,
+          "candidate_ids_missing_from_projection_count": 4,
+          "candidate_ids_missing_from_projection_sha256": "c1987e03c6b0a13404b4fc2c9b2a933ce2ee5971e9a0c4e831528a3e51babe3e",
+          "projection_ids_missing_from_candidate_count": 0,
+          "projection_ids_missing_from_candidate_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "common_status_mismatch_count": 258,
+          "common_status_mismatch_ids_sha256": "53a7f34c5bd2b41dd6f39a2a5fa127445c94b42835e5b47adff1d5db7ecd6d4c"
+        }
+      }
+    },
+    {
+      "id": "gap-check-inline-data",
+      "path": "Delta-Atlas-GapCheck.html",
+      "kind": "INLINE_CONST_DATA",
+      "marker": "const DATA=",
+      "term_key": "terms",
+      "source_key": null,
+      "relation_key": "rels",
+      "expected": {
+        "canonical_json_sha256": "2e9011cab9aa714e5619e4d739cc8801b5574ec3c71ecd59d0be4d369bf49b57",
+        "terms": {
+          "count": 433,
+          "ordered_ids_sha256": "4f5cb164fe952abb423f4e9aa03a8608a83e41d06b570ae87680f73ad047a11e",
+          "status_counts": {
+            "candidate": 256,
+            "reviewed": 177
+          }
+        },
+        "sources_count": null,
+        "relations_count": 353,
+        "comparison_to_candidate_source": {
+          "shared_term_count": 433,
+          "identical_term_record_count": 0,
+          "different_term_record_count": 433,
+          "candidate_ids_missing_from_projection_count": 6,
+          "candidate_ids_missing_from_projection_sha256": "0d0998d77c2ccd23165479fc7dd0fcb1aa51ab4d0b53c250863b5813896c66ce",
+          "projection_ids_missing_from_candidate_count": 0,
+          "projection_ids_missing_from_candidate_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "common_status_mismatch_count": 256,
+          "common_status_mismatch_ids_sha256": "a421e2a4e77da54e1a22ff2a6c4bd23cf0d4974550c93fba98187faf33f789b0"
+        }
+      }
+    },
+    {
+      "id": "canon-json-projection",
+      "path": "delta-atlas-canon.json",
+      "kind": "JSON_DOCUMENT",
+      "term_key": "terms",
+      "source_key": null,
+      "relation_key": null,
+      "expected": {
+        "canonical_json_sha256": "84b78510c4ae51ac9dbd201f05eb0ad760e548e6bac07b959b510529d3b3f5c2",
+        "terms": {
+          "count": 214,
+          "ordered_ids_sha256": "ddf624ac4b81a03378f17e41b9699832c1155a4e3ea4898ee3f86b43e45c3783",
+          "status_counts": {
+            "candidate": 26,
+            "reviewed": 188
+          }
+        },
+        "sources_count": null,
+        "relations_count": null,
+        "comparison_to_candidate_source": {
+          "shared_term_count": 204,
+          "identical_term_record_count": 0,
+          "different_term_record_count": 204,
+          "candidate_ids_missing_from_projection_count": 235,
+          "candidate_ids_missing_from_projection_sha256": "cb67f092652db36e30476e6553608caccd16bb773d70b563785dcc4fda4e4f9b",
+          "projection_ids_missing_from_candidate_count": 10,
+          "projection_ids_missing_from_candidate_sha256": "5d5714b0a6cf505ff77a87ada008f0d7c810a1d6a890269ea3804e110bef1237",
+          "common_status_mismatch_count": 26,
+          "common_status_mismatch_ids_sha256": "c64b597cfc9960708724fd79b94b94d88c8ef016c66f72ae606a3c5133c699b8"
+        }
+      }
+    },
+    {
+      "id": "canon-markdown-presentation",
+      "path": "Delta-Atlas-Canon.md",
+      "kind": "TEXT_DOCUMENT",
+      "expected": {
+        "canonical_text_sha256": "9f8f02fc97d41f505f48ef54f29332ba56bb2452d8fec30589ebf32aebfc290c",
+        "canonical_text_byte_length": 38971
+      }
+    }
+  ],
+  "change_rule": "Any changed baseline field or newly covered projection requires an explicit contract update with a written review decision elsewhere. This file must not be used to silently normalize a semantic disagreement.",
+  "supersedes_contract": {
+    "path": "governance/contracts/atlas-data-sync.contract.v1.json",
+    "sha256": "45cb718d137cf38b15cd849475faabe10a10df155eff0db0bfb71dca62070821",
+    "reason": "The v1 text-document byte_length counted platform-native CRLF bytes on Windows. V2 pins the length of the same canonical LF-normalized UTF-8 bytes used by canonical_text_sha256."
+  },
+  "portability_rule": "For TEXT_DOCUMENT projections, normalize CRLF to LF before both SHA-256 and byte-length calculation. The byte count is named canonical_text_byte_length and is platform-independent."
+}

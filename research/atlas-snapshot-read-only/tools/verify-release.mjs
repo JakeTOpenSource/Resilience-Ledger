@@ -1,16 +1,17 @@
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
-import { dirname, extname, join, resolve } from "node:path";
+import { dirname, extname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = resolve(packageRoot, "..", "..");
 const packagePrefix = "research/atlas-snapshot-read-only/";
 const historyRelative = `${packagePrefix}release-history-pr6.v1.json`;
-const historyRecord = JSON.parse(readFileSync(join(repositoryRoot, historyRelative), "utf8"));
 const manifestRelative = `${packagePrefix}release-manifest.json`;
 const verifierRelative = `${packagePrefix}tools/verify-release.mjs`;
+const lifecycleBaseCommit = "6ce4bb033fb7bbb6289faae7dc6f8e67bb1998b1";
+const lifecycleHeadCommit = "d1a037b56b18a9b5669f4a83c915a97cf7e6eb15";
+const lifecycleMergeCommit = "ee9a04b61950601f761912c8c9dd86761a77abf6";
 const lifecycleDecisionRelative = "governance/decision-log/0007-git-pages-source-hardening.md";
 const governanceValidatorRelative = "governance/governance-validate.js";
 const lifecycleEventRelative = "governance/ledger/events/governance/000006-git-pages-source-hardening-authorized.json";
@@ -139,9 +140,7 @@ function matchesRecord(record, bytes) {
   return Boolean(record) && record.sha256 === sha256(bytes) && record.byte_length === bytes.length;
 }
 
-function worktreeBytes(path) {
-  return normalized(readFileSync(join(repositoryRoot, path)));
-}
+const historyRecord = JSON.parse(normalized(gitBytes(lifecycleHeadCommit, historyRelative)).toString("utf8"));
 
 assert(historyRecord.schema_version === "public-release-history.v1", "unknown release-history schema");
 assert(historyRecord.classification === "PUBLIC", "release-history classification mismatch");
@@ -261,12 +260,19 @@ const lifecycleEvidencePaths = [
   verifierRelative,
   manifestRelative
 ];
-const lifecycleEventBytes = worktreeBytes(lifecycleEventRelative);
+for (const ref of [lifecycleBaseCommit, lifecycleHeadCommit, lifecycleMergeCommit]) git(["cat-file", "-e", `${ref}^{commit}`]);
+const lifecycleParents = git(["rev-list", "--parents", "-n", "1", lifecycleMergeCommit]).trim().split(/\s+/).slice(1);
+assert(JSON.stringify(lifecycleParents) === JSON.stringify([lifecycleBaseCommit, lifecycleHeadCommit]),
+  "source-hardening merge parent order mismatch");
+assert(git(["rev-parse", `${lifecycleMergeCommit}^{tree}`]).trim() === git(["rev-parse", `${lifecycleHeadCommit}^{tree}`]).trim(),
+  "source-hardening merge tree does not equal the accepted PR head tree");
+
+const lifecycleEventBytes = normalized(gitBytes(lifecycleHeadCommit, lifecycleEventRelative));
 const lifecycleEvent = JSON.parse(lifecycleEventBytes.toString("utf8"));
-const lifecycleCheckpoint = JSON.parse(worktreeBytes(lifecycleCheckpointRelative).toString("utf8"));
-const lifecycleBytes = new Map(lifecycleEvidencePaths.map((path) => [path, worktreeBytes(path)]));
+const lifecycleCheckpoint = JSON.parse(normalized(gitBytes(lifecycleHeadCommit, lifecycleCheckpointRelative)).toString("utf8"));
+const lifecycleBytes = new Map(lifecycleEvidencePaths.map((path) => [path, normalized(gitBytes(lifecycleHeadCommit, path))]));
 assert(sha256(lifecycleBytes.get(manifestRelative)) === history.release_manifest_sha256,
-  "current release-manifest bytes do not preserve the accepted PR6 manifest");
+  "accepted source-hardening commit does not preserve the PR6 manifest");
 assert(lifecycleEvent.event_id === "evt_governance_git_pages_source_hardening_0006" && lifecycleEvent.decision === "ACCEPT_WITH_LIMITS",
   "release-history lifecycle event mismatch");
 assert(lifecycleEvent.authority_ref === lifecycleDecisionRelative && lifecycleEvent.effect?.kind === "NONE",
@@ -308,5 +314,5 @@ scanPublicText(lifecycleEventRelative, lifecycleEventBytes);
 process.stdout.write(
   `historical public release: PR6 ${expectedDiff.length} exact paths from ${history.base_commit.slice(0, 12)} to ${history.head_commit.slice(0, 12)}; ` +
   `${expectedReleasePaths.length} immutable release files; ${expectedSourcePaths.length} pinned public source objects; ` +
-  `append-only lifecycle event/checkpoint bound; 3 historical and ${lifecycleProductPaths.length} lifecycle product tamper canaries: PASS\n`
+  `immutable source-hardening merge/event/checkpoint bound; 3 historical and ${lifecycleProductPaths.length} lifecycle product tamper canaries: PASS\n`
 );

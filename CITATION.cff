@@ -5,7 +5,6 @@ type: software
 authors:
   - family-names: Tiller
     given-names: Jake
-    email: jake.tiller91@gmail.com
 license: CC-BY-4.0
 url: "https://resilience-eval-ai.pages.dev/"
 repository-code: "https://github.com/JakeTOpenSource/Resilience-Ledger"
@@ -16,8 +15,8 @@ abstract: >-
   audit scoring coherence and resilience on eight dimensions, a gap
   check for plans and policies, and an ordering-drift detector for
   agent traces, together with the Resilience Ledger method documents
-  and calibration logs. No model or network is required at runtime;
-  all detector lexicons are versioned and openly displayed.
+  and calibration logs. No model or external API is required by the
+  analysis engines; detector lexicons are versioned and openly displayed.
 keywords:
   - coherence audit
   - agentic AI governance

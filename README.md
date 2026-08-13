@@ -12,7 +12,7 @@ This is shared openly to get cold reads. If you find a flaw, a missing case, or 
 
 Three things in one folder:
 
-1. **A function-first glossary** of the language used in agentic AI and its governance. Every term is defined by what it *does*, not where it falls in an alphabet, grouped by purpose and linked to other terms by shared function. Each term carries its sources and a status — **candidate** (AI-drafted, awaiting verification) or **reviewed** (human-verified). The home page shows the current counts.
+1. **A function-first glossary** of the language used in agentic AI and its governance. Every term is defined by what it *does*, not where it falls in an alphabet, grouped by purpose and linked to other terms by shared function. Each term carries source assertions and a repository status label. A **reviewed** label is not yet a receipt proving reviewer identity, review date, exact source locator, or semantic correctness. The home page shows the current counts and boundary.
 2. **Audit instruments.** Gap Check reads a plan for missing governance. Framework Audit scores any framework on eight coherence and resilience dimensions. The Priority Tracer reads an agent trace for ordering drift — the moment purpose starts bending the rule it answers to.
 3. **The method docs** that produced all of it, including the calibration log that records every change to the detectors and why. The theory underneath is the Resilience Ledger: three functions (Absorb, Check, Reset) measured from one neutral center, and three drifts (content, thermal, ordering).
 
@@ -20,8 +20,8 @@ Three things in one folder:
 
 These are the rules the whole project is built on. They don't bend.
 
-- **Deterministic.** Same input, same answer, on any machine, every time. Scoring is plain JavaScript over versioned data, not model output.
-- **100% client-side.** No account, no API key, no network call at evaluation time. Text you paste into a tool never leaves your machine.
+- **Deterministic core.** Scoring is plain JavaScript over versioned data, not model output. Labeled corpora pin exact behavior for the checked code and data; browser presentation and unmeasured platforms are not part of that proof.
+- **Client-side analysis.** No account, API key, or model call is required. Atlas does not place submitted tool text in request URLs or send it to a model or API. The hosted site still makes ordinary page requests and Cloudflare may collect page-performance and visit telemetry; the home page discloses that boundary.
 - **No LLM at runtime.** AI was used to draft content — and everything AI-drafted is marked candidate until a human verifies it — but no model runs when you use the tools.
 - **Versioned lexicons.** Every token list a detector uses carries a version number, displayed openly in the UI. When a lexicon changes, the calibration log records what changed and why.
 - **Agency matters.** A limit revised by a named external authority is an amendment. A limit an agent revises on itself is drift. The detectors keep those apart and say which they saw.
@@ -46,9 +46,9 @@ These are the rules the whole project is built on. They don't bend.
 | `Delta-Atlas-Field.html` | The Field — an instrument view. |
 | `evaluate.html` | For evaluators — a 10-minute guided review with specific questions. |
 | `Delta-Atlas-Verify.html` | Verification checklist — check off candidate terms whose definition and sources read right, export the batch, then run `verify-terms.js` to apply it. No bulk-check: one human judgment per term. |
-| `Delta-Atlas-ContinuityAudit.html` | Continuity Audit — Gap Check's and Framework Audit's engines, pointed at an operations manual instead of an AI policy: a **resilience** reading (can the goal survive a key person out, a vendor failing, an emergency), risks with no stated control, and single points of failure with no documented backup. Supports a private, gitignored overlay (`continuity-overlay.local.js`) for one organization's real procedures. |
+| `Delta-Atlas-ContinuityAudit.html` | Continuity Audit — Gap Check's and Framework Audit's engines, pointed at an operations manual instead of an AI policy: a **resilience** reading (can the goal survive a key person out, a vendor failing, an emergency), risks with no stated control, and single points of failure with no documented backup. Supports an explicitly selected, data-only private overlay (`continuity-overlay.local.json`); it never evaluates overlay code. |
 
-The data underneath: `terms.enriched.json` is the single source of truth for the vocabulary. `Delta-Atlas-Canon.md` and `delta-atlas-canon.json` are generated from it. `primitives.json` feeds the Primitives page.
+The data underneath: `terms.enriched.json` is the declared **candidate** vocabulary input, not accepted semantic truth. Several public pages and both Canon artifacts currently carry older, non-identical projections. [`governance/contracts/atlas-data-sync-baseline.md`](governance/contracts/atlas-data-sync-baseline.md) records the exact split, and the candidate materializer is intentionally read-only until a human approves each consumer's inclusion, field, status, source, and Canon policy. [`governance/contracts/atlas-repair-sources.md`](governance/contracts/atlas-repair-sources.md) maps the platform changes to primary standards without claiming certification. `primitives.json` separately feeds the Primitives page.
 
 ## Shared engines (the reuse-upstream layer)
 
@@ -66,13 +66,13 @@ Three ways, easiest first.
 
 **1. Use the live site.** https://resilience-eval-ai.pages.dev/ — nothing to install, no sign-in.
 
-**2. Install it as an app.** Open the live site in Chrome or Edge and click **Install app** in the top bar (or the install icon in the address bar). After that it works offline, like any installed app.
+**2. Install it as an app.** Open the live site in Chrome or Edge and click **Install app** in the top bar (or the install icon in the address bar). Installation succeeds only if every declared core asset caches. That covers the declared core; optional assets and an older existing browser cache may differ.
 
-**3. Download it and run it offline.** On GitHub, click the green **Code** button, then **Download ZIP**. Unzip anywhere and double-click `index.html` — or any tool page directly. Every page is self-contained; copy the folder to a USB stick and it still works. The exact offline guarantees, and the one optional dependency (the 3D map's library), are in `README-Portability.md`.
+**3. Download it and run it locally.** On GitHub, click the green **Code** button, then **Download ZIP**. Unzip anywhere and double-click `index.html` — or a tool page directly. Most tools are self-contained or use adjacent checked-in scripts; browser `file://` restrictions and optional assets can affect a few authoring views. The exact boundaries are in `README-Portability.md`.
 
 ## The scripts (Node, zero dependencies)
 
-The detector scripts pull the `analyze()` engine straight out of `Delta-Atlas-Tracer.html`, so the command line and the web page can never disagree: one source of truth, no copy to drift. You need Node.js installed and nothing else — no packages.
+The detector scripts pull the `analyze()` engine straight out of `Delta-Atlas-Tracer.html`, so that detector's command line and page share one implementation rather than copied logic. You need Node.js installed and nothing else—no packages. This scoped guarantee does not imply that every Atlas page currently shares one synchronized data projection.
 
 Besides the calibration harness and CLI below: `tracer-bench.js` keeps the engine's measured scale limits reproducible and fails loudly if a complexity regression gets in; `mend-gate.js` runs the proposal register (every proposed change to this project, from any source, sorted fold/decline with a written reason — see `State-Delta-Bridge.md`); `mcp-manifest-pin.js` pins an MCP server's tool manifest by hash so a counterparty's silent contract change becomes a visible return to sort (`node mcp-manifest-pin.js selftest` proves it offline); and `ivy-gen.js` regrows the decorative ivy on the home page (`node ivy-gen.js` rewrites the vines in `index.html`; seeded and deterministic, same output every run, and it exits non-zero if a leaf detaches from its stem or a vine end would dangle visibly mid-page — the same rule as everything else here: structure checked, not eyeballed). `ask-corpus.js` pins the Ask engine (loads its `answer()` from the HTML and asserts real terms resolve while fragment-collisions like "sandbagging"→"Bagging" fall back to honest closest-matches instead of a confident wrong answer). `verify-terms.js` applies a human-checked batch from `Delta-Atlas-Verify.html`: `node verify-terms.js apply verified-batch.json` flips exactly those ids from candidate to reviewed, refusing anything unknown or already non-candidate (`--dry-run` to preview; `selftest` proves the logic on synthetic data first).
 

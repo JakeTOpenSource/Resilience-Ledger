@@ -146,6 +146,17 @@ document.getElementById("ex3").onclick=function(){ loadEx("Open the cafe and cov
   "The owner checks sales against the budget every Friday.",
   "We will always delight every single guest.",
   "If weekly sales miss target for a month, drop the priciest supplier."]); };
-(function(){try{var pf=JSON.parse(localStorage.getItem('delta_prefill')||'null'); if(pf&&pf.tool==='audit'){localStorage.removeItem('delta_prefill'); if(pf.goal)document.getElementById('goal').value=pf.goal; if(pf.parts)document.getElementById('parts').value=pf.parts; run();}}catch(e){}})();
+(function(){
+  var key='delta_prefill', raw=null; try{raw=localStorage.getItem(key); if(raw!==null)localStorage.removeItem(key);}catch(e){return;}
+  if(raw===null)return;
+  try{
+    var pf=JSON.parse(raw), now=Date.now(), lifetime=pf&&pf.expires_at-pf.issued_at;
+    if(!pf||pf.type!=='delta-atlas-prefill'||pf.version!==1||pf.one_use!==true||pf.tool!=='audit'||
+       typeof pf.issued_at!=='number'||typeof pf.expires_at!=='number'||pf.issued_at>now||pf.expires_at<=now||
+       lifetime<=0||lifetime>15*60*1000||typeof pf.goal!=='string'||typeof pf.parts!=='string'||
+       pf.goal.length>20000||pf.parts.length>200000)return;
+    document.getElementById('goal').value=pf.goal; document.getElementById('parts').value=pf.parts; run();
+  }catch(e){}
+})();
 </script>
 </body></html>

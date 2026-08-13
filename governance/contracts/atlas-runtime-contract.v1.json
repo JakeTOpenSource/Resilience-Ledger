@@ -1,0 +1,42 @@
+{
+  "type": "delta-atlas-runtime-contract",
+  "version": 1,
+  "scope": "public static Pages runtime slice",
+  "offline": {
+    "cache_name": "aaig-v87",
+    "install": "all declared core assets must cache before activation",
+    "required_shared_engines": ["lexicon-engine.js", "coherence-score-engine.js"],
+    "optional_private_assets": ["continuity-overlay.local.json", "tracer-overlay.local.js"],
+    "ceiling": "This proves declared first-visit asset closure only; it does not prove every browser's PWA installation state."
+  },
+  "private_overlay": {
+    "file": "continuity-overlay.local.json",
+    "type": "delta-atlas-continuity-overlay",
+    "version": 1,
+    "mode": "explicit browser file selection; additive data only; no background fetch",
+    "forbidden": ["runtime code evaluation", "regular-expression source from overlay data", "base control removal"],
+    "red_flag_shape": {"t": "string", "d": "string", "phrases": ["literal string"]}
+  },
+  "browser_storage": {
+    "prefill": {"key": "delta_prefill", "type": "delta-atlas-prefill", "version": 1, "ttl_ms": 900000, "one_use": true, "receiver_clear_before_validation": true, "receiver_expiry_validation": true},
+    "ask_misses": {"key": "deltaAtlasAskMisses", "type": "delta-atlas-ask-misses", "version": 1, "ttl_ms": 2592000000, "max_entries": 100, "clear": "user initiated"}
+    ,"verify_checklist": {"key": "deltaAtlasVerifyChecked", "contents": "public term identifiers only", "clear": "user initiated"}
+    ,"home_clear_all": ["delta_prefill", "deltaAtlasAskMisses", "deltaAtlasVerifyChecked"]
+  },
+  "in_memory_query": {
+    "type": "delta-atlas-query",
+    "version": 1,
+    "transport": "same-origin parent-to-iframe postMessage after static page load",
+    "max_characters": 500,
+    "forbidden": ["query string", "URL fragment payload", "persistent storage"]
+  },
+  "headers": {
+    "global_baseline_route": "/*",
+    "covered_routes": ["/Agentic-AI-Governance-Chat", "/Delta-Atlas-Quick", "/Delta-Atlas-ContinuityAudit", "/Delta-Atlas-GapCheck", "/Coherence-Audit", "/sw.js"],
+    "required": ["Referrer-Policy", "X-Content-Type-Options", "Permissions-Policy"],
+    "iframe_routes": ["/Agentic-AI-Governance-Chat", "/Delta-Atlas-Quick", "/Delta-Atlas-ContinuityAudit", "/Delta-Atlas-GapCheck", "/Coherence-Audit"],
+    "iframe_policy": "SAMEORIGIN",
+    "global_frame_policy": "SAMEORIGIN",
+    "csp": "No broad CSP is asserted by this contract because current pages use inline scripts and Pages-injected Web Analytics. CSP is a separately compatibility-tested change."
+  }
+}

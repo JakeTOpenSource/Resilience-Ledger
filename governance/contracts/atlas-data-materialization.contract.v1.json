@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "delta-atlas-candidate-materialization-v1",
+  "classification": "PUBLIC",
+  "decision": "DEFER",
+  "purpose": "Define the narrow, offline transforms that can be reproduced from the declared candidate vocabulary input. The transforms create candidate consumer-shaped data only; they do not authorize an HTML rewrite or establish semantic authority.",
+  "input": {
+    "path": "terms.enriched.json",
+    "declared_role": "CANDIDATE_SOURCE_OF_TRUTH",
+    "accepted_as_semantic_truth": false,
+    "expected_canonical_json_sha256": "2dabd09aacb6896dda5a535350fe258b80aee781a676eda8b0699d2475a5de35"
+  },
+  "profiles": [
+    {
+      "id": "ask-ground-truth-v1",
+      "target_shape": "{terms,relations,sources}",
+      "known_transform": "Deep-copy candidate terms, relations, and sources without filtering or relabeling.",
+      "target_consumers": ["Agentic-AI-Governance-Chat.html", "Agentic-AI-Governance-GroundTruth.html"],
+      "writes_consumer": false,
+      "expected_output": {
+        "canonical_json_sha256": "374bb326164b41ca237aeb979673164b940ad00e07a97bc8283e494b0c439100",
+        "terms_count": 439,
+        "ordered_ids_sha256": "d5cd6fc4346d9569a83e3bc65d4f5a51148f9ee0bfc2befb305682b08f436cf5",
+        "relation_count": 360
+      }
+    },
+    {
+      "id": "explore-v1",
+      "target_shape": "{terms,relations}",
+      "known_transform": "Deep-copy candidate terms and relations without filtering or relabeling.",
+      "target_consumers": ["Agentic-AI-Governance-Query.html"],
+      "writes_consumer": false,
+      "expected_output": {
+        "canonical_json_sha256": "c5dc662afbb7f537dafcee435ddeddecccb2bd9f30849bcfca3c33503c718d2e",
+        "terms_count": 439,
+        "ordered_ids_sha256": "d5cd6fc4346d9569a83e3bc65d4f5a51148f9ee0bfc2befb305682b08f436cf5",
+        "relation_count": 360
+      }
+    },
+    {
+      "id": "gap-check-v1",
+      "target_shape": "{terms,rels}",
+      "known_transform": "Map each term only from named input fields: id, first plain name (or first technical name only when plain is empty), cluster, purpose, status, accountability, function statement, lower-cased de-duplicated aliases from the selected name set, and optional prov. Map each relation to [source,target,type].",
+      "target_consumers": ["Delta-Atlas-GapCheck.html"],
+      "writes_consumer": false,
+      "expected_output": {
+        "canonical_json_sha256": "dafa60800751c2a1f0ecf87df145c903c90a0f0275140ec9826a6a6bc59a65e4",
+        "terms_count": 439,
+        "ordered_ids_sha256": "d5cd6fc4346d9569a83e3bc65d4f5a51148f9ee0bfc2befb305682b08f436cf5",
+        "relation_count": 360
+      }
+    }
+  ],
+  "known_unknowns": [
+    "The existing embedded datasets cannot be reproduced exactly from the current candidate input: they omit terms, preserve historical statuses, use historical source lists and three historical definitions.",
+    "The historical Canon selection, its ten non-input ids, and its light/status policy have no declared materialization profile here.",
+    "No transform validates definitions, provenance, review status, source availability, UI behavior, or STP accepted state."
+  ],
+  "next_acceptance_gate": "A human must approve a target projection policy for each consumer (inclusion, field selection, status treatment, source treatment, and Canon scope), then a separate change may update one consumer plus its exact output receipt and UI corpus evidence."
+}
