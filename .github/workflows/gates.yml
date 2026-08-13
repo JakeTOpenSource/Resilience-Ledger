@@ -32,6 +32,14 @@ jobs:
         run: node tracer-corpus.js
       - name: Gap Check corpus (negation guard stays honest)
         run: node gapcheck-corpus.js
+      - name: Ask corpus (retrieval behavior stays pinned)
+        run: node ask-corpus.js
+      - name: Coherence corpus (control checks stay pinned)
+        run: node coherence-audit-corpus.js
+      - name: Continuity corpus (continuity checks stay pinned)
+        run: node continuity-audit-corpus.js
+      - name: Theme and accessibility structure gate
+        run: node theme-gate.js
       - name: Day-ledger corpus (dual attestation, chain integrity)
         run: node day-ledger-corpus.js
       - name: Benchmark (scale limits stay reproducible)

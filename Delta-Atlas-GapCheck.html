@@ -221,7 +221,17 @@ function batchRender(text){ var out=document.getElementById('out');
      '</div>'; });
   h+='<div class="note">Batch view is a scan. For the full findings and how-to-close on any one plan, turn Batch off and paste it alone.</div>';
   out.innerHTML=h; }
-(function(){try{var p=JSON.parse(localStorage.getItem('delta_prefill')||'null'); if(p&&p.tool==='gap'&&p.text){localStorage.removeItem('delta_prefill'); document.getElementById('src').value=p.text; render(p.text);}}catch(e){}})();
+(function(){
+  var key='delta_prefill', raw=null; try{raw=localStorage.getItem(key); if(raw!==null)localStorage.removeItem(key);}catch(e){return;}
+  if(raw===null)return;
+  try{
+    var p=JSON.parse(raw), now=Date.now(), lifetime=p&&p.expires_at-p.issued_at;
+    if(!p||p.type!=='delta-atlas-prefill'||p.version!==1||p.one_use!==true||p.tool!=='gap'||
+       typeof p.issued_at!=='number'||typeof p.expires_at!=='number'||p.issued_at>now||p.expires_at<=now||
+       lifetime<=0||lifetime>15*60*1000||typeof p.text!=='string'||!p.text.trim()||p.text.length>200000)return;
+    document.getElementById('src').value=p.text; render(p.text);
+  }catch(e){}
+})();
 // embed mode for the homepage hero: prefill a sample AI policy and run the REAL engine so a visitor sees live findings
 (function(){ if(location.hash.indexOf('embed')<0) return;
   document.body.classList.add('embed');

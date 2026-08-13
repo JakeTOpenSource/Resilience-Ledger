@@ -15,10 +15,12 @@
     the 100vh line above is the fallback for older browsers. */
  #bar{flex:none;display:flex;align-items:center;gap:6px;padding:9px 16px;border-bottom:1px solid var(--line);
    background:#10281a;position:relative;z-index:10;flex-wrap:wrap;}
- #brand{font-weight:700;font-size:14.5px;cursor:pointer;margin-right:8px;letter-spacing:.2px;display:flex;align-items:center;gap:8px;}
+ #brand{font-weight:700;font-size:14.5px;cursor:pointer;margin-right:8px;letter-spacing:.2px;display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--txt);padding:0;}
  #brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
- .nav{cursor:pointer;border:1px solid transparent;background:transparent;color:var(--dim);font-size:13px;padding:6px 11px;border-radius:8px;}
+ .primary-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+ .nav{cursor:pointer;border:1px solid transparent;background:transparent;color:var(--dim);font-size:13px;padding:10px 11px;min-height:44px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;}
  .nav:hover{color:var(--txt);background:rgba(217,181,69,0.10);}
+ .nav:focus-visible,.action:focus-visible,.dlink:focus-visible,.hchip:focus-visible,.card:focus-visible,.area:focus-visible,.doc:focus-visible,.qlink:focus-visible,.data-clear:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
  .nav.on{color:var(--accent);border-color:var(--line);background:rgba(217,181,69,0.12);}
  .rightgrp{margin-left:auto;display:flex;gap:6px;}
  #stage{flex:1;position:relative;min-height:0;}
@@ -45,7 +47,7 @@
  /* hero */
  .hero{text-align:center;padding:46px 0 8px;position:relative;}
  .plumb{position:absolute;left:50%;top:0;bottom:-8px;width:1px;background:linear-gradient(var(--line) 60%,transparent);z-index:-1;}
- .logo{font-size:38px;font-weight:700;letter-spacing:.5px;display:inline-flex;align-items:center;gap:12px;}
+ .logo{font-size:38px;font-weight:700;letter-spacing:.5px;display:inline-flex;align-items:center;gap:12px;margin:0;}
  .logo .dot{width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 13px var(--accent);}
  .headline{font-size:21px;font-weight:650;margin:14px 0 4px;}
  .tagline{color:var(--dim);font-size:14px;margin:0 0 22px;}
@@ -54,6 +56,15 @@
  .demoframe{width:100%;height:500px;border:1px solid var(--line);border-radius:12px;background:var(--bg);display:block;}
  .demonote{font-size:12.5px;color:var(--dim);margin-top:9px;text-align:center;}
  .demonote .dlink{color:var(--accent);cursor:pointer;}
+ .sample{margin:18px auto 26px;max-width:900px;text-align:left;border:1px solid var(--line);border-radius:12px;padding:0 14px;background:rgba(44,74,56,.4);}
+ .sample summary{cursor:pointer;color:var(--accent);font-weight:650;padding:11px 2px;}
+ .sample .herodemo{margin:0 0 14px;}
+ .privacy-note{max-width:760px;margin:10px auto 0;color:var(--dim);font-size:12px;line-height:1.55;}
+ .privacy-note a{color:var(--accent);}
+ .data-clear{border:0;background:transparent;color:var(--accent);padding:0;margin-left:4px;text-decoration:underline;cursor:pointer;font:inherit;}
+ .storage-status{display:inline-block;min-width:5ch;margin-left:5px;color:var(--green);}
+ .primary-cta{margin-top:14px;min-height:44px;padding:10px 18px;border:1px solid var(--accent);background:var(--accent);color:#1e2b17;border-radius:24px;cursor:pointer;font-weight:700;font-size:14px;}
+ .primary-cta:hover{background:#f0c75e;}
  @media (max-width:700px){ .demoframe{height:560px;} }
  .searchwrap{display:flex;gap:8px;max-width:620px;margin:0 auto;}
  #hq{flex:1;padding:14px 19px;border:1px solid var(--line);border-radius:26px;background:var(--panel);color:var(--txt);
@@ -67,13 +78,13 @@
  .seam{height:2px;margin:26px 40px 4px;background:linear-gradient(90deg,transparent,#f2cd55 18%,#d8b855 50%,#f2cd55 82%,transparent);opacity:.75;}
  /* the three doors */
  .doors{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:20px 0 6px;}
- .door{cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px;position:relative;transition:border-color .15s,transform .15s;}
+ .door{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px;position:relative;transition:border-color .15s,transform .15s;}
  .door:hover{border-color:var(--accent);transform:translateY(-2px);}
  .dk{font-size:10.5px;letter-spacing:.9px;color:var(--dim);}
  .dn{font-size:17px;font-weight:700;margin:2px 0 6px;}
  .dw{font-size:12.8px;color:var(--dim);line-height:1.55;}
  .dlinks{margin-top:10px;font-size:12px;}
- .dlink{color:var(--accent);cursor:pointer;border-bottom:1px solid transparent;} .dlink:hover{border-bottom-color:var(--accent);}
+ .dlink{color:var(--accent);cursor:pointer;border:0;border-bottom:1px solid transparent;background:transparent;padding:0;font:inherit;} .dlink:hover{border-bottom-color:var(--accent);}
  .dsep{color:var(--line);margin:0 7px;}
  .badge{position:absolute;top:-9px;right:12px;background:var(--win);color:#1e2b17;font-size:9.5px;padding:2px 9px;border-radius:9px;letter-spacing:.5px;}
  .substrip{text-align:center;margin:14px 0 4px;font-size:13px;color:var(--dim);}
@@ -90,10 +101,10 @@
  .block p+p{margin-top:9px;}
  h3.sec{font-size:14px;text-transform:uppercase;letter-spacing:.5px;color:var(--dim);margin:30px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px;}
  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:13px;}
- .card{cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px;transition:border-color .15s,transform .15s;}
+ .card{cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px;transition:border-color .15s,transform .15s;color:var(--txt);font:inherit;text-align:left;width:100%;}
  .card:hover{border-color:var(--accent);transform:translateY(-2px);}
- .cn{font-size:15.5px;font-weight:650;margin-bottom:4px;} .cw{font-size:12.8px;margin-bottom:8px;}
- .cb{font-size:11.5px;color:var(--dim);} .cb span{color:var(--accent);} .cgo{margin-top:9px;font-size:12px;color:var(--accent);}
+ .cn{font-size:15.5px;font-weight:650;margin-bottom:4px;display:block;} .cw{font-size:12.8px;margin-bottom:8px;display:block;}
+ .cb{font-size:11.5px;color:var(--dim);display:block;} .cb span{color:var(--accent);} .cgo{margin-top:9px;font-size:12px;color:var(--accent);display:block;}
  .docsec{position:relative;}
  .docs{display:flex;flex-wrap:wrap;gap:10px;}
  .doc{text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 13px;display:flex;flex-direction:column;gap:2px;min-width:210px;}
@@ -107,9 +118,10 @@
  .areas{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
  .area{cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;
    display:flex;align-items:center;gap:11px;transition:border-color .15s,transform .15s;}
+ button.area{color:var(--txt);font:inherit;text-align:left;width:100%;}
  .area:hover{border-color:var(--accent);transform:translateY(-2px);}
  .area .adot{width:11px;height:11px;border-radius:50%;flex:none;}
- .area .an{font-size:14.5px;font-weight:600;} .area .as{font-size:12px;color:var(--dim);}
+ .area .an{font-size:14.5px;font-weight:600;display:block;} .area .as{font-size:12px;color:var(--dim);display:block;}
  .seclead{color:var(--dim);font-size:12.5px;margin:-4px 0 12px;}
  .jake{background:#3a2d0d;border:1px solid #6b5518;border-left:3px solid var(--gold);border-radius:12px;padding:16px 20px;margin:22px 0;position:relative;}
  .jake .jn{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:#f0c75e;font-weight:700;margin-bottom:6px;}
@@ -131,7 +143,18 @@
  textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
  button{font-family:inherit;}
  ::placeholder{color:var(--dim);opacity:1;}
+ .skip{position:absolute;left:12px;top:-60px;z-index:20;background:var(--accent);color:#1e2b17;padding:8px 12px;border-radius:6px;font-weight:700;}
+ .skip:focus{top:12px;}
+ @media (max-width:700px){
+   #bar{gap:2px;padding:5px 9px;}
+   #brand{min-height:44px;margin-right:2px;}
+   .primary-nav{order:3;flex-basis:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px;}
+   .rightgrp{margin-left:auto;gap:1px;}
+   .rightgrp .nav{padding-inline:8px;}
+   .sample{margin-top:14px;}
+ }
 </style></head><body>
+<a class="skip" href="#primary-content">Skip to main content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <path id="pBig" d="M50,97 C40,94 28,92 18,86 L8,78 C16,68 26,66 33,62 C24,54 17,44 14,32 L12,22 C22,22 31,26 38,28 C41,18 45,8 50,2 C55,8 59,18 62,28 C69,26 78,22 88,22 L86,32 C83,44 76,54 67,62 C74,66 84,68 92,78 L82,86 C72,92 60,94 50,97 Z"/>
   <path id="pMed" d="M50,96 C38,92 24,86 13,76 L9,68 C18,61 28,59 36,55 C31,40 34,20 44,8 L50,2 C56,8 66,20 64,40 C63,46 64,51 64,55 C72,59 82,61 91,68 L87,76 C76,86 62,92 50,96 Z"/>
@@ -206,17 +229,19 @@
   <!-- shadow is CSS drop-shadow on .ivy (not an SVG filter): Safari can rasterize blank
        tiles for feDropShadow over large SVG canvases, showing white boxes on iPad. -->
 </defs></svg>
-<div id="bar">
-  <div id="brand" onclick="goHome()"><span class="dot"></span>Delta Atlas</div>
-  <button class="nav" data-f="Delta-Atlas-GapCheck.html" onclick="nav('Delta-Atlas-GapCheck.html','Gap Check')">Gap Check</button><button class="nav" data-f="Delta-Atlas-Tracer.html" onclick="nav('Delta-Atlas-Tracer.html','Tracer')">Tracer</button><button class="nav" data-f="Coherence-Audit.html" onclick="nav('Coherence-Audit.html','Framework Audit')">Framework Audit</button><button class="nav" data-f="Agentic-AI-Governance-Query.html" onclick="nav('Agentic-AI-Governance-Query.html','Explore')">Explore</button><button class="nav" data-f="Delta-Atlas-Primitives.html" onclick="nav('Delta-Atlas-Primitives.html','Primitives')">Primitives</button><button class="nav" data-f="Six-Signal-Method.html" onclick="nav('Six-Signal-Method.html','Six Signals')">Six Signals</button><button class="nav" data-f="White-Paper.html" onclick="nav('White-Paper.html','White Paper')">White Paper</button>
-  <span class="rightgrp">
+<header id="bar">
+  <button id="brand" type="button" onclick="goHome(true)"><span class="dot"></span>Delta Atlas</button>
+  <nav class="primary-nav" aria-label="Primary navigation">
+   <button class="nav" type="button" data-f="Delta-Atlas-GapCheck.html" onclick="nav('Delta-Atlas-GapCheck.html')">Gap Check</button><button class="nav" type="button" data-f="Delta-Atlas-Tracer.html" onclick="nav('Delta-Atlas-Tracer.html')">Tracer</button><button class="nav" type="button" data-f="Coherence-Audit.html" onclick="nav('Coherence-Audit.html')">Framework Audit</button><button class="nav" type="button" data-f="Agentic-AI-Governance-Query.html" onclick="nav('Agentic-AI-Governance-Query.html')">Explore</button><button class="nav" type="button" data-f="Delta-Atlas-Primitives.html" onclick="nav('Delta-Atlas-Primitives.html')">Primitives</button><button class="nav" type="button" data-f="Six-Signal-Method.html" onclick="nav('Six-Signal-Method.html')">Six Signals</button><button class="nav" type="button" data-f="White-Paper.html" onclick="nav('White-Paper.html')">White Paper</button>
+  </nav>
+  <div class="rightgrp">
    <button class="nav" id="installBtn" style="display:none;color:#8fe0a5;border:1px solid #4a6b56" onclick="doInstall()">Install app</button>
    <button class="nav" id="shareBtn" onclick="doShare()">Share</button>
-   <a class="nav" href="evaluate.html" target="_blank">For Evaluators</a>
-   <button class="nav" id="home0" onclick="goHome()">Home</button>
-  </span>
-</div>
-<div id="stage">
+   <a class="nav" href="evaluate.html" target="_blank" rel="noopener noreferrer">For Evaluators</a>
+   <button class="nav" id="home0" type="button" onclick="goHome(true)">Home</button>
+  </div>
+</header>
+<main id="stage" aria-label="Delta Atlas tools">
   <div id="loading">loading&hellip;</div>
   <iframe id="frame" title="Delta Atlas content"></iframe>
   <div id="home">
@@ -273,71 +298,76 @@
  <div class="wrap">
     <div class="hero">
       <div class="plumb"></div>
-      <div class="logo"><span class="dot"></span>Delta Atlas</div>
+      <h1 class="logo"><span class="dot"></span>Delta Atlas</h1>
       <div class="headline">Check the structure before you trust it.</div>
-      <div class="tagline">Paste an AI plan. Get back the risks it names with no control. Each gap links to a sourced, plain-language definition &mdash; 439 of them. Deterministic, on your device; nothing leaves it.</div>
-      <div class="herodemo">
+      <div class="tagline">Check an AI plan, trace, or term against fixed, plain-language rules. The tools are deterministic and run in your browser.</div>
+      <button class="primary-cta" type="button" onclick="nav('Delta-Atlas-GapCheck.html')">Paste a plan into Gap Check</button>
+      <p class="privacy-note">Your plan and search text are analyzed locally. Atlas does not place submitted text in request URLs or send it to a model or API. Cloudflare may collect ordinary request metadata plus page-performance and visit measurements; <a href="https://developers.cloudflare.com/speed/observatory/rum-beacon/" target="_blank" rel="noopener noreferrer">read Cloudflare's RUM description (opens in a new tab)</a>. This browser may retain a one-use Quick handoff, missed-search history, or verification checklist. <button class="data-clear" type="button" onclick="clearAtlasData()">Clear saved Atlas data</button><span class="storage-status" id="storage-status" role="status" aria-live="polite"></span></p>
+      <div class="searchwrap" id="primary-content">
+        <input id="hq" maxlength="500" aria-label="Search the Delta Atlas glossary" placeholder="Ask anything:  what is a harness?   what defends against prompt injection?" autofocus/>
+        <button id="hgo" type="button" onclick="heroSearch()">Search</button>
+      </div>
+      <div class="hchips" id="hchips" aria-label="Common glossary searches"></div>
+      <details class="sample">
+       <summary>See a sample Gap Check before using your own plan</summary>
+       <div class="herodemo">
         <div class="demolabel">Live &middot; the real tool, running on your device</div>
         <iframe class="demoframe" data-src="Delta-Atlas-GapCheck.html#embed" title="Gap Check running on a sample AI policy" loading="lazy"></iframe>
-        <div class="demonote">Above is Gap Check on a sample AI policy &mdash; it names <b>2 gaps</b> with no control present, and sees the controls that are there. <span class="dlink" onclick="nav('Delta-Atlas-GapCheck.html','Gap Check')">Open it and paste your own &rarr;</span></div>
-      </div>
-      <div class="searchwrap">
-        <input id="hq" placeholder="Ask anything:  what is a harness?   what defends against prompt injection?" autofocus/>
-        <button id="hgo" onclick="heroSearch()">Search</button>
-      </div>
-      <div class="hchips" id="hchips"></div>
+        <div class="demonote">This sample names <b>2 gaps</b> with no control present, and sees the controls that are there. <button class="dlink" type="button" onclick="nav('Delta-Atlas-GapCheck.html')">Open it and paste your own &rarr;</button></div>
+       </div>
+      </details>
     </div>
 
     <div class="seam"></div>
 
     <div class="doors">
-      <div class="door" onclick="nav('Delta-Atlas-GapCheck.html','Gap Check')">
+      <section class="door" aria-labelledby="plan-door">
         <div class="dk">I HAVE A</div>
-        <div class="dn">Plan or policy</div>
+        <div class="dn" id="plan-door">Plan or policy</div>
         <div class="dw">Gap Check finds what a plan leaves unhandled: a risk with no control, autonomy with no oversight. Framework Audit scores what's there.</div>
-        <div class="dlinks"><span class="dlink" onclick="event.stopPropagation();nav('Delta-Atlas-GapCheck.html','Gap Check')">Gap Check &rarr;</span><span class="dsep">&middot;</span><span class="dlink" onclick="event.stopPropagation();nav('Coherence-Audit.html','Framework Audit')">Framework Audit</span><span class="dsep">&middot;</span><span class="dlink" onclick="event.stopPropagation();nav('Delta-Atlas-Quick.html','Quick check')">Quick check</span></div>
-      </div>
-      <div class="door" onclick="nav('Delta-Atlas-Tracer.html','Priority Tracer')">
+        <div class="dlinks"><button class="dlink" type="button" onclick="nav('Delta-Atlas-GapCheck.html')">Gap Check &rarr;</button><span class="dsep">&middot;</span><button class="dlink" type="button" onclick="nav('Coherence-Audit.html')">Framework Audit</button><span class="dsep">&middot;</span><button class="dlink" type="button" onclick="nav('Delta-Atlas-Quick.html')">Quick check</button></div>
+      </section>
+      <section class="door" aria-labelledby="trace-door">
         <div class="badge">THE ONE NOBODY ELSE HAS</div>
         <div class="dk">I HAVE AN</div>
-        <div class="dn">Agent's trace</div>
+        <div class="dn" id="trace-door">Agent's trace</div>
         <div class="dw">The Priority Tracer catches ordering drift: the moment a goal quietly climbs over a rule it was supposed to obey &mdash; and credits where the rule held.</div>
-        <div class="dlinks"><span class="dlink" onclick="event.stopPropagation();nav('Delta-Atlas-Tracer.html','Priority Tracer')">Open the Tracer &rarr;</span><span class="dsep">&middot;</span><span style="color:var(--dim)">CLI for pipelines in the repo</span></div>
-      </div>
-      <div class="door" onclick="nav('Agentic-AI-Governance-Query.html','Explore')">
+        <div class="dlinks"><button class="dlink" type="button" onclick="nav('Delta-Atlas-Tracer.html')">Open the Tracer &rarr;</button><span class="dsep">&middot;</span><span style="color:var(--dim)">CLI for pipelines in the repo</span></div>
+      </section>
+      <section class="door" aria-labelledby="words-door">
         <div class="dk">I WANT THE</div>
-        <div class="dn">Words explained</div>
+        <div class="dn" id="words-door">Words explained</div>
         <div class="dw">439 terms defined by what they do, linked by shared function. Browse the map, or just ask the search above.</div>
-        <div class="dlinks"><span class="dlink" onclick="event.stopPropagation();nav('Agentic-AI-Governance-Query.html','Explore')">Explore &rarr;</span><span class="dsep">&middot;</span><span class="dlink" onclick="event.stopPropagation();nav('White-Paper.html','White Paper')">White Paper</span><span class="dsep">&middot;</span><span class="dlink" onclick="event.stopPropagation();nav('Delta-Atlas-Start.html','Start here')">Start here</span></div>
-      </div>
+        <div class="dlinks"><button class="dlink" type="button" onclick="nav('Agentic-AI-Governance-Query.html')">Explore &rarr;</button><span class="dsep">&middot;</span><button class="dlink" type="button" onclick="nav('White-Paper.html')">White Paper</button><span class="dsep">&middot;</span><button class="dlink" type="button" onclick="nav('Delta-Atlas-Start.html')">Start here</button></div>
+      </section>
     </div>
 
-    <div class="substrip">New here? <a class="qlink" onclick="nav('Delta-Atlas-Start.html','Start here')">the 2-minute guide</a><span class="qsep">&middot;</span><a class="qlink" onclick="nav('Delta-Atlas-Quick.html','Quick check')">Quick check: a read in a minute</a><span class="qsep">&middot;</span><a class="qlink" href="evaluate.html" target="_blank" style="text-decoration:none">For Evaluators</a></div>
+    <div class="substrip">New here? <button class="dlink qlink" type="button" onclick="nav('Delta-Atlas-Start.html')">the 2-minute guide</button><span class="qsep">&middot;</span><button class="dlink qlink" type="button" onclick="nav('Delta-Atlas-Quick.html')">Quick check: a read in a minute</button><span class="qsep">&middot;</span><a class="qlink" href="evaluate.html" target="_blank" rel="noopener noreferrer" style="text-decoration:none">For Evaluators</a></div>
 
-    <div id="results"><div class="resultcard"><div class="reshead"><span>Answer &middot; live function-first engine</span><a onclick="clearResults()">Clear &times;</a></div><iframe id="ansframe" title="answer"></iframe></div></div>
+    <div id="results"><div class="resultcard"><div class="reshead"><span>Answer &middot; fixed function-first engine</span><button class="dlink" type="button" onclick="clearResults()">Clear &times;</button></div><iframe id="ansframe" title="Glossary search result" referrerpolicy="no-referrer"></iframe></div></div>
 
     <div class="statwrap">
-      <div class="statline">439 plain-language terms &middot; 6 areas &middot; 51 independent sources &middot; all 439 human-reviewed &middot; free to read</div>
+      <div class="statline">439 vocabulary records &middot; 6 areas &middot; 193 source records &middot; all 439 currently carry the repository label <b>reviewed</b> &middot; free to read</div>
       <div class="statline" style="margin-top:10px;line-height:1.7"><b>Get the app:</b>
         Android &mdash; tap <b>Install app</b> above (or Chrome menu &rsaquo; Add to Home screen) &middot;
         iPhone/iPad &mdash; in Safari tap <b>Share &rsaquo; Add to Home Screen</b> &middot;
         Computer &mdash; in Chrome/Edge click the install icon at the right end of the address bar.<br/>
-        Free. No app store, no account, no tracking. Works offline after your first visit &mdash; everything runs on your device.</div>
+        Free. No app store or account. A successful install caches the declared core tools for offline use; optional assets and an existing browser cache can vary. Cloudflare Web Analytics measures page visits and performance separately from Atlas analysis input.</div>
     </div>
 
     <h3 class="sec">Browse by area</h3>
     <div class="seclead">Pick an area to read the terms inside it.</div>
-    <div class="areas"><div class="area" onclick="nav('Agentic-AI-Governance-Query.html','Explore')"><span class="adot" style="background:#3b6ea5"></span><div><div class="an">Foundations</div><div class="as">What it's built from</div></div></div><div class="area" onclick="nav('Agentic-AI-Governance-Query.html','Explore')"><span class="adot" style="background:#2f8f83"></span><div><div class="an">Data & Provenance</div><div class="as">What it's anchored to</div></div></div><div class="area" onclick="nav('Agentic-AI-Governance-Query.html','Explore')"><span class="adot" style="background:#6b8e3d"></span><div><div class="an">Agentic Mechanics</div><div class="as">How it acts</div></div></div><div class="area" onclick="nav('Agentic-AI-Governance-Query.html','Explore')"><span class="adot" style="background:#a85d3c"></span><div><div class="an">Failure Modes & Risks</div><div class="as">What goes wrong</div></div></div><div class="area" onclick="nav('Agentic-AI-Governance-Query.html','Explore')"><span class="adot" style="background:#7a5aa6"></span><div><div class="an">Control & Safety</div><div class="as">How it's constrained</div></div></div><div class="area" onclick="nav('Agentic-AI-Governance-Query.html','Explore')"><span class="adot" style="background:#b08a2e"></span><div><div class="an">Oversight & Governance</div><div class="as">Who's accountable</div></div></div></div>
+    <div class="areas"><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#3b6ea5"></span><span><span class="an">Foundations</span><span class="as">What it's built from</span></span></button><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#2f8f83"></span><span><span class="an">Data &amp; Provenance</span><span class="as">What it's anchored to</span></span></button><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#6b8e3d"></span><span><span class="an">Agentic Mechanics</span><span class="as">How it acts</span></span></button><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#a85d3c"></span><span><span class="an">Failure Modes &amp; Risks</span><span class="as">What goes wrong</span></span></button><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#7a5aa6"></span><span><span class="an">Control &amp; Safety</span><span class="as">How it's constrained</span></span></button><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#b08a2e"></span><span><span class="an">Oversight &amp; Governance</span><span class="as">Who's accountable</span></span></button></div>
 
     <div class="block">
       <h2>What is this?</h2>
-      <p><b>Delta Atlas</b> is a function-first glossary of the language used in agentic AI and its governance. Every term is defined by <b>what it does</b>, not by where it falls in an alphabet, and linked to the others by shared purpose. Underneath, a grounding method called <b>State-Delta</b> keeps each definition tied to how these systems actually behave, not how they are marketed.</p>
+      <p><b>Delta Atlas</b> is a function-first glossary of language used in agentic AI and its governance. Each recorded term is described by <b>what it does</b>, then linked to related functions and controls. A candidate method called <b>State-Delta</b> organizes claims, observations, proposed changes, and accepted state as separate things; the public evidence status below shows where that method is and is not yet fully applied.</p>
     </div>
 
     <div class="block">
       <h2>Why not just ask a chatbot?</h2>
-      <p>You can, and for many things a chatbot is great. But it rebuilds its answer from scratch every time, and the more you pile into one chat, the more it can <b>drift</b>: contradict itself, blur old and new, and sound sure while losing the thread.</p>
-      <p>Delta Atlas works the other way. Each term has <b>one small, fixed, sourced definition</b> that does not change between visits. Ask the same thing twice and you get the same answer. It stays clear because it carries <b>less</b>, not more. That is the whole method: keep what is true, drop the noise, and check new information before trusting it. Simplifying on purpose is what keeps a system, or a chat, from getting sloppy.</p>
+      <p>You can, and for many things a chatbot is useful. But a generated answer can vary with model, context, and prompt history; long or conflicting context can also blur old and new claims.</p>
+      <p>Delta Atlas uses fixed browser code over recorded data snapshots. With the same pinned engine, snapshot, and input, its tested scoring behavior is reproducible. That does <b>not</b> make the underlying definitions true, and several older pages still carry different snapshots. The method is to keep claims small, expose those mismatches, and require evidence before promoting them.</p>
     </div>
 
     <div class="block gold">
@@ -349,65 +379,65 @@
     <div class="block flag">
       <h2>What this doesn't do</h2>
       <p><b>Where it sits:</b> this is the coherence check that runs <i>before</i> the enforcement layer, before you optimize, gate, or audit against your rules. It doesn't bind anything. It catches the incoherent spec before something else has to.</p>
-      <p>It does not <b>certify</b> anything. The groundedness score tells you how well-sourced a term is, <b>not</b> whether it is true.</p>
-      <p>It is not legal, compliance, or professional advice, and it is not trying to out-dictionary the dictionary. It defines what matters for understanding agentic AI and leaves the rest out on purpose.</p>
+      <p>It does not <b>certify</b> anything. The groundedness score is a source-support heuristic, <b>not</b> a truth, confidence, acceptance, or safety result.</p>
+      <p>It is not legal, compliance, or professional advice, and it is not trying to out-dictionary the dictionary. It focuses on a deliberately selected subset of terms for understanding agentic AI.</p>
     </div>
 
     <div class="block win">
-      <h2>What's next</h2>
-      <p>All 439 terms are now human-reviewed, so the candidate backlog is cleared. Next up is per-term source quotes so every definition shows its receipt, more independent sources like the EU AI Act and ISO 23894, and learning paths that connect job roles to the terms they need.</p>
+      <h2>Evidence status</h2>
+      <p>All 439 records currently carry the repository label <b>reviewed</b>. That label is not yet a per-term receipt: reviewer identity, review date, exact source locator, and source digest are not recorded consistently. Some public tools also still contain older generated vocabulary snapshots. The <a href="governance/contracts/atlas-data-sync-baseline.md" target="_blank" rel="noopener noreferrer">public data-sync baseline (opens in a new tab)</a> records those differences instead of hiding them. The next safe step is an owner-approved materialization policy and receipt-grade per-term evidence.</p>
     </div>
 
     <div class="jake">
-      <div class="jn">A note from Jake</div>
-      <p>Hi, I'm Jake. I'm not a company and I'm not a coder. I'm a guy who got tired of AI that sounds sure while losing the thread. These tools are the checks I wanted for my own work, shared so you can use them too. If you can break something here, please do. That's how it gets better.</p>
+      <div class="jn">Research note</div>
+      <p>Delta Atlas is independent open research, not a product certification. The tools are shared so people can inspect the rules, reproduce the checks, and report where they fail. A falsified claim or broken fixture is useful evidence: it should lead to a recorded correction, not a hidden rewrite.</p>
     </div>
 
     <h3 class="sec">Everyday tools</h3>
     <div class="seclead">Look up a word in the search above. Then these two.</div>
     <div class="grid">
-     <div class="card" onclick="nav('Delta-Atlas-GapCheck.html','Gap Check')"><div class="cn">Gap Check</div><div class="cw">Paste an AI policy, plan, or vendor claim. It flags what the document leaves unhandled: risks named with no control, autonomy with no oversight, and thin terms. Runs on your device.</div><div class="cb"><span>Best for:</span> checking a document</div><div class="cgo">Open &rarr;</div></div>
-     <div class="card" onclick="nav('Delta-Atlas-Tracer.html','Priority Tracer')"><div class="cn">Priority Tracer</div><div class="cw">Paste an agent reasoning trace or log. It flags ordering drift, where the mission overrode a rule that should have held, and marks where the reference held. Client-side, nothing to install.</div><div class="cb"><span>Best for:</span> tracing a reasoning log</div><div class="cgo">Open &rarr;</div></div>
-     <div class="card" onclick="nav('Agentic-AI-Governance-Query.html','Explore')"><div class="cn">Explore</div><div class="cw">Browse the whole vocabulary, or filter by trait (a risk, hard to undo, no human in charge). Each term shows what it does and what it connects to.</div><div class="cb"><span>Best for:</span> browsing and finding terms</div><div class="cgo">Open &rarr;</div></div>
+     <button class="card" type="button" onclick="nav('Delta-Atlas-GapCheck.html')"><span class="cn">Gap Check</span><span class="cw">Paste an AI policy, plan, or vendor claim. It flags what the document leaves unhandled: risks named with no control, autonomy with no oversight, and thin terms. Runs on your device.</span><span class="cb"><span>Best for:</span> checking a document</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Delta-Atlas-Tracer.html')"><span class="cn">Priority Tracer</span><span class="cw">Paste an agent reasoning trace or log. It flags ordering drift, where the mission overrode a rule that should have held, and marks where the reference held. Client-side, nothing to install.</span><span class="cb"><span>Best for:</span> tracing a reasoning log</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="cn">Explore</span><span class="cw">Browse the whole vocabulary, or filter by trait (a risk, hard to undo, no human in charge). Each term shows what it does and what it connects to.</span><span class="cb"><span>Best for:</span> browsing and finding terms</span><span class="cgo">Open &rarr;</span></button>
     </div>
     <h3 class="sec">General tool</h3>
     <div class="seclead">Not about AI vocabulary. It checks any framework or plan for coherence, on any topic.</div>
     <div class="grid">
-     <div class="card" onclick="nav('Coherence-Audit.html','Framework Audit')"><div class="cn">Framework Audit</div><div class="cw">Score any framework or plan against its goal, on any subject: where it holds, where it goes vague, and what to fix first.</div><div class="cb"><span>Best for:</span> auditing a plan on any topic</div><div class="cgo">Open &rarr;</div></div>
-     <div class="card" onclick="nav('Delta-Atlas-Primitives.html','Systems Primitives')"><div class="cn">Systems Primitives</div><div class="cw">A companion library, separate from the glossary: 150 cross-domain primitives (finance, crypto, real estate, compute, AI) grouped by system role, not field. Same lens, wider world.</div><div class="cb"><span>Best for:</span> seeing one pattern across fields</div><div class="cgo">Open &rarr;</div></div>
-     <div class="card" onclick="nav('Delta-Atlas-Cadence.html','The Cadence Dial')"><div class="cn">The Cadence Dial</div><div class="cw">An explorable lesson: how often to check on anything. Physics measured three zones &#8212; watch constantly and it freezes, watch rarely and it drifts, watch at the wrong rhythm and the checking itself speeds the decay. Measured law for quantum systems; the lesson marks exactly what transfers to everything else. Interactive, on your device.</div><div class="cb"><span>Best for:</span> tuning any monitoring habit</div><div class="cgo">Open &rarr;</div></div>
-     <div class="card" onclick="nav('Delta-Atlas-Basin.html','The Basin')"><div class="cn">The Basin</div><div class="cw">An explorable lesson: kick a ball in a bowl and watch resilience split into two separate numbers &#8212; how fast it returns, and how hard a shock it survives before it never comes back. Rest states, tipping points, and the early warning that a system is losing its footing. Interactive, on your device.</div><div class="cb"><span>Best for:</span> seeing what resilience actually is</div><div class="cgo">Open &rarr;</div></div>
-     <div class="card" onclick="nav('Delta-Atlas-ContinuityAudit.html','Continuity Audit')"><div class="cn">Continuity Audit</div><div class="cw">Framework Audit's engine, pointed at an operations manual: risks with no stated control, and single points of failure with no documented backup.</div><div class="cb"><span>Best for:</span> operations manuals &amp; SOPs</div><div class="cgo">Open &rarr;</div></div>
+     <button class="card" type="button" onclick="nav('Coherence-Audit.html')"><span class="cn">Framework Audit</span><span class="cw">Score any framework or plan against its goal, on any subject: where it holds, where it goes vague, and what to fix first.</span><span class="cb"><span>Best for:</span> auditing a plan on any topic</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Delta-Atlas-Primitives.html')"><span class="cn">Systems Primitives</span><span class="cw">A companion library, separate from the glossary: 150 cross-domain primitives (finance, crypto, real estate, compute, AI) grouped by system role, not field. Same lens, wider world.</span><span class="cb"><span>Best for:</span> seeing one pattern across fields</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Delta-Atlas-Cadence.html')"><span class="cn">The Cadence Dial</span><span class="cw">An explorable lesson: how often to check on anything. Physics measured three zones &mdash; watch constantly and it freezes, watch rarely and it drifts, watch at the wrong rhythm and the checking itself speeds the decay. Measured law for quantum systems; the lesson marks exactly what transfers to everything else. Interactive, on your device.</span><span class="cb"><span>Best for:</span> tuning any monitoring habit</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Delta-Atlas-Basin.html')"><span class="cn">The Basin</span><span class="cw">An explorable lesson: kick a ball in a bowl and watch resilience split into two separate numbers &mdash; how fast it returns, and how hard a shock it survives before it never comes back. Rest states, tipping points, and the early warning that a system is losing its footing. Interactive, on your device.</span><span class="cb"><span>Best for:</span> seeing what resilience actually is</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Delta-Atlas-ContinuityAudit.html')"><span class="cn">Continuity Audit</span><span class="cw">Framework Audit's engine, pointed at an operations manual: risks with no stated control, and single points of failure with no documented backup.</span><span class="cb"><span>Best for:</span> operations manuals &amp; SOPs</span><span class="cgo">Open &rarr;</span></button>
     </div>
     <h3 class="sec">For Evaluators</h3>
     <div class="seclead">Deeper views for checking the work.</div>
     <div class="grid">
-     <div class="card" onclick="nav('Agentic-AI-Governance-GroundTruth.html','Curation dashboard')"><div class="cn">Curation dashboard</div><div class="cw">The author view for keeping the glossary honest: which entries are still unreviewed, thin, or lean on a single source. A worklist for integration, not a ranking of the words.</div><div class="cb"><span>Best for:</span> author curation</div><div class="cgo">Open &rarr;</div></div>
-     <div class="card" onclick="nav('Delta-Atlas-Field.html','Lab: the Field')"><div class="cn">Lab: the Field</div><div class="cw">An experiment, not a tool. Push a signal into the vocabulary and feel how grounded it is: calm where it is solid, restless where it is thin. Play, walled off from the real tools.</div><div class="cb"><span>Best for:</span> tinkering</div><div class="cgo">Open &rarr;</div></div>
+     <button class="card" type="button" onclick="nav('Agentic-AI-Governance-GroundTruth.html')"><span class="cn">Curation dashboard</span><span class="cw">The author view for keeping the glossary honest: which entries are still unreviewed, thin, or lean on a single source. A worklist for integration, not a ranking of the words.</span><span class="cb"><span>Best for:</span> author curation</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Delta-Atlas-Field.html')"><span class="cn">Lab: the Field</span><span class="cw">An experiment, not a tool. Push a signal into the vocabulary and feel how grounded it is: calm where it is solid, restless where it is thin. Play, walled off from the real tools.</span><span class="cb"><span>Best for:</span> tinkering</span><span class="cgo">Open &rarr;</span></button>
     </div>
 
     <h3 class="sec docsec">Reference documents
     </h3>
     <div class="seclead">Longer reads. These open in a new tab.</div>
     <div class="docs">
-     <a class="doc" href="Delta-Atlas-HowItWorks.html" target="_blank"><b>How it works</b><span>One engine, many checks &mdash; the whole toolset in plain English  (opens in new tab)</span></a>
-     <a class="doc" href="White-Paper.html" target="_blank"><b>White Paper (plain English)</b><span>The living legend: every tool, the exact meanings, the rules  (opens in new tab)</span></a>
-     <a class="doc" href="Delta-Atlas-Canon.md" target="_blank"><b>Delta Atlas Canon</b><span>Portable spec that keeps any model on the same terms, to minimize uncontrolled drift  (opens in new tab)</span></a>
-     <a class="doc" href="Agentic-AI-Governance-Glossary.md" target="_blank"><b>Glossary (text)</b><span>The function-first glossary as a plain document  (opens in new tab)</span></a>
-     <a class="doc" href="README-Portability.md" target="_blank"><b>Portability &amp; model-agnostic</b><span>Why it runs on any PC, no AI model needed  (opens in new tab)</span></a>
-     <a class="doc" href="Translator-Framework-Design.md" target="_blank"><b>Framework design</b><span>The data model and sovereign-zero idea  (opens in new tab)</span></a>
-     <a class="doc" href="Red-Team-Report.md" target="_blank"><b>Red-team report</b><span>The honest weaknesses, treated as a feature  (opens in new tab)</span></a>
-     <a class="doc" href="Coherence-Ledger-Method.md" target="_blank"><b>Coherence Ledger (method)</b><span>The neutral method behind the Framework Audit  (opens in new tab)</span></a>
+     <a class="doc" href="Delta-Atlas-HowItWorks.html" target="_blank" rel="noopener noreferrer"><b>How it works</b><span>One engine, many checks &mdash; the whole toolset in plain English  (opens in new tab)</span></a>
+     <a class="doc" href="White-Paper.html" target="_blank" rel="noopener noreferrer"><b>White Paper (plain English)</b><span>The living legend: every tool, the exact meanings, the rules  (opens in new tab)</span></a>
+     <a class="doc" href="Delta-Atlas-Canon.md" target="_blank" rel="noopener noreferrer"><b>Delta Atlas Canon</b><span>Portable spec that keeps any model on the same terms, to minimize uncontrolled drift  (opens in new tab)</span></a>
+     <a class="doc" href="Agentic-AI-Governance-Glossary.md" target="_blank" rel="noopener noreferrer"><b>Glossary (text)</b><span>The function-first glossary as a plain document  (opens in new tab)</span></a>
+     <a class="doc" href="README-Portability.md" target="_blank" rel="noopener noreferrer"><b>Portability &amp; model-agnostic</b><span>Why it runs on any PC, no AI model needed  (opens in new tab)</span></a>
+     <a class="doc" href="Translator-Framework-Design.md" target="_blank" rel="noopener noreferrer"><b>Framework design</b><span>The data model and sovereign-zero idea  (opens in new tab)</span></a>
+     <a class="doc" href="Red-Team-Report.md" target="_blank" rel="noopener noreferrer"><b>Red-team report</b><span>The honest weaknesses, treated as a feature  (opens in new tab)</span></a>
+     <a class="doc" href="Coherence-Ledger-Method.md" target="_blank" rel="noopener noreferrer"><b>Coherence Ledger (method)</b><span>The neutral method behind the Framework Audit  (opens in new tab)</span></a>
     </div>
 
-    <div class="floor">
-     <div class="fhead"><b>THE FLOOR</b><span>lexicons versioned &middot; corpus held fixed &middot; every change logged with its reason</span><a class="seamlink" href="Delta-Atlas-Tracer-Calibration.md" target="_blank">every seam on record &rarr;</a></div>
-     <p><b>How to read this honestly.</b> A person has read and checked every definition, though that is not a promise it is correct. A term can be well sourced and still be wrong. The tools run without any AI model, so the same input always gives the same answer. The definitions draw on government, standards bodies, academia, industry, and the security community. This is open research, and it stays open.</p>
-     <p class="disc"><b>Disclaimer.</b> Independent educational research, provided as-is with no warranty of accuracy or fitness for any purpose. Not legal, compliance, or professional advice; verify against primary sources before relying on anything. Not affiliated with or endorsed by NIST, ISO/IEC, OWASP, Stanford HAI, MIT, NSA/CISA, or any cited organization; their names and materials remain the property of their owners. Content licensed <a href="LICENSE.txt" target="_blank">CC BY 4.0</a>. &copy; 2026 Jake Tiller.</p>
-    </div>
+    <footer class="floor">
+     <div class="fhead"><b>THE FLOOR</b><span>lexicons versioned &middot; corpus held fixed &middot; every change logged with its reason</span><a class="seamlink" href="Delta-Atlas-Tracer-Calibration.md" target="_blank" rel="noopener noreferrer">every seam on record &rarr;</a></div>
+     <p><b>How to read this honestly.</b> The current dataset labels every definition reviewed, but the repository does not yet carry complete per-term review receipts. A term can be sourced and still be wrong. The tools run without an AI model; their labeled corpus tests pin specific behavior for the checked code and data. Definitions draw on government, standards bodies, academia, industry, and the security community. This is open research, and its unresolved seams stay visible.</p>
+     <p class="disc"><b>Disclaimer.</b> Independent educational research, provided as-is with no warranty of accuracy or fitness for any purpose. Not legal, compliance, or professional advice; verify against primary sources before relying on anything. Not affiliated with or endorsed by NIST, ISO/IEC, OWASP, Stanford HAI, MIT, NSA/CISA, or any cited organization; their names and materials remain the property of their owners. Content licensed <a href="LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. &copy; 2026 Jake Tiller.</p>
+    </footer>
    </div>
   </div>
-</div>
+</main>
 <script>
  var frame=document.getElementById('frame'), home=document.getElementById('home'), loading=document.getElementById('loading');
  var NAV_ROUTES=Object.freeze({
@@ -428,17 +458,20 @@
  });
  function base(f){ return (f||'').split('?')[0]; }
  function setActive(f){ var b=base(f); document.querySelectorAll('.nav').forEach(function(x){ x.classList.toggle('on', x.dataset && x.dataset.f===b); }); }
- function nav(f){ var routePath=base(f); if(!Object.prototype.hasOwnProperty.call(NAV_ROUTES,routePath)) return false;
+ function routeFromLocation(){ var h=''; try{h=decodeURIComponent((location.hash||'').replace('#',''));}catch(e){return null;} return Object.prototype.hasOwnProperty.call(NAV_ROUTES,h)?h:null; }
+ function nav(f,writeHistory){ var routePath=base(f); if(!Object.prototype.hasOwnProperty.call(NAV_ROUTES,routePath)) return false;
    var routeLabel=NAV_ROUTES[routePath];
    home.style.display='none'; frame.style.display='block'; loading.style.display='block';
    frame.onload=function(){ loading.style.display='none'; };
    frame.title=routeLabel; frame.src=routePath; setActive(routePath); document.title=routeLabel;
-   try{ history.replaceState(null,'','#'+encodeURIComponent(routePath)); }catch(e){} return true; }
- function goHome(){ frame.style.display='none'; frame.removeAttribute('src'); home.style.display='block'; home.scrollTop=0;
+   if(writeHistory!==false){try{ history.pushState({route:routePath},'', '#'+encodeURIComponent(routePath)); }catch(e){}} return true; }
+ function goHome(writeHistory){ frame.style.display='none'; frame.removeAttribute('src'); home.style.display='block'; home.scrollTop=0;
    frame.title='Delta Atlas content'; loading.style.display='none'; setActive(null); document.title='Delta Atlas';
-   try{ history.replaceState(null,'','#'); }catch(e){} var hq=document.getElementById('hq'); if(hq) hq.focus(); }
+   if(writeHistory!==false){try{ history.pushState({route:null},'', location.pathname); }catch(e){}} var hq=document.getElementById('hq'); if(hq&&writeHistory!==false) hq.focus(); }
  function heroSearch(){ var q=document.getElementById('hq').value.trim(); if(!q) return;
-   var fr=document.getElementById('ansframe'); fr.src='Agentic-AI-Governance-Chat.html?q='+encodeURIComponent(q)+'&embed=1';
+   var fr=document.getElementById('ansframe');
+   fr.onload=function(){ var target=location.origin==='null'?'*':location.origin; fr.contentWindow.postMessage({type:'delta-atlas-query',version:1,query:q},target); };
+   fr.src='Agentic-AI-Governance-Chat.html#embed';
    document.getElementById('results').style.display='block';
    document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'}); }
  function clearResults(){ document.getElementById('results').style.display='none';
@@ -446,12 +479,19 @@
    var hq=document.getElementById('hq'); if(hq){ hq.value=''; hq.focus(); } }
  var HEX=["what is artificial intelligence?","what is machine learning?","what is a model?","what is an agent?","what is a prompt?","what is a hallucination?","what is a guardrail?","what is alignment?","what is fine-tuning?","what is RAG?"];
  var hc=document.getElementById('hchips');
- hc.innerHTML=HEX.map(function(x){ return '<span class="hchip">'+x+'</span>'; }).join('');
+ hc.innerHTML=HEX.map(function(x){ return '<button class="hchip" type="button">'+x+'</button>'; }).join('');
  hc.querySelectorAll('.hchip').forEach(function(el){ el.onclick=function(){ var hq=document.getElementById('hq'); hq.value=el.textContent; heroSearch(); }; });
  document.getElementById('hq').addEventListener('keydown',function(e){ if(e.key==='Enter') heroSearch(); });
- (function(){ var h=''; try{ h=decodeURIComponent((location.hash||'').replace('#','')); }catch(e){ return; } if(h){ nav(h); } })();
+ function clearAtlasData(){
+   var keys=['delta_prefill','deltaAtlasAskMisses','deltaAtlasVerifyChecked'], status=document.getElementById('storage-status');
+   try{keys.forEach(function(key){localStorage.removeItem(key);}); if(status)status.textContent='Cleared';}
+   catch(e){if(status)status.textContent='Could not clear';}
+ }
+ function applyLocation(){ var route=routeFromLocation(); if(route){nav(route,false);}else{goHome(false);} }
+ window.addEventListener('popstate',applyLocation);
+ (function(){ applyLocation(); })();
  if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
- window.doShare=function(){ var url=location.href.split('#')[0]; var b=document.getElementById('shareBtn');
+ window.doShare=function(){ var url=location.href; var b=document.getElementById('shareBtn');
    function ok(){ if(b){ var t=b.textContent; b.textContent='Link copied'; setTimeout(function(){ b.textContent=t; },1400); } }
    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(ok,function(){ window.prompt('Copy this link:',url); }); } else { window.prompt('Copy this link:',url); } };
  var deferredPrompt=null, installBtn=document.getElementById('installBtn');
@@ -461,8 +501,8 @@
  if(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches && installBtn){ installBtn.style.display='none'; }
 </script>
 <script>
- /* defer the hero Gap Check demo so it never blocks the homepage's first paint */
- (function(){function go(){var f=document.querySelector('.demoframe');if(f&&!f.getAttribute('src')&&f.getAttribute('data-src'))f.setAttribute('src',f.getAttribute('data-src'));}
-  if('requestIdleCallback' in window){requestIdleCallback(go,{timeout:2000});}else{window.addEventListener('load',function(){setTimeout(go,250);});}})();
+ /* Load the illustrative sample only when a visitor asks to see it. */
+ (function(){var sample=document.querySelector('.sample');function go(){var f=document.querySelector('.demoframe');if(f&&!f.getAttribute('src')&&f.getAttribute('data-src'))f.setAttribute('src',f.getAttribute('data-src'));}
+  if(sample){sample.addEventListener('toggle',function(){if(sample.open)go();});}})();
 </script>
 </body></html>

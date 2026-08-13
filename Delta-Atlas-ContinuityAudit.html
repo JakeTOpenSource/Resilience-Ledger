@@ -31,6 +31,9 @@
  .flag.bad{color:var(--red);border-color:#e3c1b8;} .flag.mid{color:var(--amber);border-color:#e6d3a3;} .flag.ok{color:var(--green);border-color:#4a6b56;}
  .note{color:var(--dim);font-size:12px;background:rgba(95,125,80,0.07);border:1px solid #4a6b56;border-radius:9px;padding:11px 14px;margin-top:20px;}
  .overlaynote{font-size:11px;color:var(--dim);margin-top:6px;}
+ .overlayloader{margin-top:12px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--panel);}
+ .overlayloader label{margin:0 0 6px;text-transform:none;font-size:12px;letter-spacing:0;}
+ .overlayloader input{padding:7px;font-size:12px;}
 
  /* canonical typography: one baseline across every page (added 2026-07-11) */
  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;line-height:1.6;}
@@ -57,9 +60,13 @@ If the on-call schedule changes, only one person is informed."></textarea>
    <button class="ghost" id="ex2">Weak example</button>
    <button class="ghost" id="clr">Clear</button>
  </div>
- <div class="overlaynote" id="overlaynote"></div>
+ <div class="overlayloader">
+   <label for="overlayfile">Optional private rules: choose a data-only <code>continuity-overlay.local.json</code> from this device. The file is read only in this browser and is not uploaded.</label>
+   <input id="overlayfile" type="file" accept="application/json,.json"/>
+   <div class="overlaynote" id="overlaynote" role="status" aria-live="polite">No private overlay loaded.</div>
+ </div>
  <div class="res" id="res"></div>
- <div class="note">Honest limit: this reads words and patterns, not meaning or your operation's actual arrangements. It flags likely gaps to point you where to look; it does not deliver a verdict, and it cannot see anything you haven't written down. The judgment stays yours. Nothing you type leaves your device. Want to harden this privately with your own real procedures and vendor names? Copy <code>continuity-overlay.sample.js</code> to <code>continuity-overlay.local.js</code> next to this file (gitignored — never published) and this page will load it automatically.</div>
+ <div class="note">Honest limit: this reads words and patterns, not meaning or your operation's actual arrangements. It flags likely gaps to point you where to look; it does not deliver a verdict, and it cannot see anything you haven't written down. The judgment stays yours. Atlas does not submit the text you enter to a model or API. A private overlay is optional and data-only; invalid or unsupported files are rejected.</div>
 </div>
 <script src="lexicon-engine.js"></script>
 <script src="coherence-score-engine.js"></script>
@@ -147,15 +154,10 @@ const BASE_KB = {
   }],
 };
 
-// Private overlay (gitignored *.local.js, never published): additive only. Copy
-// continuity-overlay.sample.js to continuity-overlay.local.js and add real terms/relations/redFlags
-// specific to one operation — those never belong in the public floor above.
-//
-// SHALLOW copy, never a JSON round-trip: BASE_KB carries a Set (defendRelTypes) and functions
-// (groupChecks[].title/detail, ifGroup.ids) that JSON.stringify silently destroys — a red-team
-// found that broke the whole overlay path (spec.ids.has is not a function). We only ever CONCAT
-// the four additive, JSON-safe arrays; everything structural (groupChecks, defendRelTypes,
-// clusters) is shared by reference from the base, untouched.
+// Private overlay (gitignored *.local.json, never published): additive data only.
+// Code overlays are intentionally unsupported: this page never evaluates fetched text.
+// BASE_KB contains Sets and functions, so copy it shallowly and concatenate only the
+// validated additive data; structural controls remain the public floor.
 function mergeOverlay(base, ov){
   if(!ov) return base;
   var kb = {};
@@ -169,6 +171,48 @@ function mergeOverlay(base, ov){
     Object.keys(ov.bridge).forEach(function(id){ kb.bridge[id] = (kb.bridge[id]||[]).concat(ov.bridge[id]); });
   }
   return kb;
+}
+
+const OVERLAY_FILE_LABEL='continuity-overlay.local.json';
+const OVERLAY_VERSION=1;
+const OVERLAY_MAX_TERMS=80, OVERLAY_MAX_RELATIONS=160, OVERLAY_MAX_PHRASES=24;
+const OVERLAY_REL_TYPES=new Set(['mitigates','checks','detects','governs']);
+function own(o,k){ return Object.prototype.hasOwnProperty.call(o,k); }
+function obj(v){ return !!v && typeof v==='object' && !Array.isArray(v); }
+function text(v,max){ return typeof v==='string' && v.length>0 && v.length<=max; }
+function id(v){ return typeof v==='string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v) && v.length<=80; }
+function only(o,keys){ return Object.keys(o).every(function(k){ return keys.indexOf(k)!==-1; }); }
+function literalPattern(phrases){
+  return new RegExp(phrases.map(function(p){ return p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }).join('|'),'i');
+}
+function parseOverlay(raw){
+  var ov;
+  try { ov=JSON.parse(raw); } catch(e) { return null; }
+  if(!obj(ov) || ov.type!=='delta-atlas-continuity-overlay' || ov.version!==OVERLAY_VERSION || !only(ov,['type','version','terms','relations','redFlags','bridge'])) return null;
+  var terms=Array.isArray(ov.terms)?ov.terms:[], relations=Array.isArray(ov.relations)?ov.relations:[], redFlags=Array.isArray(ov.redFlags)?ov.redFlags:[], bridge=obj(ov.bridge)?ov.bridge:{};
+  if(terms.length>OVERLAY_MAX_TERMS || relations.length>OVERLAY_MAX_RELATIONS || redFlags.length>OVERLAY_MAX_TERMS) return null;
+  var known={}; BASE_KB.terms.forEach(function(t){ known[t.id]=true; });
+  var cleanTerms=[];
+  for(var i=0;i<terms.length;i++){
+    var t=terms[i];
+    if(!obj(t) || !only(t,['id','name','purpose','cluster','acct','aliases']) || !id(t.id) || known[t.id] || !text(t.name,160) || ['risk','control','concept'].indexOf(t.purpose)===-1 || !text(t.cluster,100) || typeof t.acct!=='string' || !Array.isArray(t.aliases) || t.aliases.length>OVERLAY_MAX_PHRASES || !t.aliases.every(function(a){return text(a,160);} )) return null;
+    known[t.id]=true; cleanTerms.push({id:t.id,name:t.name,purpose:t.purpose,cluster:t.cluster,acct:t.acct,aliases:t.aliases.slice()});
+  }
+  var cleanRelations=[];
+  for(var j=0;j<relations.length;j++){
+    var r=relations[j];
+    if(!Array.isArray(r) || r.length!==3 || !id(r[0]) || !id(r[1]) || !known[r[0]] || !known[r[1]] || !OVERLAY_REL_TYPES.has(r[2])) return null;
+    cleanRelations.push([r[0],r[1],r[2]]);
+  }
+  var cleanFlags=[];
+  for(var k=0;k<redFlags.length;k++){
+    var f=redFlags[k];
+    if(!obj(f) || !only(f,['t','d','phrases']) || !text(f.t,160) || !text(f.d,800) || !Array.isArray(f.phrases) || f.phrases.length<1 || f.phrases.length>OVERLAY_MAX_PHRASES || !f.phrases.every(function(p){return text(p,160);} )) return null;
+    cleanFlags.push({t:esc(f.t),d:esc(f.d),re:literalPattern(f.phrases)});
+  }
+  var cleanBridge={};
+  for(var b in bridge){ if(!own(bridge,b) || !id(b) || !known[b] || !Array.isArray(bridge[b]) || bridge[b].length>OVERLAY_MAX_PHRASES || !bridge[b].every(function(p){return text(p,160);} )) return null; cleanBridge[b]=bridge[b].slice(); }
+  return {terms:cleanTerms,relations:cleanRelations,redFlags:cleanFlags,bridge:cleanBridge};
 }
 
 // --- coherence scoring: base 5 dimensions + one new one this domain needed: continuity ---
@@ -308,9 +352,17 @@ document.getElementById('ex2').onclick=function(){ loadEx("Run the operation smo
   "The accounts are not reconciled on any regular schedule.",
   "Anyone can approve purchases without any sign-off from management.",
   "In an incident, only one person knows who to call."]); };
-fetch('continuity-overlay.local.js').then(function(r){ if(!r.ok) throw 0; return r.text(); }).then(function(src){
-  (0,eval)(src); // defines window.CONTINUITY_OVERLAY if present; local file only, never fetched over a network
-  if(window.CONTINUITY_OVERLAY){ KB = mergeOverlay(BASE_KB, window.CONTINUITY_OVERLAY); document.getElementById('overlaynote').textContent = 'Private overlay loaded: base + your local rules.'; }
-}).catch(function(){});
+// RUNTIME_BINDING_START: explicit local file selection; no network fetch and no code evaluation.
+document.getElementById('overlayfile').addEventListener('change',function(event){
+  var file=event.target.files&&event.target.files[0], note=document.getElementById('overlaynote');
+  KB=BASE_KB;
+  if(!file){note.textContent='No private overlay loaded.';return;}
+  if(file.size>256*1024){note.textContent='Overlay rejected: file exceeds 256 KiB.';event.target.value='';return;}
+  file.text().then(function(raw){
+    var overlay=parseOverlay(raw);
+    if(!overlay){note.textContent='Overlay rejected: invalid type, version, field, identifier, or relation.';return;}
+    KB=mergeOverlay(BASE_KB,overlay); note.textContent='Private data overlay loaded for this page session.';
+  }).catch(function(){note.textContent='Overlay rejected: the file could not be read.';});
+});
 </script>
 </body></html>

@@ -36,7 +36,17 @@
 <div class="wrap"><div id="view"></div></div>
 <script>
 var view=document.getElementById('view');
-function go(tool,payload){ try{localStorage.setItem('delta_prefill',JSON.stringify(Object.assign({tool:tool},payload)));}catch(e){}
+const PREFILL_KEY='delta_prefill', PREFILL_VERSION=1, PREFILL_TTL_MS=15*60*1000;
+function go(tool,payload){ try{
+  // Receivers consume `tool` and the payload fields, then remove this one-use record.
+  // Metadata lets a future receiver reject a stale or incompatible handoff.
+  var clean;
+  if(tool==='gap'&&payload&&typeof payload.text==='string'&&payload.text.length<=200000)clean={text:payload.text};
+  else if(tool==='audit'&&payload&&typeof payload.goal==='string'&&typeof payload.parts==='string'&&payload.goal.length<=20000&&payload.parts.length<=200000)clean={goal:payload.goal,parts:payload.parts};
+  else return;
+  var now=Date.now(), record=Object.assign({type:'delta-atlas-prefill',version:PREFILL_VERSION,issued_at:now,expires_at:now+PREFILL_TTL_MS,one_use:true,tool:tool},clean);
+  localStorage.removeItem(PREFILL_KEY); localStorage.setItem(PREFILL_KEY,JSON.stringify(record));
+}catch(e){}
   var f=tool==='gap'?'Delta-Atlas-GapCheck.html':'Coherence-Audit.html', l=tool==='gap'?'Gap Check':'Framework Audit';
   if(window.parent&&window.parent!==window&&window.parent.nav){window.parent.nav(f,l);} else {location.href=f;} }
 function esc(s){return (s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}

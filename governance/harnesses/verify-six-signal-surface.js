@@ -138,14 +138,14 @@ function navigationFailures(source) {
   const navigationTargets = [...source.matchAll(/nav\('([^']+\.html)'/g)].map((match) => match[1]);
   if (JSON.stringify([...routes]) !== JSON.stringify(expectedRoutes)) failures.push('route allowlist or canonical titles changed');
   if (routes.get('Six-Signal-Method.html') !== 'Six Signals') failures.push('Six-Signal route or canonical title is missing');
-  if (!source.includes('<button class="nav" data-f="Six-Signal-Method.html" onclick="nav(\'Six-Signal-Method.html\',\'Six Signals\')">Six Signals</button>')) {
+  if (!source.includes('<button class="nav" type="button" data-f="Six-Signal-Method.html" onclick="nav(\'Six-Signal-Method.html\')">Six Signals</button>')) {
     failures.push('visible Six Signals navigation item is missing');
   }
   if (!navigationTargets.every((target) => routes.has(target))) failures.push('a navigation target bypasses the fixed route allowlist');
   if (!source.includes('<iframe id="frame" title="Delta Atlas content"></iframe>')) failures.push('iframe fallback title is missing');
 
-  const programStart = source.indexOf(' var NAV_ROUTES=Object.freeze(');
-  const programEnd = source.indexOf(' function goHome()', programStart);
+  const programStart = source.indexOf('var NAV_ROUTES=Object.freeze(');
+  const programEnd = source.indexOf('function goHome(', programStart);
   if (programStart < 0 || programEnd < 0) {
     failures.push('navigation program boundary is missing');
     return failures;
@@ -169,7 +169,7 @@ function navigationFailures(source) {
     title: 'unchanged',
     querySelectorAll() { return []; }
   };
-  const context = { frame, home, loading, document, history: { replaceState(...args) { historyCalls.push(args); } } };
+  const context = { frame, home, loading, document, history: { pushState(...args) { historyCalls.push(args); } } };
   try {
     vm.runInNewContext(program, context, { timeout: 1000 });
     const beforeUnknown = JSON.stringify({ frame, home, loading, documentTitle: document.title, historyCalls });
@@ -197,8 +197,9 @@ for (const failure of navigationFailures(index)) requireSurface(false, failure);
 
 const coreBlock = (serviceWorker.match(/const CORE=\[([\s\S]*?)\];/) || [])[1] || '';
 const coreMethodCount = (coreBlock.match(/'Six-Signal-Method\.html'/g) || []).length;
-requireSurface((serviceWorker.match(/aaig-v86/g) || []).length === 1 && serviceWorker.includes("const CACHE='aaig-v86';"), 'service-worker cache was not advanced exactly once to v86');
-requireSurface(!serviceWorker.includes("const CACHE='aaig-v85';"), 'stale v85 cache identifier remains');
+const cacheDeclarations = [...serviceWorker.matchAll(/const CACHE='aaig-v(\d+)';/g)];
+requireSurface(cacheDeclarations.length === 1 && Number(cacheDeclarations[0][1]) >= 87,
+  'service-worker cache identifier must be a single integer generation at or above v87');
 requireSurface(coreMethodCount === 1, 'Six-Signal page must appear exactly once in the service-worker core');
 
 const canaries = [

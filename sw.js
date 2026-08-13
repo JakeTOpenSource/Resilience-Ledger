@@ -1,16 +1,20 @@
 // Service worker: enables install + offline. Network-first so fresh deploys show immediately;
-// falls back to cache when offline. Read-only static caching; no tracking, no data collection.
-const CACHE='aaig-v86';
+// falls back to cache when offline. This worker performs read-only static caching
+// and does not collect application inputs.
+// Installation is all-or-nothing: a claimed offline shell must have every
+// declared core dependency, not a silently partial cache.
+const CACHE='aaig-v87';
 const CORE=[
  'index.html','manifest.webmanifest','evaluate.html','404.html','terms.enriched.json',
  'Agentic-AI-Governance-Chat.html','Agentic-AI-Governance-GroundTruth.html','Delta-Atlas-Start.html','Delta-Atlas-Field.html',
  'Agentic-AI-Governance-Query.html','Delta-Atlas-GapCheck.html','Delta-Atlas-Quick.html','Delta-Atlas-Tracer.html','primitives.json','Delta-Atlas-Primitives.html','Delta-Atlas-Canon.md',
  'Coherence-Audit.html','White-Paper.html','Six-Signal-Method.html',
+ 'lexicon-engine.js','coherence-score-engine.js',
  'Agentic-AI-Governance-Glossary.md','README-Portability.md','Translator-Framework-Design.md','Red-Team-Report.md','Coherence-Ledger-Method.md','LICENSE.txt',
  'icon-192.png','icon-512.png','icon-maskable-512.png','favicon.png'
 ];
 self.addEventListener('install',e=>{ e.waitUntil(
-  caches.open(CACHE).then(c=>Promise.allSettled(CORE.map(u=>c.add(u)))).then(()=>self.skipWaiting())); });
+  caches.open(CACHE).then(c=>Promise.all(CORE.map(u=>c.add(u)))).then(()=>self.skipWaiting())); });
 self.addEventListener('activate',e=>{ e.waitUntil(
   caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())); });
 self.addEventListener('fetch',e=>{
