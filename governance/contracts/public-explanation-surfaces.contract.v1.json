@@ -1,0 +1,110 @@
+{
+  "schema_version": "public-explanation-surfaces-contract.v1",
+  "contract_id": "public-explanation-surfaces-0001",
+  "classification": "PUBLIC",
+  "status": "PROPOSED_SOURCE_CLEANUP",
+  "mode": "PREPARE_ONLY",
+  "scope": {
+    "mutable_candidate_surfaces": [
+      "index.html",
+      "White-Paper.html"
+    ],
+    "immutable_archival_artifacts": [
+      "Resilience Ledger v0 4.pdf",
+      "Resilience Ledger v0 5.pdf"
+    ],
+    "verification_surface": "governance/harnesses/verify-public-explanation-surfaces.js",
+    "excluded_actions": [
+      "MERGE",
+      "DEPLOYMENT",
+      "PDF_REVISION",
+      "SEMANTIC_DATA_MIGRATION",
+      "LIVE_STATE_ACCEPTANCE"
+    ]
+  },
+  "source_profile": {
+    "hash_basis": {
+      "repository_text": "SHA-256 of UTF-8 bytes with CRLF normalized to LF",
+      "pdf": "SHA-256 of exact file bytes"
+    },
+    "base_repository_commit": "3e809fc1596491cb252723d3ba694e7b73047f71",
+    "atlas_candidate_source": {
+      "path": "terms.enriched.json",
+      "sha256": "0a57277ffbdcfa00771ae05777f0c7b8782edeaee10b90ed5242430ecd4e2413",
+      "terms": 439,
+      "sources": 193,
+      "relations": 360,
+      "status_boundary": "REPOSITORY_LABEL_NOT_REVIEW_RECEIPT"
+    },
+    "atlas_projection_baseline": {
+      "path": "governance/contracts/atlas-data-sync-baseline.md",
+      "sha256": "81e5a5fb1b5f84c23b45017a5e53dcc5347595f361aa76bd98b02d0694f0a1d6",
+      "ask_terms": 435,
+      "curation_terms": 435,
+      "explore_terms": 435,
+      "gap_check_terms": 433,
+      "projection_statuses": {
+        "ask": "177 reviewed, 258 candidate",
+        "curation": "177 reviewed, 258 candidate",
+        "explore": "177 reviewed, 258 candidate",
+        "gap_check": "177 reviewed, 256 candidate"
+      }
+    },
+    "systems_primitives": {
+      "path": "primitives.json",
+      "sha256": "f0665f18d96b2084075d1b5bfb627e46f6f5f5ddfa4470aa2c997f3bbfefd457",
+      "records": 160
+    },
+    "resilience_ledger_v0_4": {
+      "path": "Resilience Ledger v0 4.pdf",
+      "sha256": "2543d21b5f7c29a50ae6a6769aa9af5611b60940a4373b0dc2077ce191c72f0b",
+      "artifact_status": "ARCHIVAL_UNCHANGED"
+    },
+    "resilience_ledger_v0_5": {
+      "path": "Resilience Ledger v0 5.pdf",
+      "sha256": "65644b4d567d6937a34639f9724de2b072becb278792b7c1c2ef05f4b2c8672a",
+      "artifact_status": "ARCHIVAL_UNCHANGED",
+      "function_terms": [
+        "Absorb load (alias: Buffer)",
+        "Check against a fixed reference (alias: Floor)",
+        "Reset to baseline (alias: Return)"
+      ]
+    }
+  },
+  "presentation_invariants": [
+    "The home surface identifies 439 as the declared candidate-source inventory and does not imply that every tool serves all 439 records.",
+    "The home and explanation surfaces keep the 435- and 433-record public projections and their legacy status-label mismatch visible through the recorded data-sync baseline.",
+    "The Systems Primitives card reports 160 records for the pinned primitives.json source.",
+    "No unsupported novelty, uniqueness, endorsement, universal correctness, or certification claim is presented.",
+    "Area labels are not presented as working filters unless a distinct filtered result is implemented and verified.",
+    "Local processing, Cloudflare Web Analytics, network, privacy, offline, and determinism claims remain scoped to tested code paths and named assets rather than stated absolutely.",
+    "Cadence and Basin mappings are labeled as bounded analogies and expose source links; the cited physical or ecological result is not generalized as a law for AI systems.",
+    "The ledger function is named Reset to baseline; Return is shown only as its v0.5 alias.",
+    "White-Paper.html describes itself as a maintained public guide, not as the sole canonical state or a peer-reviewed paper.",
+    "The v0.4 and v0.5 PDFs are labeled archival, are linked as exact artifacts, and remain byte-for-byte unchanged.",
+    "The guide discloses the observed archival PDF pagination defects without claiming to repair the unchanged bytes.",
+    "No future Witness Ledger or v0.6 artifact is asserted without a repository artifact and a separate source decision.",
+    "Governance copy points to append-only events and checkpoints without claiming that every historical project change was logged.",
+    "Primary content has a working skip target, one main landmark, one page heading, and scoped table headings or captions where tabular data is used."
+  ],
+  "acceptance_checks": [
+    "PINNED_SOURCE_DIGESTS_MATCH",
+    "PINNED_COUNTS_MATCH",
+    "ARCHIVAL_PDF_BYTES_UNCHANGED",
+    "HTML_SEMANTIC_BOUNDARIES_MATCH",
+    "UNSUPPORTED_ABSOLUTE_CLAIMS_ABSENT",
+    "INLINE_SCRIPTS_PARSE",
+    "MUTATION_CANARIES_REJECTED",
+    "OWNER_MERGE_STILL_REQUIRED",
+    "PRODUCTION_DEPLOYMENT_NOT_ATTEMPTED"
+  ],
+  "claim_ceiling": [
+    "FILE_DIGEST_BOUND_SOURCE_CANDIDATE_ONLY",
+    "NOT_SEMANTIC_TRUTH_OR_REVIEW_RECEIPT",
+    "NOT_PDF_CORRECTION_OR_ENDORSEMENT",
+    "NOT_PRIVACY_SECURITY_OR_ACCESSIBILITY_CERTIFICATION",
+    "NOT_LIVE_HEALTH_OR_PRODUCTION_IDENTITY",
+    "NOT_MERGE_OR_DEPLOYMENT_AUTHORITY",
+    "OWNER_MERGE_REQUIRED"
+  ]
+}

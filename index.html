@@ -20,7 +20,7 @@
  .primary-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
  .nav{cursor:pointer;border:1px solid transparent;background:transparent;color:var(--dim);font-size:13px;padding:10px 11px;min-height:44px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;}
  .nav:hover{color:var(--txt);background:rgba(217,181,69,0.10);}
- .nav:focus-visible,.action:focus-visible,.dlink:focus-visible,.hchip:focus-visible,.card:focus-visible,.area:focus-visible,.doc:focus-visible,.qlink:focus-visible,.data-clear:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+ .nav:focus-visible,.dlink:focus-visible,.hchip:focus-visible,.card:focus-visible,.doc:focus-visible,.qlink:focus-visible,.data-clear:focus-visible,.primary-cta:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
  .nav.on{color:var(--accent);border-color:var(--line);background:rgba(217,181,69,0.12);}
  .rightgrp{margin-left:auto;display:flex;gap:6px;}
  #stage{flex:1;position:relative;min-height:0;}
@@ -62,7 +62,7 @@
  .privacy-note{max-width:760px;margin:10px auto 0;color:var(--dim);font-size:12px;line-height:1.55;}
  .privacy-note a{color:var(--accent);}
  .data-clear{border:0;background:transparent;color:var(--accent);padding:0;margin-left:4px;text-decoration:underline;cursor:pointer;font:inherit;}
- .storage-status{display:inline-block;min-width:5ch;margin-left:5px;color:var(--green);}
+ .storage-status{display:inline-block;min-width:5ch;margin-left:5px;color:var(--win);}
  .primary-cta{margin-top:14px;min-height:44px;padding:10px 18px;border:1px solid var(--accent);background:var(--accent);color:#1e2b17;border-radius:24px;cursor:pointer;font-weight:700;font-size:14px;}
  .primary-cta:hover{background:#f0c75e;}
  @media (max-width:700px){ .demoframe{height:560px;} }
@@ -86,7 +86,6 @@
  .dlinks{margin-top:10px;font-size:12px;}
  .dlink{color:var(--accent);cursor:pointer;border:0;border-bottom:1px solid transparent;background:transparent;padding:0;font:inherit;} .dlink:hover{border-bottom-color:var(--accent);}
  .dsep{color:var(--line);margin:0 7px;}
- .badge{position:absolute;top:-9px;right:12px;background:var(--win);color:#1e2b17;font-size:9.5px;padding:2px 9px;border-radius:9px;letter-spacing:.5px;}
  .substrip{text-align:center;margin:14px 0 4px;font-size:13px;color:var(--dim);}
  .substrip .qlink{cursor:pointer;color:var(--accent);border-bottom:1px solid transparent;} .substrip .qlink:hover{border-bottom-color:var(--accent);}
  .qsep{margin:0 10px;opacity:.5;}
@@ -113,13 +112,11 @@
  #results{display:none;margin:20px 0 6px;}
  .resultcard{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);box-shadow:0 1px 5px rgba(0,0,0,0.06);}
  .reshead{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid var(--line);font-size:12px;color:var(--dim);}
- .reshead a{cursor:pointer;color:var(--accent);}
+ .reshead .dlink{cursor:pointer;color:var(--accent);}
  #ansframe{width:100%;height:66vh;border:0;display:block;background:var(--panel);}
  .areas{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;}
- .area{cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;
-   display:flex;align-items:center;gap:11px;transition:border-color .15s,transform .15s;}
- button.area{color:var(--txt);font:inherit;text-align:left;width:100%;}
- .area:hover{border-color:var(--accent);transform:translateY(-2px);}
+ .area{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;
+   display:flex;align-items:center;gap:11px;}
  .area .adot{width:11px;height:11px;border-radius:50%;flex:none;}
  .area .an{font-size:14.5px;font-weight:600;display:block;} .area .as{font-size:12px;color:var(--dim);display:block;}
  .seclead{color:var(--dim);font-size:12.5px;margin:-4px 0 12px;}
@@ -154,7 +151,7 @@
    .sample{margin-top:14px;}
  }
 </style></head><body>
-<a class="skip" href="#primary-content">Skip to main content</a>
+<a class="skip" href="#stage">Skip to main content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <path id="pBig" d="M50,97 C40,94 28,92 18,86 L8,78 C16,68 26,66 33,62 C24,54 17,44 14,32 L12,22 C22,22 31,26 38,28 C41,18 45,8 50,2 C55,8 59,18 62,28 C69,26 78,22 88,22 L86,32 C83,44 76,54 67,62 C74,66 84,68 92,78 L82,86 C72,92 60,94 50,97 Z"/>
   <path id="pMed" d="M50,96 C38,92 24,86 13,76 L9,68 C18,61 28,59 36,55 C31,40 34,20 44,8 L50,2 C56,8 66,20 64,40 C63,46 64,51 64,55 C72,59 82,61 91,68 L87,76 C76,86 62,92 50,96 Z"/>
@@ -241,9 +238,9 @@
    <button class="nav" id="home0" type="button" onclick="goHome(true)">Home</button>
   </div>
 </header>
-<main id="stage" aria-label="Delta Atlas tools">
-  <div id="loading">loading&hellip;</div>
-  <iframe id="frame" title="Delta Atlas content"></iframe>
+<main id="stage" aria-label="Delta Atlas tools" tabindex="-1">
+  <div id="loading" role="status" aria-live="polite">Loading&hellip;</div>
+  <iframe id="frame" title="Delta Atlas content" tabindex="-1"></iframe>
   <div id="home">
    <svg class="ivy vine-hero" viewBox="0 0 1440 1600" aria-hidden="true">
      <g>
@@ -295,7 +292,7 @@
   <path transform="rotate(45 100 100)" d="M100,42 L106,94 L158,100 L106,106 L100,158 L94,106 L42,100 L94,94 Z" stroke="#a8794f"/>
   <circle cx="100" cy="100" r="5" fill="#e3c258" stroke="none"/><text x="94" y="12" font-size="13" fill="#e3c258" stroke="none" font-family="Georgia,serif">N</text>
  </svg>
- <div class="wrap">
+  <div class="wrap">
     <div class="hero">
       <div class="plumb"></div>
       <h1 class="logo"><span class="dot"></span>Delta Atlas</h1>
@@ -303,7 +300,7 @@
       <div class="tagline">Check an AI plan, trace, or term against fixed, plain-language rules. The tools are deterministic and run in your browser.</div>
       <button class="primary-cta" type="button" onclick="nav('Delta-Atlas-GapCheck.html')">Paste a plan into Gap Check</button>
       <p class="privacy-note">Your plan and search text are analyzed locally. Atlas does not place submitted text in request URLs or send it to a model or API. Cloudflare may collect ordinary request metadata plus page-performance and visit measurements; <a href="https://developers.cloudflare.com/speed/observatory/rum-beacon/" target="_blank" rel="noopener noreferrer">read Cloudflare's RUM description (opens in a new tab)</a>. This browser may retain a one-use Quick handoff, missed-search history, or verification checklist. <button class="data-clear" type="button" onclick="clearAtlasData()">Clear saved Atlas data</button><span class="storage-status" id="storage-status" role="status" aria-live="polite"></span></p>
-      <div class="searchwrap" id="primary-content">
+      <div class="searchwrap">
         <input id="hq" maxlength="500" aria-label="Search the Delta Atlas glossary" placeholder="Ask anything:  what is a harness?   what defends against prompt injection?" autofocus/>
         <button id="hgo" type="button" onclick="heroSearch()">Search</button>
       </div>
@@ -313,7 +310,7 @@
        <div class="herodemo">
         <div class="demolabel">Live &middot; the real tool, running on your device</div>
         <iframe class="demoframe" data-src="Delta-Atlas-GapCheck.html#embed" title="Gap Check running on a sample AI policy" loading="lazy"></iframe>
-        <div class="demonote">This sample names <b>2 gaps</b> with no control present, and sees the controls that are there. <button class="dlink" type="button" onclick="nav('Delta-Atlas-GapCheck.html')">Open it and paste your own &rarr;</button></div>
+         <div class="demonote">This fixed example shows how the tool separates named gaps from controls it can find. It is a demonstration, not a verdict. <button class="dlink" type="button" onclick="nav('Delta-Atlas-GapCheck.html')">Open it and paste your own &rarr;</button></div>
        </div>
       </details>
     </div>
@@ -328,7 +325,6 @@
         <div class="dlinks"><button class="dlink" type="button" onclick="nav('Delta-Atlas-GapCheck.html')">Gap Check &rarr;</button><span class="dsep">&middot;</span><button class="dlink" type="button" onclick="nav('Coherence-Audit.html')">Framework Audit</button><span class="dsep">&middot;</span><button class="dlink" type="button" onclick="nav('Delta-Atlas-Quick.html')">Quick check</button></div>
       </section>
       <section class="door" aria-labelledby="trace-door">
-        <div class="badge">THE ONE NOBODY ELSE HAS</div>
         <div class="dk">I HAVE AN</div>
         <div class="dn" id="trace-door">Agent's trace</div>
         <div class="dw">The Priority Tracer catches ordering drift: the moment a goal quietly climbs over a rule it was supposed to obey &mdash; and credits where the rule held.</div>
@@ -337,7 +333,7 @@
       <section class="door" aria-labelledby="words-door">
         <div class="dk">I WANT THE</div>
         <div class="dn" id="words-door">Words explained</div>
-        <div class="dw">439 terms defined by what they do, linked by shared function. Browse the map, or just ask the search above.</div>
+        <div class="dw">The candidate source inventory records 439 terms. The current Ask and Explore snapshot contains 435; the public data-sync baseline records the four-term gap.</div>
         <div class="dlinks"><button class="dlink" type="button" onclick="nav('Agentic-AI-Governance-Query.html')">Explore &rarr;</button><span class="dsep">&middot;</span><button class="dlink" type="button" onclick="nav('White-Paper.html')">White Paper</button><span class="dsep">&middot;</span><button class="dlink" type="button" onclick="nav('Delta-Atlas-Start.html')">Start here</button></div>
       </section>
     </div>
@@ -347,17 +343,17 @@
     <div id="results"><div class="resultcard"><div class="reshead"><span>Answer &middot; fixed function-first engine</span><button class="dlink" type="button" onclick="clearResults()">Clear &times;</button></div><iframe id="ansframe" title="Glossary search result" referrerpolicy="no-referrer"></iframe></div></div>
 
     <div class="statwrap">
-      <div class="statline">439 vocabulary records &middot; 6 areas &middot; 193 source records &middot; all 439 currently carry the repository label <b>reviewed</b> &middot; free to read</div>
+      <div class="statline">Candidate source inventory: 439 vocabulary records &middot; 6 areas &middot; 193 source records &middot; Ask and Explore snapshot: <b>435 records</b> &middot; free to read</div>
       <div class="statline" style="margin-top:10px;line-height:1.7"><b>Get the app:</b>
         Android &mdash; tap <b>Install app</b> above (or Chrome menu &rsaquo; Add to Home screen) &middot;
         iPhone/iPad &mdash; in Safari tap <b>Share &rsaquo; Add to Home Screen</b> &middot;
         Computer &mdash; in Chrome/Edge click the install icon at the right end of the address bar.<br/>
-        Free. No app store or account. A successful install caches the declared core tools for offline use; optional assets and an existing browser cache can vary. Cloudflare Web Analytics measures page visits and performance separately from Atlas analysis input.</div>
+        Free. No app store or account. A successful install pre-caches a defined subset of core routes and engines, not every page; optional assets and an existing browser cache can vary. <a href="sw.js" target="_blank" rel="noopener noreferrer">Inspect the exact cache list (opens in a new tab)</a>. Cloudflare Web Analytics measures page visits and performance separately from Atlas analysis input.</div>
     </div>
 
     <h3 class="sec">Browse by area</h3>
-    <div class="seclead">Pick an area to read the terms inside it.</div>
-    <div class="areas"><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#3b6ea5"></span><span><span class="an">Foundations</span><span class="as">What it's built from</span></span></button><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#2f8f83"></span><span><span class="an">Data &amp; Provenance</span><span class="as">What it's anchored to</span></span></button><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#6b8e3d"></span><span><span class="an">Agentic Mechanics</span><span class="as">How it acts</span></span></button><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#a85d3c"></span><span><span class="an">Failure Modes &amp; Risks</span><span class="as">What goes wrong</span></span></button><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#7a5aa6"></span><span><span class="an">Control &amp; Safety</span><span class="as">How it's constrained</span></span></button><button class="area" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="adot" style="background:#b08a2e"></span><span><span class="an">Oversight &amp; Governance</span><span class="as">Who's accountable</span></span></button></div>
+    <div class="seclead">These are the six topic filters available inside Explore. <button class="dlink" type="button" onclick="nav('Agentic-AI-Governance-Query.html')">Open Explore and choose an area &rarr;</button></div>
+    <div class="areas" aria-label="Topic areas available in Explore"><div class="area"><span class="adot" style="background:#3b6ea5"></span><span><span class="an">Foundations</span><span class="as">What it's built from</span></span></div><div class="area"><span class="adot" style="background:#2f8f83"></span><span><span class="an">Data &amp; Provenance</span><span class="as">What it's anchored to</span></span></div><div class="area"><span class="adot" style="background:#6b8e3d"></span><span><span class="an">Agentic Mechanics</span><span class="as">How it acts</span></span></div><div class="area"><span class="adot" style="background:#a85d3c"></span><span><span class="an">Failure Modes &amp; Risks</span><span class="as">What goes wrong</span></span></div><div class="area"><span class="adot" style="background:#7a5aa6"></span><span><span class="an">Control &amp; Safety</span><span class="as">How it's constrained</span></span></div><div class="area"><span class="adot" style="background:#b08a2e"></span><span><span class="an">Oversight &amp; Governance</span><span class="as">Who's accountable</span></span></div></div>
 
     <div class="block">
       <h2>What is this?</h2>
@@ -372,13 +368,13 @@
 
     <div class="block gold">
       <h2>Why?</h2>
-      <p>The field invents words faster than most people can learn them, and that gap quietly decides who gets to take part. Someone entering the AI workforce should be able to find out what "ontology gate," "guardrail," or "excessive agency" mean without a course and without spin.</p>
+      <p>The field invents words faster than most people can learn them, and that gap quietly decides who gets to take part. Someone entering the AI workforce should be able to find out what an Atlas-specific term such as "ontology gate," or a broader term such as "guardrail" or "excessive agency," means without a course and without spin.</p>
       <p>This is <b>open research</b>: free to read, check, and build on. Helping people understand the work is part of doing the work.</p>
     </div>
 
     <div class="block flag">
       <h2>What this doesn't do</h2>
-      <p><b>Where it sits:</b> this is the coherence check that runs <i>before</i> the enforcement layer, before you optimize, gate, or audit against your rules. It doesn't bind anything. It catches the incoherent spec before something else has to.</p>
+      <p><b>Where it sits:</b> these tools compare stated text with explicit browser-side rules. They can point to missing or conflicting structure; they do not enforce policy, authorize an action, observe the outside world, or bind a system.</p>
       <p>It does not <b>certify</b> anything. The groundedness score is a source-support heuristic, <b>not</b> a truth, confidence, acceptance, or safety result.</p>
       <p>It is not legal, compliance, or professional advice, and it is not trying to out-dictionary the dictionary. It focuses on a deliberately selected subset of terms for understanding agentic AI.</p>
     </div>
@@ -398,21 +394,21 @@
     <div class="grid">
      <button class="card" type="button" onclick="nav('Delta-Atlas-GapCheck.html')"><span class="cn">Gap Check</span><span class="cw">Paste an AI policy, plan, or vendor claim. It flags what the document leaves unhandled: risks named with no control, autonomy with no oversight, and thin terms. Runs on your device.</span><span class="cb"><span>Best for:</span> checking a document</span><span class="cgo">Open &rarr;</span></button>
      <button class="card" type="button" onclick="nav('Delta-Atlas-Tracer.html')"><span class="cn">Priority Tracer</span><span class="cw">Paste an agent reasoning trace or log. It flags ordering drift, where the mission overrode a rule that should have held, and marks where the reference held. Client-side, nothing to install.</span><span class="cb"><span>Best for:</span> tracing a reasoning log</span><span class="cgo">Open &rarr;</span></button>
-     <button class="card" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="cn">Explore</span><span class="cw">Browse the whole vocabulary, or filter by trait (a risk, hard to undo, no human in charge). Each term shows what it does and what it connects to.</span><span class="cb"><span>Best for:</span> browsing and finding terms</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Agentic-AI-Governance-Query.html')"><span class="cn">Explore</span><span class="cw">Browse the 435-term embedded snapshot, or filter by trait (a risk, hard to undo, no human in charge). Each record shows what it does and what it connects to.</span><span class="cb"><span>Best for:</span> browsing and finding terms</span><span class="cgo">Open &rarr;</span></button>
     </div>
     <h3 class="sec">General tool</h3>
     <div class="seclead">Not about AI vocabulary. It checks any framework or plan for coherence, on any topic.</div>
     <div class="grid">
      <button class="card" type="button" onclick="nav('Coherence-Audit.html')"><span class="cn">Framework Audit</span><span class="cw">Score any framework or plan against its goal, on any subject: where it holds, where it goes vague, and what to fix first.</span><span class="cb"><span>Best for:</span> auditing a plan on any topic</span><span class="cgo">Open &rarr;</span></button>
-     <button class="card" type="button" onclick="nav('Delta-Atlas-Primitives.html')"><span class="cn">Systems Primitives</span><span class="cw">A companion library, separate from the glossary: 150 cross-domain primitives (finance, crypto, real estate, compute, AI) grouped by system role, not field. Same lens, wider world.</span><span class="cb"><span>Best for:</span> seeing one pattern across fields</span><span class="cgo">Open &rarr;</span></button>
-     <button class="card" type="button" onclick="nav('Delta-Atlas-Cadence.html')"><span class="cn">The Cadence Dial</span><span class="cw">An explorable lesson: how often to check on anything. Physics measured three zones &mdash; watch constantly and it freezes, watch rarely and it drifts, watch at the wrong rhythm and the checking itself speeds the decay. Measured law for quantum systems; the lesson marks exactly what transfers to everything else. Interactive, on your device.</span><span class="cb"><span>Best for:</span> tuning any monitoring habit</span><span class="cgo">Open &rarr;</span></button>
-     <button class="card" type="button" onclick="nav('Delta-Atlas-Basin.html')"><span class="cn">The Basin</span><span class="cw">An explorable lesson: kick a ball in a bowl and watch resilience split into two separate numbers &mdash; how fast it returns, and how hard a shock it survives before it never comes back. Rest states, tipping points, and the early warning that a system is losing its footing. Interactive, on your device.</span><span class="cb"><span>Best for:</span> seeing what resilience actually is</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Delta-Atlas-Primitives.html')"><span class="cn">Systems Primitives</span><span class="cw">A companion library, separate from the glossary: 160 recorded cross-domain primitives grouped by system role, not field. Same lens, wider world.</span><span class="cb"><span>Best for:</span> seeing one pattern across fields</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Delta-Atlas-Cadence.html')"><span class="cn">The Cadence Dial</span><span class="cw">An explorable analogy about monitoring intervals, grounded in specific quantum Zeno and anti-Zeno results. The physics is measured in quantum systems; applying its shape to human or software monitoring is a design hypothesis, not a transferred law.</span><span class="cb"><span>Best for:</span> asking when observation may change a process</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Delta-Atlas-Basin.html')"><span class="cn">The Basin</span><span class="cw">An explorable dynamical-systems analogy separating return speed from the size of a disturbance a modeled system can absorb. Its tipping-point and early-warning signals are conditional indicators, not diagnoses for every real system.</span><span class="cb"><span>Best for:</span> comparing two dimensions of resilience</span><span class="cgo">Open &rarr;</span></button>
      <button class="card" type="button" onclick="nav('Delta-Atlas-ContinuityAudit.html')"><span class="cn">Continuity Audit</span><span class="cw">Framework Audit's engine, pointed at an operations manual: risks with no stated control, and single points of failure with no documented backup.</span><span class="cb"><span>Best for:</span> operations manuals &amp; SOPs</span><span class="cgo">Open &rarr;</span></button>
     </div>
     <h3 class="sec">For Evaluators</h3>
     <div class="seclead">Deeper views for checking the work.</div>
     <div class="grid">
-     <button class="card" type="button" onclick="nav('Agentic-AI-Governance-GroundTruth.html')"><span class="cn">Curation dashboard</span><span class="cw">The author view for keeping the glossary honest: which entries are still unreviewed, thin, or lean on a single source. A worklist for integration, not a ranking of the words.</span><span class="cb"><span>Best for:</span> author curation</span><span class="cgo">Open &rarr;</span></button>
+     <button class="card" type="button" onclick="nav('Agentic-AI-Governance-GroundTruth.html')"><span class="cn">Curation dashboard</span><span class="cw">A worklist built from an older 435-term snapshot: it shows entries marked candidate in that snapshot, thin entries, and single-source dependence. It is not the current 439-record source inventory or a ranking of the words.</span><span class="cb"><span>Best for:</span> author curation</span><span class="cgo">Open &rarr;</span></button>
      <button class="card" type="button" onclick="nav('Delta-Atlas-Field.html')"><span class="cn">Lab: the Field</span><span class="cw">An experiment, not a tool. Push a signal into the vocabulary and feel how grounded it is: calm where it is solid, restless where it is thin. Play, walled off from the real tools.</span><span class="cb"><span>Best for:</span> tinkering</span><span class="cgo">Open &rarr;</span></button>
     </div>
 
@@ -420,18 +416,18 @@
     </h3>
     <div class="seclead">Longer reads. These open in a new tab.</div>
     <div class="docs">
-     <a class="doc" href="Delta-Atlas-HowItWorks.html" target="_blank" rel="noopener noreferrer"><b>How it works</b><span>One engine, many checks &mdash; the whole toolset in plain English  (opens in new tab)</span></a>
-     <a class="doc" href="White-Paper.html" target="_blank" rel="noopener noreferrer"><b>White Paper (plain English)</b><span>The living legend: every tool, the exact meanings, the rules  (opens in new tab)</span></a>
-     <a class="doc" href="Delta-Atlas-Canon.md" target="_blank" rel="noopener noreferrer"><b>Delta Atlas Canon</b><span>Portable spec that keeps any model on the same terms, to minimize uncontrolled drift  (opens in new tab)</span></a>
-     <a class="doc" href="Agentic-AI-Governance-Glossary.md" target="_blank" rel="noopener noreferrer"><b>Glossary (text)</b><span>The function-first glossary as a plain document  (opens in new tab)</span></a>
-     <a class="doc" href="README-Portability.md" target="_blank" rel="noopener noreferrer"><b>Portability &amp; model-agnostic</b><span>Why it runs on any PC, no AI model needed  (opens in new tab)</span></a>
-     <a class="doc" href="Translator-Framework-Design.md" target="_blank" rel="noopener noreferrer"><b>Framework design</b><span>The data model and sovereign-zero idea  (opens in new tab)</span></a>
-     <a class="doc" href="Red-Team-Report.md" target="_blank" rel="noopener noreferrer"><b>Red-team report</b><span>The honest weaknesses, treated as a feature  (opens in new tab)</span></a>
-     <a class="doc" href="Coherence-Ledger-Method.md" target="_blank" rel="noopener noreferrer"><b>Coherence Ledger (method)</b><span>The neutral method behind the Framework Audit  (opens in new tab)</span></a>
+     <a class="doc" href="Delta-Atlas-HowItWorks.html" target="_blank" rel="noopener noreferrer"><b>How it works</b><span>One engine, many checks &mdash; the whole toolset in plain English (opens in new tab)</span></a>
+     <a class="doc" href="White-Paper.html" target="_blank" rel="noopener noreferrer"><b>Project guide and evidence boundaries</b><span>The plain-English white paper, exact terms, citations, and current limits (opens in new tab)</span></a>
+     <a class="doc" href="Delta-Atlas-Canon.md" target="_blank" rel="noopener noreferrer"><b>Delta Atlas Canon</b><span>Portable spec that keeps any model on the same terms, to minimize uncontrolled drift (opens in new tab)</span></a>
+     <a class="doc" href="Agentic-AI-Governance-Glossary.md" target="_blank" rel="noopener noreferrer"><b>Glossary (text)</b><span>The function-first glossary as a plain document (opens in new tab)</span></a>
+     <a class="doc" href="README-Portability.md" target="_blank" rel="noopener noreferrer"><b>Portability &amp; model-agnostic</b><span>Why it runs on any PC, no AI model needed (opens in new tab)</span></a>
+     <a class="doc" href="Translator-Framework-Design.md" target="_blank" rel="noopener noreferrer"><b>Framework design</b><span>The data model and sovereign-zero idea (opens in new tab)</span></a>
+     <a class="doc" href="Red-Team-Report.md" target="_blank" rel="noopener noreferrer"><b>Red-team report</b><span>The honest weaknesses, treated as a feature (opens in new tab)</span></a>
+     <a class="doc" href="Coherence-Ledger-Method.md" target="_blank" rel="noopener noreferrer"><b>Coherence Ledger (method)</b><span>The neutral method behind the Framework Audit (opens in new tab)</span></a>
     </div>
 
     <footer class="floor">
-     <div class="fhead"><b>THE FLOOR</b><span>lexicons versioned &middot; corpus held fixed &middot; every change logged with its reason</span><a class="seamlink" href="Delta-Atlas-Tracer-Calibration.md" target="_blank" rel="noopener noreferrer">every seam on record &rarr;</a></div>
+     <div class="fhead"><b>THE FLOOR</b><span>versioned lexicons &middot; fixed test corpora &middot; append-only governance for current load-bearing changes</span><a class="seamlink" href="governance/README.md" target="_blank" rel="noopener noreferrer">inspect the governance boundary &rarr;</a></div>
      <p><b>How to read this honestly.</b> The current dataset labels every definition reviewed, but the repository does not yet carry complete per-term review receipts. A term can be sourced and still be wrong. The tools run without an AI model; their labeled corpus tests pin specific behavior for the checked code and data. Definitions draw on government, standards bodies, academia, industry, and the security community. This is open research, and its unresolved seams stay visible.</p>
      <p class="disc"><b>Disclaimer.</b> Independent educational research, provided as-is with no warranty of accuracy or fitness for any purpose. Not legal, compliance, or professional advice; verify against primary sources before relying on anything. Not affiliated with or endorsed by NIST, ISO/IEC, OWASP, Stanford HAI, MIT, NSA/CISA, or any cited organization; their names and materials remain the property of their owners. Content licensed <a href="LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. &copy; 2026 Jake Tiller.</p>
     </footer>
@@ -473,7 +469,8 @@
    var routeLabel=NAV_ROUTES[routePath];
    if(!canReplaceFrameLocation(frame)) return false;
    if(writeHistory!==false){try{ history.pushState({route:routePath},'', '#'+encodeURIComponent(routePath)); }catch(e){return false;}}
-   frame.onload=function(){ loading.style.display='none'; };
+    loading.textContent='Loading '+routeLabel+'\u2026';
+    frame.onload=function(){ loading.style.display='none'; frame.focus(); };
    if(!replaceFrameLocation(frame,routePath)){frame.onload=null; if(writeHistory!==false){try{history.back();}catch(e){}} return false;}
    home.style.display='none'; frame.style.display='block'; loading.style.display='block';
    frame.title=routeLabel; setActive(routePath); document.title=routeLabel;

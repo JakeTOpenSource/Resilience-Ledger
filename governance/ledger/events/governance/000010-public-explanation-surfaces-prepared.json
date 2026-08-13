@@ -1,0 +1,190 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_governance_public_explanation_surfaces_prepared_0010",
+  "stream_id": "governance",
+  "sequence": 10,
+  "event_type": "governance.public_explanation_surfaces_prepared",
+  "occurred_at": "2026-08-13T18:25:00Z",
+  "recorded_at": "2026-08-13T18:25:00Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "governance/decision-log/0011-public-explanation-surface-cleanup.md"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C2",
+  "parents": [
+    "evt_governance_atlas_navigation_history_corrected_0009"
+  ],
+  "prev_event_hash": "33bdb9a50e0a95500437414a850ae73b0fd8db1d9c608c5494e4f82b59be31ad",
+  "payload_hash": "32aa8be0b090de683b0c646e34bca4fc543c88bf63df2001b76d5c8fc5bbf9a6",
+  "event_hash": "a63fb75269ffc54da67e0bf31601c77d70dc7b60fd745c929c3a4e339f5a4841",
+  "read_set": [
+    "git:commit:3e809fc1596491cb252723d3ba694e7b73047f71",
+    "terms.enriched.json",
+    "primitives.json",
+    "governance/contracts/atlas-data-sync-baseline.md",
+    "Resilience Ledger v0 4.pdf",
+    "Resilience Ledger v0 5.pdf"
+  ],
+  "write_set": [
+    "index.html",
+    "White-Paper.html",
+    "governance/contracts/public-explanation-surfaces.contract.v1.json",
+    "governance/decision-log/0011-public-explanation-surface-cleanup.md",
+    "governance/harnesses/verify-home-navigation-history.js",
+    "governance/harnesses/verify-home-surface.js",
+    "governance/harnesses/verify-public-explanation-surfaces.js",
+    "governance/harnesses/verify-atlas-data-sync-v2.js",
+    "governance/harnesses/verify-six-signal-surface.js",
+    "governance/harnesses/run-all.js"
+  ],
+  "precondition_refs": [
+    "evt_governance_atlas_navigation_history_corrected_0009",
+    "governance/decision-log/0011-public-explanation-surface-cleanup.md",
+    "governance/contracts/public-explanation-surfaces.contract.v1.json"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "public-explanation-surface-decision-0011",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "0cb66828f010cfc94698524e4085ff60d3265c21ad63a1098ea6bf5de261d409",
+      "source_locator": "governance/decision-log/0011-public-explanation-surface-cleanup.md"
+    },
+    {
+      "ref_id": "public-explanation-surface-contract-0001",
+      "kind": "presentation_contract",
+      "classification": "PUBLIC",
+      "sha256": "4d297e7f932aedcce34ba13c14362fb332e1d3d754af00e6cc0296a2d99e441a",
+      "source_locator": "governance/contracts/public-explanation-surfaces.contract.v1.json"
+    },
+    {
+      "ref_id": "public-home-source-candidate-0001",
+      "kind": "public_source",
+      "classification": "PUBLIC",
+      "sha256": "fa44d8d834598bb5e459bee99bace552571b00f68cbd80d4e1b04322546bd49b",
+      "source_locator": "index.html"
+    },
+    {
+      "ref_id": "public-guide-source-candidate-0001",
+      "kind": "public_source",
+      "classification": "PUBLIC",
+      "sha256": "ae92595e4ab3515229c824a4ecaa5c2dc366088d11005e29328b1044019dfd55",
+      "source_locator": "White-Paper.html"
+    },
+    {
+      "ref_id": "public-explanation-surface-harness-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "1fe2fec1d8e816c32f021d02bb616fd7d044bb7ca54b8c64fcdcc976e101b6cc",
+      "source_locator": "governance/harnesses/verify-public-explanation-surfaces.js"
+    },
+    {
+      "ref_id": "home-navigation-historical-binding-correction-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "8fddef88b9c2dee31ab40e45bff9b1cbcc5bc7bb8867e723057a41636ea72fe1",
+      "source_locator": "governance/harnesses/verify-home-navigation-history.js"
+    },
+    {
+      "ref_id": "public-home-harness-cleanup-0002",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "89a1357b5660706eb90fce79dad7d78b896d592217ffc5115f08a9e81872e14c",
+      "source_locator": "governance/harnesses/verify-home-surface.js"
+    },
+    {
+      "ref_id": "atlas-data-sync-historical-binding-correction-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "19892d7e5fbe207442e3201ddb58772bdcfab1336859866becf5e7c4dd97deba",
+      "source_locator": "governance/harnesses/verify-atlas-data-sync-v2.js"
+    },
+    {
+      "ref_id": "six-signal-iframe-attribute-tolerance-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "e31c04f7c2559bdc249de17b3fd60f86f4ed132d91b106737de5230ef215d65f",
+      "source_locator": "governance/harnesses/verify-six-signal-surface.js"
+    },
+    {
+      "ref_id": "governance-suite-public-explanation-binding-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "2725275449ea6bd25d460e328885dcf11685af2854582fef2db8aa61f6f33a96",
+      "source_locator": "governance/harnesses/run-all.js"
+    },
+    {
+      "ref_id": "atlas-candidate-source-cleanup-basis-0001",
+      "kind": "data_source",
+      "classification": "PUBLIC",
+      "sha256": "0a57277ffbdcfa00771ae05777f0c7b8782edeaee10b90ed5242430ecd4e2413",
+      "source_locator": "terms.enriched.json"
+    },
+    {
+      "ref_id": "atlas-projection-baseline-cleanup-basis-0001",
+      "kind": "data_baseline",
+      "classification": "PUBLIC",
+      "sha256": "81e5a5fb1b5f84c23b45017a5e53dcc5347595f361aa76bd98b02d0694f0a1d6",
+      "source_locator": "governance/contracts/atlas-data-sync-baseline.md"
+    },
+    {
+      "ref_id": "systems-primitives-cleanup-basis-0001",
+      "kind": "data_source",
+      "classification": "PUBLIC",
+      "sha256": "f0665f18d96b2084075d1b5bfb627e46f6f5f5ddfa4470aa2c997f3bbfefd457",
+      "source_locator": "primitives.json"
+    },
+    {
+      "ref_id": "resilience-ledger-v0-4-archival-0001",
+      "kind": "archival_pdf",
+      "classification": "PUBLIC",
+      "sha256": "2543d21b5f7c29a50ae6a6769aa9af5611b60940a4373b0dc2077ce191c72f0b",
+      "source_locator": "Resilience Ledger v0 4.pdf"
+    },
+    {
+      "ref_id": "resilience-ledger-v0-5-archival-0001",
+      "kind": "archival_pdf",
+      "classification": "PUBLIC",
+      "sha256": "65644b4d567d6937a34639f9724de2b072becb278792b7c1c2ef05f4b2c8672a",
+      "source_locator": "Resilience Ledger v0 5.pdf"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0011-public-explanation-surface-cleanup.md",
+  "idempotency_key": "governance:public-explanation-surfaces:2026-08-13:0010",
+  "decision": "ACCEPT_WITH_LIMITS",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "NOT_ATTEMPTED",
+    "observation": "MATCHED",
+    "acceptance": "PROVISIONAL",
+    "outcome": "TOO_EARLY"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "packet_id": "public-explanation-surfaces-0001",
+    "mode": "PREPARE_ONLY",
+    "base_repository_commit": "3e809fc1596491cb252723d3ba694e7b73047f71",
+    "candidate_source_inventory_terms": 439,
+    "ask_explore_projection_terms": 435,
+    "gap_check_projection_terms": 433,
+    "systems_primitives_records": 160,
+    "archival_pdfs_changed": false,
+    "semantic_data_migration": "NOT_ATTEMPTED",
+    "owner_merge_required": true,
+    "production_deployment": "NOT_ATTEMPTED",
+    "claim_ceiling": "Prepares and digest-binds corrected public explanation source for owner pull-request review. It does not authorize merge or deployment, establish per-term review or semantic truth, correct or endorse the archival PDFs, validate every external citation, certify accessibility, privacy, security, offline behavior, or live health, or establish production identity."
+  }
+}
