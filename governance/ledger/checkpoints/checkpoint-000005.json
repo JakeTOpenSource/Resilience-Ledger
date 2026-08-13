@@ -1,0 +1,65 @@
+{
+  "schema_version": "2.0.0",
+  "checkpoint_id": "checkpoint-000005",
+  "recorded_at": "2026-08-13T02:20:00Z",
+  "previous_checkpoint_root": "81985f0746786190c8f1fc4326e7732dff1e11604db86ddb2fc4fea01203e8ab",
+  "event_count": 9,
+  "event_file_hash_basis": "SHA-256 of UTF-8 event JSON with CRLF normalized to LF.",
+  "event_files": {
+    "governance/ledger/events/deployment/000001-wp0-production-observation.json": "34bde4ec2eb4d1bfb70b8d44df6439cb295bd1dc1293df0ae47490193ad3fa97",
+    "governance/ledger/events/feedback/000001-public-researcher-comment.json": "ba6c14fee16552d485c8343e07fe29aa5bfee295bdd854367a44dc27904183ed",
+    "governance/ledger/events/governance/000001-wp0-authority-freeze.json": "8179bbd5216dfaf91e7b5dd10a04722f4928fd8a9ae9ff2acd834f904ebdc337",
+    "governance/ledger/events/governance/000002-public-metadata-release-acceptance.json": "b42cf6d6da3ae197e8726d8809887c941109a7e25b359a3b775d1be114f519f3",
+    "governance/ledger/events/governance/000003-stp-v1-2-public-reproduction-authorized.json": "16c2f324bb63a671963f38eaab92a22fb8ec0b055cf4107e67d6e14db158d25f",
+    "governance/ledger/events/governance/000004-six-signal-public-method-authorized.json": "a60602c90396b34081da5896079e3721197147226ecde63e0a3377ad6fec3cfb",
+    "governance/ledger/events/publication/000001-stp-v1-2-public-release-observed.json": "c505f5ea075344f29e67540a9f3178a6e7e5bec7e1e079cf132ab2b0fbae5bc6",
+    "governance/ledger/events/research/000001-wp0-artifact-search.json": "f9997b300db7ac4181bcc2755c872c206fbab838c3012c26930cb469a4afee29",
+    "governance/ledger/events/semantics/000001-status-vocabulary-boundary.json": "407c36c1c412f1c3d6f8eecda2bcd1a9ddcf5069f2e5febb9d0dacee70415fe5"
+  },
+  "streams": {
+    "deployment": {
+      "sequence": 1,
+      "event_id": "evt_deployment_wp0_production_observation_0001",
+      "event_hash": "20c74580f8c1cdc436490d340105ff0e4918c0901c675bc46ab608d0206fda88"
+    },
+    "feedback": {
+      "sequence": 1,
+      "event_id": "evt_feedback_public_researcher_comment_0001",
+      "event_hash": "d30d65d43a51491bb51d08538d8e6e5ba7621a0461cc65f7ff633b4393774435"
+    },
+    "governance": {
+      "sequence": 4,
+      "event_id": "evt_governance_six_signal_public_method_0004",
+      "event_hash": "4d5652b768877cac6765f12aa83019a15cfdc02ba8e2e92533b362e31ff1b2ba"
+    },
+    "publication": {
+      "sequence": 1,
+      "event_id": "evt_publication_stp_v1_2_release_0001",
+      "event_hash": "91cb238abfda22b2fdea65f56f0e4515e1b8df8c9a512569d9302c59a0901534"
+    },
+    "research": {
+      "sequence": 1,
+      "event_id": "evt_research_wp0_artifact_register_0001",
+      "event_hash": "b8661fda03f6da05e89507eb632c81a42bbdbe287c507ef66b9b8cb4074d105a"
+    },
+    "semantics": {
+      "sequence": 1,
+      "event_id": "evt_semantics_status_vocabulary_boundary_0001",
+      "event_hash": "cca5be5a16d815990fd23a1006d731e9704e9db16bbeacb76bedc0e45916ff96"
+    }
+  },
+  "capability_policies": {
+    "governance/ledger/policy/capabilities.v1.json": "8d144987a039561ccf80f6c8c703901150b32061843db2f48d9dcde2c78cd2d4",
+    "governance/ledger/policy/capabilities.v2.json": "3d6d25510d489e295a3321298c0ca6b46495393fc558f108afb5988a68d8a696"
+  },
+  "projection_root": "22852b5a3025d4ed7ee1d26cc4efcd51ae2e3e02ba2a20332c2a09827d6462ca",
+  "witnesses": [
+    {
+      "kind": "git_commit_or_release",
+      "status": "NOT_OBSERVED",
+      "locator": null,
+      "limit": "The checkpoint is internally sealed but has not yet been anchored by a protected signed ref or independent witness."
+    }
+  ],
+  "checkpoint_root": "78a7571f52b1cac8590d0bce784358e56617c5ce41b459faac08f117d837e5a1"
+}

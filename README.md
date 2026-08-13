@@ -42,6 +42,7 @@ These are the rules the whole project is built on. They don't bend.
 | `Coherence-Audit.html` | Framework Audit — scores a framework's parts on eight coherence and resilience dimensions. |
 | `Delta-Atlas-Tracer.html` | Priority Tracer — reads an agent trace or decision log for ordering drift. Lexicon version shown in the tool. |
 | `Delta-Atlas-Primitives.html` | Systems Primitives — the recurring structures underneath. |
+| `Six-Signal-Method.html` | Six-Signal Method — separates Calibration, Consequence, Evidence, Integrity, Privacy, and Activity without inventing a current status. |
 | `Delta-Atlas-Field.html` | The Field — an instrument view. |
 | `evaluate.html` | For evaluators — a 10-minute guided review with specific questions. |
 | `Delta-Atlas-Verify.html` | Verification checklist — check off candidate terms whose definition and sources read right, export the batch, then run `verify-terms.js` to apply it. No bulk-check: one human judgment per term. |
@@ -131,6 +132,16 @@ governance ledger.
 The packet remains proposed research. A passing run proves agreement on its
 enumerated synthetic cases; it does not prove live calibration, external event
 truth, statistical reliability, unbounded safety, or protocol acceptance.
+
+### Six-Signal Method and pinned public snapshot card
+
+[`Six-Signal-Method.html`](Six-Signal-Method.html) is a no-input educational
+page that explains why six independent questions must not collapse into one
+score or color. It reports no current system status. The companion
+[`research/atlas-snapshot-read-only/`](research/atlas-snapshot-read-only/)
+package demonstrates the narrower first step: pin already-public source bytes
+before interpreting them. Its offline verifier checks seven Git object IDs,
+SHA-256 digests, and byte lengths while publishing no private evaluation.
 
 ## The seed frame: download it and harden it privately
 

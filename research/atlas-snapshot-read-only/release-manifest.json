@@ -1,0 +1,51 @@
+{
+  "schema_version": "public-release-manifest.v2",
+  "recorded_at": "2026-08-12",
+  "release_id": "six-signal-public-method-and-card-0002",
+  "classification": "PUBLIC",
+  "decision_ref": "governance/decision-log/0006-six-signal-release-binding-correction.md",
+  "authorization_event_ref": "governance/ledger/events/governance/000005-six-signal-release-binding-corrected.json",
+  "hash_basis": "SHA-256 of UTF-8 file bytes with CRLF normalized to LF",
+  "excludes": [
+    "release-manifest.json self-reference",
+    "append-only governance decisions, events, and checkpoints sealed by checkpoint-000006"
+  ],
+  "files": {
+    ".github/workflows/gates.yml": {
+      "sha256": "9d8802f0c4732b290a68dee96fdf9c61bb3119611020b26d4483c4b1e95c3d65",
+      "byte_length": 2389
+    },
+    "README.md": {
+      "sha256": "f80aacfee7777352400d701a6aa47a281e537ebdf0d8937fcdc50b9cb88654a6",
+      "byte_length": 19196
+    },
+    "Six-Signal-Method.html": {
+      "sha256": "784b3d0a362e6fbdcfcee5c48ccf4a2d73d6a7d47f06229c4195bcf59e7475da",
+      "byte_length": 8725
+    },
+    "_headers": {
+      "sha256": "45b27173ac5eb0f5a29b0b599abc9f4955c88c89f2e6e8ec578279f26dc63fdc",
+      "byte_length": 807
+    },
+    "governance/harnesses/run-all.js": {
+      "sha256": "80485c0722cc71d9df93c38addc74176cbe855f4ab568a5de1a5e56e64589516",
+      "byte_length": 708
+    },
+    "governance/harnesses/verify-six-signal-surface.js": {
+      "sha256": "9b44d24a0712507bf34e360427216fd811d9e16a9a10c59f05d8e405697b67b4",
+      "byte_length": 5469
+    },
+    "research/atlas-snapshot-read-only/README.md": {
+      "sha256": "fd10e9c3f1d2e88903e9072c65ab15777905f6b91474083a634d3490e8cd33dd",
+      "byte_length": 2962
+    },
+    "research/atlas-snapshot-read-only/snapshot-card.json": {
+      "sha256": "2bde94189785606cd631a126dc8076d1a576c38aef3dc9c520b5c2c330ceaa64",
+      "byte_length": 2785
+    },
+    "research/atlas-snapshot-read-only/tools/verify-release.mjs": {
+      "sha256": "ff73396439b156e45f5b783e68e2822199ebf98e122899b29682422a04c14e42",
+      "byte_length": 12948
+    }
+  }
+}
