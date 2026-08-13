@@ -1,7 +1,8 @@
 # Atlas public data-sync baseline
 
-**Contract:** `atlas-data-sync.contract.v1.json`  
-**Decision:** `DEFER`  
+**Contract:** `atlas-data-sync.contract.v1.json`
+
+**Decision:** `DEFER`
 **Scope:** public repository files only; no live deployment, private overlay, browser storage, source validity, or semantic acceptance is tested.
 
 ## What this baseline measures
