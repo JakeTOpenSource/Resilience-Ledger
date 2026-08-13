@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const child = require('child_process');
 
 const repoRoot = path.resolve(__dirname, '..');
 const failures = [];
@@ -32,6 +33,21 @@ function canonicalRepositoryText(bytes) {
 
 function sha256RepositoryText(relativePath) {
   return sha256Bytes(canonicalRepositoryText(fs.readFileSync(path.join(repoRoot, relativePath))));
+}
+
+function sha256HistoricalRepositoryText(commit, relativePath) {
+  try {
+    const bytes = child.execFileSync('git', ['-c', `safe.directory=${repoRoot}`, 'show', `${commit}:${relativePath}`], {
+      cwd: repoRoot,
+      encoding: null,
+      stdio: ['ignore', 'pipe', 'pipe']
+    });
+    return sha256Bytes(canonicalRepositoryText(bytes));
+  } catch (error) {
+    const detail = error.stderr ? error.stderr.toString('utf8').trim() : error.message;
+    fail(`deployment receipt: cannot resolve recorded Git bytes for ${commit}:${relativePath}: ${detail}`);
+    return null;
+  }
 }
 
 function assert(condition, message) {
@@ -149,8 +165,9 @@ if (deployment) {
   for (const required of ['index.html', 'sw.js']) {
     assert(Boolean(mismatchByPath[required]), `deployment receipt: missing drift record for ${required}`);
     if (mismatchByPath[required]) {
-      assert(sha256RepositoryText(required) === mismatchByPath[required].repository_sha256,
-        `deployment receipt: repository hash drifted for ${required}; add a new receipt`);
+      assert(sha256HistoricalRepositoryText(deployment.repository.commit, required) ===
+        mismatchByPath[required].repository_sha256,
+        `deployment receipt: recorded historical repository hash does not hold for ${required}`);
     }
   }
   const statusKeys = ['evidence', 'authority', 'preparation', 'execution', 'observation', 'acceptance', 'outcome'];

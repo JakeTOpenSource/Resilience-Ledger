@@ -1,0 +1,172 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_governance_git_pages_source_hardening_0006",
+  "stream_id": "governance",
+  "sequence": 6,
+  "event_type": "governance.git_pages_source_hardening_authorized",
+  "occurred_at": "2026-08-13T14:30:00Z",
+  "recorded_at": "2026-08-13T14:30:00Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "governance/decision-log/0007-git-pages-source-hardening.md"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C2",
+  "parents": [
+    "evt_governance_six_signal_release_binding_0005",
+    "evt_semantics_status_vocabulary_boundary_0001"
+  ],
+  "prev_event_hash": "1e51fdd079c80add2030baf1002e6d33a9e1411ca1e84327508ed9765906dc06",
+  "payload_hash": "ae97d96375c6cafec19fa034fc3c790161f3d445294bc80ac0315529b0320fef",
+  "event_hash": "d0fd63a2c642dbb4cba3edc7d55968e069303791c40cd6a585761c397199dec2",
+  "read_set": [
+    "governance/decision-log/0005-six-signal-public-method-release.md",
+    "governance/decision-log/0006-six-signal-release-binding-correction.md",
+    "governance/decision-log/0007-git-pages-source-hardening.md",
+    "governance/ledger/checkpoints/checkpoint-000006.json",
+    "research/atlas-snapshot-read-only/release-manifest.json"
+  ],
+  "write_set": [
+    "Six-Signal-Method.html",
+    "_headers",
+    "governance/governance-validate.js",
+    "governance/harnesses/verify-six-signal-surface.js",
+    "index.html",
+    "research/atlas-snapshot-read-only/release-history-pr6.v1.json",
+    "research/atlas-snapshot-read-only/tools/verify-release.mjs",
+    "sw.js"
+  ],
+  "precondition_refs": [
+    "evt_governance_six_signal_release_binding_0005",
+    "governance/decision-log/0007-git-pages-source-hardening.md",
+    "governance/ledger/checkpoints/checkpoint-000006.json"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "six-signal-method-typography-baseline-0001",
+      "kind": "public_source",
+      "classification": "PUBLIC",
+      "sha256": "aa2f76fbdddddcd605232940918f75a1a1c53c774e980a55d98bf96894e8a7e7",
+      "source_locator": "Six-Signal-Method.html"
+    },
+    {
+      "ref_id": "git-pages-source-hardening-decision-0007",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "8d273397e70b2ce077dc0d771800f91b5c9623462a1c34cafde2d5317e9c0ca5",
+      "source_locator": "governance/decision-log/0007-git-pages-source-hardening.md"
+    },
+    {
+      "ref_id": "pages-route-security-headers-0001",
+      "kind": "public_source",
+      "classification": "PUBLIC",
+      "sha256": "465f0aa444f9d8914f9797697bd88363bda560e5b22ef8a8fcfd6ca115d051e8",
+      "source_locator": "_headers"
+    },
+    {
+      "ref_id": "delta-atlas-route-allowlist-0001",
+      "kind": "public_source",
+      "classification": "PUBLIC",
+      "sha256": "a6721112439e636afb166817c2e9e41d42a2933c945623ed71a4ba749156db0a",
+      "source_locator": "index.html"
+    },
+    {
+      "ref_id": "delta-atlas-service-worker-core-0001",
+      "kind": "public_source",
+      "classification": "PUBLIC",
+      "sha256": "d16ae0ebaf3bf24e42caa3571018ede6ae7436a11e93d45ae8a864c84edd16be",
+      "source_locator": "sw.js"
+    },
+    {
+      "ref_id": "six-signal-source-hardening-harness-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "7eef492ee7600797604c0dd7a6add27647252d8f9b26ea4a50f85abbfcca10b1",
+      "source_locator": "governance/harnesses/verify-six-signal-surface.js"
+    },
+    {
+      "ref_id": "historical-deployment-observation-verifier-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "19d61ae166d2f26618525b459c1af2dd202352515cd6df09f6179b815c2484b8",
+      "source_locator": "governance/governance-validate.js"
+    },
+    {
+      "ref_id": "pr6-release-history-profile-0001",
+      "kind": "release_history_profile",
+      "classification": "PUBLIC",
+      "sha256": "a8ad419376bf547c1783a1982a71fa4cecd3620a0d9e64ff6d3a5e2e75bfae6f",
+      "source_locator": "research/atlas-snapshot-read-only/release-history-pr6.v1.json"
+    },
+    {
+      "ref_id": "pr6-release-history-verifier-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "823c6bebd0cdb009d82b52c96df5a5c57c41cca12c74007b3b6146bd4460a63a",
+      "source_locator": "research/atlas-snapshot-read-only/tools/verify-release.mjs"
+    },
+    {
+      "ref_id": "pr6-corrected-release-manifest-0002",
+      "kind": "release_manifest",
+      "classification": "PUBLIC",
+      "sha256": "1a2cafb690bd5be048a8d2280e0c8ffb190ca913c33ed2fb7a311c6cbc27b8b0",
+      "source_locator": "research/atlas-snapshot-read-only/release-manifest.json"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0007-git-pages-source-hardening.md",
+  "idempotency_key": "governance:git-pages-source-hardening:2026-08-13:0006",
+  "decision": "ACCEPT_WITH_LIMITS",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "NOT_ATTEMPTED",
+    "observation": "MATCHED",
+    "acceptance": "ACCEPTED",
+    "outcome": "MET"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "release_id": "six-signal-public-method-and-card-0002",
+    "history_profile_id": "six-signal-public-method-pr6-history-0001",
+    "base_commit": "9802e5460248c69d2b08049182a36994f9a660e0",
+    "head_commit": "02d346b7cce4b489667cafde7dcf049337403779",
+    "merge_commit": "6ce4bb033fb7bbb6289faae7dc6f8e67bb1998b1",
+    "exact_diff_path_count": 16,
+    "release_file_count": 9,
+    "pinned_source_object_count": 7,
+    "tamper_canary_count": 3,
+    "original_release_manifest_preserved": true,
+    "future_pull_request_diff_enforcement": false,
+    "historical_deployment_receipt_preserved": true,
+    "historical_deployment_commit": "7608ce90eb83357e7e9edddb6d0fb80c70b30369",
+    "source_hardening_file_count": 8,
+    "source_hardening_features": [
+      "VISIBLE_SIX_SIGNAL_NAVIGATION",
+      "EXACT_IFRAME_ROUTE_ALLOWLIST_AND_TITLES",
+      "EXTENSIONLESS_ROUTE_SECURITY_HEADERS",
+      "SERVICE_WORKER_CACHE_AND_CORE_UPDATE",
+      "CANONICAL_TYPOGRAPHY_BASELINE",
+      "ADVERSARIAL_SURFACE_HARNESS"
+    ],
+    "git_connected_main_auto_deploy": "OBSERVED_OPERATIONAL_CONTEXT",
+    "branch_push_or_public_draft_pr_preview": "MAY_OCCUR_NOT_OBSERVED",
+    "repository_pr_authorized": true,
+    "owner_merge_is_consequential_production_action": true,
+    "current_production_proof": "NOT_OBSERVED",
+    "pre_push_deployment_claim": "NOT_MADE",
+    "effect_status": "NONE",
+    "deployment_status": "NOT_ATTEMPTED",
+    "claim_ceiling": "Authorizes the exact bounded repository source-hardening pull request and append-only verifier lifecycle profile. Owner merge is the consequential production action because Git-connected main auto-deploy is observed context. No current production identity, successful deployment outcome, or live health is established until separate post-merge observation."
+  }
+}

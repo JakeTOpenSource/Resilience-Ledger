@@ -43,6 +43,8 @@
     a { color: var(--accent); font-weight: 700; text-underline-offset: .18em; }
     a:focus-visible { outline: .2rem solid var(--focus); outline-offset: .25rem; }
     footer { border-top: 1px solid var(--line); color: var(--muted); margin-top: 2.5rem; padding-top: 1.25rem; }
+    /* canonical typography: one baseline across every page (added 2026-07-11) */
+    textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
     @media (prefers-color-scheme: dark) {
       :root { --paper: #121713; --ink: #eef3ed; --muted: #c0cbc3; --line: #667268; --card: #1c241e; --accent: #9edcb4; --soft: #202c24; --focus: #ffcc4d; }
     }

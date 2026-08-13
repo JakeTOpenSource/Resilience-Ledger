@@ -208,7 +208,7 @@
 </defs></svg>
 <div id="bar">
   <div id="brand" onclick="goHome()"><span class="dot"></span>Delta Atlas</div>
-  <button class="nav" data-f="Delta-Atlas-GapCheck.html" onclick="nav('Delta-Atlas-GapCheck.html','Gap Check')">Gap Check</button><button class="nav" data-f="Delta-Atlas-Tracer.html" onclick="nav('Delta-Atlas-Tracer.html','Tracer')">Tracer</button><button class="nav" data-f="Coherence-Audit.html" onclick="nav('Coherence-Audit.html','Framework Audit')">Framework Audit</button><button class="nav" data-f="Agentic-AI-Governance-Query.html" onclick="nav('Agentic-AI-Governance-Query.html','Explore')">Explore</button><button class="nav" data-f="Delta-Atlas-Primitives.html" onclick="nav('Delta-Atlas-Primitives.html','Primitives')">Primitives</button><button class="nav" data-f="White-Paper.html" onclick="nav('White-Paper.html','White Paper')">White Paper</button>
+  <button class="nav" data-f="Delta-Atlas-GapCheck.html" onclick="nav('Delta-Atlas-GapCheck.html','Gap Check')">Gap Check</button><button class="nav" data-f="Delta-Atlas-Tracer.html" onclick="nav('Delta-Atlas-Tracer.html','Tracer')">Tracer</button><button class="nav" data-f="Coherence-Audit.html" onclick="nav('Coherence-Audit.html','Framework Audit')">Framework Audit</button><button class="nav" data-f="Agentic-AI-Governance-Query.html" onclick="nav('Agentic-AI-Governance-Query.html','Explore')">Explore</button><button class="nav" data-f="Delta-Atlas-Primitives.html" onclick="nav('Delta-Atlas-Primitives.html','Primitives')">Primitives</button><button class="nav" data-f="Six-Signal-Method.html" onclick="nav('Six-Signal-Method.html','Six Signals')">Six Signals</button><button class="nav" data-f="White-Paper.html" onclick="nav('White-Paper.html','White Paper')">White Paper</button>
   <span class="rightgrp">
    <button class="nav" id="installBtn" style="display:none;color:#8fe0a5;border:1px solid #4a6b56" onclick="doInstall()">Install app</button>
    <button class="nav" id="shareBtn" onclick="doShare()">Share</button>
@@ -218,7 +218,7 @@
 </div>
 <div id="stage">
   <div id="loading">loading&hellip;</div>
-  <iframe id="frame" title="tool"></iframe>
+  <iframe id="frame" title="Delta Atlas content"></iframe>
   <div id="home">
    <svg class="ivy vine-hero" viewBox="0 0 1440 1600" aria-hidden="true">
      <g>
@@ -410,14 +410,32 @@
 </div>
 <script>
  var frame=document.getElementById('frame'), home=document.getElementById('home'), loading=document.getElementById('loading');
+ var NAV_ROUTES=Object.freeze({
+   'Agentic-AI-Governance-GroundTruth.html':'Curation dashboard',
+   'Agentic-AI-Governance-Query.html':'Explore',
+   'Coherence-Audit.html':'Framework Audit',
+   'Delta-Atlas-Basin.html':'The Basin',
+   'Delta-Atlas-Cadence.html':'The Cadence Dial',
+   'Delta-Atlas-ContinuityAudit.html':'Continuity Audit',
+   'Delta-Atlas-Field.html':'Lab: the Field',
+   'Delta-Atlas-GapCheck.html':'Gap Check',
+   'Delta-Atlas-Primitives.html':'Systems Primitives',
+   'Delta-Atlas-Quick.html':'Quick check',
+   'Delta-Atlas-Start.html':'Start here',
+   'Delta-Atlas-Tracer.html':'Priority Tracer',
+   'Six-Signal-Method.html':'Six Signals',
+   'White-Paper.html':'White Paper'
+ });
  function base(f){ return (f||'').split('?')[0]; }
  function setActive(f){ var b=base(f); document.querySelectorAll('.nav').forEach(function(x){ x.classList.toggle('on', x.dataset && x.dataset.f===b); }); }
- function nav(f,label){ home.style.display='none'; frame.style.display='block'; loading.style.display='block';
+ function nav(f){ var routePath=base(f); if(!Object.prototype.hasOwnProperty.call(NAV_ROUTES,routePath)) return false;
+   var routeLabel=NAV_ROUTES[routePath];
+   home.style.display='none'; frame.style.display='block'; loading.style.display='block';
    frame.onload=function(){ loading.style.display='none'; };
-   frame.src=f; setActive(f); document.title=label;
-   try{ history.replaceState(null,'','#'+encodeURIComponent(f)); }catch(e){} }
+   frame.title=routeLabel; frame.src=routePath; setActive(routePath); document.title=routeLabel;
+   try{ history.replaceState(null,'','#'+encodeURIComponent(routePath)); }catch(e){} return true; }
  function goHome(){ frame.style.display='none'; frame.removeAttribute('src'); home.style.display='block'; home.scrollTop=0;
-   loading.style.display='none'; setActive(null); document.title='Delta Atlas';
+   frame.title='Delta Atlas content'; loading.style.display='none'; setActive(null); document.title='Delta Atlas';
    try{ history.replaceState(null,'','#'); }catch(e){} var hq=document.getElementById('hq'); if(hq) hq.focus(); }
  function heroSearch(){ var q=document.getElementById('hq').value.trim(); if(!q) return;
    var fr=document.getElementById('ansframe'); fr.src='Agentic-AI-Governance-Chat.html?q='+encodeURIComponent(q)+'&embed=1';
@@ -431,7 +449,7 @@
  hc.innerHTML=HEX.map(function(x){ return '<span class="hchip">'+x+'</span>'; }).join('');
  hc.querySelectorAll('.hchip').forEach(function(el){ el.onclick=function(){ var hq=document.getElementById('hq'); hq.value=el.textContent; heroSearch(); }; });
  document.getElementById('hq').addEventListener('keydown',function(e){ if(e.key==='Enter') heroSearch(); });
- (function(){ var h=decodeURIComponent((location.hash||'').replace('#','')); if(h && h.indexOf('.html')>0){ nav(h,h); } })();
+ (function(){ var h=''; try{ h=decodeURIComponent((location.hash||'').replace('#','')); }catch(e){ return; } if(h){ nav(h); } })();
  if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
  window.doShare=function(){ var url=location.href.split('#')[0]; var b=document.getElementById('shareBtn');
    function ok(){ if(b){ var t=b.textContent; b.textContent='Link copied'; setTimeout(function(){ b.textContent=t; },1400); } }
