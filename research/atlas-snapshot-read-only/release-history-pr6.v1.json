@@ -1,0 +1,59 @@
+{
+  "schema_version": "public-release-history.v1",
+  "recorded_at": "2026-08-13",
+  "record_id": "six-signal-public-method-pr6-history-0001",
+  "classification": "PUBLIC",
+  "purpose": "VERIFY_IMMUTABLE_HISTORICAL_RELEASE",
+  "hash_basis": "SHA-256 of UTF-8 file bytes with CRLF normalized to LF",
+  "claim_ceiling": [
+    "HISTORICAL_PR6_BYTE_IDENTITY_ONLY",
+    "NOT_CURRENT_RELEASE_SCOPE",
+    "NOT_FUTURE_PULL_REQUEST_SCOPE",
+    "NOT_DEPLOYMENT_IDENTITY",
+    "NOT_LIVE_HEALTH",
+    "NOT_RELEASE_OR_EFFECT_AUTHORITY"
+  ],
+  "historical_release": {
+    "release_id": "six-signal-public-method-and-card-0002",
+    "base_commit": "9802e5460248c69d2b08049182a36994f9a660e0",
+    "head_commit": "02d346b7cce4b489667cafde7dcf049337403779",
+    "merge_commit": "6ce4bb033fb7bbb6289faae7dc6f8e67bb1998b1",
+    "merge_parents": [
+      "9802e5460248c69d2b08049182a36994f9a660e0",
+      "02d346b7cce4b489667cafde7dcf049337403779"
+    ],
+    "release_manifest_path": "research/atlas-snapshot-read-only/release-manifest.json",
+    "release_manifest_sha256": "1a2cafb690bd5be048a8d2280e0c8ffb190ca913c33ed2fb7a311c6cbc27b8b0",
+    "authorization_event_ref": "governance/ledger/events/governance/000005-six-signal-release-binding-corrected.json",
+    "checkpoint_ref": "governance/ledger/checkpoints/checkpoint-000006.json",
+    "release_file_paths": [
+      ".github/workflows/gates.yml",
+      "README.md",
+      "Six-Signal-Method.html",
+      "_headers",
+      "governance/harnesses/run-all.js",
+      "governance/harnesses/verify-six-signal-surface.js",
+      "research/atlas-snapshot-read-only/README.md",
+      "research/atlas-snapshot-read-only/snapshot-card.json",
+      "research/atlas-snapshot-read-only/tools/verify-release.mjs"
+    ],
+    "exact_diff": [
+      { "status": "M", "path": ".github/workflows/gates.yml" },
+      { "status": "M", "path": "README.md" },
+      { "status": "A", "path": "Six-Signal-Method.html" },
+      { "status": "A", "path": "_headers" },
+      { "status": "A", "path": "governance/decision-log/0005-six-signal-public-method-release.md" },
+      { "status": "A", "path": "governance/decision-log/0006-six-signal-release-binding-correction.md" },
+      { "status": "M", "path": "governance/harnesses/run-all.js" },
+      { "status": "A", "path": "governance/harnesses/verify-six-signal-surface.js" },
+      { "status": "A", "path": "governance/ledger/checkpoints/checkpoint-000005.json" },
+      { "status": "A", "path": "governance/ledger/checkpoints/checkpoint-000006.json" },
+      { "status": "A", "path": "governance/ledger/events/governance/000004-six-signal-public-method-authorized.json" },
+      { "status": "A", "path": "governance/ledger/events/governance/000005-six-signal-release-binding-corrected.json" },
+      { "status": "A", "path": "research/atlas-snapshot-read-only/README.md" },
+      { "status": "A", "path": "research/atlas-snapshot-read-only/release-manifest.json" },
+      { "status": "A", "path": "research/atlas-snapshot-read-only/snapshot-card.json" },
+      { "status": "A", "path": "research/atlas-snapshot-read-only/tools/verify-release.mjs" }
+    ]
+  }
+}
