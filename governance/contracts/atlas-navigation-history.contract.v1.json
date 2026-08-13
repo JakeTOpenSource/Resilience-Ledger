@@ -1,0 +1,45 @@
+{
+  "schema_version": "atlas-navigation-history-contract.v1",
+  "contract_id": "atlas-navigation-history-0001",
+  "classification": "PUBLIC",
+  "status": "PROPOSED_CORRECTION",
+  "scope": {
+    "shell": "index.html",
+    "child_contexts": [
+      "main tool frame",
+      "glossary result frame",
+      "opt-in sample frame"
+    ],
+    "route_boundary": "fixed same-origin NAV_ROUTES entries only"
+  },
+  "invariants": [
+    "A successful explicit user tool navigation writes exactly one parent history entry.",
+    "A child-frame route change uses Location.replace and does not add a second joint-session-history entry.",
+    "A popstate render changes the child view without writing parent history.",
+    "A rejected parent history write leaves the child and presentation unchanged.",
+    "Returning home replaces the main child document with about:blank before hiding it.",
+    "Clearing a glossary result replaces the result child document with about:blank before hiding it.",
+    "An unknown route or replacement surface found unavailable during preflight fails closed without a parent history write.",
+    "If child replacement fails after a successful parent write, presentation remains unchanged and one best-effort parent Back recovery is requested; cross-context atomicity is not claimed."
+  ],
+  "acceptance_cases": [
+    "HOME_TO_GAP_TO_TRACER_BACK_RETURNS_GAP",
+    "GAP_BACK_RETURNS_HOME",
+    "POPSTATE_WRITES_ZERO_PARENT_HISTORY_ENTRIES",
+    "PARENT_HISTORY_FAILURE_IS_NO_OP",
+    "POST_PUSH_CHILD_FAILURE_REQUESTS_ONE_PARENT_ROLLBACK",
+    "UNKNOWN_ROUTE_IS_NO_OP",
+    "HOME_CLEAR_USES_ABOUT_BLANK_REPLACEMENT",
+    "GLOSSARY_QUERY_AND_CLEAR_REPLACE_CHILD_HISTORY",
+    "SAMPLE_LOAD_REPLACES_CHILD_HISTORY_ONCE"
+  ],
+  "claim_ceiling": [
+    "SOURCE_AND_LOCAL_BROWSER_BEHAVIOR_ONLY",
+    "NOT_PRODUCTION_DEPLOYMENT",
+    "NOT_EVERY_BROWSER_OR_INSTALLED_PWA_STATE",
+    "NOT_CROSS_ORIGIN_NAVIGATION_SUPPORT",
+    "NOT_ATOMIC_ACROSS_PARENT_AND_CHILD_HISTORY",
+    "NOT_PRIVACY_OR_ACCESSIBILITY_CERTIFICATION",
+    "OWNER_MERGE_REQUIRED"
+  ]
+}

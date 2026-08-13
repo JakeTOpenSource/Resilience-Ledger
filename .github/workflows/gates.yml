@@ -52,6 +52,8 @@ jobs:
         run: node governance/governance-validate.js
       - name: Governance ledger (append-only, replay, privacy, falsification)
         run: node governance/harnesses/run-all.js
+      - name: Home navigation history (one Back step per tool)
+        run: node governance/harnesses/verify-home-navigation-history.js
       - name: Public pinned snapshot card (offline byte identities)
         run: node research/atlas-snapshot-read-only/tools/verify-release.mjs
       - name: STP v1.2 public reproduction packet

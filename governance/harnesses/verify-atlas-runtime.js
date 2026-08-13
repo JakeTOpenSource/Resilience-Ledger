@@ -50,7 +50,8 @@ for(const receiver of ['Delta-Atlas-GapCheck.html','Coherence-Audit.html']){
 const chat=read('Agentic-AI-Governance-Chat.html');
 for(const required of ["type:'delta-atlas-ask-misses'",'MISS_TTL_MS=30*24*60*60*1000','expires_at:now+MISS_TTL_MS','localStorage.removeItem(MISSKEY)']) if(!chat.includes(required)) fail('missing miss-storage control: '+required);
 const home=read('index.html');
-for(const required of ["type:'delta-atlas-query'",'version:1,query:q','contentWindow.postMessage',"fr.src='Agentic-AI-Governance-Chat.html#embed'", "['delta_prefill','deltaAtlasAskMisses','deltaAtlasVerifyChecked']"]) if(!home.includes(required)) fail('missing in-memory query or erase-all control: '+required);
+for(const required of ["type:'delta-atlas-query'",'version:1,query:q','contentWindow.postMessage',"replaceFrameLocation(fr,'Agentic-AI-Governance-Chat.html#embed')", "['delta_prefill','deltaAtlasAskMisses','deltaAtlasVerifyChecked']"]) if(!home.includes(required)) fail('missing in-memory query or erase-all control: '+required);
+if(/fr\.src\s*=\s*['"]Agentic-AI-Governance-Chat\.html#embed/.test(home)) fail('query child navigation adds a joint-session-history entry');
 if(/Agentic-AI-Governance-Chat\.html\?q=|URLSearchParams\(location\.search\)/.test(home+'\n'+chat)) fail('submitted query can enter a request URL');
 const headers=read('_headers');
 const globalBlock=headers.match(/^\/\*\n((?:  .*\n)+)/m);

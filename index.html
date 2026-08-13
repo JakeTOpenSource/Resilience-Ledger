@@ -459,23 +459,39 @@
  function base(f){ return (f||'').split('?')[0]; }
  function setActive(f){ var b=base(f); document.querySelectorAll('.nav').forEach(function(x){ x.classList.toggle('on', x.dataset && x.dataset.f===b); }); }
  function routeFromLocation(){ var h=''; try{h=decodeURIComponent((location.hash||'').replace('#',''));}catch(e){return null;} return Object.prototype.hasOwnProperty.call(NAV_ROUTES,h)?h:null; }
+ function canReplaceFrameLocation(target){
+   try{return !!target&&!!target.contentWindow&&!!target.contentWindow.location&&typeof target.contentWindow.location.replace==='function';}
+   catch(e){return false;}
+ }
+ function replaceFrameLocation(target,url){
+   try{
+     if(!canReplaceFrameLocation(target)) return false;
+     target.contentWindow.location.replace(url); return true;
+   }catch(e){return false;}
+ }
  function nav(f,writeHistory){ var routePath=base(f); if(!Object.prototype.hasOwnProperty.call(NAV_ROUTES,routePath)) return false;
    var routeLabel=NAV_ROUTES[routePath];
-   home.style.display='none'; frame.style.display='block'; loading.style.display='block';
+   if(!canReplaceFrameLocation(frame)) return false;
+   if(writeHistory!==false){try{ history.pushState({route:routePath},'', '#'+encodeURIComponent(routePath)); }catch(e){return false;}}
    frame.onload=function(){ loading.style.display='none'; };
-   frame.title=routeLabel; frame.src=routePath; setActive(routePath); document.title=routeLabel;
-   if(writeHistory!==false){try{ history.pushState({route:routePath},'', '#'+encodeURIComponent(routePath)); }catch(e){}} return true; }
- function goHome(writeHistory){ frame.style.display='none'; frame.removeAttribute('src'); home.style.display='block'; home.scrollTop=0;
+   if(!replaceFrameLocation(frame,routePath)){frame.onload=null; if(writeHistory!==false){try{history.back();}catch(e){}} return false;}
+   home.style.display='none'; frame.style.display='block'; loading.style.display='block';
+   frame.title=routeLabel; setActive(routePath); document.title=routeLabel;
+   return true; }
+ function goHome(writeHistory){ if(!canReplaceFrameLocation(frame)) return false;
+   if(writeHistory!==false){try{ history.pushState({route:null},'', location.pathname); }catch(e){return false;}}
+   if(!replaceFrameLocation(frame,'about:blank')){if(writeHistory!==false){try{history.back();}catch(e){}} return false;}
+   frame.style.display='none'; home.style.display='block'; home.scrollTop=0;
    frame.title='Delta Atlas content'; loading.style.display='none'; setActive(null); document.title='Delta Atlas';
-   if(writeHistory!==false){try{ history.pushState({route:null},'', location.pathname); }catch(e){}} var hq=document.getElementById('hq'); if(hq&&writeHistory!==false) hq.focus(); }
+   var hq=document.getElementById('hq'); if(hq&&writeHistory!==false) hq.focus(); return true; }
  function heroSearch(){ var q=document.getElementById('hq').value.trim(); if(!q) return;
    var fr=document.getElementById('ansframe');
    fr.onload=function(){ var target=location.origin==='null'?'*':location.origin; fr.contentWindow.postMessage({type:'delta-atlas-query',version:1,query:q},target); };
-   fr.src='Agentic-AI-Governance-Chat.html#embed';
+   if(!replaceFrameLocation(fr,'Agentic-AI-Governance-Chat.html#embed')){fr.onload=null; return;}
    document.getElementById('results').style.display='block';
    document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'}); }
- function clearResults(){ document.getElementById('results').style.display='none';
-   var fr=document.getElementById('ansframe'); fr.removeAttribute('src');
+ function clearResults(){ var fr=document.getElementById('ansframe'); if(!replaceFrameLocation(fr,'about:blank')) return false;
+   document.getElementById('results').style.display='none';
    var hq=document.getElementById('hq'); if(hq){ hq.value=''; hq.focus(); } }
  var HEX=["what is artificial intelligence?","what is machine learning?","what is a model?","what is an agent?","what is a prompt?","what is a hallucination?","what is a guardrail?","what is alignment?","what is fine-tuning?","what is RAG?"];
  var hc=document.getElementById('hchips');
@@ -502,7 +518,7 @@
 </script>
 <script>
  /* Load the illustrative sample only when a visitor asks to see it. */
- (function(){var sample=document.querySelector('.sample');function go(){var f=document.querySelector('.demoframe');if(f&&!f.getAttribute('src')&&f.getAttribute('data-src'))f.setAttribute('src',f.getAttribute('data-src'));}
+ (function(){var sample=document.querySelector('.sample');function go(){var f=document.querySelector('.demoframe'),src=f&&f.getAttribute('data-src');if(f&&f.dataset.loaded!=='true'&&src&&replaceFrameLocation(f,src))f.dataset.loaded='true';}
   if(sample){sample.addEventListener('toggle',function(){if(sample.open)go();});}})();
 </script>
 </body></html>
