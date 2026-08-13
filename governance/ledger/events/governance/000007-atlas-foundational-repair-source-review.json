@@ -1,0 +1,147 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_governance_atlas_foundational_repair_0007",
+  "stream_id": "governance",
+  "sequence": 7,
+  "event_type": "governance.atlas_foundational_repair_source_reviewed",
+  "occurred_at": "2026-08-13T15:50:03Z",
+  "recorded_at": "2026-08-13T15:50:03Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "governance/decision-log/0008-atlas-foundational-repair-source-review.md"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C2",
+  "parents": [
+    "evt_governance_git_pages_source_hardening_0006",
+    "evt_semantics_status_vocabulary_boundary_0001"
+  ],
+  "prev_event_hash": "d0fd63a2c642dbb4cba3edc7d55968e069303791c40cd6a585761c397199dec2",
+  "payload_hash": "5800de3167310639622bb5e52ce926aacbce34d9a5ea2910b4050e625d6b486c",
+  "event_hash": "55d9f68e9a5718e14bc2ef13db622207681b9b4fcfc66c95a6c7734a1a252433",
+  "read_set": [
+    "governance/decision-log/0008-atlas-foundational-repair-source-review.md",
+    "governance/releases/atlas-foundational-repair.v1.json",
+    "git:commit:46a798fd104bdda0db1e2f219805a9ebf73a8c48"
+  ],
+  "write_set": [
+    "governance/decision-log/0008-atlas-foundational-repair-source-review.md",
+    "governance/releases/atlas-foundational-repair.v1.json",
+    "governance/harnesses/verify-atlas-foundational-repair.js",
+    "governance/harnesses/run-all.js"
+  ],
+  "precondition_refs": [
+    "evt_governance_git_pages_source_hardening_0006",
+    "evt_semantics_status_vocabulary_boundary_0001",
+    "governance/decision-log/0008-atlas-foundational-repair-source-review.md",
+    "governance/releases/atlas-foundational-repair.v1.json"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "atlas-foundational-repair-decision-0008",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "252ad0cc87922a3d71f53c01b33d150ef5f4f76b9a0e5cc89e424656daf35bee",
+      "source_locator": "governance/decision-log/0008-atlas-foundational-repair-source-review.md"
+    },
+    {
+      "ref_id": "atlas-foundational-repair-manifest-0001",
+      "kind": "source_candidate_manifest",
+      "classification": "PUBLIC",
+      "sha256": "ee0445a1cd1f5402db00c22a3d78fcfbdfecab165ed948138e6ab45b4f46116a",
+      "source_locator": "governance/releases/atlas-foundational-repair.v1.json"
+    },
+    {
+      "ref_id": "atlas-data-sync-contract-0001",
+      "kind": "data_contract",
+      "classification": "PUBLIC",
+      "sha256": "45cb718d137cf38b15cd849475faabe10a10df155eff0db0bfb71dca62070821",
+      "source_locator": "governance/contracts/atlas-data-sync.contract.v1.json"
+    },
+    {
+      "ref_id": "atlas-runtime-contract-0001",
+      "kind": "runtime_contract",
+      "classification": "PUBLIC",
+      "sha256": "7cd8c2a89f6df20995789f066643240a4cbcbc3ca67d2dc1cc4c71129b22ffd5",
+      "source_locator": "governance/contracts/atlas-runtime-contract.v1.json"
+    },
+    {
+      "ref_id": "atlas-repair-source-map-0001",
+      "kind": "source_register",
+      "classification": "PUBLIC",
+      "sha256": "7659c121cd920892c5dde3c9506bf5da3ef619a50673b8f0fb5d744961eeb015",
+      "source_locator": "governance/contracts/atlas-repair-sources.md"
+    },
+    {
+      "ref_id": "atlas-data-sync-harness-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "8a95be88604c46a9de40bdca10d74ac9d277cea2383dd0b6c9a684059f044d32",
+      "source_locator": "governance/harnesses/verify-atlas-data-sync.js"
+    },
+    {
+      "ref_id": "atlas-runtime-harness-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "8991818891174fc96a3ede60e2cf2f363a3235284bedcdbdede95c503b84d730",
+      "source_locator": "governance/harnesses/verify-atlas-runtime.js"
+    },
+    {
+      "ref_id": "atlas-home-harness-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "8e1f0b6a26a03e18a0c2cb8f4bfa152bfd6256aef96b24090eb4be9340bd8b9b",
+      "source_locator": "governance/harnesses/verify-home-surface.js"
+    },
+    {
+      "ref_id": "atlas-source-candidate-verifier-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "79dc42f3f1781b7ffb67de6bdfcf09c1added2039bfd8cb4d7447520812a6649",
+      "source_locator": "governance/harnesses/verify-atlas-foundational-repair.js"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0008-atlas-foundational-repair-source-review.md",
+  "idempotency_key": "governance:atlas-foundational-repair:2026-08-13:0007",
+  "decision": "ACCEPT_WITH_LIMITS",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "NOT_ATTEMPTED",
+    "observation": "MATCHED",
+    "acceptance": "PROVISIONAL",
+    "outcome": "UNMEASURED"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "program_id": "atlas-foundational-repair-0001",
+    "base_commit": "ee9a04b61950601f761912c8c9dd86761a77abf6",
+    "candidate_commit": "46a798fd104bdda0db1e2f219805a9ebf73a8c48",
+    "candidate_tree": "467aff1b158ce865ca3d452cc514f03ed4952790",
+    "exact_diff_path_count": 31,
+    "data_sync_decision": "DEFER",
+    "legacy_review_token_semantics": "REPOSITORY_LABEL_NOT_RECEIPT",
+    "continuity_overlay_execution": "DATA_ONLY_ESCAPED",
+    "deterministic_corpora": "PASS",
+    "independent_replay": "PASS",
+    "local_browser_checks": "PASS",
+    "independent_red_team_reviews": 3,
+    "red_team_result": "GO",
+    "performance_metrics": "NOT_OBSERVED",
+    "public_draft_pr_authorized": true,
+    "owner_merge_required": true,
+    "production_deployment": "NOT_ATTEMPTED",
+    "claim_ceiling": "Accepts the exact Git-bound source candidate for public draft pull-request review. It does not authorize agent merge, perform or accept production deployment, select a canonical semantic migration, prove per-term review, establish semantic truth, certify accessibility or privacy, or establish live health."
+  }
+}
