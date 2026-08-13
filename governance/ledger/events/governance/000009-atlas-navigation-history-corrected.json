@@ -1,0 +1,157 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_governance_atlas_navigation_history_corrected_0009",
+  "stream_id": "governance",
+  "sequence": 9,
+  "event_type": "governance.atlas_navigation_history_corrected",
+  "occurred_at": "2026-08-13T16:25:50Z",
+  "recorded_at": "2026-08-13T16:25:50Z",
+  "actor": {
+    "id": "github:JakeTOpenSource",
+    "role": "repository_owner",
+    "auth_basis": "governance/decision-log/0010-atlas-navigation-history-correction.md"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C2",
+  "parents": [
+    "evt_governance_atlas_data_sync_portability_correction_0008"
+  ],
+  "prev_event_hash": "ba3487d1acbc46fef01b71ef0a5012841f6b9e347e83bcc8dc49af92c28e0f50",
+  "payload_hash": "5e26a702ac46a5919901f01df9fa738b6f51b11737304dfb6c03e4a16efa67a4",
+  "event_hash": "33bdb9a50e0a95500437414a850ae73b0fd8db1d9c608c5494e4f82b59be31ad",
+  "read_set": [
+    "evt_governance_atlas_foundational_repair_0007",
+    "evt_governance_atlas_data_sync_portability_correction_0008",
+    "https://8bd26c3c.resilience-eval-ai.pages.dev/",
+    "index.html"
+  ],
+  "write_set": [
+    ".github/workflows/gates.yml",
+    "governance/contracts/atlas-navigation-history.contract.v1.json",
+    "governance/decision-log/0010-atlas-navigation-history-correction.md",
+    "governance/harnesses/verify-atlas-foundational-repair.js",
+    "governance/harnesses/verify-atlas-runtime.js",
+    "governance/harnesses/verify-home-navigation-history.js",
+    "governance/harnesses/verify-six-signal-surface.js",
+    "governance/observations/2026-08-13-atlas-navigation-local-browser.json",
+    "index.html"
+  ],
+  "precondition_refs": [
+    "evt_governance_atlas_data_sync_portability_correction_0008",
+    "governance/decision-log/0010-atlas-navigation-history-correction.md",
+    "governance/contracts/atlas-navigation-history.contract.v1.json"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "atlas-navigation-history-decision-0010",
+      "kind": "decision_record",
+      "classification": "PUBLIC",
+      "sha256": "5886a954eda42c7de9f6f16ad7d27b5dc2d570cbe9d09614a7aab901dccfa6a1",
+      "source_locator": "governance/decision-log/0010-atlas-navigation-history-correction.md"
+    },
+    {
+      "ref_id": "atlas-navigation-history-contract-0001",
+      "kind": "runtime_contract",
+      "classification": "PUBLIC",
+      "sha256": "65001c9856358ab7147fec946eaad3715fba8eaa71137d4f3abbd659c6d878ec",
+      "source_locator": "governance/contracts/atlas-navigation-history.contract.v1.json"
+    },
+    {
+      "ref_id": "atlas-navigation-shell-correction-0001",
+      "kind": "public_source",
+      "classification": "PUBLIC",
+      "sha256": "689078ab775c917e78615356a157a6f7734622542a103de0dfdf00b6d691d95a",
+      "source_locator": "index.html"
+    },
+    {
+      "ref_id": "atlas-navigation-history-harness-0001",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "cef2fca5e834508588388f3ce93059dc870aec1d54cf17d678eb79ab7f64c6ef",
+      "source_locator": "governance/harnesses/verify-home-navigation-history.js"
+    },
+    {
+      "ref_id": "atlas-runtime-harness-navigation-correction-0002",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "c1815d9b19c6b071aeb33faf2c48f229a4314b46aa37d408f1e71ac2f7c10cf1",
+      "source_locator": "governance/harnesses/verify-atlas-runtime.js"
+    },
+    {
+      "ref_id": "atlas-source-candidate-verifier-historical-binding-0002",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "29ae651b4027ccd2db11c6660e325e00d2b7be9575bf7c7ac4a76b508362c757",
+      "source_locator": "governance/harnesses/verify-atlas-foundational-repair.js"
+    },
+    {
+      "ref_id": "six-signal-navigation-harness-correction-0002",
+      "kind": "verification_harness",
+      "classification": "PUBLIC",
+      "sha256": "7fbcdb7ba19b067b829e9f698391adae4490183d52ec3be2341b8edffb45212c",
+      "source_locator": "governance/harnesses/verify-six-signal-surface.js"
+    },
+    {
+      "ref_id": "github-navigation-history-gate-0001",
+      "kind": "ci_workflow",
+      "classification": "PUBLIC",
+      "sha256": "066c58b7841bb0363ed28bb9196f568a0de82f663b891cb8ae6ce6d22d579723",
+      "source_locator": ".github/workflows/gates.yml"
+    },
+    {
+      "ref_id": "cloudflare-preview-duplicate-back-observation-0001",
+      "kind": "external_observation",
+      "classification": "PUBLIC",
+      "sha256": null,
+      "source_locator": "https://8bd26c3c.resilience-eval-ai.pages.dev/"
+    },
+    {
+      "ref_id": "atlas-navigation-local-browser-correction-observation-0001",
+      "kind": "browser_observation",
+      "classification": "PUBLIC",
+      "sha256": "9a7c136a1a998dfdac39c44adb7d6202805cbd3fd62de8425d43c0108d35480e",
+      "source_locator": "governance/observations/2026-08-13-atlas-navigation-local-browser.json"
+    }
+  ],
+  "authority_ref": "governance/decision-log/0010-atlas-navigation-history-correction.md",
+  "idempotency_key": "governance:atlas-navigation-history-correction:2026-08-13:0009",
+  "decision": "CORRECT",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "NOT_ATTEMPTED",
+    "observation": "MATCHED",
+    "acceptance": "PROVISIONAL",
+    "outcome": "TOO_EARLY"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [
+    "evt_governance_atlas_foundational_repair_0007"
+  ],
+  "payload": {
+    "correction_id": "atlas-navigation-history-0001",
+    "base_candidate_commit": "2a9e5f30451b1e5f3ac0c3cf86f9c4e5f96fa425",
+    "defect_reproduction": "HOME_GAP_TRACER_FIRST_BACK_REMAINED_TRACER",
+    "defect_preview_url": "https://8bd26c3c.resilience-eval-ai.pages.dev/",
+    "child_navigation_policy": "LOCATION_REPLACE",
+    "explicit_user_navigation_parent_history_writes": 1,
+    "popstate_parent_history_writes": 0,
+    "local_browser_correction_observation": "MATCHED",
+    "local_browser_receipt_ref": "governance/observations/2026-08-13-atlas-navigation-local-browser.json",
+    "cloudflare_preview_correction_observation": "NOT_YET_OBSERVED",
+    "post_push_child_failure_policy": "PRESENTATION_UNCHANGED_PARENT_BACK_RECOVERY_REQUESTED_NOT_ATOMIC",
+    "mutation_canaries": 10,
+    "owner_merge_required": true,
+    "production_deployment": "NOT_ATTEMPTED",
+    "claim_ceiling": "Corrects the draft source and local-browser navigation history behavior only. It does not establish a corrected Cloudflare preview until separately observed, authorize agent merge or production deployment, prove every browser or installed-PWA state, add cross-origin navigation support, provide atomicity across parent and child history, certify privacy/accessibility/security, or establish live health."
+  }
+}

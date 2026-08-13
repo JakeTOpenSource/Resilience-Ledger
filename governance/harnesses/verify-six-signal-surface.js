@@ -151,17 +151,22 @@ function navigationFailures(source) {
     return failures;
   }
   const program = source.slice(programStart, programEnd);
-  if ((program.match(/\bframe\.src\s*=/g) || []).length !== 1 || !program.includes('frame.src=routePath;')) {
-    failures.push('navigation must contain exactly one main-frame source assignment bound to routePath');
+  if ((program.match(/replaceFrameLocation\(frame,routePath\)/g) || []).length !== 1 || /\bframe\.src\s*=/.test(program)) {
+    failures.push('navigation must replace exactly one main-frame location bound to routePath without adding child history');
   }
   if ((program.match(/\bframe\.title\s*=/g) || []).length !== 1 || !program.includes('frame.title=routeLabel;')) {
     failures.push('navigation must contain exactly one main-frame title assignment bound to routeLabel');
   }
-  if (/\bframe\s*\[\s*['"](?:src|title)['"]\s*\]\s*=|\bframe\.setAttribute\(\s*['"](?:src|title)['"]/.test(program)) {
+  if (/\bframe\s*\[\s*['"](?:src|title)['"]\s*\]\s*=|\bframe\.setAttribute\(\s*['"](?:src|title)['"]|\bframe\.src\s*=/.test(program)) {
     failures.push('navigation contains an alternate main-frame source or title mutation');
   }
 
-  const frame = { style: { display: 'unchanged' }, title: 'unchanged' };
+  const frameReplacements = [];
+  const frame = {
+    style: { display: 'unchanged' },
+    title: 'unchanged',
+    contentWindow: { location: { replace(value) { frameReplacements.push(value); } } }
+  };
   const home = { style: { display: 'unchanged' } };
   const loading = { style: { display: 'unchanged' } };
   const historyCalls = [];
@@ -172,19 +177,19 @@ function navigationFailures(source) {
   const context = { frame, home, loading, document, history: { pushState(...args) { historyCalls.push(args); } } };
   try {
     vm.runInNewContext(program, context, { timeout: 1000 });
-    const beforeUnknown = JSON.stringify({ frame, home, loading, documentTitle: document.title, historyCalls });
+    const beforeUnknown = JSON.stringify({ frame, home, loading, documentTitle: document.title, historyCalls, frameReplacements });
     if (context.nav('https://exfil.invalid/owned.html', 'forged label') !== false ||
-        JSON.stringify({ frame, home, loading, documentTitle: document.title, historyCalls }) !== beforeUnknown) {
+        JSON.stringify({ frame, home, loading, documentTitle: document.title, historyCalls, frameReplacements }) !== beforeUnknown) {
       failures.push('unknown navigation mutates presentation state or is not rejected');
     }
     for (const [route, title] of expectedRoutes) {
-      delete frame.src;
       frame.title = 'unchanged';
       document.title = 'unchanged';
       historyCalls.length = 0;
-      if (context.nav(route, 'forged label') !== true || frame.src !== route || frame.title !== title ||
+      frameReplacements.length = 0;
+      if (context.nav(route, 'forged label') !== true || JSON.stringify(frameReplacements) !== JSON.stringify([route]) || frame.title !== title ||
           document.title !== title || historyCalls.length !== 1 || historyCalls[0][2] !== `#${encodeURIComponent(route)}`) {
-        failures.push(`${route} does not bind the allowlisted source, title, and hash atomically`);
+        failures.push(`${route} does not bind the allowlisted replacement location, title, and hash atomically`);
       }
     }
   } catch (error) {
@@ -216,11 +221,11 @@ const exactBoundaryCanaries = [
     'header egress extension'],
   [methodHeaderFailures(`${headers}\n/Six-Signal-Method\n  X-Frame-Options: SAMEORIGIN\n`).length > 0,
     'duplicate canonical header block'],
-  [navigationFailures(index.replace('frame.title=routeLabel; frame.src=routePath;',
-    "frame.title=routeLabel; frame.src=routePath; frame.src='https://exfil.invalid';")).length > 0,
+  [navigationFailures(index.replace('frame.title=routeLabel; setActive(routePath);',
+    "frame.title=routeLabel; frame.src='https://exfil.invalid'; setActive(routePath);")).length > 0,
     'second main-frame source assignment'],
-  [navigationFailures(index.replace('frame.title=routeLabel; frame.src=routePath;',
-    "frame.title=routeLabel; frame.src=routePath; frame.title='forged';")).length > 0,
+  [navigationFailures(index.replace('frame.title=routeLabel; setActive(routePath);',
+    "frame.title=routeLabel; frame.title='forged'; setActive(routePath);")).length > 0,
     'second main-frame title assignment']
 ];
 for (const [rejected, label] of exactBoundaryCanaries) {

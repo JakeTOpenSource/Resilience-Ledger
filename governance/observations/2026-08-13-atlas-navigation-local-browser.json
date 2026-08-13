@@ -1,0 +1,64 @@
+{
+  "schema_version": "atlas-browser-observation.v1",
+  "observation_id": "atlas-navigation-local-browser-2026-08-13-0001",
+  "recorded_at": "2026-08-13T16:36:00Z",
+  "classification": "PUBLIC",
+  "subject": {
+    "surface": "index.html",
+    "source_sha256": "689078ab775c917e78615356a157a6f7734622542a103de0dfdf00b6d691d95a",
+    "source_state": "UNCOMMITTED_WORKTREE_CANDIDATE",
+    "delivery": "LOCAL_LOOPBACK_HTTP"
+  },
+  "instrument": {
+    "browser_family": "CHROME",
+    "browser_version": "NOT_OBSERVED",
+    "control_surface": "CHATGPT_CHROME_EXTENSION",
+    "profile_or_session_data_collected": false
+  },
+  "cases": [
+    {
+      "case_id": "BACK_ONE_ENTRY_PER_TOOL",
+      "input": "HOME_TO_GAP_TO_TRACER_TO_BACK_TO_BACK",
+      "expected": "GAP_THEN_HOME",
+      "observed": "GAP_THEN_HOME",
+      "result": "MATCHED"
+    },
+    {
+      "case_id": "FORWARD_ONE_ENTRY_PER_TOOL",
+      "input": "HOME_TO_FORWARD_TO_FORWARD",
+      "expected": "GAP_THEN_TRACER",
+      "observed": "GAP_THEN_TRACER",
+      "result": "MATCHED"
+    },
+    {
+      "case_id": "GLOSSARY_IN_MEMORY_QUERY",
+      "input": "SYNTHETIC_WHAT_IS_A_HARNESS",
+      "expected": "HARNESS_RESULT_WITHOUT_QUERY_IN_PARENT_URL",
+      "observed": "HARNESS_RESULT_WITHOUT_QUERY_IN_PARENT_URL",
+      "result": "MATCHED"
+    },
+    {
+      "case_id": "NARROW_VIEWPORT_REFLOW",
+      "input": "320_BY_800_CSS_PIXELS",
+      "expected": "NO_HORIZONTAL_DOCUMENT_OVERFLOW",
+      "observed": "NO_HORIZONTAL_DOCUMENT_OVERFLOW",
+      "result": "MATCHED"
+    },
+    {
+      "case_id": "CONSOLE_ERRORS",
+      "input": "NAVIGATION_AND_GLOSSARY_SEQUENCE",
+      "expected": "ZERO",
+      "observed": "ZERO",
+      "result": "MATCHED"
+    }
+  ],
+  "result": "MATCHED",
+  "claim_ceiling": [
+    "LOCAL_SOURCE_BYTES_ONLY",
+    "SYNTHETIC_NON_SENSITIVE_INPUT_ONLY",
+    "NOT_CLOUDFLARE_PREVIEW",
+    "NOT_PRODUCTION",
+    "NOT_EVERY_BROWSER_OR_INSTALLED_PWA_STATE",
+    "NOT_ACCESSIBILITY_PRIVACY_SECURITY_OR_HEALTH_CERTIFICATION"
+  ]
+}

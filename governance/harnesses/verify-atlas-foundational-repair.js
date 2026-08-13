@@ -9,6 +9,7 @@ const L = require('../ledger/lib.js');
 
 const manifestPath = 'governance/releases/atlas-foundational-repair.v1.json';
 const eventPath = 'governance/ledger/events/governance/000007-atlas-foundational-repair-source-review.json';
+const recordingCommit = '5242a1d3501b3f984ad5c98092b7488f3e606d58';
 const manifestBytes = L.canonicalTextBytes(fs.readFileSync(path.join(L.repoRoot, manifestPath)));
 const manifest = JSON.parse(manifestBytes.toString('utf8'));
 const errors = [];
@@ -57,20 +58,26 @@ for (const entry of manifest.exact_diff.filter((item) => item.status !== 'D')) {
 }
 
 const event = JSON.parse(fs.readFileSync(path.join(L.repoRoot, eventPath), 'utf8'));
+git(['cat-file', '-e', `${recordingCommit}^{commit}`]);
+hold(L.sha256CanonicalTextBytes(git(['show', `${recordingCommit}:${eventPath}`], null)) ===
+  L.sha256CanonicalTextBytes(fs.readFileSync(path.join(L.repoRoot, eventPath))),
+  'current source-review event differs from its recording commit');
 for (const ref of event.evidence_refs) {
   hold(typeof ref.source_locator === 'string' && !path.isAbsolute(ref.source_locator) &&
     !ref.source_locator.split(/[\\/]/).includes('..'), `${ref.ref_id}: unsafe or missing evidence locator`);
   if (typeof ref.source_locator !== 'string' || path.isAbsolute(ref.source_locator) ||
       ref.source_locator.split(/[\\/]/).includes('..')) continue;
-  const evidencePath = path.resolve(L.repoRoot, ref.source_locator);
-  hold(evidencePath.startsWith(`${path.resolve(L.repoRoot)}${path.sep}`) && fs.existsSync(evidencePath),
-    `${ref.ref_id}: evidence file is missing or outside the repository`);
-  if (!fs.existsSync(evidencePath)) continue;
-  hold(L.sha256CanonicalTextBytes(fs.readFileSync(evidencePath)) === ref.sha256,
-    `${ref.ref_id}: evidence digest mismatch`);
+  let evidenceBytes = null;
+  try { evidenceBytes = git(['show', `${recordingCommit}:${ref.source_locator}`], null); }
+  catch (error) { hold(false, `${ref.ref_id}: evidence file is missing from the recording commit`); }
+  if (!evidenceBytes) continue;
+  hold(L.sha256CanonicalTextBytes(evidenceBytes) === ref.sha256,
+    `${ref.ref_id}: historical evidence digest mismatch`);
 }
 const manifestEvidence = event.evidence_refs.find((ref) => ref.source_locator === manifestPath);
-hold(manifestEvidence && manifestEvidence.sha256 === L.sha256Bytes(manifestBytes),
+const recordedManifestBytes = L.canonicalTextBytes(git(['show', `${recordingCommit}:${manifestPath}`], null));
+hold(manifestEvidence && manifestEvidence.sha256 === L.sha256Bytes(recordedManifestBytes) &&
+  L.sha256Bytes(recordedManifestBytes) === L.sha256Bytes(manifestBytes),
   'governance event does not bind the candidate manifest');
 hold(event.payload.candidate_commit === manifest.candidate_commit && event.payload.candidate_tree === manifest.candidate_tree,
   'governance event candidate identity mismatch');
