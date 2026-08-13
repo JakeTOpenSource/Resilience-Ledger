@@ -10,7 +10,7 @@ const scripts = [
   'verify-chain.js',
   'replay.js',
   'privacy-boundary.js',
-  'verify-atlas-data-sync.js',
+  'verify-atlas-data-sync-v2.js',
   'verify-atlas-data-materialization.js',
   'verify-atlas-runtime.js',
   'verify-home-surface.js',
