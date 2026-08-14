@@ -1,0 +1,21 @@
+# Byte identity is the floor here.
+#
+# Most checks in this repository compare a working-tree file against a digest
+# recorded from the committed bytes: the data-sync baselines, the release
+# manifests, the ledger event hashes, and the header baseline in
+# governance/harnesses/verify-atlas-runtime.js. Any end-of-line rewriting on
+# checkout breaks that comparison before a check can reach a real defect. On a
+# default Windows clone (core.autocrlf=true) the runtime check fails with
+# "global header baseline missing" for exactly this reason, which reads as a
+# repository defect and is not one.
+#
+# Unsetting `text` on every path disables end-of-line conversion in both
+# directions. A checkout reproduces the committed bytes on every platform, and
+# a commit stores what the working tree holds. No stored blob is rewritten by
+# this file, so every digest already published against this history stays
+# valid.
+#
+# Do not replace this with `text=auto eol=lf`. That normalizes on check-in,
+# which can rewrite a stored blob and invalidate a published digest.
+
+* -text
