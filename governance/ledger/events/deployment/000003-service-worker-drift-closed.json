@@ -1,0 +1,117 @@
+{
+  "schema_version": "2.0.0",
+  "status_vocabulary": "stp-v1.1-status-axes",
+  "capability_policy_ref": "governance/ledger/policy/capabilities.v2.json",
+  "event_id": "evt_deployment_service_worker_drift_closed_0003",
+  "stream_id": "deployment",
+  "sequence": 3,
+  "event_type": "deployment.production_observed",
+  "occurred_at": "2026-08-14T13:20:30Z",
+  "recorded_at": "2026-08-14T13:20:30Z",
+  "actor": {
+    "id": "adapter:claude-code",
+    "role": "agent_observer",
+    "auth_basis": "evt_deployment_public_explanation_production_observed_0002"
+  },
+  "classification": "PUBLIC",
+  "consequence_class": "C1",
+  "parents": [
+    "evt_deployment_public_explanation_production_observed_0002"
+  ],
+  "prev_event_hash": "636df04813901f3168bc62366e496a152e14096c27683a668c441b5488cc80a3",
+  "payload_hash": "b348def185ce59be11c6c7447f9fe9372fee13965965ab7c0a0767e0f2f43758",
+  "event_hash": "0914ca90d73804b045655c3ce0c7cefbdc3474b87691aa842ed3fd09a3b1222e",
+  "read_set": [
+    "sw.js",
+    "governance/ledger/events/deployment/000001-wp0-production-observation.json",
+    "governance/ledger/events/deployment/000002-public-explanation-production-observed.json"
+  ],
+  "write_set": [
+    "governance/ledger/events/deployment/000003-service-worker-drift-closed.json"
+  ],
+  "precondition_refs": [
+    "evt_deployment_wp0_production_observation_0001",
+    "evt_deployment_public_explanation_production_observed_0002"
+  ],
+  "evidence_refs": [
+    {
+      "ref_id": "repository-service-worker",
+      "kind": "repository_file",
+      "classification": "PUBLIC",
+      "sha256": "fa01638d739955c4db7b5c220aee2309cb7ede03f6101433697732fb9043fa4f",
+      "source_locator": "sw.js"
+    },
+    {
+      "ref_id": "live-service-worker",
+      "kind": "http_response_body",
+      "classification": "PUBLIC",
+      "sha256": "fa01638d739955c4db7b5c220aee2309cb7ede03f6101433697732fb9043fa4f",
+      "source_locator": "https://resilience-eval-ai.pages.dev/sw.js"
+    },
+    {
+      "ref_id": "prior-observation-event",
+      "kind": "governance_event",
+      "classification": "PUBLIC",
+      "sha256": "34bde4ec2eb4d1bfb70b8d44df6439cb295bd1dc1293df0ae47490193ad3fa97",
+      "source_locator": "governance/ledger/events/deployment/000001-wp0-production-observation.json"
+    }
+  ],
+  "authority_ref": "evt_deployment_public_explanation_production_observed_0002",
+  "idempotency_key": "service-worker-drift-closure-2026-08-14T13:20:30Z",
+  "decision": "OBSERVE",
+  "status_axes": {
+    "evidence": "SUPPORTED",
+    "authority": "APPROVED",
+    "preparation": "READY",
+    "execution": "APPLIED",
+    "observation": "MATCHED",
+    "acceptance": "PRESERVED",
+    "outcome": "UNMEASURED"
+  },
+  "effect": {
+    "kind": "NONE",
+    "target": null,
+    "reversible": true,
+    "recovery_ref": null
+  },
+  "supersedes": [],
+  "correction_of": [],
+  "payload": {
+    "observation_id": "service-worker-drift-closure-0003",
+    "closes": {
+      "prior_observation_event": "evt_deployment_wp0_production_observation_0001",
+      "prior_finding": "Repository cache name is aaig-v85; production cache name is aaig-v84.",
+      "prior_finding_path": "sw.js",
+      "prior_repository_sha256": "5acd2a7818a67b6551707e0209b2ebd6cc57168208e55c5a6094a6058a2fbd42",
+      "prior_live_sha256": "2e98e8558e832ad711572184faa40b12f823b3bc8f81b13fd14f881b1000381f",
+      "prior_status": "UNRESOLVED",
+      "intervening_versions_unobserved": [
+        "aaig-v85",
+        "aaig-v86"
+      ],
+      "closure_basis": "CURRENT_STATE_MATCHED"
+    },
+    "observation": {
+      "path": "sw.js",
+      "url": "https://resilience-eval-ai.pages.dev/sw.js",
+      "method": "GET",
+      "http_status": 200,
+      "observed_at": "2026-08-14T13:20:30Z",
+      "live_sha256": "fa01638d739955c4db7b5c220aee2309cb7ede03f6101433697732fb9043fa4f",
+      "repository_sha256": "fa01638d739955c4db7b5c220aee2309cb7ede03f6101433697732fb9043fa4f",
+      "repository_commit": "ecbaa7589ed292cd7b3567f3e85fc772b3cc17c3",
+      "byte_identity": "MATCHED",
+      "live_cache_name": "aaig-v87",
+      "repository_cache_name": "aaig-v87",
+      "response_etag": "\"fc71f9cb0ba83ca5d9e866548aca21c8\"",
+      "content_security_policy": "NOT_PRESENT"
+    },
+    "residual": {
+      "single_edge_only": true,
+      "installed_client_caches_unobserved": true,
+      "intervening_drift_never_observed": true,
+      "note": "This closes the current-state question only. The v85 and v86 generations were never observed in production and cannot be reconstructed from this receipt."
+    },
+    "claim_ceiling": "Establishes that one sampled production edge served bytes identical to the repository at the recorded time. Does not establish global edge convergence, installed service-worker cache state, past generations, or any future response."
+  }
+}
