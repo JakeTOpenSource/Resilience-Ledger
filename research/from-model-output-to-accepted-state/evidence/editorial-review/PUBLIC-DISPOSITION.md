@@ -60,3 +60,26 @@ paper evidence.
 
 No omitted private review text is incorporated by reference. A finding not
 listed here is not accepted merely because it appeared in the private source.
+
+## Follow-up cold-read disposition
+
+Two later owner-supplied follow-up notes were reviewed under the same boundary.
+The owner attributed them to Claude; that attribution is not runtime-authenticated.
+The raw notes and their locators remain private.
+
+| Source ID | Bytes | SHA-256 |
+|---|---:|---|
+| `SRC-EDITORIAL-FOLLOWUP-2026-08-15-A` | `5289` | `3318b8fde20f95d751748b7fbd4f82a5edf5f735fa5d39c1253e6d14959b323e` |
+| `SRC-EDITORIAL-FOLLOWUP-2026-08-15-B` | `5389` | `4f49a39f4b6ebcfad43f0fe081d954a80fe37907c15d4b178d85fc09579c1e7e` |
+
+Adopted follow-up corrections separate unsupported-claim counts from the
+auditability contribution, report the three exploratory structured-arm Fisher
+comparisons with their clustering ceiling, and describe 34 numbered holds as a
+diagnostic inventory rather than coverage. A separate evidence audit also found
+that the standalone `QueryQuotient.lean` compile needed its own append-only
+receipt; receipt 000005 now binds that source and compile result.
+
+No action was taken on suggestions to rewrite a historical receipt, relabel the
+output-recovery packet as a determinism test, or add a clarification already
+present in the manuscript. The follow-up remains editorial assistance rather
+than evidence, authorship, peer review, or independent validation.

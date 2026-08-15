@@ -54,11 +54,13 @@ and that 258 shared terms disagreed on review status. A production observation f
 <p>The most useful results are the ones that went against me. In a refusal experiment,
 an unstructured larger-model control recorded zero unsupported claims, matching the
 excluded P4 arm and below the rates in the eligible P1-P3 structured arms. That
-evidence bears on auditability and claim discipline; it does not establish that
-either structure or model choice causally improved accuracy. An experiment described
-by its repository as preregistered denied its own doctrine on a single counterexample.
-One deployment receipt in this repository contradicts itself across two fields, and
-the schema gate passes it. Those are reported here at full strength.</p>
+comparison concerns unsupported-claim counts; it does not establish that either
+structure or model choice causally improved accuracy. The auditability contribution
+lies in making the artifacts, assumptions, and limits behind the comparison
+inspectable. An experiment described by its repository as preregistered denied its
+own doctrine on a single counterexample. One deployment receipt in this repository
+contradicts itself across two fields, and the schema gate passes it. Those are
+reported here at full strength.</p>
 </div>
 """
 

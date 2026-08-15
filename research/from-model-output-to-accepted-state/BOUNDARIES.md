@@ -6,7 +6,7 @@ This file is load-bearing. A result copied from this packet should retain the re
 
 - The files match the byte lengths and SHA-256 digests in `release-manifest.json`.
 - The retained JSON reports parse and remain byte-identical to the audited local outputs.
-- The paper outputs passed the local structure checks recorded in `evidence/RELEASE-BUILD-RECEIPT-000001.md`. The dependency-bearing validator used for that preparation check is not included in this zero-dependency public packet.
+- The paper outputs passed the local structure, visual, and privacy checks recorded in `evidence/RELEASE-BUILD-RECEIPT-000003.md`. The dependency-bearing validator used for those preparation checks is not included in this zero-dependency public packet.
 - The finite fixture results are exact for the frozen records, events, queries, candidate fields, equality rules, and implementations named in their reports.
 - `evidence/editorial-review/PUBLIC-DISPOSITION.md` records the owner's minimized editorial decisions and the supplied private source's byte identity. It does not authenticate the reviewer attribution or promote review assertions into evidence.
 
@@ -19,6 +19,7 @@ This file is load-bearing. A result copied from this packet should retain the re
 - that a probability forecast is an outcome, that one resolved case establishes calibration, or that agent agreement is evidence of external truth;
 - that requested model labels in the blind-prompt packet attest the runtime model, seed, sampling process, or independence of the responses.
 - that the private editorial review is evidence, authorship, peer review, source truth, or independent validation.
+- that retained-source IDs expose or reproduce the corresponding private bytes.
 
 ## Vocabulary crosswalk
 
@@ -35,3 +36,5 @@ This directory is prepared for a draft pull request. A draft PR, branch, commit,
 
 The private editorial review and its locator remain outside the public packet.
 Only the minimized owner disposition is authorized for this review surface.
+Absolute local-machine paths, attachment locators, workspace-only paths, raw review
+text, and private prompt responses are outside the publication boundary.

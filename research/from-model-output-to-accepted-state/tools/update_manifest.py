@@ -73,7 +73,7 @@ def main() -> None:
     ).encode("utf-8")
     manifest = {
         "schema": "accepted-state-owner-review-release.v1",
-        "release_id": "from-model-output-to-accepted-state-0.1.0-owner-review.2",
+        "release_id": "from-model-output-to-accepted-state-0.1.0-owner-review.3",
         "status": "OWNER_REVIEW",
         "recorded_date": "2026-08-15",
         "hash_basis": "SHA-256 of raw file bytes",

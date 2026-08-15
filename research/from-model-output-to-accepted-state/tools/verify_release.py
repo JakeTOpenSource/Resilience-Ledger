@@ -13,6 +13,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "release-manifest.json"
 TEXT_SUFFIXES = {".cff", ".html", ".json", ".md", ".mjs", ".ps1", ".py", ".svg", ".txt"}
+PRIVATE_PATTERNS = {
+    "absolute Windows user path": r"[A-Za-z]:[\\/](?:Users|Documents|Downloads|AppData)[\\/]",
+    "absolute Unix user path": r"/(?:Users|home)/[^/\s]+/",
+    "Codex private locator": r"(?:\.codex[\\/]|codex-remote-attachments|codex-clipboard-)",
+    "workspace-only locator": r"(?:work/<wbr>|work/(?:device-activation|transition-stable|probabilistic-audit|mathlib-zero-state))",
+    "local network locator": r"(?:localhost|127\.0\.0\.1)",
+    "email address": r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b",
+    "private key material": r"-----BEGIN [A-Z ]*PRIVATE KEY-----",
+}
 
 
 def fail(message: str) -> None:
@@ -72,8 +81,10 @@ def main() -> None:
                 fail(f"invalid UTF-8 in {relative}: {error}")
             if "\ufffd" in text or "\x00" in text:
                 fail(f"invalid text scalar in {relative}")
-            if re.search(r"[A-Za-z]:[\\/](?:Users|Documents|Downloads|AppData)[\\/]", text):
-                fail(f"absolute local path in {relative}")
+            if relative not in {"tools/verify_release.py", "tools/verify-release.mjs"}:
+                for label, pattern in PRIVATE_PATTERNS.items():
+                    if re.search(pattern, text, flags=re.I):
+                        fail(f"{label} in {relative}")
             if re.search(r"(?:gh[opsu]_|github_pat_)[A-Za-z0-9_]{20,}", text):
                 fail(f"credential-like token in {relative}")
             if path.suffix.lower() == ".json":

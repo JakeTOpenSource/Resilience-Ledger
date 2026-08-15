@@ -6,6 +6,15 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const manifestPath = join(root, "release-manifest.json");
 const textSuffixes = new Set([".cff", ".html", ".json", ".md", ".mjs", ".ps1", ".py", ".svg", ".txt"]);
+const privatePatterns = [
+  ["absolute Windows user path", /[A-Za-z]:[\\/](?:Users|Documents|Downloads|AppData)[\\/]/i],
+  ["absolute Unix user path", /\/(?:Users|home)\/[^/\s]+\//i],
+  ["Codex private locator", /(?:\.codex[\\/]|codex-remote-attachments|codex-clipboard-)/i],
+  ["workspace-only locator", /(?:work\/<wbr>|work\/(?:device-activation|transition-stable|probabilistic-audit|mathlib-zero-state))/i],
+  ["local network locator", /(?:localhost|127\.0\.0\.1)/i],
+  ["email address", /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i],
+  ["private key material", /-----BEGIN [A-Z ]*PRIVATE KEY-----/i],
+];
 
 function fail(message) {
   throw new Error(`VERIFY FAIL: ${message}`);
@@ -58,7 +67,11 @@ for (const path of actual) {
   if (textSuffixes.has(suffix) || path.endsWith("/LICENSE") || path === "requirements.txt") {
     const text = new TextDecoder("utf-8", { fatal: true }).decode(data);
     if (text.includes("\uFFFD") || text.includes("\0")) fail(`invalid text scalar in ${path}`);
-    if (/[A-Za-z]:[\\/](?:Users|Documents|Downloads|AppData)[\\/]/.test(text)) fail(`absolute local path in ${path}`);
+    if (path !== "tools/verify_release.py" && path !== "tools/verify-release.mjs") {
+      for (const [label, pattern] of privatePatterns) {
+        if (pattern.test(text)) fail(`${label} in ${path}`);
+      }
+    }
     if (/(?:gh[opsu]_|github_pat_)[A-Za-z0-9_]{20,}/.test(text)) fail(`credential-like token in ${path}`);
     if (suffix === ".json") {
       try { JSON.parse(text); } catch (error) { fail(`invalid JSON in ${path}: ${error.message}`); }

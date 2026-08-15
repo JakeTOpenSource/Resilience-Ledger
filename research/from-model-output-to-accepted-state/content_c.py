@@ -82,7 +82,7 @@ oracle-hidden output-recovery report are pinned locally by digests
 <span class="digest">7c550d125d38</span>,
 <span class="digest">1b0e78adcac7</span>, and
 <span class="digest">de2c28735762</span>. Appendix C gives the full values and
-paths. <span class="chip chip-tested">TESTED</span></p>
+either public packet locators or retained source IDs. <span class="chip chip-tested">TESTED</span></p>
 
 <h3>8.3 Related work boundary</h3>
 
@@ -164,9 +164,9 @@ to its numerator.</p>
 
 <p class="tnote">Four of the sixteen scripts print a named pass with no numbered
 hold: the replay driver, the runtime check, the home surface check, and the public
-explanation check. Their results are therefore invisible in the total of 34. The
-number understates coverage and should not be read as the count of everything
-checked. <span class="chip chip-tested">TESTED</span></p>
+explanation check. Their results are therefore omitted from the total of 34. That
+total is a runner-reported diagnostic inventory, not a coverage measure or a count
+of everything checked. <span class="chip chip-tested">TESTED</span></p>
 
 <h3>9.2 One source, six incompatible views</h3>
 
@@ -381,8 +381,12 @@ question and run clustering could not be modeled from the published aggregate.</
 </tbody></table>
 
 <p>The eligible structured-arm ordering is non-monotone: P1 and P2 each recorded 5.7
-unsupported claims per 100, while P3 recorded 9.0. The three Wilson intervals
-overlap, so these aggregates do not support ranking P1, P2, and P3.</p>
+unsupported claims per 100, while P3 recorded 9.0. Pairwise two-tailed Fisher exact
+tests on the published claim-level aggregates give p = 1.000 for P1 versus P2,
+p = 0.579 for P1 versus P3, and p = 0.428 for P2 versus P3. The three Wilson
+intervals overlap. Under the same working-independence assumption, these exploratory
+summaries do not support ranking P1, P2, and P3 and do not establish equivalence
+among them.</p>
 
 <p>At the claim level, the archived aggregates yield p = 0.0021 for P1, p = 0.0012
 for P2, and p = 0.0148 for P3 against P0. No decision threshold was registered, and
@@ -867,7 +871,8 @@ functions induce the same kernel partition. Their class labels and data structur
 may still differ. The local <code>QueryQuotient.lean</code> module proves component
 factorization, the sufficiency equivalence, separation of unequal signatures, and
 this kernel characterization. It compiled directly against the pinned Mathlib
-environment but is not an upstream-reviewed contribution.</p>
+environment; the exact source and standalone compile receipt are included in the
+owner-review packet. This is not an upstream-reviewed contribution.</p>
 
 <p>In the finite activation packet, the unique five-field candidate minimum is
 sufficient for all seven queries over 151 traces. It realizes 47 representation
@@ -957,15 +962,17 @@ separate from any technical identity check.</p>
 public file bytes, derived outputs, and declared digests because they have different
 verification ceilings.</p>
 
-<p class="tnote">Verification note: for public blob rows, check out the named commit
-and hash the exact file bytes with a local SHA-256 tool. The projection-root row is
-reproduced by the named verifier, not by hashing that script. The refusal corpus row
-cannot be recomputed from the public repository because the source bytes are absent.
-No single command applies to every row.</p>
+<p class="tnote">Verification note: for public repository rows, check out the named
+commit or packet version and hash the exact file bytes with a local SHA-256 tool.
+Rows identified only by retained source ID are not public inputs; their digests bind
+the bytes inspected locally without exposing a workstation path. The projection-root
+row is reproduced by the named verifier, not by hashing that script. The refusal
+corpus row cannot be recomputed from the public repository because the source bytes
+are absent. No single command applies to every row.</p>
 
 <table class="artifact-index">
-<caption><b>Table 12.</b> Exact locators and expected digests. Repository abbreviations
-are RL for Resilience-Ledger, TS for the-stable, and TR for
+<caption><b>Table 12.</b> Public locators, retained source IDs, and expected digests.
+Repository abbreviations are RL for Resilience-Ledger, TS for the-stable, and TR for
 typed-refusal-harness.</caption>
 <thead><tr><th style="width:25%">Artifact</th><th style="width:43%">Exact locator and status</th><th>Expected SHA-256 or root</th></tr></thead>
 <tbody>
@@ -978,19 +985,20 @@ typed-refusal-harness.</caption>
 <tr><td>Refusal corpus, US Code Title 29</td><td>declared only: TR@<code>721a824c9f73</code><br><code>data/<wbr>arms.json#corpus.sha256</code>; source bytes absent</td><td class="mono">188ab1c50a46f0dd2ff32aaa5f65c759a07710e052d297644b1a8f6b58ff413d</td></tr>
 <tr><td>Replication registration record</td><td>public blob: TS@<code>77408db59cad</code><br><code>experiments/<wbr>replication-2026-07-17/<wbr>PREREGISTRATION.md</code></td><td class="mono">eff780cff6a4522370af2f00d01a7dc121ab143677f805cbdc865620dad7820b</td></tr>
 <tr><td>Replication decision logs</td><td>public blob: TS@<code>77408db59cad</code><br><code>experiments/<wbr>replication-2026-07-17/<wbr>decision-logs.json</code></td><td class="mono">9fb48b2c0a837f91581c5faf5a043126348b6f86e64bf2383182f65978ffdca6</td></tr>
-<tr><td>Generic activation dataset</td><td>local owner-review artifact, 98,769 bytes<br><code>work/<wbr>device-activation-fixture/<wbr>dataset/<wbr>device-activation-v1.json</code></td><td class="mono">a2dece0b00e9659e3f50df307bd41dedc722a1c5b93b16153f616d1f2b58a179</td></tr>
-<tr><td>Generic activation checker config</td><td>local owner-review artifact, 540 bytes<br><code>work/<wbr>device-activation-fixture/<wbr>config/<wbr>checker-v2.config.json</code></td><td class="mono">7d6545f4d5cfa603b33f94ef42f747e4bf5e98631edfef30896cb5d24fb31c4d</td></tr>
-<tr><td>Generic activation analysis</td><td>local owner-review artifact, 2,737 bytes<br><code>work/<wbr>device-activation-fixture/<wbr>results/<wbr>expected-analysis.json</code></td><td class="mono">7c550d125d383f7238ff936c7d05a3815ceb35132326253b973562fbca4b0a80</td></tr>
-<tr><td>Generic activation receipt</td><td>local owner-review receipt, 3,158 bytes<br><code>work/<wbr>device-activation-fixture/<wbr>evidence/<wbr>BUILD-RECEIPT-000001.md</code></td><td class="mono">ee60b9aa4baa0286fb5899255380d6bf9772ca9240354bddc3b1a75fce1b9ab6</td></tr>
-<tr><td>Transition-stable quotient report</td><td>local owner-review artifact, 2,627 bytes<br><code>work/<wbr>transition-stable-quotient/<wbr>results/<wbr>expected-report.json</code></td><td class="mono">1b0e78adcac732561a0263ef2704d53b397597c502f81e88a0999a37232df183</td></tr>
+<tr><td>Generic activation dataset</td><td>retained source <code>DA-DATASET-001</code>, 98,769 bytes; synthetic input not included in this minimized packet</td><td class="mono">a2dece0b00e9659e3f50df307bd41dedc722a1c5b93b16153f616d1f2b58a179</td></tr>
+<tr><td>Generic activation checker config</td><td>retained source <code>DA-CONFIG-001</code>, 540 bytes; configuration not included in this minimized packet</td><td class="mono">7d6545f4d5cfa603b33f94ef42f747e4bf5e98631edfef30896cb5d24fb31c4d</td></tr>
+<tr><td>Generic activation analysis</td><td>owner-review packet, 2,737 bytes<br><code>evidence/<wbr>device-activation/<wbr>expected-analysis.json</code></td><td class="mono">7c550d125d383f7238ff936c7d05a3815ceb35132326253b973562fbca4b0a80</td></tr>
+<tr><td>Generic activation receipt</td><td>owner-review packet, 3,158 bytes<br><code>evidence/<wbr>device-activation/<wbr>BUILD-RECEIPT-000001.md</code></td><td class="mono">ee60b9aa4baa0286fb5899255380d6bf9772ca9240354bddc3b1a75fce1b9ab6</td></tr>
+<tr><td>Transition-stable quotient report</td><td>owner-review packet, 2,627 bytes<br><code>evidence/<wbr>transition-stable-quotient/<wbr>expected-report.json</code></td><td class="mono">1b0e78adcac732561a0263ef2704d53b397597c502f81e88a0999a37232df183</td></tr>
 <tr><td>Transition-stable partition over frozen case IDs</td><td>derived output: <code>stablePartitionSha256</code> in the transition-stable quotient report</td><td class="mono">2f129b2ac6c060d253831dbded1810cfd64b030fa6b8a0514d6e048fc7086187</td></tr>
-<tr><td>Transition-stable quotient receipt</td><td>local owner-review receipt, 4,016 bytes<br><code>work/<wbr>transition-stable-quotient/<wbr>evidence/<wbr>BUILD-RECEIPT-000001.md</code></td><td class="mono">4d0b0f50c361c51734db51a786fdc40b85de591e077d295677dbd40d63967514</td></tr>
-<tr><td>Oracle-hidden output-recovery prompt</td><td>local owner-private input, 1,662 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>PROMPT.md</code></td><td class="mono">6b0628ef41bdf3b8d871238aa39ac44af43576887d5e0b1ed44ad8e7cdeccaf1</td></tr>
-<tr><td>Oracle-hidden output-recovery response schema</td><td>local owner-private input, 1,808 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>schemas/<wbr>response.schema.json</code></td><td class="mono">3656a398b63255eefc2121327da65884cca365a965f5601d6eab18e33aa0a505</td></tr>
-<tr><td>Oracle-hidden output-recovery run manifest</td><td>local owner-private metadata, 2,175 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>RUN-MANIFEST.json</code></td><td class="mono">5e104bff1ccd4cffc684667f84783a06414cfb7177da1b43717f0c90145e2f63</td></tr>
-<tr><td>Oracle-hidden output-recovery evaluator report</td><td>local owner-review artifact, 20,945 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>results/<wbr>expected-report.json</code></td><td class="mono">de2c28735762a153602fc6e4bb777520c2aa3c687837e3f64b6277c459d67fe9</td></tr>
-<tr><td>Oracle-hidden output-recovery packet receipt</td><td>local owner-review receipt, 4,488 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>evidence/<wbr>BUILD-RECEIPT-000001.md</code></td><td class="mono">537e8cc13e8425e53304dd22637df6d186efa4df0be0f910a747b5f78632c815</td></tr>
-<tr><td>Lean query quotient source</td><td>local source, standalone-module compile only, 3,791 bytes<br><code>work/<wbr>mathlib-zero-state/<wbr>ZeroState/<wbr>QueryQuotient.lean</code></td><td class="mono">cfbb166202ade30abc0c79287ff8c1acf216e91a863121ade923218caede9896</td></tr>
+<tr><td>Transition-stable quotient receipt</td><td>owner-review packet, 4,016 bytes<br><code>evidence/<wbr>transition-stable-quotient/<wbr>BUILD-RECEIPT-000001.md</code></td><td class="mono">4d0b0f50c361c51734db51a786fdc40b85de591e077d295677dbd40d63967514</td></tr>
+<tr><td>Oracle-hidden output-recovery prompt</td><td>owner-review packet, 1,662 bytes<br><code>evidence/<wbr>blind-prompt/<wbr>PROMPT.md</code></td><td class="mono">6b0628ef41bdf3b8d871238aa39ac44af43576887d5e0b1ed44ad8e7cdeccaf1</td></tr>
+<tr><td>Oracle-hidden output-recovery response schema</td><td>retained source <code>BP-SCHEMA-001</code>, 1,808 bytes; not included in this minimized packet</td><td class="mono">3656a398b63255eefc2121327da65884cca365a965f5601d6eab18e33aa0a505</td></tr>
+<tr><td>Oracle-hidden output-recovery run manifest</td><td>retained source <code>BP-RUN-MANIFEST-001</code>, 2,175 bytes; not included in this minimized packet</td><td class="mono">5e104bff1ccd4cffc684667f84783a06414cfb7177da1b43717f0c90145e2f63</td></tr>
+<tr><td>Oracle-hidden output-recovery evaluator report</td><td>retained source <code>BP-EVALUATOR-001</code>, 20,945 bytes; quote-bearing report not included</td><td class="mono">de2c28735762a153602fc6e4bb777520c2aa3c687837e3f64b6277c459d67fe9</td></tr>
+<tr><td>Oracle-hidden output-recovery packet receipt</td><td>retained source <code>BP-RECEIPT-001</code>, 4,488 bytes; private packet receipt not included</td><td class="mono">537e8cc13e8425e53304dd22637df6d186efa4df0be0f910a747b5f78632c815</td></tr>
+<tr><td>Lean query quotient source</td><td>owner-review packet, standalone module, 3,791 bytes<br><code>evidence/<wbr>lean-query-quotient/<wbr>QueryQuotient.lean</code></td><td class="mono">cfbb166202ade30abc0c79287ff8c1acf216e91a863121ade923218caede9896</td></tr>
+<tr><td>Lean query quotient compile receipt</td><td>owner-review packet, 4,233 bytes<br><code>evidence/<wbr>lean-query-quotient/<wbr>BUILD-RECEIPT-000005.md</code></td><td class="mono">8cdb9da9a9ddaba90c63390f1e94d11e18ca32f7d2a95b46b6ce3e1a27de79b2</td></tr>
 </tbody></table>
 
 <div class="footer-note">
