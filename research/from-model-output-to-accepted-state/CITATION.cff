@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use or build on this owner-review release, cite the exact version or commit and retain its stated limitations."
+title: "From Model Output to Accepted State"
+type: report
+authors:
+  - family-names: Tiller
+    given-names: Jake
+version: "0.1.0-owner-review.1"
+date-released: 2026-08-15
+license: CC-BY-4.0
+repository-code: "https://github.com/JakeTOpenSource/Resilience-Ledger"
+url: "https://github.com/JakeTOpenSource/Resilience-Ledger/tree/main/research/from-model-output-to-accepted-state"
+abstract: >-
+  Owner-review draft of a typed boundary from probabilistic model output to
+  accepted state, with deterministic replay, finite query-sufficiency and
+  transition-refinement fixtures, and a separately audited probabilistic
+  forecast lane. The packet includes bounded local evidence and offline
+  integrity verification; it is not an independent validation or deployment
+  authorization.
+keywords:
+  - state transition protocol
+  - accepted state
+  - deterministic replay
+  - query sufficiency
+  - finite-state refinement
+  - probabilistic forecasts
+  - AI governance

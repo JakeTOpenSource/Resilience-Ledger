@@ -62,3 +62,6 @@ jobs:
         run: |
           npm ci --prefix research/stp-v1.2
           npm test --prefix research/stp-v1.2
+      - name: Accepted-state owner-review release manifest
+        shell: pwsh
+        run: ./research/from-model-output-to-accepted-state/tools/verify.ps1
