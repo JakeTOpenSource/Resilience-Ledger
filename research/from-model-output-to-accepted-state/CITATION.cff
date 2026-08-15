@@ -5,7 +5,7 @@ type: report
 authors:
   - family-names: Tiller
     given-names: Jake
-version: "0.1.0-owner-review.1"
+version: "0.1.0-owner-review.2"
 date-released: 2026-08-15
 license: CC-BY-4.0
 repository-code: "https://github.com/JakeTOpenSource/Resilience-Ledger"

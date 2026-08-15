@@ -15,11 +15,11 @@ This paper proposes the State Transition Protocol as a typed boundary around a p
 
 The public packet implements a narrower seven-event instrument profile over synthetic fixtures; it is not a complete implementation of that lifecycle. Within the tested slice, deterministic reducers rebuild a finite projection from pinned inputs. [TESTED]
 
-Three additional local packets test a finite query representation, transition-stable refinement, and recovery of frozen answer fields from one compact prompt. The blind prompt declared separate gate, forecast, and pending-resolution fields; all three responses recovered the frozen finite outputs. No real forecast was issued or resolved. These local results extend the analysis but are not part of the pinned public commit. [TESTED]
+Three additional local packets test a finite query representation, transition-stable refinement, and recovery of frozen answer fields from one compact oracle-hidden output-recovery prompt. That prompt declared separate gate, forecast, and pending-resolution fields; all three oracle-hidden output-recovery responses recovered the frozen finite outputs. No real forecast was issued or resolved. These local results extend the analysis but are not part of the pinned public commit. [TESTED]
 
-The evidence is finite and I state its limits precisely. Separate JavaScript and Python ports derived from the same specification and fixture corpus produce the same projection root over the pinned inputs, and did so on runtime versions two releases apart from the pinned continuous-integration environment. This is cross-language replay parity, not independent reproduction. Thirty-four numbered checks hold across twelve suites. A data contract found that six public views of one 439-term source had drifted apart, and that 258 shared terms disagreed on review status. A production observation found 100 of 102 paths matching and left two unresolved rather than rounding them off. [TESTED]
+The evidence is finite and I state its limits precisely. Separate JavaScript and Python ports derived from the same specification and fixture corpus produce the same projection root over the pinned inputs, and did so on runtime versions two releases apart from the pinned continuous-integration environment. This is cross-language replay parity, not independent reproduction. Thirty-four runner-reported numbered holds across twelve suites are a diagnostic inventory, not a coverage measure. A data contract found that six public views of one 439-term source had drifted apart, and that 258 shared terms disagreed on review status. A production observation found 100 of 102 paths matching and left two unresolved rather than rounding them off. [TESTED]
 
-The most useful results are the ones that went against me. In a refusal experiment, an unstructured larger-model control recorded zero unsupported claims, matching the excluded P4 arm and below the eligible P1-P3 instrumented accuracy arms. An experiment described by its repository as preregistered denied its own doctrine on a single counterexample. One deployment receipt in this repository contradicts itself across two fields, and the schema gate passes it. Those are reported here at full strength.
+The most useful results are the ones that went against me. In a refusal experiment, an unstructured larger-model control recorded zero unsupported claims, matching the excluded P4 arm and below the rates in the eligible P1-P3 structured arms. That evidence bears on auditability and claim discipline; it does not establish that either structure or model choice causally improved accuracy. An experiment described by its repository as preregistered denied its own doctrine on a single counterexample. One deployment receipt in this repository contradicts itself across two fields, and the schema gate passes it. Those are reported here at full strength.
 
 ## 1. The problem, in plain terms
 
@@ -68,7 +68,7 @@ Write `W(k)` for an external world state that is partly hidden, `O` for the qual
     delta(k)  ~  pi( A(k), O(≤k), H(k) )          candidate generation
     A(k)      =  R( P(g), L(≤k) )                 accepted projection
 
-_P(g) pinned policy bytes at generation g · L(≤k) the valid event prefix through sequence k · R a pinned reducer version · H(k) whatever context the model had, which the protocol does not model_
+_pi the candidate-generating distribution, not an authorization policy · P(g) pinned policy bytes at generation g · L(≤k) the valid event prefix through sequence k · R a pinned reducer version · H(k) whatever context the model had, which the protocol does not model_
 
 The determinism claim is narrower than the word usually suggests. It starts at identified input bytes and a policy generation, and it ends at a projected record. It does not cover the model that produced the candidate. It does not cover undisclosed external state, physical effects, the people involved, the network in between, or anything that happens afterward.
 
@@ -92,7 +92,7 @@ _g_t is the exact gate result at time t · f_t is a registered forecast frozen b
 
 The proposed record order is `FREEZE_FORECAST` → `CHOOSE_ACTION` → `APPEND_RESOLUTION` → `SCORE_FORECAST` → `UPDATE_CALIBRATION`. Before a qualified resolution is appended, the forecast remains pending. Pending is not zero, false, success, or failure. A reducer for these proposed records can verify the order, identities, score, and replay without claiming that the forecast was true when issued or that the selected action was wise. [PROPOSED]
 
-BP-001 used `HOLD` as a frozen gate value and asked for its execution output, `BLOCK`. This paper maps an `UNRESOLVED` condition to `HOLD` as a post-test vocabulary crosswalk. The blind test established `HOLD` to `BLOCK` only; it did not test the crosswalk. [PROPOSED]
+BP-001 used `HOLD` as a frozen gate value and asked for its execution output, `BLOCK`. This paper maps an `UNRESOLVED` condition to `HOLD` as a post-test vocabulary crosswalk. The oracle-hidden output-recovery test established `HOLD` to `BLOCK` only; it did not test the crosswalk. [PROPOSED]
 
 > Figure 1. The proposer sits inside a wider boundary. Only the tinted span is deterministic. The world is reached through a declared instrument and is never read directly.
 
@@ -291,14 +291,14 @@ For one subject, one policy generation, and one evaluation cut, let `J` be the f
 
     C  =  N_dec / N_app                  decisive evidence coverage
     Q  =  P / N_dec                      decisive conformance
-    R  =  (P + F + U + E) / N_app        non-stale status fraction
+    R  =  1 - (S / N_app)                non-stale-label fraction
 
 _A zero denominator returns UNDEFINED, never zero. Policy must map raw observations such as ABSENT and CENSORED into the condition partition before C and Q are computed._
 
 Pass and fail contribute equally to **C**. One failed check out of one applicable check gives `C = 1` and `Q = 0`, which is complete decisive coverage of a failed result. If that check is policy-blocking, the interface shows red. The coverage arithmetic alone does not, and should not.
 
-**R** reports only the share of applicable conditions not labeled stale. An
-unknown condition counts as non-stale while staying non-decisive, so **R** is not a measure of fresh evidence about the world. A stronger receipt-coverage measure would need deterministic receipt selection bound to subject, check, generation, and evaluation cut, with ties on sequence returning a typed conflict rather than a choice. The current schema does not carry those bindings, so I make no fixture claim for it. [PROPOSED]
+**R** is the non-stale-label fraction: the share of applicable conditions not
+labeled stale. An unknown condition counts as non-stale while staying non-decisive, so **R** is not a measure of fresh evidence about the world. A stronger receipt-coverage measure would need deterministic receipt selection bound to subject, check, generation, and evaluation cut, with ties on sequence returning a typed conflict rather than a choice. The current schema does not carry those bindings, so I make no fixture claim for it. [PROPOSED]
 
 **C** is deterministic and verdict-symmetric. **Q** is deliberately
 verdict-sensitive. The system as a whole is not policy-neutral, because policy chooses the applicable checks, the thresholds, the freshness windows, and the evidence requirements. For that reason **C** is never called a probability of truth, correctness, or safety.
@@ -369,15 +369,15 @@ The Typed Refusal reanalysis uses a hand-decomposed claim as its unit. Its archi
 
 The 2026-07-17 replication declares 36 sessions, of which 30 were scored after six final-block sessions were truncated. Its registration record and decision logs are public at commit `77408db59cad3f968ac9ba5a0c0c6689a90e80d4` of `JakeTOpenSource/the-stable`, and its recorded cells were replayed offline. The inspected public history does not independently establish that the registration file predates data collection, so I treat it as a committed registration record rather than verified prospective registration. The Typed Refusal aggregates are pinned separately at commit `721a824c9f735d3972d720b41685469a1020fa91` of `JakeTOpenSource/typed-refusal-harness`. No external evaluator selected, ran, or scored these experiments, and no qualified instrument or live consequential adapter was evaluated.
 
-### 8.2 Finite activation, quotient, and blind-prompt packets
+### 8.2 Finite activation, quotient, and oracle-hidden output-recovery packets
 
 Three local owner-review packets test the newer mathematical layer. The Generic Device Activation Fixture enumerates 151 synthetic trace prefixes of length at most ten. It evaluates seven declared queries against ten candidate representation fields, exhaustively checks all 1,023 nonempty candidate subsets, and retains a collision witness whenever a representation merges records whose query answers differ. Separate Python and JavaScript generators produce the same frozen dataset; the exhaustive subset analysis is then performed in Python. The result is exact only for those traces, queries, fields, and transition rules.
 
 The transition-stable quotient packet uses the same 151 records and ten declared events. Each state-event pair is either enabled, advancing to its child trace, or refused, remaining at the current trace. This gives 1,510 finite transitions. A partition begins from a declared query signature and repeatedly splits any class whose members differ in event status or successor class. Separate Python and JavaScript analyzers produce byte-identical canonical reports. This is a finite application of established sequential-machine refinement [43-45], not a new minimization theorem.
 
-The blind packet froze one prompt, one response schema, a nine-group oracle, and a twelve-function semantic rubric before three responses were evaluated. The responses were requested under `gpt-5.6-sol/high`, `gpt-5.6-sol/low`, and `gpt-5.6-terra/high` configurations. Those labels are request metadata because the retained responses contain no runtime model attestation, model-build digest, seed, or sampling parameters. The agents saw the prompt and schema, not the oracle or rubric. Exact fields were compared with the frozen oracle. Semantic recurrence was mapped separately and required a verbatim quote from the corresponding response. That map remains `DRAFT_OWNER_REVIEW`.
+The oracle-hidden output-recovery packet froze one prompt, one response schema, a nine-group oracle, and a twelve-function semantic rubric before three responses were evaluated. The responses were requested under `gpt-5.6-sol/high`, `gpt-5.6-sol/low`, and `gpt-5.6-terra/high` configurations. Those labels are request metadata because the retained responses contain no runtime model attestation, model-build digest, seed, or sampling parameters. The agents saw the prompt and schema, not the oracle or rubric. Exact fields were compared with the frozen oracle. Semantic recurrence was mapped separately and required a verbatim quote from the corresponding response. That map remains `DRAFT_OWNER_REVIEW`.
 
-The packets share an operator, orchestration platform, prompt, response schema, and likely model ancestry. Agreement is therefore a bounded output-recovery result, not independent validation. The expected activation analysis, quotient report, and blind report are pinned locally by digests `7c550d125d38`, `1b0e78adcac7`, and `de2c28735762`. Appendix C gives the full values and paths. [TESTED]
+The packets share an operator, orchestration platform, prompt, response schema, and likely model ancestry. Agreement is therefore a bounded output-recovery result, not independent validation. The expected activation analysis, quotient report, and oracle-hidden output-recovery report are pinned locally by digests `7c550d125d38`, `1b0e78adcac7`, and `de2c28735762`. Appendix C gives the full values and paths. [TESTED]
 
 ### 8.3 Related work boundary
 
@@ -455,12 +455,12 @@ The service-worker drift from the first receipt stayed open for two cache genera
 
 The closure is bounded and the receipt says so. It records that the `aaig-v85` and `aaig-v86` generations were never observed in production and cannot be reconstructed, that one edge was sampled, and that installed client caches were not inspected. The process failure is the part worth keeping: an unresolved finding aged out of view for two versions because nothing scheduled its re-observation. The protocol recorded the gap faithfully and did not close it for me. [OPEN]
 
-### 9.4 Finite representations and blind output recovery
+### 9.4 Finite representations and oracle-hidden output-recovery
 
 **Table 9. One layer in plain language, formal language, finite result, and claim ceiling. Every result is local to the retained owner-review packet.**
 
 - **A forecast is not permission.** - Formal object execute = 1 only if g = PASS, for every
-p.; Finite result All three blind responses returned BLOCK when the gate was held.; Claim ceiling Exact prompt-oracle agreement, not operational enforcement.
+p.; Finite result All three oracle-hidden output-recovery responses returned BLOCK when the gate was held.; Claim ceiling Exact prompt-oracle agreement, not operational enforcement.
 - **In the frozen objective, coupling the report to its reward moves the optimum.** - Formal object argmin E[(p-Y)^2] = 1/2; adding (1/2)p gives
 p* = 1/4.; Finite result All three responses recovered both frozen values.; Claim ceiling A synthetic algebraic counterexample, not real-world calibration.
 - **Current state is sufficient only for named questions.** - Formal object r(x)=r(y) implies sigma_Q(x)=sigma_Q(y).; Finite result Across 151 traces and seven queries, all 1,023 nonempty subsets of ten fields
@@ -470,7 +470,7 @@ query answers.; Finite result The full seven-query partition stayed 33 to 33. Re
 - **Several actions can remain equally admissible without being equal.** - Formal object Keep every nondominated risk vector until policy supplies a preference rule.; Finite result All three responses retained A, B, C as Pareto-minimal and refused
 to invent a unique action.; Claim ceiling Agreement on the frozen example, not a universal risk policy.
 
-The blind evaluator made 27 exact comparisons: nine frozen result groups across three requested configurations. All 27 matched the oracle, all three response shapes passed, and the exact answer vectors matched pairwise. The exact layer includes the gate, the two forecast optima, historical insufficiency, the Pareto set, absence of a unique action, the unresolved pending state, the encoding distinction, and the five-step record order. [TESTED]
+The oracle-hidden output-recovery evaluator made 27 exact comparisons: nine frozen result groups across three requested configurations. All 27 matched the oracle, all three response shapes passed, and the exact answer vectors matched pairwise. The exact layer includes the gate, the two forecast optima, historical insufficiency, the Pareto set, absence of a unique action, the unresolved pending state, the encoding distinction, and the five-step record order. [TESTED]
 
 The semantic layer is deliberately weaker. Its quote links pass deterministic existence checks, but the function-to-quote judgment remains `DRAFT_OWNER_REVIEW`. Six functions have unambiguous unanimous quote support: gate and forecast separation, freezing before resolution, append-only resolution, cohort calibration, typed unresolved state, and preservation of a Pareto frontier without hidden scalarization. The owner-review map also marks forecast scoring, F04, present in all three responses. One mapped quote says to score the frozen forecast after resolution without naming a declared scoring rule, so strict F04 unanimity remains unresolved and is not promoted to the six-function count. F04 still has direct scoring-rule support in two responses. Query-relative projection and behavioral quotienting also recurred in two of three responses, so functions F01 through F09 each have quote support in at least two. Deterministic replay audit, explicit separation of belief scoring from action optimization, and the general claim ceiling, F10 through F12, were absent from all three. Agreement is therefore signal about recoverable output structure, not evidence that the responses supplied the complete architecture. [OPEN]
 
@@ -501,13 +501,15 @@ The Typed Refusal archive reports unsupported-claim aggregates across five arms 
 - **P4** - Structure added frozen answers with inline receipts; Unsupported 0; Claims 99; Rate 0.0; 95% CI 0.0-3.7; Exploratory p vs P0 excluded
 - **Control** - Structure added larger model, corpus only, no structure; Unsupported 0; Claims 151; Rate 0.0; 95% CI 0.0-2.5; Exploratory p vs P0 not tested
 
+The eligible structured-arm ordering is non-monotone: P1 and P2 each recorded 5.7 unsupported claims per 100, while P3 recorded 9.0. The three Wilson intervals overlap, so these aggregates do not support ranking P1, P2, and P3.
+
 At the claim level, the archived aggregates yield p = 0.0021 for P1, p = 0.0012 for P2, and p = 0.0148 for P3 against P0. No decision threshold was registered, and the independence assumption is not supported by the clustered design, so these values are not treated as confirmatory or as arm-level significance tests. P4's zero count is descriptive only. Its answers were supplied by construction, and one of its three runs ignored the cards, so the arm is excluded from accuracy claims.
 
 The larger-model control recorded zero unsupported claims out of 151, matching the excluded P4 count and recording fewer than each eligible structured arm, P1 through P3. Exploratory claim-level Fisher comparisons yield p = 0.0061 against P1, p = 0.0044 against P2, and p = 0.0002 against P3. Because model identity and scaffolding changed together, these comparisons do not identify a causal effect. Within the published aggregate, replacing the model coincided with a lower unsupported-claim count than any eligible scaffold around the weaker model, while P1 through P3 each remained below that weaker model's P0 baseline. [OBSERVED]
 
 **What this experiment does not support**
 
-The generating prompts, the per-run answers, the corpus file, and the preregistration artifact are all absent from the repository. The repository states that six predictions were registered before any arm ran and that three were falsified, and exactly one of the six is quoted anywhere, partially. I could recompute the published aggregate from `arms.json` and `stats.py`. I could not reproduce a single original run. No significance criterion was preregistered, so every p value here is post-hoc. The archive also does not publish the question-level or run-level counts needed for a cluster-preserving permutation, bootstrap, or multilevel analysis. [OPEN]
+The generating prompts, the per-run answers, the corpus file, and the preregistration artifact are all absent from the repository. The repository states that six predictions were registered before any arm ran and that three were falsified, and exactly one of the six is quoted anywhere, partially. I could recompute the published aggregate from `arms.json` and `stats.py`. I could not reproduce a single original run. No significance criterion was preregistered, so every p value here is post-hoc. The archive also does not publish the question-level or run-level counts needed for a cluster-preserving permutation, bootstrap, or multilevel analysis. The retained evidence bears on auditability and claim discipline by making those limits visible. It does not establish that structure or model choice causally improved accuracy. [OPEN]
 
 ### 10.3 A committed registration record and a replication that denied its own doctrine
 
@@ -523,7 +525,7 @@ Recorded criterion (a) was satisfied, though not by the model that motivated the
 
 Recorded criterion (c) could not be evaluated at all. All six haiku iterative sessions were truncated mid-play by a session limit, so 30 of 36 sessions were scored. The repository record acknowledges the confound rather than hiding it: models ran in sequential blocks with haiku last, so budget exhaustion clusters on the final block. That is missing data with a known mechanism, recorded as missing. [OBSERVED]
 
-Two things survived. Sonnet was scored as calibrated under that experiment's rubric in 12 of 12 sessions across both arms, which the document itself downgrades to a rubric-specific signal rather than a capability benchmark. That label is not empirical forecast calibration as defined in section 5 and is not a protocol-calibrated predicate. And all four valid premature nulls fell on the same round, with zero on the other across its 15 valid sessions, which points to a blind-spot family that crosses models and that per-probe feedback did not close.
+Two things survived. Sonnet was scored as calibrated under that experiment's rubric in 12 of 12 sessions across both arms, which the document itself downgrades to a rubric-specific signal rather than a capability benchmark. That label is not empirical forecast calibration as defined in section 5 and is not a protocol-calibrated predicate. And all four valid premature nulls fell on the same round, with zero on the other across its 15 valid sessions, which points to a shared failure pattern across models that per-probe feedback did not close.
 
 The replay of all 36 recorded cells runs offline through the published harness, asserts twelve checks, and is wired into the repository gate. It reproduces the denied verdict from the recorded artifacts; it does not reproduce the original model sessions or constitute independent validation. [TESTED]
 
@@ -552,15 +554,17 @@ Nothing here establishes causation, lawful authority, regulatory compliance, sta
 
 The case study is one project's repair history, produced by one person, largely in one computing environment, on data and interfaces that changed while the work proceeded. It may not transfer.
 
+The single-operator design is a separate validity threat. I selected and classified source artifacts, chose fixtures and checks, wrote the manuscript claims, and applied the claim markers to my own work. Those controls make the decisions inspectable, but they do not make them independent: the same judgment can preserve one error across evidence selection, fixture design, testing, prose, and marker assignment.
+
 The activation and quotient results are exhaustive only inside a synthetic finite model. Their minima depend on the supplied candidate fields and declared queries. Their stable partition depends on the 151 trace prefixes, ten events, enabled-or-refused transition rule, and finite continuation graph. They establish no fact about an iPhone, another device, an open environment, an unmodeled event, or a richer query. A five-field sufficient representation is not the unique data structure for the behavior, and its 47 realized tuples are not the exact 33-class behavioral quotient.
 
-The blind prompt is a three-response output-recovery check, not a model benchmark. Requested model labels are unattested metadata. The runs share the prompt, schema, platform, operator, and possible training or system dependencies. Twenty-seven exact oracle matches do not establish semantic understanding. The semantic map is an owner-review judgment over quote-linked text, and its three universal absences are part of the result. No real event resolved, so the packet contains neither a forecast outcome nor evidence of forecast calibration.
+The oracle-hidden output-recovery prompt is a three-response check, not a model benchmark. Requested model labels are unattested metadata. The runs share the prompt, schema, platform, operator, and possible training or system dependencies. Twenty-seven exact oracle matches do not establish semantic understanding. The semantic map is an owner-review judgment over quote-linked text, and its three universal absences are part of the result. No real event resolved, so the packet contains neither a forecast outcome nor evidence of forecast calibration.
 
 The local Lean source states query-signature sufficiency and kernel exactness using Mathlib's pinned `Function.FactorsThrough` vocabulary [47]. The module compiled directly in the local pinned environment, but it is not imported by the package root and no upstream Mathlib review occurred. It is a local formalization aid, not an accepted library contribution or external proof review.
 
 One risk deserves naming on its own. Strict preservation of unknowns can make a system unusable. If unresolved evidence blocks every action, availability and safety trade against each other, and the protocol offers no principled exchange rate between them. [OPEN]
 
-### Five tests that would demote these claims
+### Six tests that would demote these claims
 
 - **Clean-room replay.** Give an external team the minimized public packet and
 nothing else. Disagreement demotes the replay claim or exposes a hidden dependency.
@@ -572,6 +576,8 @@ review, operating limits, uncertainty, and a known sensing footprint. Failure na
 status and the six-signal view, measuring correct intervention, missed danger, false reassurance, and response time. No benefit leaves Six Signals an accessibility design and not a comprehension improvement.
 - **Narrow live adapter.** Implement one bounded consequential tool end to end.
 Any unrecorded or duplicated effect falsifies the finality boundary.
+- **External marker re-assignment.** Give an external reviewer the pinned
+evidence and marker rules, but not the author's assigned markers. Material disagreement demotes the affected claim or exposes an underspecified marker rule.
 
 ## 12. Adapting this
 
@@ -608,9 +614,7 @@ Those are part of the result. The clearest implementation finding in this work i
 
 The ideas in this paper did not start here, and they did not start with me alone. The early conceptual work was done in April and May 2026 in extended dialogue with language models, principally Claude and Gemini. I set the problems, argued with the answers, and kept what survived. What the models contributed was real and I am not going to describe it as tooling.
 
-I published the first versions publicly on LinkedIn in May and June 2026, before any of the software described here existed. Those posts introduced most of the vocabulary this work still runs on: the biological floor, the metabolic veto, agentic drift, structural harmonics, the structural floor, hidden actualities, mechanical psychosis, and state-delta architecture. Several arguments in section 1 appear there first, in less careful form. The posts are on my public profile at `linkedin.com/in/jake-tiller-548b409b`, and per-post locators belong in this paragraph once they are archived independently rather than cited from a platform that can change them.
-
-What this paper adds to that earlier work is not the ideas. It is the part that can be checked. The posts asserted a framework. This document reports what happened when I built it, tested it, tried to break it, and recorded the places it failed. The move from assertion to evidence is the whole contribution, and the earlier material is stronger for having been narrowed by it.
+I published early versions of these ideas publicly on LinkedIn in May and June 2026, before the software described here existed. Those mutable posts provide lineage context but are not evidence for this paper. The bounded contribution here is the checkable implementation: what happened when I built it, tested it, tried to break it, and recorded the places it failed.
 
 I make no originality claim over the component ideas. Causal ordering, event sourcing, compensating transactions, safety and liveness, measurement uncertainty, conformity assessment, and provenance modeling are all established fields, cited in section 15, and none of them are mine. The synthesis is what I did. Whether that synthesis is novel in an academic sense requires a systematic literature review I have not completed, so I do not claim priority over anyone.
 
@@ -619,6 +623,8 @@ I make no originality claim over the component ideas. Causal ordering, event sou
 I supplied and classified the source artifacts, set the operating, acceptance, and privacy constraints, chose which claims to make public, and am responsible for the manuscript and every release decision.
 
 Generative AI systems were used as research, coding, testing, and editing tools. Recorded uses include brainstorming, terminology extraction, source discovery, repository inspection, code drafting, test generation, adversarial review, and manuscript editing. Their outputs were treated as candidate material, never as evidence, authority, authorship, or independent validation. Checks run by agents that share models, prompts, tools, or specifications are not described anywhere in this paper as independent replication. The synthesis and the prose benefited materially from that assistance, and I reviewed the final text.
+
+Owner-attested AI editorial-review disclosure: Claude (Opus 5) provided editorial review on 15 August 2026. I independently checked each adopted suggestion against the source artifacts and retained evidence. This review is editorial assistance, not evidence, authorship, or independent validation. A minimized disposition note is included at `evidence/editorial-review/PUBLIC-DISPOSITION.md` in the release packet.
 
 ## 15. References
 
@@ -747,7 +753,7 @@ The frozen packet's full seven-query partition began with 33 classes and was alr
 
 Let a finite nonempty action set carry a finite risk vector. Say action `a` dominates `b` when every component of `a` is no worse and at least one is strictly better. A Pareto-minimal action must exist. Start from any action. If it is dominated, move to a dominator. Strict dominance cannot cycle, and a finite set cannot support an infinite descent, so the process ends at a nondominated action.
 
-If every scalarization weight is positive, a minimizer of the weighted sum is Pareto-minimal: a dominator would make at least one positively weighted component smaller and none larger, contradicting minimality [46]. The converse does not give one authorized weight vector, and neither existence result gives uniqueness. In the blind fixture, all three actions are nondominated. Returning the frontier and an unresolved selection is therefore the complete result until policy supplies a preference rule.
+If every scalarization weight is positive, a minimizer of the weighted sum is Pareto-minimal: a dominator would make at least one positively weighted component smaller and none larger, contradicting minimality [46]. The converse does not give one authorized weight vector, and neither existence result gives uniqueness. In the oracle-hidden output-recovery fixture, all three actions are nondominated. Returning the frontier and an unresolved selection is therefore the complete result until policy supplies a preference rule.
 
 ## B. Provenance, reuse, and attribution
 
@@ -763,7 +769,7 @@ Several values here are arbitrary by construction, meaning any distinct value wo
 - the condition vocabulary `PASS | FAIL | UNKNOWN | STALE | ERROR |
 NOT_APPLICABLE`, and the reason code `INVALID_POLICY` returned for an empty required set;
 - the coined terms **protocol-calibrated predicate**, **decisive evidence
-coverage**, **decisive conformance**, and **non-stale status fraction**, each defined at first use;
+coverage**, **decisive conformance**, and **non-stale-label fraction**, each defined at first use;
 - the three-lane capacity vector of A.6, naming observation, settlement, and
 recovery as separately metered lanes that are never summed.
 
@@ -792,11 +798,11 @@ Verification note: for public blob rows, check out the named commit and hash the
 - **Transition-stable quotient report** - Exact locator and status local owner-review artifact, 2,627 byteswork/transition-stable-quotient/results/expected-report.json; Expected SHA-256 or root 1b0e78adcac732561a0263ef2704d53b397597c502f81e88a0999a37232df183
 - **Transition-stable partition over frozen case IDs** - Exact locator and status derived output: stablePartitionSha256 in the transition-stable quotient report; Expected SHA-256 or root 2f129b2ac6c060d253831dbded1810cfd64b030fa6b8a0514d6e048fc7086187
 - **Transition-stable quotient receipt** - Exact locator and status local owner-review receipt, 4,016 byteswork/transition-stable-quotient/evidence/BUILD-RECEIPT-000001.md; Expected SHA-256 or root 4d0b0f50c361c51734db51a786fdc40b85de591e077d295677dbd40d63967514
-- **Blind prompt** - Exact locator and status local owner-private input, 1,662 byteswork/probabilistic-audit-lane-study/PROMPT.md; Expected SHA-256 or root 6b0628ef41bdf3b8d871238aa39ac44af43576887d5e0b1ed44ad8e7cdeccaf1
-- **Blind response schema** - Exact locator and status local owner-private input, 1,808 byteswork/probabilistic-audit-lane-study/schemas/response.schema.json; Expected SHA-256 or root 3656a398b63255eefc2121327da65884cca365a965f5601d6eab18e33aa0a505
-- **Blind run manifest** - Exact locator and status local owner-private metadata, 2,175 byteswork/probabilistic-audit-lane-study/RUN-MANIFEST.json; Expected SHA-256 or root 5e104bff1ccd4cffc684667f84783a06414cfb7177da1b43717f0c90145e2f63
-- **Blind evaluator report** - Exact locator and status local owner-review artifact, 20,945 byteswork/probabilistic-audit-lane-study/results/expected-report.json; Expected SHA-256 or root de2c28735762a153602fc6e4bb777520c2aa3c687837e3f64b6277c459d67fe9
-- **Blind packet receipt** - Exact locator and status local owner-review receipt, 4,488 byteswork/probabilistic-audit-lane-study/evidence/BUILD-RECEIPT-000001.md; Expected SHA-256 or root 537e8cc13e8425e53304dd22637df6d186efa4df0be0f910a747b5f78632c815
+- **Oracle-hidden output-recovery prompt** - Exact locator and status local owner-private input, 1,662 byteswork/probabilistic-audit-lane-study/PROMPT.md; Expected SHA-256 or root 6b0628ef41bdf3b8d871238aa39ac44af43576887d5e0b1ed44ad8e7cdeccaf1
+- **Oracle-hidden output-recovery response schema** - Exact locator and status local owner-private input, 1,808 byteswork/probabilistic-audit-lane-study/schemas/response.schema.json; Expected SHA-256 or root 3656a398b63255eefc2121327da65884cca365a965f5601d6eab18e33aa0a505
+- **Oracle-hidden output-recovery run manifest** - Exact locator and status local owner-private metadata, 2,175 byteswork/probabilistic-audit-lane-study/RUN-MANIFEST.json; Expected SHA-256 or root 5e104bff1ccd4cffc684667f84783a06414cfb7177da1b43717f0c90145e2f63
+- **Oracle-hidden output-recovery evaluator report** - Exact locator and status local owner-review artifact, 20,945 byteswork/probabilistic-audit-lane-study/results/expected-report.json; Expected SHA-256 or root de2c28735762a153602fc6e4bb777520c2aa3c687837e3f64b6277c459d67fe9
+- **Oracle-hidden output-recovery packet receipt** - Exact locator and status local owner-review receipt, 4,488 byteswork/probabilistic-audit-lane-study/evidence/BUILD-RECEIPT-000001.md; Expected SHA-256 or root 537e8cc13e8425e53304dd22637df6d186efa4df0be0f910a747b5f78632c815
 - **Lean query quotient source** - Exact locator and status local source, standalone-module compile only, 3,791 byteswork/mathlib-zero-state/ZeroState/QueryQuotient.lean; Expected SHA-256 or root cfbb166202ade30abc0c79287ff8c1acf216e91a863121ade923218caede9896
 
 Jake Tiller · From Model Output to Accepted State · owner-review draft, 15 August 2026 · intended for release under CC BY 4.0. This draft is not a certification, a deployment authorization, or a claim of independent validation.

@@ -1,6 +1,6 @@
 {
   "schema": "accepted-state-owner-review-release.v1",
-  "release_id": "from-model-output-to-accepted-state-0.1.0-owner-review.1",
+  "release_id": "from-model-output-to-accepted-state-0.1.0-owner-review.2",
   "status": "OWNER_REVIEW",
   "recorded_date": "2026-08-15",
   "hash_basis": "SHA-256 of raw file bytes",
@@ -9,7 +9,7 @@
     ".tmp",
     "__pycache__"
   ],
-  "payload_root": "69f1b0eb42cc61224a5ced3848d9ca1e24cd3d5660f9078a4e73edb774265e5f",
+  "payload_root": "1fe39d7e0ff4b71ee52e50102eaab38a8c7c94a7d44ce8ce0084fa2921fdaafc",
   "files": {
     ".gitattributes": {
       "bytes": 227,
@@ -19,17 +19,17 @@
       "status": "OWNER_REVIEW"
     },
     "BOUNDARIES.md": {
-      "bytes": 2414,
+      "bytes": 2930,
       "media_type": "text/markdown",
       "role": "release-documentation",
-      "sha256": "2afd703a250280b137a5f827029111e78620bc964a6fba39b86b5afa025f8606",
+      "sha256": "301b52ebbb960441f187a47ff4821e6e4722f165fda61301c133b2d7116605c0",
       "status": "OWNER_REVIEW"
     },
     "CITATION.cff": {
       "bytes": 1107,
       "media_type": "application/yaml",
       "role": "release-documentation",
-      "sha256": "6f8340a44a07abba16b379840190d5d1525d583a2728348dcb68d6c301627031",
+      "sha256": "9c1dbaf9a6a9ecb4467c796fd08f85e6754c10ff2e8db9abe330b837be2d4247",
       "status": "OWNER_REVIEW"
     },
     "LICENSE.txt": {
@@ -40,10 +40,10 @@
       "status": "OWNER_REVIEW"
     },
     "README.md": {
-      "bytes": 4350,
+      "bytes": 4953,
       "media_type": "text/markdown",
       "role": "release-documentation",
-      "sha256": "68cdb96a9f4c2dddd5f4caf879452465e1ab56a8c845f93be81bbda93df9ee7a",
+      "sha256": "28b5a6ef30335543c0a4a5c7cafa7bd49e75be44357cd34e4bf433ad03951306",
       "status": "OWNER_REVIEW"
     },
     "RELATED-WORK.md": {
@@ -54,24 +54,24 @@
       "status": "OWNER_REVIEW"
     },
     "content_a.py": {
-      "bytes": 22334,
+      "bytes": 22720,
       "media_type": "text/x-python",
       "role": "paper-source",
-      "sha256": "0d1f42538d94f7e77e2e41b3609185b75adda4824062b04dfdc92baf45cb7672",
+      "sha256": "17b61ba703f9ca1222a570bc9bee3a67f98a0f59797f9acb8215e6f7bcf41425",
       "status": "OWNER_REVIEW"
     },
     "content_b.py": {
-      "bytes": 27137,
+      "bytes": 27156,
       "media_type": "text/x-python",
       "role": "paper-source",
-      "sha256": "00bab29a403d67d6aa6b88c73f71fa4b948b3ccd21521239685abb2e412d7a4c",
+      "sha256": "d015068c9ea8d9fbb2e539f01de9969a0d8b63338d23006aaa6efaec1e2ab8ed",
       "status": "OWNER_REVIEW"
     },
     "content_c.py": {
-      "bytes": 69651,
+      "bytes": 70749,
       "media_type": "text/x-python",
       "role": "paper-source",
-      "sha256": "1d9e1f9c44dc599c21f2efcd40acfacf8f21218a38eb354339bc31a7ec8509b8",
+      "sha256": "31abec3af9ec46d1a3bb1704d9940f82a19ba2ca26af333af57d87f6437f1014",
       "status": "OWNER_REVIEW"
     },
     "evidence/RELEASE-BUILD-RECEIPT-000001.md": {
@@ -79,6 +79,13 @@
       "media_type": "text/markdown",
       "role": "bounded-evidence",
       "sha256": "0e0a1c8ef73bfdd6797bb1dcdb4168264d2e9f5bd3193a1cb7ca3c0f9b175aa3",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/RELEASE-BUILD-RECEIPT-000002.md": {
+      "bytes": 6536,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "4f43366e22beeae29ce4d48d80f910ad5f93b30045b6df738412caa94dacadb5",
       "status": "OWNER_REVIEW"
     },
     "evidence/blind-prompt/PROMPT.md": {
@@ -107,6 +114,13 @@
       "media_type": "application/json",
       "role": "bounded-evidence",
       "sha256": "7c550d125d383f7238ff936c7d05a3815ceb35132326253b973562fbca4b0a80",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/editorial-review/PUBLIC-DISPOSITION.md": {
+      "bytes": 4120,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "d16ecec5d503722c9f7a1945cb7378fff391514a1fbde2bc58431e0ed870b5c8",
       "status": "OWNER_REVIEW"
     },
     "evidence/transition-stable-quotient/BUILD-RECEIPT-000001.md": {
@@ -166,17 +180,17 @@
       "status": "OWNER_REVIEW"
     },
     "paper/From-Model-Output-to-Accepted-State-Owner-Review-LinkedIn.md": {
-      "bytes": 103786,
+      "bytes": 105236,
       "media_type": "text/markdown",
       "role": "paper-output",
-      "sha256": "e4152d92a02893eb855b78d1ec48e2f836cff25c24c2a09e0b0ba9712c9465a6",
+      "sha256": "60104382023a10e4d25bb3ad80e1a729ea29efca39afe12f4e7c0a1c430a1450",
       "status": "OWNER_REVIEW"
     },
     "paper/From-Model-Output-to-Accepted-State-Owner-Review.pdf": {
-      "bytes": 949907,
+      "bytes": 956800,
       "media_type": "application/pdf",
       "role": "paper-output",
-      "sha256": "1707ffab851bc963a2874a6303c1e2d2aa5c9db2e262343d921f9d7df839b4ca",
+      "sha256": "019e372263176cb693e00a2be548c5f0dfb04c5027cb78b1f107070fc2e1afc4",
       "status": "OWNER_REVIEW"
     },
     "style.py": {
@@ -190,7 +204,7 @@
       "bytes": 2834,
       "media_type": "text/x-python",
       "role": "verification-tool",
-      "sha256": "a11160f01dae5ed9a96525e969bd7558a0199340b9fa1b9750707960dff864a5",
+      "sha256": "a55e6c13e03b7d205d529dfd92c0011d5a1c8fb60c596888150718c6e8506ba7",
       "status": "OWNER_REVIEW"
     },
     "tools/verify-release.mjs": {

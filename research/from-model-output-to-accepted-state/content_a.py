@@ -34,28 +34,31 @@ inputs. <span class="chip chip-tested">TESTED</span></p>
 
 <p>Three additional local packets test a finite query representation,
 transition-stable refinement, and recovery of frozen answer fields from one compact
-prompt. The blind prompt declared separate gate, forecast, and pending-resolution
-fields; all three responses recovered the frozen finite outputs. No real forecast
-was issued or resolved. These local results extend the analysis but are not part of
-the pinned public commit. <span class="chip chip-tested">TESTED</span></p>
+oracle-hidden output-recovery prompt. That prompt declared separate gate, forecast,
+and pending-resolution fields; all three oracle-hidden output-recovery responses
+recovered the frozen finite outputs. No real forecast was issued or resolved. These
+local results extend the analysis but are not part of the pinned public commit.
+<span class="chip chip-tested">TESTED</span></p>
 
 <p>The evidence is finite and I state its limits precisely. Separate JavaScript and
 Python ports derived from the same specification and fixture corpus produce the same
 projection root over the pinned inputs, and did so on runtime versions two releases
 apart from the pinned continuous-integration environment. This is cross-language
-replay parity, not independent reproduction. Thirty-four numbered checks hold across
-twelve suites. A data contract found that six public views of one 439-term source had
-drifted apart, and that 258 shared terms disagreed on review status. A production
-observation found 100 of 102 paths matching and left two unresolved rather than
-rounding them off. <span class="chip chip-tested">TESTED</span></p>
+replay parity, not independent reproduction. Thirty-four runner-reported numbered
+holds across twelve suites are a diagnostic inventory, not a coverage measure. A
+data contract found that six public views of one 439-term source had drifted apart,
+and that 258 shared terms disagreed on review status. A production observation found
+100 of 102 paths matching and left two unresolved rather than rounding them off.
+<span class="chip chip-tested">TESTED</span></p>
 
 <p>The most useful results are the ones that went against me. In a refusal experiment,
 an unstructured larger-model control recorded zero unsupported claims, matching the
-excluded P4 arm and below the eligible P1-P3 instrumented accuracy arms. An
-experiment described by its repository as preregistered denied its own doctrine on
-a single counterexample. One deployment receipt in this repository
-contradicts itself across two fields, and the schema gate passes it. Those are
-reported here at full strength.</p>
+excluded P4 arm and below the rates in the eligible P1-P3 structured arms. That
+evidence bears on auditability and claim discipline; it does not establish that
+either structure or model choice causally improved accuracy. An experiment described
+by its repository as preregistered denied its own doctrine on a single counterexample.
+One deployment receipt in this repository contradicts itself across two fields, and
+the schema gate passes it. Those are reported here at full strength.</p>
 </div>
 """
 
@@ -174,7 +177,9 @@ The probability it assigns gives the candidate no standing.</p>
 <div class="formula">
 <div class="eq">delta(k)  ~  pi( A(k), O(&le;k), H(k) )          candidate generation
 A(k)      =  R( P(g), L(&le;k) )                 accepted projection</div>
-<div class="where"><b>P(g)</b> pinned policy bytes at generation g &nbsp;&middot;&nbsp;
+<div class="where"><b>pi</b> the candidate-generating distribution, not an
+authorization policy &nbsp;&middot;&nbsp;
+<b>P(g)</b> pinned policy bytes at generation g &nbsp;&middot;&nbsp;
 <b>L(&le;k)</b> the valid event prefix through sequence k &nbsp;&middot;&nbsp;
 <b>R</b> a pinned reducer version &nbsp;&middot;&nbsp; <b>H(k)</b> whatever context the
 model had, which the protocol does not model</div>
@@ -230,8 +235,9 @@ the forecast was true when issued or that the selected action was wise.
 
 <p>BP-001 used <code>HOLD</code> as a frozen gate value and asked for its execution
 output, <code>BLOCK</code>. This paper maps an <code>UNRESOLVED</code> condition to
-<code>HOLD</code> as a post-test vocabulary crosswalk. The blind test established
-<code>HOLD</code> to <code>BLOCK</code> only; it did not test the crosswalk.
+<code>HOLD</code> as a post-test vocabulary crosswalk. The oracle-hidden
+output-recovery test established <code>HOLD</code> to <code>BLOCK</code> only; it did
+not test the crosswalk.
 <span class="chip chip-proposed">PROPOSED</span></p>
 
 <figure>

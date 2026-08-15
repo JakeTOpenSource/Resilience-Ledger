@@ -307,7 +307,7 @@ N_dec  =  P + F                      decisive
 
 C  =  N_dec / N_app                  decisive evidence coverage
 Q  =  P / N_dec                      decisive conformance
-R  =  (P + F + U + E) / N_app        non-stale status fraction</div>
+R  =  1 - (S / N_app)                non-stale-label fraction</div>
 <div class="where">A zero denominator returns <b>UNDEFINED</b>, never zero. Policy
 must map raw observations such as <code>ABSENT</code> and <code>CENSORED</code> into
 the condition partition before <b>C</b> and <b>Q</b> are computed.</div>
@@ -318,13 +318,13 @@ applicable check gives <code>C = 1</code> and <code>Q = 0</code>, which is compl
 decisive coverage of a failed result. If that check is policy-blocking, the
 interface shows red. The coverage arithmetic alone does not, and should not.</p>
 
-<p><b>R</b> reports only the share of applicable conditions not labeled stale. An
-unknown condition counts as non-stale while staying non-decisive, so <b>R</b> is not
-a measure of fresh evidence about the world. A stronger receipt-coverage measure
-would need deterministic receipt selection bound to subject, check, generation, and
-evaluation cut, with ties on sequence returning a typed conflict rather than a
-choice. The current schema does not carry those bindings, so I make no fixture
-claim for it. <span class="chip chip-proposed">PROPOSED</span></p>
+<p><b>R</b> is the non-stale-label fraction: the share of applicable conditions not
+labeled stale. An unknown condition counts as non-stale while staying non-decisive,
+so <b>R</b> is not a measure of fresh evidence about the world. A stronger
+receipt-coverage measure would need deterministic receipt selection bound to subject,
+check, generation, and evaluation cut, with ties on sequence returning a typed
+conflict rather than a choice. The current schema does not carry those bindings, so
+I make no fixture claim for it. <span class="chip chip-proposed">PROPOSED</span></p>
 
 <p><b>C</b> is deterministic and verdict-symmetric. <b>Q</b> is deliberately
 verdict-sensitive. The system as a whole is not policy-neutral, because policy

@@ -1,7 +1,7 @@
 # From Model Output to Accepted State
 
 Status: **OWNER-REVIEW DRAFT**<br>
-Release packet: `0.1.0-owner-review.1`<br>
+Release packet: `0.1.0-owner-review.2`<br>
 Recorded: 2026-08-15
 
 This packet publishes a bounded draft, its readable outputs, the authored manuscript and figure source, minimized local evidence reports, and offline integrity checks. The dependency-bearing assembly helper remains outside this zero-dependency public boundary. This is a review surface, not a claim of publication acceptance, independent replication, production safety, or deployment authority.
@@ -29,6 +29,7 @@ The packet adds no package dependency or runtime network call. The owner workspa
 | `evidence/device-activation/` | Frozen finite query-sufficiency result and its original local receipt. |
 | `evidence/transition-stable-quotient/` | Frozen future-stability refinement result and its original local receipt. |
 | `evidence/blind-prompt/` | Frozen prompt and aggregate-only public result summary. Raw responses, quote-bearing reports, per-response digests, and owner-private mappings are excluded. |
+| `evidence/editorial-review/` | Public minimized owner disposition of a private editorial review. The raw review and private locator are excluded. |
 | `release-manifest.json` | Complete raw-byte allowlist for every packet file except the manifest itself. |
 | `tools/` | Deterministic manifest writer plus separate Python and JavaScript verifiers derived from one release contract. |
 
@@ -38,6 +39,14 @@ The packet adds no package dependency or runtime network call. The owner workspa
 - In one synthetic 151-trace device fixture, all 1,023 nonempty subsets of ten declared candidate fields were checked for seven declared queries. Exactly one five-field subset was minimum by field count within that frozen model. It is not a universal device state or bit minimum.
 - In the same finite model, the full seven-query signature was already transition-stable at 33 classes. Removing `nextPermittedActions` produced 18 static classes that refined to the same 33 classes after one round. This is a local Moore/Myhill-Nerode-style result, not new automata theory.
 - Three frozen response configurations reproduced 27 of 27 exact answer fields from one compact prompt. Six semantic functions were unambiguously unanimous; other semantic mappings remain bounded or unresolved as stated in the paper. Requested model labels were metadata, not runtime identity attestation.
+
+## Editorial review disposition
+
+[`evidence/editorial-review/PUBLIC-DISPOSITION.md`](evidence/editorial-review/PUBLIC-DISPOSITION.md)
+binds one private owner-supplied editorial review by byte count and SHA-256 and
+publishes only the owner's minimized dispositions. The reviewer attribution is
+owner-attested, not runtime-authenticated. The review is editorial assistance,
+not evidence, authorship, peer review, source truth, or independent validation.
 
 ## Related-work credit
 

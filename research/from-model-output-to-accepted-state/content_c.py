@@ -44,7 +44,7 @@ Refusal aggregates are pinned separately at commit
 ran, or scored these experiments, and no qualified instrument or live consequential
 adapter was evaluated.</p>
 
-<h3>8.2 Finite activation, quotient, and blind-prompt packets</h3>
+<h3>8.2 Finite activation, quotient, and oracle-hidden output-recovery packets</h3>
 
 <p>Three local owner-review packets test the newer mathematical layer. The Generic
 Device Activation Fixture enumerates 151 synthetic trace prefixes of length at most
@@ -64,9 +64,9 @@ JavaScript analyzers produce byte-identical canonical reports. This is a finite
 application of established sequential-machine refinement [43-45], not a new
 minimization theorem.</p>
 
-<p>The blind packet froze one prompt, one response schema, a nine-group oracle, and
-a twelve-function semantic rubric before three responses were evaluated. The
-responses were requested under <code>gpt-5.6-sol/high</code>,
+<p>The oracle-hidden output-recovery packet froze one prompt, one response schema, a
+nine-group oracle, and a twelve-function semantic rubric before three responses were
+evaluated. The responses were requested under <code>gpt-5.6-sol/high</code>,
 <code>gpt-5.6-sol/low</code>, and <code>gpt-5.6-terra/high</code> configurations.
 Those labels are request metadata because the retained responses contain no runtime
 model attestation, model-build digest, seed, or sampling parameters. The agents saw
@@ -78,7 +78,8 @@ quote from the corresponding response. That map remains
 <p>The packets share an operator, orchestration platform, prompt, response schema,
 and likely model ancestry. Agreement is therefore a bounded output-recovery result,
 not independent validation. The expected activation analysis, quotient report, and
-blind report are pinned locally by digests <span class="digest">7c550d125d38</span>,
+oracle-hidden output-recovery report are pinned locally by digests
+<span class="digest">7c550d125d38</span>,
 <span class="digest">1b0e78adcac7</span>, and
 <span class="digest">de2c28735762</span>. Appendix C gives the full values and
 paths. <span class="chip chip-tested">TESTED</span></p>
@@ -253,7 +254,7 @@ unresolved finding aged out of view for two versions because nothing scheduled i
 re-observation. The protocol recorded the gap faithfully and did not close it for me.
 <span class="chip chip-open">OPEN</span></p>
 
-<h3>9.4 Finite representations and blind output recovery</h3>
+<h3>9.4 Finite representations and oracle-hidden output-recovery</h3>
 
 <table>
 <caption><b>Table 9.</b> One layer in plain language, formal language, finite result,
@@ -264,7 +265,8 @@ and claim ceiling. Every result is local to the retained owner-review packet.</c
 <tr><td>A forecast is not permission.</td>
 <td><code>execute = 1</code> only if <code>g = PASS</code>, for every
 <code>p</code>.</td>
-<td>All three blind responses returned <code>BLOCK</code> when the gate was held.</td>
+<td>All three oracle-hidden output-recovery responses returned <code>BLOCK</code> when
+the gate was held.</td>
 <td>Exact prompt-oracle agreement, not operational enforcement.</td></tr>
 <tr><td>In the frozen objective, coupling the report to its reward moves the optimum.</td>
 <td><code>argmin E[(p-Y)^2] = 1/2</code>; adding <code>(1/2)p</code> gives
@@ -292,12 +294,13 @@ to invent a unique action.</td>
 <td>Agreement on the frozen example, not a universal risk policy.</td></tr>
 </tbody></table>
 
-<p>The blind evaluator made 27 exact comparisons: nine frozen result groups across
-three requested configurations. All 27 matched the oracle, all three response shapes
-passed, and the exact answer vectors matched pairwise. The exact layer includes the
-gate, the two forecast optima, historical insufficiency, the Pareto set, absence of
-a unique action, the unresolved pending state, the encoding distinction, and the
-five-step record order. <span class="chip chip-tested">TESTED</span></p>
+<p>The oracle-hidden output-recovery evaluator made 27 exact comparisons: nine frozen
+result groups across three requested configurations. All 27 matched the oracle, all
+three response shapes passed, and the exact answer vectors matched pairwise. The
+exact layer includes the gate, the two forecast optima, historical insufficiency,
+the Pareto set, absence of a unique action, the unresolved pending state, the
+encoding distinction, and the five-step record order.
+<span class="chip chip-tested">TESTED</span></p>
 
 <p>The semantic layer is deliberately weaker. Its quote links pass deterministic
 existence checks, but the function-to-quote judgment remains
@@ -377,6 +380,10 @@ question and run clustering could not be modeled from the published aggregate.</
 <tr class="total"><td>Control</td><td>larger model, corpus only, no structure</td><td class="num">0</td><td class="num">151</td><td class="num">0.0</td><td>0.0-2.5</td><td class="num">not tested</td></tr>
 </tbody></table>
 
+<p>The eligible structured-arm ordering is non-monotone: P1 and P2 each recorded 5.7
+unsupported claims per 100, while P3 recorded 9.0. The three Wilson intervals
+overlap, so these aggregates do not support ranking P1, P2, and P3.</p>
+
 <p>At the claim level, the archived aggregates yield p = 0.0021 for P1, p = 0.0012
 for P2, and p = 0.0148 for P3 against P0. No decision threshold was registered, and
 the independence assumption is not supported by the clustered design, so these
@@ -404,7 +411,9 @@ recompute the published aggregate from <code>arms.json</code> and
 <code>stats.py</code>. I could not reproduce a single original run. No significance
 criterion was preregistered, so every p value here is post-hoc. The archive also
 does not publish the question-level or run-level counts needed for a
-cluster-preserving permutation, bootstrap, or multilevel analysis.
+cluster-preserving permutation, bootstrap, or multilevel analysis. The retained
+evidence bears on auditability and claim discipline by making those limits visible.
+It does not establish that structure or model choice causally improved accuracy.
 <span class="chip chip-open">OPEN</span></p>
 </div>
 
@@ -446,8 +455,8 @@ rubric in 12 of 12 sessions across both arms, which the document itself downgrad
 to a rubric-specific signal rather than a capability benchmark. That label is not
 empirical forecast calibration as defined in section 5 and is not a
 protocol-calibrated predicate. And all four valid premature nulls fell on the same round, with zero on
-the other across its 15 valid sessions, which points to a blind-spot family that
-crosses models and that per-probe feedback did not close.</p>
+the other across its 15 valid sessions, which points to a shared failure pattern
+across models that per-probe feedback did not close.</p>
 
 <p>The replay of all 36 recorded cells runs offline through the published harness,
 asserts twelve checks, and is wired into the repository gate. It reproduces the
@@ -505,6 +514,13 @@ external replication of the architecture.</p>
 in one computing environment, on data and interfaces that changed while the work
 proceeded. It may not transfer.</p>
 
+<p>The single-operator design is a separate validity threat. I selected and
+classified source artifacts, chose fixtures and checks, wrote the manuscript claims,
+and applied the claim markers to my own work. Those controls make the decisions
+inspectable, but they do not make them independent: the same judgment can preserve
+one error across evidence selection, fixture design, testing, prose, and marker
+assignment.</p>
+
 <p>The activation and quotient results are exhaustive only inside a synthetic
 finite model. Their minima depend on the supplied candidate fields and declared
 queries. Their stable partition depends on the 151 trace prefixes, ten events,
@@ -514,13 +530,13 @@ a richer query. A five-field sufficient representation is not the unique data
 structure for the behavior, and its 47 realized tuples are not the exact 33-class
 behavioral quotient.</p>
 
-<p>The blind prompt is a three-response output-recovery check, not a model benchmark.
-Requested model labels are unattested metadata. The runs share the prompt, schema,
-platform, operator, and possible training or system dependencies. Twenty-seven exact
-oracle matches do not establish semantic understanding. The semantic map is an
-owner-review judgment over quote-linked text, and its three universal absences are
-part of the result. No real event resolved, so the packet contains neither a
-forecast outcome nor evidence of forecast calibration.</p>
+<p>The oracle-hidden output-recovery prompt is a three-response check, not a model
+benchmark. Requested model labels are unattested metadata. The runs share the prompt,
+schema, platform, operator, and possible training or system dependencies.
+Twenty-seven exact oracle matches do not establish semantic understanding. The
+semantic map is an owner-review judgment over quote-linked text, and its three
+universal absences are part of the result. No real event resolved, so the packet
+contains neither a forecast outcome nor evidence of forecast calibration.</p>
 
 <p>The local Lean source states query-signature sufficiency and kernel exactness
 using Mathlib's pinned <code>Function.FactorsThrough</code> vocabulary [47]. The
@@ -533,7 +549,7 @@ system unusable. If unresolved evidence blocks every action, availability and sa
 trade against each other, and the protocol offers no principled exchange rate
 between them. <span class="chip chip-open">OPEN</span></p>
 
-<h3>Five tests that would demote these claims</h3>
+<h3>Six tests that would demote these claims</h3>
 <ol>
 <li><b>Clean-room replay.</b> Give an external team the minimized public packet and
 nothing else. Disagreement demotes the replay claim or exposes a hidden dependency.</li>
@@ -549,6 +565,9 @@ reassurance, and response time. No benefit leaves Six Signals an accessibility
 design and not a comprehension improvement.</li>
 <li><b>Narrow live adapter.</b> Implement one bounded consequential tool end to end.
 Any unrecorded or duplicated effect falsifies the finality boundary.</li>
+<li><b>External marker re-assignment.</b> Give an external reviewer the pinned
+evidence and marker rules, but not the author's assigned markers. Material
+disagreement demotes the affected claim or exposes an underspecified marker rule.</li>
 </ol>
 """
 
@@ -618,21 +637,11 @@ language models, principally Claude and Gemini. I set the problems, argued with 
 answers, and kept what survived. What the models contributed was real and I am not
 going to describe it as tooling.</p>
 
-<p>I published the first versions publicly on LinkedIn in May and June 2026, before
-any of the software described here existed. Those posts introduced most of the
-vocabulary this work still runs on: the biological floor, the metabolic veto,
-agentic drift, structural harmonics, the structural floor, hidden actualities,
-mechanical psychosis, and state-delta architecture. Several arguments in section 1
-appear there first, in less careful form. The posts are on my public profile at
-<code>linkedin.com/in/jake-tiller-548b409b</code>, and per-post locators belong in
-this paragraph once they are archived independently rather than cited from a
-platform that can change them.</p>
-
-<p>What this paper adds to that earlier work is not the ideas. It is the part that
-can be checked. The posts asserted a framework. This document reports what happened
-when I built it, tested it, tried to break it, and recorded the places it failed.
-The move from assertion to evidence is the whole contribution, and the earlier
-material is stronger for having been narrowed by it.</p>
+<p>I published early versions of these ideas publicly on LinkedIn in May and June
+2026, before the software described here existed. Those mutable posts provide
+lineage context but are not evidence for this paper. The bounded contribution here
+is the checkable implementation: what happened when I built it, tested it, tried to
+break it, and recorded the places it failed.</p>
 
 <p>I make no originality claim over the component ideas. Causal ordering, event
 sourcing, compensating transactions, safety and liveness, measurement uncertainty,
@@ -655,6 +664,13 @@ evidence, authority, authorship, or independent validation. Checks run by agents
 that share models, prompts, tools, or specifications are not described anywhere in
 this paper as independent replication. The synthesis and the prose benefited
 materially from that assistance, and I reviewed the final text.</p>
+
+<p>Owner-attested AI editorial-review disclosure: Claude (Opus 5) provided editorial
+review on 15 August 2026. I independently checked each adopted suggestion against the
+source artifacts and retained evidence. This review is editorial assistance, not
+evidence, authorship, or independent validation. A minimized disposition note is
+included at <code>evidence/<wbr>editorial-review/<wbr>PUBLIC-DISPOSITION.md</code> in
+the release packet.</p>
 
 <h2><span class="num">15</span>References</h2>
 <div class="refs">
@@ -895,9 +911,9 @@ a nondominated action.</p>
 Pareto-minimal: a dominator would make at least one positively weighted component
 smaller and none larger, contradicting minimality [46]. The converse does not give
 one authorized weight vector, and neither existence result gives uniqueness. In the
-blind fixture, all three actions are nondominated. Returning the frontier and an
-unresolved selection is therefore the complete result until policy supplies a
-preference rule.</p>
+oracle-hidden output-recovery fixture, all three actions are nondominated. Returning
+the frontier and an unresolved selection is therefore the complete result until
+policy supplies a preference rule.</p>
 
 <h2><span class="num">B</span>Provenance, reuse, and attribution</h2>
 
@@ -926,7 +942,7 @@ evidence of origin:</p>
 NOT_APPLICABLE</code>, and the reason code <code>INVALID_POLICY</code> returned for
 an empty required set;</li>
 <li>the coined terms <b>protocol-calibrated predicate</b>, <b>decisive evidence
-coverage</b>, <b>decisive conformance</b>, and <b>non-stale status fraction</b>,
+coverage</b>, <b>decisive conformance</b>, and <b>non-stale-label fraction</b>,
 each defined at first use;</li>
 <li>the three-lane capacity vector of A.6, naming observation, settlement, and
 recovery as separately metered lanes that are never summed.</li>
@@ -969,11 +985,11 @@ typed-refusal-harness.</caption>
 <tr><td>Transition-stable quotient report</td><td>local owner-review artifact, 2,627 bytes<br><code>work/<wbr>transition-stable-quotient/<wbr>results/<wbr>expected-report.json</code></td><td class="mono">1b0e78adcac732561a0263ef2704d53b397597c502f81e88a0999a37232df183</td></tr>
 <tr><td>Transition-stable partition over frozen case IDs</td><td>derived output: <code>stablePartitionSha256</code> in the transition-stable quotient report</td><td class="mono">2f129b2ac6c060d253831dbded1810cfd64b030fa6b8a0514d6e048fc7086187</td></tr>
 <tr><td>Transition-stable quotient receipt</td><td>local owner-review receipt, 4,016 bytes<br><code>work/<wbr>transition-stable-quotient/<wbr>evidence/<wbr>BUILD-RECEIPT-000001.md</code></td><td class="mono">4d0b0f50c361c51734db51a786fdc40b85de591e077d295677dbd40d63967514</td></tr>
-<tr><td>Blind prompt</td><td>local owner-private input, 1,662 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>PROMPT.md</code></td><td class="mono">6b0628ef41bdf3b8d871238aa39ac44af43576887d5e0b1ed44ad8e7cdeccaf1</td></tr>
-<tr><td>Blind response schema</td><td>local owner-private input, 1,808 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>schemas/<wbr>response.schema.json</code></td><td class="mono">3656a398b63255eefc2121327da65884cca365a965f5601d6eab18e33aa0a505</td></tr>
-<tr><td>Blind run manifest</td><td>local owner-private metadata, 2,175 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>RUN-MANIFEST.json</code></td><td class="mono">5e104bff1ccd4cffc684667f84783a06414cfb7177da1b43717f0c90145e2f63</td></tr>
-<tr><td>Blind evaluator report</td><td>local owner-review artifact, 20,945 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>results/<wbr>expected-report.json</code></td><td class="mono">de2c28735762a153602fc6e4bb777520c2aa3c687837e3f64b6277c459d67fe9</td></tr>
-<tr><td>Blind packet receipt</td><td>local owner-review receipt, 4,488 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>evidence/<wbr>BUILD-RECEIPT-000001.md</code></td><td class="mono">537e8cc13e8425e53304dd22637df6d186efa4df0be0f910a747b5f78632c815</td></tr>
+<tr><td>Oracle-hidden output-recovery prompt</td><td>local owner-private input, 1,662 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>PROMPT.md</code></td><td class="mono">6b0628ef41bdf3b8d871238aa39ac44af43576887d5e0b1ed44ad8e7cdeccaf1</td></tr>
+<tr><td>Oracle-hidden output-recovery response schema</td><td>local owner-private input, 1,808 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>schemas/<wbr>response.schema.json</code></td><td class="mono">3656a398b63255eefc2121327da65884cca365a965f5601d6eab18e33aa0a505</td></tr>
+<tr><td>Oracle-hidden output-recovery run manifest</td><td>local owner-private metadata, 2,175 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>RUN-MANIFEST.json</code></td><td class="mono">5e104bff1ccd4cffc684667f84783a06414cfb7177da1b43717f0c90145e2f63</td></tr>
+<tr><td>Oracle-hidden output-recovery evaluator report</td><td>local owner-review artifact, 20,945 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>results/<wbr>expected-report.json</code></td><td class="mono">de2c28735762a153602fc6e4bb777520c2aa3c687837e3f64b6277c459d67fe9</td></tr>
+<tr><td>Oracle-hidden output-recovery packet receipt</td><td>local owner-review receipt, 4,488 bytes<br><code>work/<wbr>probabilistic-audit-lane-study/<wbr>evidence/<wbr>BUILD-RECEIPT-000001.md</code></td><td class="mono">537e8cc13e8425e53304dd22637df6d186efa4df0be0f910a747b5f78632c815</td></tr>
 <tr><td>Lean query quotient source</td><td>local source, standalone-module compile only, 3,791 bytes<br><code>work/<wbr>mathlib-zero-state/<wbr>ZeroState/<wbr>QueryQuotient.lean</code></td><td class="mono">cfbb166202ade30abc0c79287ff8c1acf216e91a863121ade923218caede9896</td></tr>
 </tbody></table>
 
