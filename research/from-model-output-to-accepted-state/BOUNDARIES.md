@@ -33,7 +33,7 @@ This file is load-bearing. A result copied from this packet should retain the re
 
 ## Publication boundary
 
-This directory is prepared for a draft pull request. A draft PR, branch, commit, or passing verifier does not authorize merge, release tagging, DOI registration, deployment, or a claim that the owner has accepted every semantic mapping.
+This directory is prepared for review by pull request. An open PR, branch, commit, or passing verifier does not authorize merge, release tagging, DOI registration, deployment, or a claim that the owner has accepted every semantic mapping.
 
 The private editorial review and its locator remain outside the public packet.
 Only the minimized owner disposition is authorized for this review surface.
