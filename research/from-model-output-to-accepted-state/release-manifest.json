@@ -1,0 +1,309 @@
+{
+  "schema": "accepted-state-owner-review-release.v1",
+  "release_id": "from-model-output-to-accepted-state-0.1.0-owner-review.4",
+  "status": "OWNER_REVIEW",
+  "recorded_date": "2026-08-15",
+  "hash_basis": "SHA-256 of raw file bytes",
+  "excludes": [
+    "release-manifest.json self-reference",
+    ".tmp",
+    "__pycache__"
+  ],
+  "payload_root": "e1110bd7796e48b0eff2b6606926c7f305999004bd42741c9fb53a5251af5e25",
+  "files": {
+    ".gitattributes": {
+      "bytes": 239,
+      "media_type": "application/octet-stream",
+      "role": "release-documentation",
+      "sha256": "7ccb36d6cee337107bbdd2ac846114861d66e81b803cfead82bbb8e639598a54",
+      "status": "OWNER_REVIEW"
+    },
+    "BOUNDARIES.md": {
+      "bytes": 3444,
+      "media_type": "text/markdown",
+      "role": "release-documentation",
+      "sha256": "919b3020eb8f34d63fc0944718293f85ebc1ba234c444c96f1e789a34c760fad",
+      "status": "OWNER_REVIEW"
+    },
+    "CHANGELOG.md": {
+      "bytes": 2014,
+      "media_type": "text/markdown",
+      "role": "release-documentation",
+      "sha256": "27002ddfb2c569c2ec37253c91f44805e111551cf3090172ba7a8aaa5c5d6d2d",
+      "status": "OWNER_REVIEW"
+    },
+    "CITATION.cff": {
+      "bytes": 1107,
+      "media_type": "application/yaml",
+      "role": "release-documentation",
+      "sha256": "2fc22ff66c18df0178c6e9e28519035e928cf28e7902a981da50222f9c21157a",
+      "status": "OWNER_REVIEW"
+    },
+    "LICENSE.txt": {
+      "bytes": 1037,
+      "media_type": "text/plain",
+      "role": "release-documentation",
+      "sha256": "c86594fff80816a5443d6b26149d7a6b791338c490ca822a201deea0dab52b6f",
+      "status": "OWNER_REVIEW"
+    },
+    "README.md": {
+      "bytes": 5869,
+      "media_type": "text/markdown",
+      "role": "release-documentation",
+      "sha256": "6b15e94f87b3d399ea12028077ed65291db575e40d648b359e97aca9b0f95a6f",
+      "status": "OWNER_REVIEW"
+    },
+    "RELATED-WORK.md": {
+      "bytes": 1360,
+      "media_type": "text/markdown",
+      "role": "release-documentation",
+      "sha256": "f2d56a7337ab424eee0f914bffe23a4ae5a4d1f82a62049a74510c226779043a",
+      "status": "OWNER_REVIEW"
+    },
+    "REPRODUCE.md": {
+      "bytes": 3408,
+      "media_type": "text/markdown",
+      "role": "release-documentation",
+      "sha256": "dde7934c3a54cc2b1b1156314dbbcd22d1855cd448f0478bfa770678a8cbffcf",
+      "status": "OWNER_REVIEW"
+    },
+    "author-markers.json": {
+      "bytes": 25533,
+      "media_type": "application/json",
+      "role": "release-documentation",
+      "sha256": "6d4670d9841c70df6e32c9ff78eb381461430be437a19f0b6c5f66402237494c",
+      "status": "OWNER_REVIEW"
+    },
+    "claims.json": {
+      "bytes": 78962,
+      "media_type": "application/json",
+      "role": "release-documentation",
+      "sha256": "48e1d732cb8fd59ff54f47b996a2bc48ff25b62b386ba411e364f49e4b03817f",
+      "status": "OWNER_REVIEW"
+    },
+    "content_a.py": {
+      "bytes": 22978,
+      "media_type": "text/x-python",
+      "role": "paper-source",
+      "sha256": "02dafb2397764c730f8d8f007de502984e86615151ec82b9d4fbeff4eabff317",
+      "status": "OWNER_REVIEW"
+    },
+    "content_b.py": {
+      "bytes": 27564,
+      "media_type": "text/x-python",
+      "role": "paper-source",
+      "sha256": "7802aa784bfdfedf33a72034b70f79a995a39c9e98ee8a502e37a9596ee098d0",
+      "status": "OWNER_REVIEW"
+    },
+    "content_c.py": {
+      "bytes": 79303,
+      "media_type": "text/x-python",
+      "role": "paper-source",
+      "sha256": "80bab59a91296a91e98a271b036835c5018e2f9125f8b3474ce947f2a34ee059",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/RELEASE-BUILD-RECEIPT-000001.md": {
+      "bytes": 2708,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "0e0a1c8ef73bfdd6797bb1dcdb4168264d2e9f5bd3193a1cb7ca3c0f9b175aa3",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/RELEASE-BUILD-RECEIPT-000002.md": {
+      "bytes": 6536,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "4f43366e22beeae29ce4d48d80f910ad5f93b30045b6df738412caa94dacadb5",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/RELEASE-BUILD-RECEIPT-000003.md": {
+      "bytes": 6977,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "a38b50371df75f62348f3cadebd37c766af3ba869a7cd4ae9682cf2d29e951fc",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/RELEASE-BUILD-RECEIPT-000004.md": {
+      "bytes": 7151,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "a56132ab18f41c714a5e09476fbd368794fb7176e191e9132b29f715c3a81c0d",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/blind-prompt/PROMPT.md": {
+      "bytes": 1662,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "6b0628ef41bdf3b8d871238aa39ac44af43576887d5e0b1ed44ad8e7cdeccaf1",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/blind-prompt/PUBLIC-SUMMARY.md": {
+      "bytes": 1925,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "b04998e04354f0027a42aa2f082b4d934bd50a76aa387e22d73705bde5fe95c4",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/device-activation/BUILD-RECEIPT-000001.md": {
+      "bytes": 3158,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "ee60b9aa4baa0286fb5899255380d6bf9772ca9240354bddc3b1a75fce1b9ab6",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/device-activation/expected-analysis.json": {
+      "bytes": 2737,
+      "media_type": "application/json",
+      "role": "bounded-evidence",
+      "sha256": "7c550d125d383f7238ff936c7d05a3815ceb35132326253b973562fbca4b0a80",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/editorial-review/PUBLIC-DISPOSITION.md": {
+      "bytes": 5413,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "3bdf8723fa8d6d3d696a363316e627a392f86204c08129640b42c94edb056223",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/lean-query-quotient/BUILD-RECEIPT-000005.md": {
+      "bytes": 4233,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "8cdb9da9a9ddaba90c63390f1e94d11e18ca32f7d2a95b46b6ce3e1a27de79b2",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/lean-query-quotient/QueryQuotient.lean": {
+      "bytes": 3791,
+      "media_type": "application/octet-stream",
+      "role": "bounded-evidence",
+      "sha256": "cfbb166202ade30abc0c79287ff8c1acf216e91a863121ade923218caede9896",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/reproduction/WINDOWS-CLEAN-CLONE-V3.md": {
+      "bytes": 3453,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "7f5476957fad26c621a730dba01a441a17262bf6a6b3d89a3c3f1168f9c6f7c2",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/transition-stable-quotient/BUILD-RECEIPT-000001.md": {
+      "bytes": 4016,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "4d0b0f50c361c51734db51a786fdc40b85de591e077d295677dbd40d63967514",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/transition-stable-quotient/expected-report.json": {
+      "bytes": 2627,
+      "media_type": "application/json",
+      "role": "bounded-evidence",
+      "sha256": "1b0e78adcac732561a0263ef2704d53b397597c502f81e88a0999a37232df183",
+      "status": "OWNER_REVIEW"
+    },
+    "figures.py": {
+      "bytes": 20056,
+      "media_type": "text/x-python",
+      "role": "paper-source",
+      "sha256": "00ddc57b44452616d4f1478f661bdc47beed9acf01fd3989f94e8751070ea239",
+      "status": "OWNER_REVIEW"
+    },
+    "figures/fig1-boundary.svg": {
+      "bytes": 4567,
+      "media_type": "image/svg+xml",
+      "role": "paper-source",
+      "sha256": "5f03bcee42dfeae18b761227cf8bd0ee11daf72cc837c99d53ef64c7d046f629",
+      "status": "OWNER_REVIEW"
+    },
+    "figures/fig2-lifecycle.svg": {
+      "bytes": 8496,
+      "media_type": "image/svg+xml",
+      "role": "paper-source",
+      "sha256": "0f8f739831c86259d8cca47493436cb729b5b6714a718d764eaba84753249e89",
+      "status": "OWNER_REVIEW"
+    },
+    "figures/fig3-stores.svg": {
+      "bytes": 3390,
+      "media_type": "image/svg+xml",
+      "role": "paper-source",
+      "sha256": "e2d39da854399b24e695dcd90a38ca12903709c586c9a8bbd253fa270b720e00",
+      "status": "OWNER_REVIEW"
+    },
+    "figures/fig4-signals.svg": {
+      "bytes": 4999,
+      "media_type": "image/svg+xml",
+      "role": "paper-source",
+      "sha256": "2d7c3e427c64835d8419375aff44bab7cffe3d17660eb46a268c311d3b69ee49",
+      "status": "OWNER_REVIEW"
+    },
+    "figures/fig5-repair.svg": {
+      "bytes": 6147,
+      "media_type": "image/svg+xml",
+      "role": "paper-source",
+      "sha256": "19d03dd2a9c4ee55229a7ef61b94c2e8119f28f805a72b55514d07ef02a1d0d3",
+      "status": "OWNER_REVIEW"
+    },
+    "paper/From-Model-Output-to-Accepted-State-Owner-Review-v4-LinkedIn.md": {
+      "bytes": 112945,
+      "media_type": "text/markdown",
+      "role": "paper-output",
+      "sha256": "7da62740394ffe5e2200355daf836bb76e9a5171677c25fcec839d398ac39916",
+      "status": "OWNER_REVIEW"
+    },
+    "paper/From-Model-Output-to-Accepted-State-Owner-Review-v4.pdf": {
+      "bytes": 996152,
+      "media_type": "application/pdf",
+      "role": "paper-output",
+      "sha256": "1af2d25e29670862bac09e185c9bb811a0b043c4a9e27b68917568ea93e63bf8",
+      "status": "OWNER_REVIEW"
+    },
+    "reviewer-markers.template.json": {
+      "bytes": 10493,
+      "media_type": "application/json",
+      "role": "release-documentation",
+      "sha256": "0891b5eb03271cc9591dd70dca9cb4f14fbb2fa4346d0ead2154b523cf37087b",
+      "status": "OWNER_REVIEW"
+    },
+    "style.py": {
+      "bytes": 7972,
+      "media_type": "text/x-python",
+      "role": "paper-source",
+      "sha256": "2465ab980b097a11bad0d7b343b64fe3aa46c809292577e14bef555dfd5e1bba",
+      "status": "OWNER_REVIEW"
+    },
+    "tools/update_claim_register.py": {
+      "bytes": 25787,
+      "media_type": "text/x-python",
+      "role": "verification-tool",
+      "sha256": "c1b0a95a1c986860832e049e8a4b6b3e67127244d29957307678efa1ce25a271",
+      "status": "OWNER_REVIEW"
+    },
+    "tools/update_manifest.py": {
+      "bytes": 3130,
+      "media_type": "text/x-python",
+      "role": "verification-tool",
+      "sha256": "2afbe95dbac3c6005de120030d25c0208ec6b54d87c6a53d79601f2d4481cc74",
+      "status": "OWNER_REVIEW"
+    },
+    "tools/verify-release.mjs": {
+      "bytes": 13651,
+      "media_type": "text/javascript",
+      "role": "verification-tool",
+      "sha256": "0381bc73a9beb2cf63e075975f06dec0678f6720c452b218a83f450de33a1c47",
+      "status": "OWNER_REVIEW"
+    },
+    "tools/verify.ps1": {
+      "bytes": 2288,
+      "media_type": "text/plain",
+      "role": "verification-tool",
+      "sha256": "76ef747623d5bc4de171a48fab8cf8b0a5d0b5c91f11e5996eb2442371afc974",
+      "status": "OWNER_REVIEW"
+    },
+    "tools/verify_release.py": {
+      "bytes": 14729,
+      "media_type": "text/x-python",
+      "role": "verification-tool",
+      "sha256": "f58769ca2873e6912503fb8fd41438d7b66078bce4865cd06aaa44803285b1b9",
+      "status": "OWNER_REVIEW"
+    }
+  }
+}

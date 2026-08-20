@@ -1,0 +1,442 @@
+{
+  "schema_version": "fmota-marker-assignments.v1",
+  "claim_register_sha256": "48e1d732cb8fd59ff54f47b996a2bc48ff25b62b386ba411e364f49e4b03817f",
+  "assignment_role": "EXTERNAL_REVIEW",
+  "assignment_set_id": "replace-with-reviewer-id",
+  "assignments": [
+    {
+      "claim_id": "FMOTA-V4-CLM-001",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-002",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-003",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-004",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-005",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-006",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-007",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-008",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-009",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-010",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-011",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-012",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-013",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-014",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-015",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-016",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-017",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-018",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-019",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-020",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-021",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-022",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-023",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-024",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-025",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-026",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-027",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-028",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-029",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-030",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-031",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-032",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-033",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-034",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-035",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-036",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-037",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-038",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-039",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-062",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-040",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-041",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-042",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-043",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-044",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-045",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-046",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-047",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-048",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-049",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-050",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-051",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-052",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-053",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-054",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-055",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-056",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-057",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-058",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-059",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-060",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-061",
+      "marker": null,
+      "rationale": "",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    }
+  ]
+}

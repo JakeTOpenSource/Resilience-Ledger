@@ -1,0 +1,1394 @@
+{
+  "schema_version": "fmota-claim-register.v1",
+  "status": "OWNER_REVIEW",
+  "paper_output_path": "paper/From-Model-Output-to-Accepted-State-Owner-Review-v4.pdf",
+  "paper_source_sha256": {
+    "content_a.py": "02dafb2397764c730f8d8f007de502984e86615151ec82b9d4fbeff4eabff317",
+    "content_b.py": "7802aa784bfdfedf33a72034b70f79a995a39c9e98ee8a502e37a9596ee098d0",
+    "content_c.py": "80bab59a91296a91e98a271b036835c5018e2f9125f8b3474ce947f2a34ee059"
+  },
+  "marker_policy": {
+    "source_path": "content_a.py",
+    "source_sha256": "02dafb2397764c730f8d8f007de502984e86615151ec82b9d4fbeff4eabff317",
+    "section": "2 / Table 1",
+    "definitions": {
+      "TESTED": {
+        "meaning": "Exact behavior over a named finite corpus, reproducible by a stated command.",
+        "never_means": "That the behavior generalizes past that corpus."
+      },
+      "OBSERVED": {
+        "meaning": "A bounded inspection of a named surface at a recorded time.",
+        "never_means": "That the surface still looks that way, or that other surfaces match."
+      },
+      "PROPOSED": {
+        "meaning": "Specified or reasoned beyond the tested artifact boundary. It may have a partial fixture, but the marked claim itself is not established.",
+        "never_means": "Implemented behavior. Do not cite it as a result."
+      },
+      "OPEN": {
+        "meaning": "I do not know, and I say where the evidence stops.",
+        "never_means": "That the question is unimportant."
+      }
+    }
+  },
+  "blinding_protocol": "Give claims.json, registered accessible sources, and reviewer-markers.template.json to the reviewer before exposing the marked manuscript or author-markers.json. This is procedural blinding, not cryptographic secrecy after publication.",
+  "comparison_rule": "Compare by claim_id only. Equal markers agree. Any mismatch is MATERIAL_DISAGREEMENT and places the claim in CONTESTED/HOLD until owner adjudication; missing assignments are INCOMPLETE. Never auto-promote.",
+  "sources": [
+    {
+      "source_id": "EV-PUBLIC-STP-COMMIT",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "path": "research/stp-v1.2/release-manifest.json",
+      "expected_bytes": 3613,
+      "expected_sha256": "2f95ed233a20060d1cbca3fae555410732242b26d9fb08afe482bc3390077704",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-TREE-275D",
+      "kind": "public_git_tree",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "tree": "ed1342684125e9165f27fdc6d9702b102665b324",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-GATE",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "path": "governance/harnesses/run-all.js",
+      "expected_bytes": 925,
+      "expected_sha256": "2725275449ea6bd25d460e328885dcf11685af2854582fef2db8aa61f6f33a96",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-LEDGER-LIB",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "path": "governance/ledger/lib.js",
+      "expected_bytes": 18577,
+      "expected_sha256": "8e824d144f5416fc969ab49f13639325c4a5cfc32970a006e3732181b9c68ac8",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-REPLAY-PY",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "path": "governance/harnesses/replay.py",
+      "expected_bytes": 7946,
+      "expected_sha256": "db6fdd073034e0c2173af0d65dca6c3db3e73cd4841f25bbc3fbb91aee069279",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-VERIFY-REPLAYERS",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "path": "governance/harnesses/verify-replayers.js",
+      "expected_bytes": 1854,
+      "expected_sha256": "7e63495fe344b007b221061c73c8b70dbf536e924db1ce9da9a7d14426da6b49",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-CI-GATES",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "path": ".github/workflows/gates.yml",
+      "expected_bytes": 2914,
+      "expected_sha256": "066c58b7841bb0363ed28bb9196f568a0de82f663b891cb8ae6ce6d22d579723",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-ATLAS-DATA-CONTRACT",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "path": "governance/contracts/atlas-data-sync.contract.v2.json",
+      "expected_bytes": 10165,
+      "expected_sha256": "7366c7042ec2e40a501fe091f9367eb5e8e8449763b69afadf29762864d58263",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-ATLAS-RUNTIME-CONTRACT",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "path": "governance/contracts/atlas-runtime-contract.v1.json",
+      "expected_bytes": 2558,
+      "expected_sha256": "7cd8c2a89f6df20995789f066643240a4cbcbc3ca67d2dc1cc4c71129b22ffd5",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-OBSERVATION-000001",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "path": "governance/ledger/events/deployment/000001-wp0-production-observation.json",
+      "expected_bytes": 6252,
+      "expected_sha256": "34bde4ec2eb4d1bfb70b8d44df6439cb295bd1dc1293df0ae47490193ad3fa97",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-OBSERVATION-000002",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "275d0b3e7474ef58456c82a042163567cd12122f",
+      "path": "governance/ledger/events/deployment/000002-public-explanation-production-observed.json",
+      "expected_bytes": 10952,
+      "expected_sha256": "4917a927727e3b0cc03cd057100a698ccc18e51751f69dd33f5bed14344fa24f",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-OBSERVATION-000003",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "5f9cc145763bc51b183e93b4f7059b25aa6ee2ca",
+      "path": "governance/ledger/events/deployment/000003-service-worker-drift-closed.json",
+      "expected_bytes": 4782,
+      "expected_sha256": "f03960cb1927a2c89fa5b9e98bd9cdf0cdd977c6b45fe19937346264251158e4",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-RL-CHECKPOINT-000013",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/Resilience-Ledger",
+      "commit": "5f9cc145763bc51b183e93b4f7059b25aa6ee2ca",
+      "path": "governance/ledger/checkpoints/checkpoint-000013.json",
+      "expected_bytes": 4922,
+      "expected_sha256": "17a2bf4ee223dcbd55bdf22dd66aebac95c6c3273d958fb0a15f4608917fcbb2",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-DEVICE-ANALYSIS",
+      "kind": "packet_file",
+      "path": "evidence/device-activation/expected-analysis.json",
+      "expected_bytes": 2737,
+      "expected_sha256": "7c550d125d383f7238ff936c7d05a3815ceb35132326253b973562fbca4b0a80",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-DEVICE-RECEIPT",
+      "kind": "packet_file",
+      "path": "evidence/device-activation/BUILD-RECEIPT-000001.md",
+      "expected_bytes": 3158,
+      "expected_sha256": "ee60b9aa4baa0286fb5899255380d6bf9772ca9240354bddc3b1a75fce1b9ab6",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-TRANSITION-REPORT",
+      "kind": "packet_file",
+      "path": "evidence/transition-stable-quotient/expected-report.json",
+      "expected_bytes": 2627,
+      "expected_sha256": "1b0e78adcac732561a0263ef2704d53b397597c502f81e88a0999a37232df183",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-TRANSITION-RECEIPT",
+      "kind": "packet_file",
+      "path": "evidence/transition-stable-quotient/BUILD-RECEIPT-000001.md",
+      "expected_bytes": 4016,
+      "expected_sha256": "4d0b0f50c361c51734db51a786fdc40b85de591e077d295677dbd40d63967514",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-BP-PROMPT",
+      "kind": "packet_file",
+      "path": "evidence/blind-prompt/PROMPT.md",
+      "expected_bytes": 1662,
+      "expected_sha256": "6b0628ef41bdf3b8d871238aa39ac44af43576887d5e0b1ed44ad8e7cdeccaf1",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-BP-SUMMARY",
+      "kind": "packet_file",
+      "path": "evidence/blind-prompt/PUBLIC-SUMMARY.md",
+      "expected_bytes": 1925,
+      "expected_sha256": "b04998e04354f0027a42aa2f082b4d934bd50a76aa387e22d73705bde5fe95c4",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-BP-EVALUATOR",
+      "kind": "retained_digest",
+      "retained_source_id": "BP-EVALUATOR-001",
+      "expected_bytes": 20945,
+      "expected_sha256": "de2c28735762a153602fc6e4bb777520c2aa3c687837e3f64b6277c459d67fe9",
+      "access": "RETAINED_RESTRICTED",
+      "verification_status": "DECLARED_ONLY"
+    },
+    {
+      "source_id": "EV-BP-RECEIPT",
+      "kind": "retained_digest",
+      "retained_source_id": "BP-RECEIPT-001",
+      "expected_bytes": 4488,
+      "expected_sha256": "537e8cc13e8425e53304dd22637df6d186efa4df0be0f910a747b5f78632c815",
+      "access": "RETAINED_RESTRICTED",
+      "verification_status": "DECLARED_ONLY"
+    },
+    {
+      "source_id": "EV-LEAN-QUERY-SOURCE",
+      "kind": "packet_file",
+      "path": "evidence/lean-query-quotient/QueryQuotient.lean",
+      "expected_bytes": 3791,
+      "expected_sha256": "cfbb166202ade30abc0c79287ff8c1acf216e91a863121ade923218caede9896",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-LEAN-QUERY-RECEIPT",
+      "kind": "packet_file",
+      "path": "evidence/lean-query-quotient/BUILD-RECEIPT-000005.md",
+      "expected_bytes": 4233,
+      "expected_sha256": "8cdb9da9a9ddaba90c63390f1e94d11e18ca32f7d2a95b46b6ce3e1a27de79b2",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-TYPED-REFUSAL-ARMS",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/typed-refusal-harness",
+      "commit": "721a824c9f735d3972d720b41685469a1020fa91",
+      "path": "data/arms.json",
+      "expected_bytes": 4937,
+      "expected_sha256": "504ca00f4286f25ee80ebe4cc9aacb2a05326b66c45602e40113117bbb40389b",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-TYPED-REFUSAL-STATS",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/typed-refusal-harness",
+      "commit": "721a824c9f735d3972d720b41685469a1020fa91",
+      "path": "data/stats.py",
+      "expected_bytes": 5364,
+      "expected_sha256": "8ecd41b40b7b75eaaa93ee0caa017e764182a3e0aee0a6f1beda7aa86277c802",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-TYPED-REFUSAL-TREE",
+      "kind": "public_git_tree",
+      "repository": "JakeTOpenSource/typed-refusal-harness",
+      "commit": "721a824c9f735d3972d720b41685469a1020fa91",
+      "tree": "ae82fa57c0b34bb2166424128d2537822e53bc26",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-TYPED-REFUSAL-CORPUS",
+      "kind": "retained_digest",
+      "retained_source_id": "TR-CORPUS-TITLE-29",
+      "expected_bytes": 11666245,
+      "expected_sha256": "188ab1c50a46f0dd2ff32aaa5f65c759a07710e052d297644b1a8f6b58ff413d",
+      "access": "RETAINED_RESTRICTED",
+      "verification_status": "UNAVAILABLE"
+    },
+    {
+      "source_id": "EV-STABLE-PREREGISTRATION",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/the-stable",
+      "commit": "77408db59cad3f968ac9ba5a0c0c6689a90e80d4",
+      "path": "experiments/replication-2026-07-17/PREREGISTRATION.md",
+      "expected_bytes": 7602,
+      "expected_sha256": "eff780cff6a4522370af2f00d01a7dc121ab143677f805cbdc865620dad7820b",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-STABLE-DECISION-LOGS",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/the-stable",
+      "commit": "77408db59cad3f968ac9ba5a0c0c6689a90e80d4",
+      "path": "experiments/replication-2026-07-17/decision-logs.json",
+      "expected_bytes": 144527,
+      "expected_sha256": "9fb48b2c0a837f91581c5faf5a043126348b6f86e64bf2383182f65978ffdca6",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-STABLE-REPLAY",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/the-stable",
+      "commit": "77408db59cad3f968ac9ba5a0c0c6689a90e80d4",
+      "path": "bridge/replay-replication.js",
+      "expected_bytes": 5373,
+      "expected_sha256": "2fd2afa0b90395194b3165e19c580c4af626dfae7f54cb44193b1c326d25ebb0",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-STABLE-CELLS",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/the-stable",
+      "commit": "77408db59cad3f968ac9ba5a0c0c6689a90e80d4",
+      "path": "bridge/replication-cells.json",
+      "expected_bytes": 8097,
+      "expected_sha256": "326b544a425daf07fe38790d58ee1dfdba825536bec84e7f81a3c46b187e2939",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-STABLE-GATE",
+      "kind": "public_git_blob",
+      "repository": "JakeTOpenSource/the-stable",
+      "commit": "77408db59cad3f968ac9ba5a0c0c6689a90e80d4",
+      "path": "stable-gate.js",
+      "expected_bytes": 15250,
+      "expected_sha256": "7ab31a6cd8daa969a61230cb545db30c27b8cf80820150b07bc7328c5e16a9a2",
+      "access": "PUBLIC_EXTERNAL",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-WINDOWS-CLEAN-CLONE-V3",
+      "kind": "packet_file",
+      "path": "evidence/reproduction/WINDOWS-CLEAN-CLONE-V3.md",
+      "expected_bytes": 3453,
+      "expected_sha256": "7f5476957fad26c621a730dba01a441a17262bf6a6b3d89a3c3f1168f9c6f7c2",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-REPRODUCE-RUNBOOK",
+      "kind": "packet_file",
+      "path": "REPRODUCE.md",
+      "expected_bytes": 3408,
+      "expected_sha256": "dde7934c3a54cc2b1b1156314dbbcd22d1855cd448f0478bfa770678a8cbffcf",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-PACKET-EOL-RULE",
+      "kind": "packet_file",
+      "path": ".gitattributes",
+      "expected_bytes": 239,
+      "expected_sha256": "7ccb36d6cee337107bbdd2ac846114861d66e81b803cfead82bbb8e639598a54",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "VERIFIED_BYTES"
+    },
+    {
+      "source_id": "EV-PAPER-CONTEXT",
+      "kind": "paper_context",
+      "access": "PUBLIC_PACKET",
+      "verification_status": "NOT_EVIDENCE"
+    }
+  ],
+  "claims": [
+    {
+      "claim_id": "FMOTA-V4-CLM-001",
+      "section": "Abstract",
+      "scope": "paragraph",
+      "fragment": "FRONT",
+      "claim_text": "This paper proposes the State Transition Protocol as a typed boundary around a probabilistic proposer. A conceptual ten-stage lifecycle separates proposal from authority, execution, observation, acceptance, and correction. The broader observation algebra and six-condition reporting surface are also design proposals.",
+      "claim_text_sha256": "7e376684c19a7fca6cbd535703619017bb7619bda15731c44e81f40c06b1964a",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-002",
+      "section": "Abstract",
+      "scope": "paragraph",
+      "fragment": "FRONT",
+      "claim_text": "The public packet implements a narrower seven-event instrument profile over synthetic fixtures; it is not a complete implementation of that lifecycle. Within the tested slice, deterministic reducers rebuild a finite projection from pinned inputs.",
+      "claim_text_sha256": "fdc1f50ea21fb6b1cf498ee026e539b8294ef4d2e800c3bc31662809b46d9e09",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-003",
+      "section": "Abstract",
+      "scope": "paragraph",
+      "fragment": "FRONT",
+      "claim_text": "Three additional local packets test a finite query representation, transition-stable refinement, and recovery of frozen answer fields from one compact prompt. That prompt declared separate gate, forecast, and pending-resolution fields; all three responses recovered the frozen finite outputs. No real forecast was issued or resolved. These local results extend the analysis but are not part of the pinned public commit.",
+      "claim_text_sha256": "1ead4ada9fe250f8bae6a08a4c258dce6720eb3ceddb213670cd9c9738dfab1d",
+      "review_source_ids": [
+        "EV-DEVICE-ANALYSIS",
+        "EV-DEVICE-RECEIPT",
+        "EV-TRANSITION-REPORT",
+        "EV-TRANSITION-RECEIPT",
+        "EV-BP-PROMPT",
+        "EV-BP-SUMMARY",
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT",
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-004",
+      "section": "Abstract",
+      "scope": "paragraph",
+      "fragment": "FRONT",
+      "claim_text": "The evidence is finite and I state its limits precisely. Separate JavaScript and Python ports derived from the same specification and fixture corpus produce the same projection root over the pinned inputs, and did so on runtime versions two releases apart from the pinned continuous-integration environment. This is cross-language replay parity, not independent reproduction. Thirty-four runner-reported numbered holds across twelve suites are a diagnostic inventory, not a coverage measure. A data contract found that six public views of one 439-term source had drifted apart, and that 258 shared terms disagreed on review status. A production observation found 100 of 102 paths matching and left two unresolved rather than rounding them off.",
+      "claim_text_sha256": "5567e94afbc4d50b334d0dcec5f4851c3a960513baa6c4d9386936046a8b5d3a",
+      "review_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS",
+        "EV-RL-GATE",
+        "EV-RL-ATLAS-DATA-CONTRACT",
+        "EV-RL-ATLAS-RUNTIME-CONTRACT",
+        "EV-RL-OBSERVATION-000001"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-005",
+      "section": "1The problem, in plain terms",
+      "scope": "paragraph",
+      "fragment": "SUMMARY",
+      "claim_text": "The public evidence is narrower than the conceptual protocol. It establishes finite behavior for an instrumented seven-event profile and related harnesses. It does not establish end-to-end conformance with the proposed ten-stage lifecycle.",
+      "claim_text_sha256": "816a828171333eb93eda9bb7a125535d5b95e3ef97b904bd66263d48d51e1945",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-006",
+      "section": "Artifact identity is part of the result",
+      "scope": "paragraph",
+      "fragment": "CLAIMS",
+      "claim_text": "The Calibration Ledger document I hold does not match the Ledger digest printed in State Transition Protocol v1.1, and I could not retrieve the bytes that digest was computed over. I do not know whether the document is a later revision, a sibling artifact, or an unrelated export. I have not treated the two as equivalent anywhere in this paper.",
+      "claim_text_sha256": "6002d12197f284aefdd5e95c5036f4086408b9b87c2f99220373c7243861728e",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-007",
+      "section": "Two lanes, one acceptance boundary",
+      "scope": "paragraph",
+      "fragment": "BOUNDARY",
+      "claim_text": "The proposed record order is FREEZE_FORECAST \u2192 CHOOSE_ACTION \u2192 APPEND_RESOLUTION \u2192 SCORE_FORECAST \u2192 UPDATE_CALIBRATION. Before a qualified resolution is appended, the forecast remains pending. Pending is not zero, false, success, or failure. A reducer for these proposed records can verify the order, identities, score, and replay without claiming that the forecast was true when issued or that the selected action was wise.",
+      "claim_text_sha256": "2540976e28d195ddd74fa36cb0d64cfb356e648dc4c0b562f5ba52107828a6ef",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-008",
+      "section": "Two lanes, one acceptance boundary",
+      "scope": "paragraph",
+      "fragment": "BOUNDARY",
+      "claim_text": "BP-001 used HOLD as a frozen gate value and asked for its execution output, BLOCK. This paper maps an UNRESOLVED condition to HOLD as a post-test vocabulary crosswalk. BP-001 established HOLD to BLOCK only; it did not test the crosswalk.",
+      "claim_text_sha256": "0bb27775359f45e922a12b70a36c74a52b50d4a96b54ed712096213d356c40fb",
+      "review_source_ids": [
+        "EV-BP-PROMPT",
+        "EV-BP-SUMMARY",
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-009",
+      "section": "What the threat model covers",
+      "scope": "paragraph",
+      "fragment": "BOUNDARY",
+      "claim_text": "The trusted computing base is not one object. It is the policy, the schemas, the reducers, the canonicalization rules, the authority registry, the keys, the clocks, the instrument contracts, the evidence stores, and the release process. This implementation does not provide an independently operated root of trust for all of them.",
+      "claim_text_sha256": "73d26d9db98fef14b0504036d6023db98f5699e4f9db81378183c355b0685491",
+      "review_source_ids": [
+        "EV-RL-TREE-275D",
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-010",
+      "section": "4A proposed ten-stage lifecycle",
+      "scope": "paragraph",
+      "fragment": "LIFECYCLE",
+      "claim_text": "The candidate lifecycle runs PROPOSE, NORMALIZE, CHECK, AUTHORIZE, PREPARE, EXECUTE, OBSERVE, ACCEPT, OUTCOME, CORRECT. It is not a pipeline that succeeds. Every stage can refuse, return unknown, and stop. A failed attempt stays in the history without moving accepted state. This is the conceptual protocol, not the event vocabulary of the current executable packet.",
+      "claim_text_sha256": "19306c4d186fd84b38f153f5acd8ef7c065d129bdf1649c378dd9833cdfb1990",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-011",
+      "section": "The executable slice is narrower",
+      "scope": "paragraph",
+      "fragment": "LIFECYCLE",
+      "claim_text": "The pinned public packet is a proposed Instrumented Transition and Survivability Profile tested over synthetic fixtures. Its event vocabulary is PLAN \u2192 AUTHORIZE? \u2192 INVOKE \u2192 COMMIT \u2192 SENSING_EFFECT? \u2192 OBSERVE \u2192 SETTLE. A question mark means the phase is optional only when the pinned instrument profile permits omission. These seven event types exercise a bounded instrument profile. They do not implement the complete ten-stage lifecycle, and SETTLE is not silently renamed ACCEPT.",
+      "claim_text_sha256": "e16cd70810bb7569a048df1a6d5f49f8aabc99fc3b003ab1b37a48fa7442f244",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-012",
+      "section": "The executable slice is narrower",
+      "scope": "paragraph",
+      "fragment": "LIFECYCLE",
+      "claim_text": "Observe. A declared witness measures a postcondition, recording procedure, result type, operating conditions, freshness, and known uncertainty. Accept. A named authority advances the projection only when the required predicates and receipts satisfy policy. Acceptance is never inferred from a tool's success code. Outcome. A later observation records consequence, which can arrive long after acceptance. Correct. A correction opens a new governed transition that names the prior record and states the proposed replacement and reason. It never edits the record it corrects. The replacement changes accepted state only after a new acceptance record satisfies the current policy. CORRECT cannot bypass ACCEPT.",
+      "claim_text_sha256": "ee780c5705b2ed2b52959773620f7e9ae861f1fc0a37265f9fc59d252b14f4e0",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-013",
+      "section": "How required checks aggregate",
+      "scope": "block",
+      "fragment": "LIFECYCLE",
+      "claim_text": "The transition gate maps condition FAIL to REFUSE, carries UNRESOLVED through unchanged, and otherwise returns PASS. An empty required set returns UNRESOLVED with reason INVALID_POLICY, never a vacuous pass. Policy may be stricter. Policy may not map an unresolved required predicate to pass.",
+      "claim_text_sha256": "7dcba09e70f592c80a349e467becf05a608161b68e275d42a2e8b060d331e2ee",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-014",
+      "section": "How required checks aggregate",
+      "scope": "paragraph",
+      "fragment": "LIFECYCLE",
+      "claim_text": "The public instrument and concurrency reducers test narrower, reason-specific PASS, FAIL, and UNKNOWN outputs, including local NOT_REQUIRED obligation positions. They do not expose this general set aggregator, a mixed false-plus-unknown precedence fixture, or the empty-set INVALID_POLICY rule. The general normalization above is therefore a design target, not a reported test result.",
+      "claim_text_sha256": "fd2ece349714ed2b46c46c437e7c72fbcd0f65d2abd9a0d4aec4204dd767e7b4",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT",
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-015",
+      "section": "5Measurement before acceptance",
+      "scope": "paragraph",
+      "fragment": "OBSERVATION",
+      "claim_text": "For a scalar quantity, one conservative decision rule could require |delta_hat| + k u_delta \u2264 epsilon, with k, the meaning of u_delta, the interval, and the procedure fixed before evaluation. That rule is an example, not a universal definition. If the required uncertainty or operating conditions are missing, the evaluator returns UNKNOWN rather than NO_CHANGE. The full tuple above is a design proposal.",
+      "claim_text_sha256": "23fce1ef9cd771eb40e9ddaf14a8f16d2f46a2088e6e05ae76ad0ec6ba53a752",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-016",
+      "section": "5Measurement before acceptance",
+      "scope": "paragraph",
+      "fragment": "OBSERVATION",
+      "claim_text": "The public instrument profile tests the narrower label NO_CHANGE_DETECTED bound to a declared resolution and observation window; it does not implement the full uncertainty-aware tuple.",
+      "claim_text_sha256": "95b13287bde69528d5728244325f09a6bbe9aaade341bed310702aec6c3cb2ff",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-017",
+      "section": "Forecasts are records about later events",
+      "scope": "paragraph",
+      "fragment": "OBSERVATION",
+      "claim_text": "The architectural consequence is to estimate, freeze, and later score the forecast as one lane, then select an action under a separately declared policy. If the action can change the event distribution, the record must identify that action and either forecast Pr(Y | I_t, action) or preserve a clearly labeled pre-action scenario. Otherwise the intervention can be mistaken for forecast error. This is related to the feedback problem studied as performative prediction [42].",
+      "claim_text_sha256": "3f36236e105687284b08b70a2e9b2c2f19a0e40ebb318122a6f2cadfa428dedd",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-018",
+      "section": "Three meanings of calibration that must remain separate",
+      "scope": "paragraph",
+      "fragment": "OBSERVATION",
+      "claim_text": "So this paper uses protocol-calibrated predicate for the project's strict software condition. It is computable from declared inputs. It implies no SI traceability, no calibration hierarchy, and no probability that a system is healthy. The bridge to metrology is procedural. The protocol can carry measurement identity, uncertainty, conditions, and decision rules without collapsing them. It does not compute an uncertainty budget, qualify a laboratory, or establish forecast calibration.",
+      "claim_text_sha256": "f938d237f90332a8fd2de8776cccb662cf1fcf6dc87fefb845796ee8f136448f",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-019",
+      "section": "6Cross-language replay parity",
+      "scope": "block",
+      "fragment": "REPLAY",
+      "claim_text": "C serializes nulls, booleans, finite numbers, and strings, preserves array order, sorts object keys recursively, and emits no insignificant whitespace. This is not RFC 8785 canonicalization and makes no claim about Unicode keys outside the pinned corpus, whose keys are ASCII.",
+      "claim_text_sha256": "acecb5ce03804585e0337a756ab476818a44b7f3069af2972a9bb1bef1bd6e9c",
+      "review_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-020",
+      "section": "6Cross-language replay parity",
+      "scope": "paragraph",
+      "fragment": "REPLAY",
+      "claim_text": "One result strengthens it slightly. Continuous integration pins Node 22.17.1 and Python 3.12.10. I reran both reducers on Node 24.18.0 and Python 3.14.6, two release lines later, and got the identical projection root with all checks holding. That is evidence the parity is not an artifact of one pinned runtime.",
+      "claim_text_sha256": "1b891c6f067dd63842d09daa5265275dc9bfea341e317f72f5c4ddd5ac2a76bd",
+      "review_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS",
+        "EV-RL-CI-GATES"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-021",
+      "section": "6Cross-language replay parity",
+      "scope": "table_row",
+      "fragment": "REPLAY",
+      "claim_text": "1Records satisfy a declared structural schema",
+      "claim_text_sha256": "c415760e240a8af2a6731b0086b65bcdede6496ba2d3e02e907880cd7122e497",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-022",
+      "section": "6Cross-language replay parity",
+      "scope": "table_row",
+      "fragment": "REPLAY",
+      "claim_text": "2One implementation repeats its own result",
+      "claim_text_sha256": "69257484fc563a48b80f29afa2d2f3e9d8b08c928e6b476b1a0d78f34e6a2b37",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-023",
+      "section": "6Cross-language replay parity",
+      "scope": "table_row",
+      "fragment": "REPLAY",
+      "claim_text": "3Cross-language ports agree on pinned inputs",
+      "claim_text_sha256": "3984b5ee23d3835ff87276152df995ab183b89c36040fee2d2593386484ec4ca",
+      "review_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-024",
+      "section": "6Cross-language replay parity",
+      "scope": "table_row",
+      "fragment": "REPLAY",
+      "claim_text": "4Another team reproduces from a minimized packet",
+      "claim_text_sha256": "27618071e86b47de34cdc7ad46bb0c2eda9e98d7477c0b7b0131329d3652c857",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-025",
+      "section": "6Cross-language replay parity",
+      "scope": "table_row",
+      "fragment": "REPLAY",
+      "claim_text": "5A new study obtains fresh evidence for the question",
+      "claim_text_sha256": "9ad96cc1b818919193dba7da78b8dbcdfb024208c024f451c52d46bad1d65bea",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-026",
+      "section": "6Cross-language replay parity",
+      "scope": "table_row",
+      "fragment": "REPLAY",
+      "claim_text": "6The result stays informative in another system",
+      "claim_text_sha256": "f4d505aebd70bebeb08b44b88b8601332d0344d2fd34128d07ecd6f1c7c7ff9f",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-027",
+      "section": "The integrity ladder",
+      "scope": "paragraph",
+      "fragment": "REPLAY",
+      "claim_text": "A privileged custodian can replace an entire unanchored history and recompute every hash. A chain therefore supports consistency checks against a trusted anchor; it does not make storage immutable or prove that additions were the only changes. Resisting replacement needs external checkpoints, signatures, access control, or independent witnesses. The repository's additions-only check states this ceiling in its output rather than implying otherwise: it reports that Git branch protection and an external witness are required to resist history replacement.",
+      "claim_text_sha256": "32f639c80265989fe4973bcc8ed7d59bc22cd151ce18261aacff0e58014ce605",
+      "review_source_ids": [
+        "EV-RL-GATE"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-028",
+      "section": "The chain construction",
+      "scope": "block",
+      "fragment": "REPLAY",
+      "claim_text": "D is this protocol's domain separation tag. Its value is arbitrary by construction, in the sense that any distinct constant separates domains equally well, and it is fixed here so that two implementations agree. The profile must also pin the length encoding, duplicate-key handling, number and Unicode rendering, media type, schema version, and the initial value h(-1). The current implementation uses local canonicalizers and does not claim RFC 8785 conformance.",
+      "claim_text_sha256": "c215a7e813a94911589cd1da2b8cd4b6d1af16484a160256fc091e8e05b6d6f8",
+      "review_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS",
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-029",
+      "section": "Claim-relative evidence surfaces, and the surface this work has not tested",
+      "scope": "table_row",
+      "fragment": "REPLAY",
+      "claim_text": "Artifact-internal structureOne artifact satisfies its declared shape and consistency rules A coherent false record or a faulty rule can pass",
+      "claim_text_sha256": "2cd2dac02ad664ab3276609d4ee92d5e969f2912a0859fd0b0882509862ed3a9",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-030",
+      "section": "Claim-relative evidence surfaces, and the surface this work has not tested",
+      "scope": "table_row",
+      "fragment": "REPLAY",
+      "claim_text": "Cross-implementation replaySeparate implementations produce the same projection from the same bytes A shared specification, fixture, or source record can be wrong in common",
+      "claim_text_sha256": "9f306b7b6bd6b271d49fa994674a05d58168e42e7f0b3d42829262e4c7192fb8",
+      "review_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-031",
+      "section": "Claim-relative evidence surfaces, and the surface this work has not tested",
+      "scope": "table_row",
+      "fragment": "REPLAY",
+      "claim_text": "Physical observationA declared physical quantity covaries with a declared execution condition Instrument, driver, clock, host, custody, calibration, and inference model",
+      "claim_text_sha256": "93916ee669996069297638450199d5091afc7183eff0c1aa0837f06735162b56",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-032",
+      "section": "Claim-relative evidence surfaces, and the surface this work has not tested",
+      "scope": "paragraph",
+      "fragment": "REPLAY",
+      "claim_text": "A physical trace is not unforgeable, and the countermeasure literature on masking, hiding, and noise injection exists precisely because traces can be shaped. A sensor reading is not self-authenticating, since custody, calibration, and the path from probe to record are attackable. A correlation between load and an assertion about behavior is not a mechanism. Supporting a narrow physical predicate would require a declared measurand, calibration reference, operating limits, uncertainty budget, known sensing footprint, and a pre-registered discrimination task with false-accept and false-reject rates. Those conditions have not been met here.",
+      "claim_text_sha256": "56940125ed86f0f4818687405124a320f1acb29deac8f9b64d5e736ef9c2c6a0",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-033",
+      "section": "7Evidence state, reported as a vector",
+      "scope": "paragraph",
+      "fragment": "EVIDENCE",
+      "claim_text": "R is the non-stale-label fraction: the share of applicable conditions not labeled stale. An unknown condition counts as non-stale while staying non-decisive, so R is not a measure of fresh evidence about the world. A stronger receipt-coverage measure would need deterministic receipt selection bound to subject, check, generation, and evaluation cut, with ties on sequence returning a typed conflict rather than a choice. The current schema does not carry those bindings, so I make no fixture claim for it.",
+      "claim_text_sha256": "4101353f6f8f5d79e0c88a9a23607494d553c0535168b2a3309efbebf0d50738",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-034",
+      "section": "Probability does not select policy",
+      "scope": "paragraph",
+      "fragment": "EVIDENCE",
+      "claim_text": "An infinite representation space does not imply infinitely many behavioral answers. Many encodings can implement the same policy or forecast function. A unique optimizer may also exist on an infinite domain. Where several admissible actions remain incomparable and no authorized preference rule exists, the honest output is the frontier and an unresolved selection, not a hidden default.",
+      "claim_text_sha256": "ca4142f59bcab13104446baf32cafc7ef3b230c177f7a1a81d6500b4bd0eccf1",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-035",
+      "section": "A proposed drift vector",
+      "scope": "paragraph",
+      "fragment": "EVIDENCE",
+      "claim_text": "The following design records drift as eight components whose units remain separate. No committed reducer computes the complete vector, so the table is a specification target rather than a reported implementation result.",
+      "claim_text_sha256": "ae73831e7001294df9cf6b99c277602fc108d823f18eab5fb35a68391475c248",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-036",
+      "section": "A proposed drift vector",
+      "scope": "paragraph",
+      "fragment": "EVIDENCE",
+      "claim_text": "DRIFT_DETECTED requires a decisive component that the pinned policy marks blocking. DRIFT_NOT_DETECTED means no declared test detected drift. It does not mean drift is absent, and the two readings are not interchangeable.",
+      "claim_text_sha256": "51be17256a4e724e4b28030300482a0769241a6f2a6cbb5251832480079cf869",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-037",
+      "section": "Six signals",
+      "scope": "paragraph",
+      "fragment": "EVIDENCE",
+      "claim_text": "The order is normative, not cosmetic. Conditions are reported as protocol calibration, consequence, evidence, integrity, privacy, activity, and a conforming surface renders them in that sequence so that two deployments can be read against each other without remapping. Any total order would serve equally well. This one is fixed so that the choice is not left to each renderer.",
+      "claim_text_sha256": "9b630b606f0e3e5576d4154732cc3c73de3ef213a0c3f8b0863ad0a6987549f8",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-038",
+      "section": "Six signals",
+      "scope": "paragraph",
+      "fragment": "EVIDENCE",
+      "claim_text": "Each predicate returns PASS, FAIL, UNKNOWN, STALE, ERROR, or NOT_APPLICABLE under a pinned policy. The public case study renders partial lamps, but it does not implement this general six-predicate decision contract.",
+      "claim_text_sha256": "df9c201f34a125cf39a5f8fee02f28fe4e28bcc07b5c1c80b8121ee0b381d4fb",
+      "review_source_ids": [
+        "EV-RL-GATE",
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-039",
+      "section": "8.2 Finite activation, quotient, and frozen-oracle packets",
+      "scope": "paragraph",
+      "fragment": "RESULTS",
+      "claim_text": "The packets share a recorded operator, orchestration platform, prompt, and response schema. Their requested model labels are metadata; common model ancestry is plausible but not established. Agreement is therefore bounded prompt-oracle agreement, not independent validation. The expected activation analysis, quotient report, and BP-001 evaluator report are pinned locally by digests 7c550d125d38, 1b0e78adcac7, and de2c28735762. Appendix C gives the full values and either public packet locators or retained source IDs.",
+      "claim_text_sha256": "29fef20f4ebeea591860b26a2b62c40a5a2f6e6a10c78120d36e16aaa7dbc2a2",
+      "review_source_ids": [
+        "EV-DEVICE-ANALYSIS",
+        "EV-DEVICE-RECEIPT",
+        "EV-TRANSITION-REPORT",
+        "EV-TRANSITION-RECEIPT",
+        "EV-BP-PROMPT",
+        "EV-BP-SUMMARY",
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT",
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-062",
+      "section": "8.3 Related work boundary",
+      "scope": "paragraph",
+      "fragment": "RESULTS",
+      "claim_text": "Two narrower separations remain. First, UNRESOLVED is a condition about evidence, not a verdict about an action. AgentBound composes three authorities into the lattice Deny < Review < Permit, where Review is a deferred authorization carrying a dischargeable obligation, and satisfying human approval converts it to execution [50]. ESAA is binary, emitting output.rejected on contract violation [49]. Neither carries a state for a required check that is missing, stale, or errored. This design does. UNRESOLVED records that the evidence was not obtained, it is not discharged by an approver, and the aggregation rule in section 4 forbids any policy from mapping it to a pass. An empty required set returns UNRESOLVED with reason INVALID_POLICY rather than a vacuous pass. Second, observation and acknowledgement are separate planes from acceptance. Both cited systems gate before execution and treat the applied effect as the record. This design records submission, acknowledgement, partial execution, commit, failure, timeout, and unknown effect as distinct outcomes, and requires a declared instrument's qualified observation before a named authority may advance accepted state. A tool's success code is not an observation, and an observation is not an acceptance. The record types proposed in sections 4 and 7 are one candidate discharge mechanism for the disclosure and correctness duties named by the Leiden Declaration [51]. These comparisons rest on the arXiv HTML renders of both papers, not on their PDFs or any implementation, and no systematic review was completed. This paragraph positions the work and makes no priority claim.",
+      "claim_text_sha256": "38f32cc7e2ca54550831e6077e007f7c706e222924cfffea6d8c2d148a0c7089",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-040",
+      "section": "9.1 The gate",
+      "scope": "paragraph",
+      "fragment": "RESULTS",
+      "claim_text": "Four of the sixteen scripts print a named pass with no numbered hold: the replay driver, the runtime check, the home surface check, and the public explanation check. Their results are therefore omitted from the total of 34. That total is a runner-reported diagnostic inventory, not a coverage measure or a count of everything checked.",
+      "claim_text_sha256": "26261620178d53cc72aff703ae045e0f2e7e2d3ab3386e0808d3ef72a1df5e94",
+      "review_source_ids": [
+        "EV-RL-GATE"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-041",
+      "section": "9.2 One source, six incompatible views",
+      "scope": "paragraph",
+      "fragment": "RESULTS",
+      "claim_text": "The repair did not declare one file true. It registered a candidate source, measured every projection against it, stored the mismatch sets by digest, and added mutation tests. Historical regeneration stayed impossible for some consumers because their selection rules were never recorded. The 439-term source remains a candidate inventory, and no check here validates a single definition.",
+      "claim_text_sha256": "90770fc9f8dc4a20e6aee4e317d97969a7980ec1e11b232b81f6f8525c4a538a",
+      "review_source_ids": [
+        "EV-RL-ATLAS-DATA-CONTRACT",
+        "EV-RL-ATLAS-RUNTIME-CONTRACT",
+        "EV-RL-GATE"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-042",
+      "section": "9.3 Source, deployment, and live bytes",
+      "scope": "paragraph",
+      "fragment": "RESULTS",
+      "claim_text": "The two mismatches were left unresolved rather than rounded away. Production served a homepage without the deferral script the repository carried, and a service worker naming cache aaig-v84 where the repository named aaig-v85. The receipt also records that the reported source commit was an empty string, and that the deployment completed roughly ten minutes before the then-current main commit existed, so that commit could not have been its source. The event decision was DEFER.",
+      "claim_text_sha256": "ce648398282c1a8787f673739963d8da22cb4a1cb4681d323d5e6b4c309dda69",
+      "review_source_ids": [
+        "EV-RL-OBSERVATION-000001"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-043",
+      "section": "9.3 Source, deployment, and live bytes",
+      "scope": "paragraph",
+      "fragment": "RESULTS",
+      "claim_text": "A later Git-connected deployment linked provider record to merged source with an exact commit relationship, and sampled two live routes. Both returned 200. Both differed from committed bytes by exactly one declared 214-byte analytics insertion with zero source bytes removed, which is why raw byte identity is recorded as mismatched and the transform relationship as matched. Both routes recorded no content security policy header. That receipt explicitly declines to establish global edge convergence, installed cache state, accessibility, privacy, security, semantic truth, durability, or any future state.",
+      "claim_text_sha256": "f308aba5939ca6f21985c08a29d1b668f7dd87202f9527b5ba7200ff8319b928",
+      "review_source_ids": [
+        "EV-RL-OBSERVATION-000002"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-044",
+      "section": "9.3 Source, deployment, and live bytes",
+      "scope": "paragraph",
+      "fragment": "RESULTS",
+      "claim_text": "The service-worker drift from the first receipt stayed open for two cache generations. A third receipt now closes it: production served bytes identical to the committed file, with both naming cache aaig-v87. Closing it required publishing a checkpoint, and the projection root was unchanged at 22852b5a3025, because an observation with no effect must not advance accepted state.",
+      "claim_text_sha256": "e839307f27610b7de9e30f5336250a80b7aff2a008eaee82c99007560170c78d",
+      "review_source_ids": [
+        "EV-RL-OBSERVATION-000003",
+        "EV-RL-CHECKPOINT-000013"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-045",
+      "section": "9.3 Source, deployment, and live bytes",
+      "scope": "paragraph",
+      "fragment": "RESULTS",
+      "claim_text": "The closure is bounded and the receipt says so. It records that the aaig-v85 and aaig-v86 generations were never observed in production and cannot be reconstructed, that one edge was sampled, and that installed client caches were not inspected. The process failure is the part worth keeping: an unresolved finding aged out of view for two versions because nothing scheduled its re-observation. The protocol recorded the gap faithfully and did not close it for me.",
+      "claim_text_sha256": "903fa2ed67086eb6889bdc7205ed62bf76208b97ada528f4c3fb0e461c984f0c",
+      "review_source_ids": [
+        "EV-RL-OBSERVATION-000003",
+        "EV-RL-CHECKPOINT-000013"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-046",
+      "section": "9.4 Finite representations and frozen-oracle results",
+      "scope": "paragraph",
+      "fragment": "RESULTS",
+      "claim_text": "The BP-001 evaluator made 27 exact comparisons: nine frozen result groups across three requested configurations. All 27 matched the oracle, all three response shapes passed, and the exact answer vectors matched pairwise. The exact layer includes the gate, the two forecast optima, historical insufficiency, the Pareto set, absence of a unique action, the unresolved pending state, the encoding distinction, and the five-step record order.",
+      "claim_text_sha256": "a92d86f310e89387cf3e50e04dff92f33e6f62b5ce1674e22797ab65b0839632",
+      "review_source_ids": [
+        "EV-BP-PROMPT",
+        "EV-BP-SUMMARY",
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-047",
+      "section": "9.4 Finite representations and frozen-oracle results",
+      "scope": "paragraph",
+      "fragment": "RESULTS",
+      "claim_text": "The semantic layer is deliberately weaker. Its quote links pass deterministic existence checks, but the function-to-quote judgment remains DRAFT_OWNER_REVIEW. Six functions have unambiguous unanimous quote support: gate and forecast separation, freezing before resolution, append-only resolution, cohort calibration, typed unresolved state, and preservation of a Pareto frontier without hidden scalarization. The owner-review map also marks forecast scoring, F04, present in all three responses. One mapped quote says to score the frozen forecast after resolution without naming a declared scoring rule, so strict F04 unanimity remains unresolved and is not promoted to the six-function count. F04 still has direct scoring-rule support in two responses. Query-relative projection and behavioral quotienting also recurred in two of three responses, so functions F01 through F09 each have quote support in at least two. Deterministic replay audit, explicit separation of belief scoring from action optimization, and the general claim ceiling, F10 through F12, were absent from all three. Agreement is therefore signal about recoverable output structure, not evidence that the responses supplied the complete architecture.",
+      "claim_text_sha256": "3b51d501801e98d3957c21d8a647c3503a4aa5f5e2b4ff00d1aa038f198e4cfa",
+      "review_source_ids": [
+        "EV-BP-PROMPT",
+        "EV-BP-SUMMARY",
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-048",
+      "section": "10.1 A receipt that contradicts itself",
+      "scope": "paragraph",
+      "fragment": "NEGATIVE",
+      "claim_text": "The schema contract gate passes this file. It validates each object against its own schema and never cross-checks the two. So a receipt can be internally inconsistent on the question of whether anything was authorized, and a green gate will not notice. This is exactly the projection drift the design warns about, occurring inside a single artifact of the system that names it.",
+      "claim_text_sha256": "1b3e863d1abfc1353c9cb6b344b9b23d9bd9d3dec0015f19608f75318398df37",
+      "review_source_ids": [
+        "EV-RL-OBSERVATION-000001",
+        "EV-RL-GATE"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-049",
+      "section": "10.1 A receipt that contradicts itself",
+      "scope": "paragraph",
+      "fragment": "NEGATIVE",
+      "claim_text": "A second instance sits beside it. The two deployment receipts use different status vocabularies. The first is schema 1.0.0 with no declared vocabulary and pass-and-fail values. The second is schema 2.0.0 declaring stp-v1.1-status-axes with values such as SUPPORTED, APPLIED, and MATCHED. No mapping between them exists in the repository, so the two production observations in one stream cannot be compared axis by axis.",
+      "claim_text_sha256": "c52773b91bae8235a62979b7c331e53a4b8b7217f7249804455baa97a9969fe4",
+      "review_source_ids": [
+        "EV-RL-OBSERVATION-000001",
+        "EV-RL-OBSERVATION-000002",
+        "EV-RL-TREE-275D"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-050",
+      "section": "10.2 A larger-model control recorded fewer unsupported claims than every eligible structured arm",
+      "scope": "paragraph",
+      "fragment": "NEGATIVE",
+      "claim_text": "The larger-model control recorded zero unsupported claims out of 151, matching the excluded P4 count and recording fewer than each eligible structured arm, P1 through P3. Exploratory claim-level Fisher comparisons yield p = 0.0061 against P1, p = 0.0044 against P2, and p = 0.0002 against P3. Because model identity and scaffolding changed together, these comparisons do not identify a causal effect. Within the published aggregate, replacing the model coincided with a lower unsupported-claim count than any eligible scaffold around the weaker model, while P1 through P3 each remained below that weaker model's P0 baseline.",
+      "claim_text_sha256": "dd7f230659e41b895211c04fe2a2c2d7233ae64a971a2e1ca082aa79d47c17e7",
+      "review_source_ids": [
+        "EV-TYPED-REFUSAL-ARMS",
+        "EV-TYPED-REFUSAL-STATS"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-051",
+      "section": "What this experiment does not support",
+      "scope": "paragraph",
+      "fragment": "NEGATIVE",
+      "claim_text": "The generating prompts, the per-run answers, the corpus file, and the preregistration artifact are all absent from the repository. The repository states that six predictions were registered before any arm ran and that three were falsified, and exactly one of the six is quoted anywhere, partially. I could recompute the published aggregate from arms.json and stats.py. I could not reproduce a single original run. No significance criterion was preregistered, so every p value here is post-hoc. The archive also does not publish the question-level or run-level counts needed for a cluster-preserving permutation, bootstrap, or multilevel analysis. The retained evidence bears on auditability and claim discipline by making those limits visible. It does not establish that structure or model choice causally improved accuracy.",
+      "claim_text_sha256": "1450e9bf0858e888ab294585f6b82912faf12f314444fe3b6ae09f8d5f292af0",
+      "review_source_ids": [
+        "EV-TYPED-REFUSAL-ARMS",
+        "EV-TYPED-REFUSAL-STATS",
+        "EV-TYPED-REFUSAL-TREE",
+        "EV-TYPED-REFUSAL-CORPUS"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-052",
+      "section": "10.3 A committed registration record and a replication that denied its own doctrine",
+      "scope": "paragraph",
+      "fragment": "NEGATIVE",
+      "claim_text": "Recorded criterion (c) could not be evaluated at all. All six haiku iterative sessions were truncated mid-play by a session limit, so 30 of 36 sessions were scored. The repository record acknowledges the confound rather than hiding it: models ran in sequential blocks with haiku last, so budget exhaustion clusters on the final block. That is missing data with a known mechanism, recorded as missing.",
+      "claim_text_sha256": "441236645234e0d019488cb12103a9112799030a2f62a1751b06ee8301a4368d",
+      "review_source_ids": [
+        "EV-STABLE-PREREGISTRATION",
+        "EV-STABLE-DECISION-LOGS",
+        "EV-STABLE-CELLS"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-053",
+      "section": "10.3 A committed registration record and a replication that denied its own doctrine",
+      "scope": "paragraph",
+      "fragment": "NEGATIVE",
+      "claim_text": "The replay of all 36 recorded cells runs offline through the published harness, asserts twelve checks, and is wired into the repository gate. It reproduces the denied verdict from the recorded artifacts; it does not reproduce the original model sessions or constitute independent validation.",
+      "claim_text_sha256": "260d72b2594062a9581067adcb1b5b502e4bb7ac55dc8c0b6f66f1abdcef2d91",
+      "review_source_ids": [
+        "EV-STABLE-REPLAY",
+        "EV-STABLE-CELLS",
+        "EV-STABLE-GATE"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-054",
+      "section": "11What this does not establish",
+      "scope": "paragraph",
+      "fragment": "BOUNDARY_SECTION",
+      "claim_text": "One risk deserves naming on its own. Strict preservation of unknowns can make a system unusable. If unresolved evidence blocks every action, availability and safety trade against each other, and the protocol offers no principled exchange rate between them.",
+      "claim_text_sha256": "0cbc68900442701d771298ac13c0a47a9a687c85ba01be609520b559124b86f7",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-055",
+      "section": "A.2 Unknown preservation",
+      "scope": "paragraph",
+      "fragment": "BACK",
+      "claim_text": "For the proposed normalized aggregate over a finite nonempty required set, the result is PASS only when every condition passes, FAIL if any fails, and UNRESOLVED if none fails and any is unknown, stale, or errored. An empty set returns UNRESOLVED with reason INVALID_POLICY. No unresolved required predicate produces a pass. The rule says nothing about predicates omitted from the set. This general precedence rule has not been exercised by a mixed false-plus-unknown public fixture.",
+      "claim_text_sha256": "0c275515d4376cdfee86061c4930fb564aa21ccdcaa509f37dcc353345d94a06",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT",
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-056",
+      "section": "A.5 Illustrative effect-trace counterexample",
+      "scope": "paragraph",
+      "fragment": "BACK",
+      "claim_text": "Consider two declared effects, alpha and beta. Schedule (alpha, beta) emits the ordered trace [dispatch-alpha, dispatch-beta], while schedule (beta, alpha) emits [dispatch-beta, dispatch-alpha]. If both schedules reduce to the same accepted projection, equal projections still do not entail equal ordered effect traces. This is a counterexample by construction at the specification level. No public fixture in the pinned repository implements it, so it is not a tested result.",
+      "claim_text_sha256": "6f439988d99e76ac8c8f22732c507ce2b7ce57bb537f2ba7a651bc546b20147d",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT",
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-057",
+      "section": "A.6 Bounded lane balance",
+      "scope": "block",
+      "fragment": "BACK",
+      "claim_text": "A_x arrivals into lane x \u00b7 S_x service capacity of lane x \u00b7 B_x backlog \u00b7 C_x declared finite capacity \u00b7 H declared finite horizon \u00b7 all lane quantities finite, nonnegative, and in one declared unit.",
+      "claim_text_sha256": "9a27e0780b6ee3e7628adf450c2060ac640b40014fa118ae00bdd83c7a0d59c1",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-058",
+      "section": "A.6 Bounded lane balance",
+      "scope": "paragraph",
+      "fragment": "BACK",
+      "claim_text": "The autonomy rule in section 3 treats observation, settlement, and recovery capacity as separate constraints. Applying it to a live lane would require declared measurement procedures and a justified rule for projecting beyond the observed window. This project supplies neither. A finite-capacity pass is therefore a local trace result, not evidence that a live lane will keep pace.",
+      "claim_text_sha256": "37303224d5683ce1f195164620b266e490aa5db957b85d048ca001d7a240be6f",
+      "review_source_ids": [
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-059",
+      "section": "A.6 Bounded lane balance",
+      "scope": "paragraph",
+      "fragment": "BACK",
+      "claim_text": "Where a bounded check is wanted before an estimator exists, the survivability harness substitutes finite reachable-state traversal at a declared horizon. The profile fixes H = 7 rounds and a no-change tolerance of epsilon = 0.02 in the lane's declared unit. Both are conventions. A longer horizon evaluates a different, generally more expensive bounded question, and neither value is derived from anything. Under an exact-H recovery condition, one horizon is not uniformly stronger or weaker than another without additional monotonicity and absorbing-target assumptions. Every disturbed and controlled state must stay legal, preserve the named invariant, and retain the required essential function, and every state in the frontier at round H must be in the recovery target set. Merely reaching the target before H is insufficient unless the required H-frontier condition also holds. An invalid model, an undefined controller, or an exceeded bound returns UNKNOWN rather than a pass.",
+      "claim_text_sha256": "26c1ec92fbd81bd4a643e591470f25dda9d39302dbfc595d169d11e98bfc505d",
+      "review_source_ids": [
+        "EV-PUBLIC-STP-COMMIT",
+        "EV-PAPER-CONTEXT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-060",
+      "section": "A.8 Query factorization and exact kernels",
+      "scope": "paragraph",
+      "fragment": "BACK",
+      "claim_text": "The included source and receipt are the complete public evidence boundary for this result. The receipt points to an earlier local package receipt and binds additional package files that this minimized packet does not include, so a public reader cannot replay the complete local receipt chain from these bytes alone. The local package working directory was not itself a Git repository when the compile was recorded; the public release commit anchors the released copies, not their full pre-release history. Other modules imported by ZeroState.lean are outside A.8 and do not support the quotient claim. Clean-room reconstruction of the pinned package environment remains open.",
+      "claim_text_sha256": "5ed145abfbf954597964e87473d70f253078dbb15d9a801bf2ed9443b8ffff68",
+      "review_source_ids": [
+        "EV-LEAN-QUERY-SOURCE",
+        "EV-LEAN-QUERY-RECEIPT"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-061",
+      "section": "DReproduction and revision lineage",
+      "scope": "paragraph",
+      "fragment": "BACK",
+      "claim_text": "Clean-clone packet verification is documented in REPRODUCE.md. From a full Git checkout at the release commit or tag, the offline Python and JavaScript verifiers must independently return the same canonical report over the declared file allowlist, raw byte lengths, SHA-256 digests, and payload root. The repository-root and packet-local .gitattributes rules disable line-ending conversion so a normal Windows checkout does not create a false byte mismatch. A clean-clone test with core.autocrlf=true passed before this revision was prepared. This verifies packet identity only; it does not rebuild the PDF, recover excluded inputs, independently replicate an experiment, or establish claim truth, originality, authority, safety, or fitness.",
+      "claim_text_sha256": "f8ea4cadeaea4218515013c9737b07ec7a61e687159d731ee9e960c41778dc66",
+      "review_source_ids": [
+        "EV-WINDOWS-CLEAN-CLONE-V3",
+        "EV-REPRODUCE-RUNBOOK",
+        "EV-PACKET-EOL-RULE"
+      ],
+      "review_questions": [
+        "Which one Table 1 marker is supported by the registered and available material?",
+        "What is the strongest reading the registered material actually supports?"
+      ]
+    }
+  ]
+}
