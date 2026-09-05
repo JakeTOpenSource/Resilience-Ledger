@@ -615,6 +615,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "improve-homepage-panel-contrast-and-expose-tool",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Owner requested card legibility and disclaimer visibility, then explicitly retained moving-on-arrival behavior"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Improve homepage panel contrast and expose tool limits while preserving automatic garden motion",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }
