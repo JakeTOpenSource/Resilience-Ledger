@@ -753,6 +753,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "bound-garden-scale-and-desktop-spacing-after-wid",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Codex correction after owner reported excessive spacing in the published deer layout"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Bound garden scale and desktop spacing after wide-screen review",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }

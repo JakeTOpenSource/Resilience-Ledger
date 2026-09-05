@@ -52,8 +52,9 @@
 /* A smaller left-aligned introduction leaves more of the garden visible.
    Keep the task cards and their scope note together below the open scenery. */
 @media(min-width:721px){
-  /* Keep the lower-bank wildlife above the tools as the wide scene scales. */
-  .hero{width:min(390px,100%);min-height:0;margin-top:24px;margin-bottom:max(112px,calc(42vw - 233px));padding:20px 24px;}
+  /* Bound the landscape and its reserved space together on larger screens. */
+  #garden-scene{width:min(100%,1040px);left:50%;right:auto;transform:translateX(-50%);height:min(100%,56.2799vw,585.311px);}
+  .hero{width:min(390px,100%);min-height:0;margin-top:24px;margin-bottom:clamp(112px,calc(42vw - 233px),204px);padding:20px 24px;}
   .hero .logo{font-size:14px;}
   .hero .headline{font-size:34px;line-height:1.12;margin:13px 0;}
   .hero .tagline{font-size:14px;line-height:1.6;}
@@ -63,6 +64,9 @@
   .primary-tools .cw{font-size:13px;line-height:1.55;}
   .primary-tools .cgo{padding-top:10px;}
   .garden-tools .tool-boundary{margin:12px 0;}
+}
+@media(min-width:1041px){
+  #garden-scene{-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);}
 }
 /* The stage already excludes the navigation. A phone shows the complete wide scene
    above the reading panel, rather than enlarging a narrow crop of the waterfall. */
