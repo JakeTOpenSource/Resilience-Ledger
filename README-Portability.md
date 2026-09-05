@@ -8,7 +8,7 @@ The query and search tools are **deterministic engines, not AI models**. When yo
 
 - No API key, no account, no sign-in.
 - The fixed analysis engines do not call a model API.
-- Most analysis remains local after the page and its declared assets have loaded; the 3D map has an optional library dependency described below.
+- Most analysis remains local after the page and its declared assets have loaded. Check each active page's dependencies before assuming it works offline.
 - For a pinned data snapshot, engine version, and supported browser semantics, the scored output is reproducible. Presentation details and unpinned assets are outside that claim.
 
 This is the model-agnostic boundary: the fixed engines do not depend on Claude, GPT, or another model to produce their results. Some pages contain embedded snapshots; others load adjacent local assets, so portability must be checked per row rather than assumed for every file.
@@ -19,20 +19,14 @@ This is the model-agnostic boundary: the fixed engines do not depend on Claude, 
 |---|---|---|---|
 | Agentic-AI-Governance-Glossary.md | Yes | No | Plain text/markdown, opens anywhere. |
 | terms.enriched.json | Yes | No | Declared candidate canonical input. Current embedded consumers are not yet byte-equivalent; see `governance/contracts/atlas-data-sync-baseline.md`. |
-| Agentic-AI-Governance-Reflections.html | Yes | No | Self-contained 2D view. Double-click to open. |
+| Agentic-AI-Governance-Reflections.html | Redirect only | No | Historical URL redirects to `index.html`; it no longer contains a standalone view. |
 | Agentic-AI-Governance-Query.html | Yes | No | Embedded recorded snapshot; deterministic retrieval, but currently not synchronized to `terms.enriched.json`. |
 | Agentic-AI-Governance-Chat.html | Yes | No | Embedded recorded snapshot; deterministic retrieval, not an LLM, but currently not synchronized to `terms.enriched.json`. |
-| Agentic-AI-Governance-Map.html | Partly | No | 2D layered view works fully offline. The 3D view needs the Three.js library (see below). |
+| Agentic-AI-Governance-Map.html | Redirect only | No | Historical URL redirects to `index.html`; it no longer contains a 2D or 3D map. |
 
-## The one optional dependency: the 3D map
+## Historical map links
 
-The 3D map uses the Three.js graphics library. The file looks for it in this order:
-
-1. A local file named `three.min.js` sitting in the same folder as the map. (Best for offline.)
-2. Public CDNs (needs internet).
-3. If neither is available, it automatically shows the **same map as a flat 2D layered list**, so the file is never broken.
-
-To make the 3D map independent of that CDN, download the declared `three.min.js` version and verify its provenance before saving it beside `Agentic-AI-Governance-Map.html`. That removes this library fetch; it does not by itself prove every project route is offline-complete.
+Map and Reflections are retained as small redirects so older links still reach the project. Their former visualization and Three.js setup instructions do not describe the current files. Opening a redirect offline still requires its destination and that destination's assets to be available.
 
 ## How to run anything here
 

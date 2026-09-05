@@ -6,9 +6,10 @@
 // wrapped in an IIFE so a classic <script src="coherence-score-engine.js"> leaks nothing
 // but `window.CoherenceScoreEngine`, and works identically via require() in Node.
 //
-// Default behavior (no config) is byte-for-byte the scoring Framework Audit already
-// shipped: same word lists, same five weighted dimensions (action .30, testable .30,
-// plain .18, goal .12, backup .10), same flags and fix suggestions. A consumer extends it
+// Default scoring (no config) retains Framework Audit's word lists and five weighted
+// dimensions (action .30, testable .30, plain .18, goal .12, backup .10). Advice is
+// separately calibrated: absolute-word hits require scope review, not automatic
+// weakening of a checkable requirement. A consumer extends it
 // by passing `extraDims` — additional {k,label,help,weight,score(ctx)} entries merged into
 // the rollup, with the final average always weight-normalized so any dimension set
 // (default or extended) produces a sensible 0-100 score.
@@ -92,7 +93,7 @@
       const flags = [], fix = [];
       if (s["action"] < 50) { flags.push(["bad", "no clear action"]); fix.push("Start with a verb: what does this actually DO? (walk, weigh, call, check, send...)"); }
       if (buzz > 0) { flags.push(["bad", buzz + " hype word" + (buzz > 1 ? "s" : "")]); fix.push("Cut the hype word and say it plainly. If nothing is left, it was filler."); }
-      if (abs > 0) { flags.push(["mid", "all-or-nothing"]); fix.push("Soften the absolute (always, never, completely) into something real you can check."); }
+      if (abs > 0) { flags.push(["mid", "absolute wording"]); fix.push("Check the scope of the absolute wording. Keep explicit, testable requirements, such as blocking a merge if a test fails. Qualify promises you cannot check."); }
       if (s["testable"] < 60) { flags.push(["mid", "no measure"]); fix.push("Add a number or a cadence so you can tell if it worked: 30 minutes, 5 days a week, every Monday."); }
       if (s["goal"] < 60 && goalTokens.length) { flags.push(["mid", "loosely tied to goal"]); fix.push("Say in plain words how this serves the goal, or drop it."); }
       if (s["coherence"] < 50) { flags.push(["bad", "repeats another part"]); fix.push("This duplicates another line. Merge them."); }
