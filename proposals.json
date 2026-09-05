@@ -707,6 +707,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "align-garden-reflections-with-a-subtle-downstrea",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Owner requested downstream motion with restrained reflections and less apparent upward movement. Preserve imagery, masks, layout and motion lifecycle."
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Align garden reflections with a subtle downstream flow",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }

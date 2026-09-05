@@ -172,23 +172,38 @@
         float greenStone = smoothstep(0.055, 0.18, base.g - base.b);
         fall *= mix(1.0, 0.22, greenStone) * mix(0.18, 1.0, waterLight);
 
-        float stream = noise(vec2(p.x * 0.072, p.y * 0.036 - u_time * 2.05));
-        float fine = noise(vec2(p.x * 0.17 + 4.0, p.y * 0.058 - u_time * 3.15));
-        vec2 falling = vec2(sin(p.y * 0.075 - u_time * 3.3 + p.x * 0.031) * 1.0,
-                            (stream - 0.5) * 6.0 + (fine - 0.5) * 2.0);
+        // Authored coordinates increase downward. Moving every feature through
+        // the same upstream sampling coordinate gives it one downstream speed.
+        // These are image-space art speeds, not measurements of physical water.
+        vec2 fallFlow = p - vec2(0.0, 48.0) * u_time;
+        float stream = noise(fallFlow * vec2(0.072, 0.036));
+        float fine = noise(fallFlow * vec2(0.17, 0.058) + vec2(4.0, 0.0));
+        // Keep the photographed vertical texture anchored: oscillating it up
+        // and down made bright strands appear to lift against the waterfall.
+        vec2 falling = vec2((stream - 0.5) * 0.65 + (fine - 0.5) * 0.25, 0.0);
 
-        vec2 radial = vec2((p.x - 1301.0) * 0.55, (p.y - 678.0) * 1.65);
-        float rings = sin(length(radial) * 0.125 - u_time * 2.65);
-        float surface = sin(p.x * 0.035 + p.y * 0.11 - u_time * 1.35);
-        vec2 rippling = vec2(surface * 1.7 + rings * 0.55,
-                            cos(p.x * 0.026 - p.y * 0.075 + u_time * 1.15) * 1.1);
+        // Pools drift toward the foreground-left. Two-dimensional texture
+        // avoids the ambiguous sideways direction of parallel wave stripes.
+        vec2 poolFlow = p - vec2(-6.0, 10.0) * u_time;
+        float surface = noise(poolFlow * vec2(0.035, 0.11)) * 2.0 - 1.0;
+        float detail = noise(poolFlow * vec2(0.061, 0.17) + vec2(7.0, 3.0)) * 2.0 - 1.0;
+        // A small wash returns sideways beneath the bottom fall. Its pattern
+        // still advances down the image; it never climbs the falling strands.
+        float washZone = ellipse(p, vec2(1285.0, 700.0), vec2(160.0, 32.0));
+        vec2 washFlow = p - vec2(5.0, 3.0) * u_time;
+        float wash = noise(washFlow * vec2(0.045, 0.15)) * 2.0 - 1.0;
+        surface = mix(surface, wash, washZone * 0.65);
+        detail = mix(detail, wash, washZone * 0.45);
+        // Distort reflection edges sideways only, keeping their height fixed.
+        vec2 rippling = vec2(surface * 0.65 + detail * 0.20, 0.0);
         vec2 shift = falling * fall + rippling * pond;
         vec3 moved = texture2D(u_image, clamp(uv + shift / u_image_size, 0.0, 1.0)).rgb;
 
-        // Advect narrow highlights downward; avoid whole-image brightness pulses.
-        float glint = pow(max(0.0, sin(p.y * 0.095 - u_time * 6.5 + stream * 3.0)), 8.0);
-        moved += fall * (glint * 0.085 - 0.011) * vec3(0.84, 0.95, 1.0);
-        moved += pond * rings * 0.013 * vec3(0.60, 0.88, 0.87);
+        // Subtle highlights travel with the local water pattern, not at a
+        // separate faster phase that can read as flashing or counter-motion.
+        float glint = pow(max(0.0, sin(fallFlow.y * 0.095 + stream * 3.0)), 8.0);
+        moved += fall * (glint * 0.045 - 0.006) * vec3(0.84, 0.95, 1.0);
+        moved += pond * (surface * 0.006 + detail * 0.002) * vec3(0.60, 0.88, 0.87);
         gl_FragColor = vec4(clamp(moved, 0.0, 1.0), max(fall, pond));
       }
     `;
