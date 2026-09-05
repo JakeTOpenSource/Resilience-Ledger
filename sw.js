@@ -3,7 +3,7 @@
 // and does not collect application inputs.
 // Installation is all-or-nothing: a claimed offline shell must have every
 // declared core dependency, not a silently partial cache.
-const CACHE='aaig-v96';
+const CACHE='aaig-v97';
 const CORE=[
  'index.html','manifest.webmanifest','evaluate.html','404.html','terms.enriched.json',
  'Agentic-AI-Governance-Chat.html','Agentic-AI-Governance-GroundTruth.html','Delta-Atlas-Start.html','Delta-Atlas-Field.html',
@@ -12,6 +12,8 @@ const CORE=[
  'Delta-Atlas-ContinuityAudit.html','Delta-Atlas-Evidence.html','Delta-Atlas-Library.html',
  'lexicon-engine.js','coherence-score-engine.js','assets/handover-check-v1.js',
  'assets/garden-home-v1.css','assets/garden-water-v1.js','assets/hanging-garden-v1.webp',
+ 'assets/garden-deer-pose-v1.js','assets/garden-deer-v1.js',
+ 'assets/garden-deer-mother-v1.webp','assets/garden-deer-young-v1.webp','assets/garden-deer-alert-v1.webp',
  'Delta-Atlas-Document.html','assets/atlas-return-v1.css','assets/atlas-return-v1.js',
  'assets/atlas-document-v1.css','assets/atlas-document-v1.js','assets/atlas-documents-v1.json',
  'governance/README.md','governance/contracts/atlas-data-sync-baseline.md','llms.txt',
