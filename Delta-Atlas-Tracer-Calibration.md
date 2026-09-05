@@ -117,3 +117,11 @@ The repository introduction and technical review page now expose these implement
 The owner separately approved a navigation-only simplification: Tools, Evidence and Library with visible Search, and three primary tasks for plans, agent traces and operating procedures. Framework Audit remains secondary. References, simulations, experiments and curation remain accessible through the Library; existing URLs, datasets and shared engines are retained. The homepage keeps a concise research question, the 439/435 snapshot disagreement, and privacy/offline boundaries.
 
 Cache v89 adds the two indexes and Continuity Audit to the declared core. Current surface checks follow the approved organization, while historical source identities remain checked against their original recording commit. This changes presentation and reachability, not dataset acceptance or the meaning of old receipts. Browser checks include narrow-layout navigation, one-step Back and glossary retrieval. No measured productivity improvement is claimed. Artwork changes and any future data removal remain separate decisions.
+
+## 2026-09-05: Homepage decorative overflow repair
+
+The owner reported a large blank homepage region in a desktop screenshot. Browser reproduction at 1920 x 980 showed the content ending at approximately 1510 CSS pixels while an absolutely positioned decorative vine extended the scrollable height to 3510. Earlier top-of-page checks had missed this bottom-of-page defect.
+
+A content-sized wrapper now contains the decorative SVG bounds, and the reading column has an opaque background so vines do not cross text. No artwork assets, tools, data or routes were removed. The repaired homepage scroll height is 1510 at 1920 pixels wide, matching the content; with both expandable sections open it grows to 2173. At 320 pixels wide it reaches 2688, matching the content without horizontal document overflow. Top and bottom screenshots were inspected in the local browser, including the expanded desktop state. These are observed layout checks, not a claim of universal browser compatibility.
+
+Cache v90 distributes the repair. This is an owner-authorized, AI-assisted repair; the proposal remains in the independent cold-read queue. The broader tool red-team findings remain separate work and are not resolved by this layout change.
