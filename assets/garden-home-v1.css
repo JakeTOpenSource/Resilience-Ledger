@@ -1,0 +1,76 @@
+/* Decorative garden layer. Existing homepage content, routes and tools stay intact. */
+#stage{isolation:isolate;background:#10271d;}
+#garden-scene{position:absolute;inset:0 0 auto;height:min(100%,56.2799vw);overflow:hidden;isolation:isolate;pointer-events:none;z-index:0;background:#10271d;}
+#garden-scene[hidden]{display:none;}
+#garden-still,#garden-water{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:50% 50%;pointer-events:none;}
+.garden-atmosphere{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(5,21,14,.18),transparent 62%),linear-gradient(0deg,rgba(5,20,14,.32),transparent 48%);}
+#home{z-index:1;background:transparent;}
+#frame{position:relative;z-index:2;}
+/* Preserve the home-page overflow boundary that prevents decorative blank scrolling. */
+.home-page>.wrap{max-width:1240px;padding:1px 32px 0;background:transparent;}
+.home-page>.ivy,.home-page>.brass,.home-page .plumb{display:none;}
+#bar{background:#10281a;border-bottom-color:#48634d;}
+.garden-motion-toggle{min-height:44px;border:1px solid #718265;border-radius:22px;padding:9px 14px;background:#203e2c;color:#e9d8a5;font:inherit;font-size:12px;cursor:pointer;white-space:nowrap;}
+.garden-motion-toggle:hover{border-color:#e3cd91;}
+.garden-motion-toggle:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+.garden-motion-toggle:disabled{opacity:.65;cursor:default;}
+.garden-motion-toggle[hidden]{display:none;}
+.garden-motion-toggle[aria-pressed="true"]{background:#294c35;}
+.hero{width:min(510px,100%);min-height:340px;margin:42px 0 64px;padding:29px 34px 30px;text-align:left;background:rgba(9,30,20,.94);border:1px solid #718265;border-radius:3px 24px 24px 24px;box-shadow:0 16px 48px rgba(0,0,0,.18);}
+.hero .logo{font-family:inherit;font-size:16px;letter-spacing:.08em;color:#e3cd91;gap:10px;}
+.hero .logo .dot{width:7px;height:7px;box-shadow:none;background:#e3cd91;}
+.hero .headline{font-family:Georgia,"Times New Roman",serif;font-size:clamp(36px,3.6vw,48px);font-weight:400;line-height:1.13;letter-spacing:-.025em;max-width:425px;margin:20px 0 18px;color:#fafcf7;text-wrap:balance;}
+.hero .tagline{max-width:380px;font-size:15px;line-height:1.75;margin:0;color:#e0e9df;}
+.garden-tools{padding:22px 24px 15px;border:1px solid #607458;border-radius:16px;background:rgba(9,28,20,.97);box-shadow:0 15px 50px rgba(0,0,0,.15);}
+.garden-tools h2.sec{font-family:Georgia,"Times New Roman",serif;font-size:27px;font-weight:400;line-height:1.3;margin:0 0 20px;color:#eef3e8;}
+.primary-tools{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:0;}
+.primary-tools .card{padding:22px 21px 18px;background:#203e2c;border-color:#607458;gap:10px;}
+.primary-tools .card:hover{background:#294c35;border-color:#e3cd91;transform:none;}
+.primary-tools .dk{font-size:10.5px;letter-spacing:.12em;color:#ddcd9f;}
+.primary-tools .cn{font-size:20px;line-height:1.25;margin:0;}
+.primary-tools .cw{font-size:13px;line-height:1.7;color:#d3decf;}
+.primary-tools .cgo{font-size:13px;color:#e3cd91;border-top:1px solid #546b4d;padding-top:13px;}
+.garden-tools .tool-boundary{font-size:12.5px;line-height:1.65;margin:16px 0;}
+.garden-tools .substrip{font-size:13px;line-height:1.7;margin:14px 0;}
+.garden-tools .sample{max-width:none;background:#173521;margin:16px 0 0;}
+.evidence-entry,.research-question{background:rgba(10,32,23,.98);border-color:#607458;border-left-color:#e3cd91;margin:30px 0;padding:24px 26px;}
+.evidence-entry h2,.research-question h2{font-family:Georgia,"Times New Roman",serif;font-size:25px;font-weight:400;line-height:1.3;margin-bottom:12px;}
+.evidence-entry p,.research-question p{max-width:900px;}
+.search-section{padding:24px 26px 20px;border:1px solid #607458;border-radius:14px;background:rgba(9,28,20,.98);}
+.search-section h2.sec{margin:0 0 9px;font-family:Georgia,"Times New Roman",serif;font-size:25px;font-weight:400;}
+.search-section .seclead{font-size:13px;line-height:1.7;}
+.search-section .hchips{justify-content:flex-start;}
+.floor{margin:34px -32px 0;background:#263d32;padding:25px 32px 28px;border-top:1px solid #607458;border-radius:12px 12px 0 0;}
+.floor p{max-width:1000px;}
+.floor .garden-motion-note{font-size:12px;line-height:1.6;margin:14px 0 0;color:#d3decf;}
+@media(min-width:1800px){.hero{margin-top:52px;margin-bottom:82px;min-height:355px;}.primary-tools .cw{font-size:14px;}.primary-tools .card{padding:24px;}}
+@media(max-width:1000px){.home-page>.wrap{padding-inline:24px;}.hero{width:min(465px,100%);min-height:330px;margin-top:34px;margin-bottom:56px;padding:27px 30px;}.hero .headline{font-size:40px;}.garden-tools{padding:21px 20px 15px;}.primary-tools{gap:12px;}.primary-tools .card{padding:19px 16px;}.primary-tools .cn{font-size:18px;}.floor{margin-inline:-24px;padding-inline:26px;}}
+/* The stage already excludes the navigation. A phone shows the complete wide scene
+   above the reading panel, rather than enlarging a narrow crop of the waterfall. */
+@media(max-width:720px){
+  #garden-scene{height:auto;aspect-ratio:1672 / 941;bottom:auto;}
+  .home-page>.wrap{padding-inline:15px;}
+  .hero{width:100%;min-height:0;margin:calc(56.2799vw + 14px) 0 26px;padding:25px 24px 27px;border-radius:3px 18px 18px 18px;background:#102e1f;}
+  .hero .logo{font-size:14px;}
+  .hero .headline{font-size:38px;max-width:100%;margin:18px 0;}
+  .hero .tagline{font-size:14px;max-width:100%;}
+  .garden-motion-toggle{font-size:11px;padding-inline:11px;}
+  .garden-tools{padding:21px 18px 15px;background:#102e1f;}
+  .garden-tools h2.sec{font-size:25px;margin-bottom:17px;}
+  .primary-tools{grid-template-columns:1fr;gap:13px;}
+  .primary-tools .card{padding:21px;}
+  .primary-tools .cn{font-size:21px;}
+  .primary-tools .cw{font-size:14px;}
+  .primary-tools .cgo{font-size:13px;}
+  .garden-tools .substrip{text-align:left;}
+  .garden-tools .qsep{margin-inline:6px;}
+  .evidence-entry,.research-question{padding:23px 22px;margin:25px 0;}
+  .search-section{padding:23px 22px;}
+  .search-section .searchwrap{gap:7px;}
+  .search-section #hq{padding-inline:14px;}
+  .search-section #hgo{padding-inline:15px;}
+  .floor{margin-inline:-15px;padding:24px 22px 28px;}
+  .floor .seamlink{margin-left:0;}
+}
+@media(max-width:380px){.hero{padding:23px 21px;}.hero .headline{font-size:33px;}.garden-tools{padding-inline:16px;}.garden-motion-toggle{padding-inline:9px;}}
+@media(prefers-reduced-motion:reduce){.hero,.primary-tools .card{transition:none;}.primary-tools .card:hover{transform:none;}}

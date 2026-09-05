@@ -24,6 +24,10 @@ This is the model-agnostic boundary: the fixed engines do not depend on Claude, 
 | Agentic-AI-Governance-Chat.html | Yes | No | Embedded recorded snapshot; deterministic retrieval, not an LLM, but currently not synchronized to `terms.enriched.json`. |
 | Agentic-AI-Governance-Map.html | Redirect only | No | Historical URL redirects to `index.html`; it no longer contains a 2D or 3D map. |
 
+## Homepage garden
+
+The homepage's hanging-garden artwork is a local 1672 × 941 WebP. Its CSS, image and optional WebGL water script are declared core cache assets. The water effect needs browser WebGL support; a still image remains visible if animation cannot start. Pause/play and reduced-motion handling affect decoration only, with no role in tool results or authority. Test from HTTP(S), since local `file:` texture restrictions vary. The image adds approximately 598 kB to the initial uncached assets; no model call is needed to display it. Mobile framing shows the full landscape rather than enlarging a portrait crop.
+
 ## Historical map links
 
 Map and Reflections are retained as small redirects so older links still reach the project. Their former visualization and Three.js setup instructions do not describe the current files. Opening a redirect offline still requires its destination and that destination's assets to be available.
