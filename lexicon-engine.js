@@ -84,12 +84,17 @@
     const out = new Set();
     const low = text.toLowerCase();
     const bridge = KB.bridge || {};
+    const riskIds = new Set((KB.terms || []).filter(t => t.purpose === "risk").map(t => t.id));
     for (const id in bridge) {
+      const allowCancel = !riskIds.has(id);
       for (const cue of bridge[id]) {
         let ix = low.indexOf(cue), found = false;
         while (ix >= 0) {
           const pre = low.slice(Math.max(0, ix - 32), ix);
-          if (!NEG.test(pre)) { found = true; break; }
+          const post = low.slice(ix + cue.length, ix + cue.length + 26);
+          // Match alias cancellation behavior without suppressing named risks.
+          const cancelled = allowCancel && (CANCEL.test(pre) || CANCEL.test(post));
+          if (!NEG.test(pre) && !cancelled) { found = true; break; }
           ix = low.indexOf(cue, ix + 1);
         }
         if (found) { out.add(id); break; }

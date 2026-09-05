@@ -523,6 +523,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "repair-cancelled-oversight-detection-and-clarify",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Codex-assisted repair authorized by owner on 2026-09-05; independent cold read pending"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Repair cancelled oversight detection and clarify technical review",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }

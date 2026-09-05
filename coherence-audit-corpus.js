@@ -4,6 +4,8 @@
 // engine already produced, captured as the floor. If a future change to the engine
 // moves these numbers, the fix is to justify the change (write it down), never to
 // silently accept a drifted score as the new normal.
+// Advice checks additionally keep lexical absolute-word warnings from telling
+// users to weaken a checkable requirement. The existing score labels stay fixed.
 // Run: node coherence-audit-corpus.js
 
 "use strict";
@@ -51,6 +53,27 @@ const CASES = [
   },
 ];
 
+const ADVICE_CASES = [
+  {
+    name: "test-failure gate — review scope without weakening the requirement",
+    text: "Run the full test suite on every change; block the merge if any test fails.",
+    mustSay: [/scope/i, /keep.*(?:rules|requirements)/i],
+    mustNotSay: [/soften/i, /all-or-nothing/i],
+  },
+  {
+    name: "unsupported promise — absolute wording still needs qualification",
+    text: "Always exceed every customer expectation, guaranteed.",
+    mustSay: [/absolute/i, /qualify.*(?:promise|claim)/i],
+    mustNotSay: [/clear and testable/i],
+  },
+  {
+    name: "bounded ordinary instruction — no absolute-word advice added",
+    text: "The on-call engineer reviews error rates for 30 minutes after each deploy.",
+    mustSay: [],
+    mustNotSay: [/absolute/i, /all-or-nothing/i, /soften/i],
+  },
+];
+
 function run() {
   const scorer = E.makeScorer(); // default config — must match Framework Audit's shipped behavior exactly
   for (const c of CASES) {
@@ -61,6 +84,14 @@ function run() {
     const problems = [];
     if (overall !== c.expectOverall) problems.push("overall=" + overall + " want " + c.expectOverall);
     c.expectPerPart.forEach((want, i) => { if (perPart[i] !== want) problems.push("part[" + i + "]=" + perPart[i] + " want " + want); });
+    if (problems.length) H.fail(c.name, problems); else H.pass(c.name);
+  }
+  for (const c of ADVICE_CASES) {
+    const scored = scorer.scorePart(c.text, [], [c.text], 0);
+    const advice = scored.flags.map(f => f[1]).concat(scored.fix).join(" ");
+    const problems = [];
+    c.mustSay.forEach(re => { if (!re.test(advice)) problems.push("missing advice matching " + re); });
+    c.mustNotSay.forEach(re => { if (re.test(advice)) problems.push("unwanted advice matching " + re); });
     if (problems.length) H.fail(c.name, problems); else H.pass(c.name);
   }
   process.exit(H.summarize("scenarios"));

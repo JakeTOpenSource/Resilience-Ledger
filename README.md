@@ -1,184 +1,93 @@
 # Delta Atlas
 
-Plain-language tools for auditing coherence: in the vocabulary of agentic AI, in frameworks and plans, and in agent decision traces. Built on the Resilience Ledger method. Everything runs on your own machine, free, with no account and no model behind it.
+**Deterministic tools and evidence records for AI-assisted work.** Delta Atlas reads plans, frameworks, and agent traces for structural weaknesses, then makes the rules and recorded results available for inspection.
 
-**Live site:** https://resilience-eval-ai.pages.dev/
+Created by Jake Tiller through AI-assisted development. The project combines working JavaScript tools, labeled tests, documented corrections, and proposed research. Its value can be assessed from those artifacts.
 
-## Why it's public
+[Open the tools](https://resilience-eval-ai.pages.dev/) · [Two-minute guide](https://resilience-eval-ai.pages.dev/Delta-Atlas-Start.html) · [Guided technical review](https://resilience-eval-ai.pages.dev/evaluate.html)
 
-This is shared openly to get cold reads. If you find a flaw, a missing case, or a place where the structure doesn't hold without the momentum that produced it, that's exactly the feedback wanted. Poke holes in it.
+## Start with one example
 
-## What this is
+[Gap Check](https://resilience-eval-ai.pages.dev/Delta-Atlas-GapCheck.html) reads a plan for missing controls. It uses versioned rules in the browser, without a model call or account.
 
-Three things in one folder:
+Inspect the [shared detector](lexicon-engine.js), its [labeled cases](gapcheck-corpus.js), and the [Continuity Audit cases](continuity-audit-corpus.js) that exercise the same engine in another domain. The [coherence scorer](coherence-score-engine.js) is also shared across tools rather than copied into each page.
 
-1. **A function-first glossary** of the language used in agentic AI and its governance. Every term is defined by what it *does*, not where it falls in an alphabet, grouped by purpose and linked to other terms by shared function. Each term carries source assertions and a repository status label. A **reviewed** label is not yet a receipt proving reviewer identity, review date, exact source locator, or semantic correctness. The home page shows the current counts and boundary.
-2. **Audit instruments.** Gap Check reads a plan for missing governance. Framework Audit scores any framework on eight coherence and resilience dimensions. The Priority Tracer reads an agent trace for ordering drift — the moment purpose starts bending the rule it answers to.
-3. **The method docs** that produced all of it, including the calibration log that records every change to the detectors and why. The theory underneath is the Resilience Ledger: three functions (Absorb, Check, Reset) measured from one neutral center, and three drifts (content, thermal, ordering).
+The detectors use finite word and structural rules. Their output points to text worth reviewing; a clean result does not establish meaning, correctness, or safety.
 
-## Design constraints
+## Inspect the engineering
 
-These are the rules the whole project is built on. They don't bend.
-
-- **Deterministic core.** Scoring is plain JavaScript over versioned data, not model output. Labeled corpora pin exact behavior for the checked code and data; browser presentation and unmeasured platforms are not part of that proof.
-- **Client-side analysis.** No account, API key, or model call is required. Atlas does not place submitted tool text in request URLs or send it to a model or API. The hosted site still makes ordinary page requests and Cloudflare may collect page-performance and visit telemetry; the home page discloses that boundary.
-- **No LLM at runtime.** AI was used to draft content — and everything AI-drafted is marked candidate until a human verifies it — but no model runs when you use the tools.
-- **Versioned lexicons.** Every token list a detector uses carries a version number, displayed openly in the UI. When a lexicon changes, the calibration log records what changed and why.
-- **Agency matters.** A limit revised by a named external authority is an amendment. A limit an agent revises on itself is drift. The detectors keep those apart and say which they saw.
-
-## The tools
-
-| Page | What it does |
+| Question | Artifact |
 |---|---|
-| `index.html` | Home. Search the glossary and open everything else. |
-| `Delta-Atlas-Start.html` | Start here — the 2-minute guide. |
-| `Delta-Atlas-Quick.html` | Quick check — a read in about a minute. |
-| `Agentic-AI-Governance-Chat.html` | Ask — type a question, get a sourced plain-language answer. Deterministic retrieval, not a chatbot. |
-| `Agentic-AI-Governance-Query.html` | Explore — browse and filter the full vocabulary and its connections. |
-| `Agentic-AI-Governance-GroundTruth.html` | Curation dashboard — how well-sourced each term is, and why. |
-| `Agentic-AI-Governance-Map.html` | Map — layered view of the vocabulary. The 3D view needs a local `three.min.js`; without it, it falls back to 2D on its own. |
-| `Agentic-AI-Governance-Reflections.html` | 2D layered view, fully self-contained. |
-| `Delta-Atlas-GapCheck.html` | Gap Check — paste a plan or policy; it reads for missing governance. |
-| `Coherence-Audit.html` | Framework Audit — scores a framework's parts on eight coherence and resilience dimensions. |
-| `Delta-Atlas-Tracer.html` | Priority Tracer — reads an agent trace or decision log for ordering drift. Lexicon version shown in the tool. |
-| `Delta-Atlas-Primitives.html` | Systems Primitives — the recurring structures underneath. |
-| `Six-Signal-Method.html` | Six-Signal Method — separates Calibration, Consequence, Evidence, Integrity, Privacy, and Activity without inventing a current status. |
-| `Delta-Atlas-Field.html` | The Field — an instrument view. |
-| `evaluate.html` | For evaluators — a 10-minute guided review with specific questions. |
-| `Delta-Atlas-Verify.html` | Verification checklist — check off candidate terms whose definition and sources read right, export the batch, then run `verify-terms.js` to apply it. No bulk-check: one human judgment per term. |
-| `Delta-Atlas-ContinuityAudit.html` | Continuity Audit — Gap Check's and Framework Audit's engines, pointed at an operations manual instead of an AI policy: a **resilience** reading (can the goal survive a key person out, a vendor failing, an emergency), risks with no stated control, and single points of failure with no documented backup. Supports an explicitly selected, data-only private overlay (`continuity-overlay.local.json`); it never evaluates overlay code. |
+| Does the detector retain its expected behavior? | [Tracer corpus](tracer-corpus.js), [Gap Check corpus](gapcheck-corpus.js), and [calibration history](Delta-Atlas-Tracer-Calibration.md). |
+| Can the same detector run in a pipeline? | [CLI](delta-atlas-cli.js), with JSON output and explicit exit codes. |
+| How are decisions and corrections retained? | [Governance ledger](governance/ledger/README.md), append-only events, and Node/Python projection checks. |
+| How are external contract changes noticed? | [MCP manifest pin](mcp-manifest-pin.js), an offline hash-based comparison tool. |
+| What is actually checked in CI? | [Repository workflow](.github/workflows/gates.yml), with pinned runtime versions and named checks. |
 
-The data underneath: `terms.enriched.json` is the declared **candidate** vocabulary input, not accepted semantic truth. Several public pages and both Canon artifacts currently carry older, non-identical projections. [`governance/contracts/atlas-data-sync-baseline.md`](governance/contracts/atlas-data-sync-baseline.md) records the exact split, and the candidate materializer is intentionally read-only until a human approves each consumer's inclusion, field, status, source, and Canon policy. [`governance/contracts/atlas-repair-sources.md`](governance/contracts/atlas-repair-sources.md) maps the platform changes to primary standards without claiming certification. `primitives.json` separately feeds the Primitives page.
+## Run locally
 
-## Shared engines (the reuse-upstream layer)
+The basic detector checks require Node.js and no package installation.
 
-Gap Check, Framework Audit, and the Continuity Audit are three different questions asked of the same two engines, not three copies of the same code:
-
-- **`lexicon-engine.js`** — the deterministic detection core: NEG-guarded substring matching, the everyday-phrasing bridge crosswalk, "risk named with no control present," and a generalized "if this group of terms is present and that group is absent, that's a gap" check. Gap Check supplies its AI-governance knowledge base; the Continuity Audit supplies an operations-domain one. Same engine, same negation-guard fix, both places, forever — not two lexicons that can quietly drift apart.
-- **`coherence-score-engine.js`** — the eight-dimension-style scorer behind Framework Audit: does each part of a plan say what to do, can you tell if it worked, is it plain language, does it serve the goal, does it say what happens on failure. A consumer can add its own dimension (the Continuity Audit adds "institutional continuity" — does a procedure rest on one person with no documented backup) without forking the whole scorer.
-- **`corpus-harness.js`** — the shared PASS/FAIL/exit-code presentation layer every labeled corpus in this project prints through. Each corpus keeps its own comparison logic (Tracer's precision/recall stays Tracer's own, deliberately not forced through this); this only unifies the parts that were pure duplication.
-
-Both HTML tools load their engine via a plain `<script src="…engine.js">` tag (not an ES module — those get blocked by CORS on `file://`, so a double-clicked page still works with no server). Each engine is wrapped in an IIFE and exposes exactly one namespaced global (`LexiconEngine`, `CoherenceScoreEngine`), so a page's own local `analyze(text)` wrapper never collides with the shared one.
-
-## Quick start
-
-Three ways, easiest first.
-
-**1. Use the live site.** https://resilience-eval-ai.pages.dev/ — nothing to install, no sign-in.
-
-**2. Install it as an app.** Open the live site in Chrome or Edge and click **Install app** in the top bar (or the install icon in the address bar). Installation succeeds only if every declared core asset caches. That covers the declared core; optional assets and an older existing browser cache may differ.
-
-**3. Download it and run it locally.** On GitHub, click the green **Code** button, then **Download ZIP**. Unzip anywhere and double-click `index.html` — or a tool page directly. Most tools are self-contained or use adjacent checked-in scripts; browser `file://` restrictions and optional assets can affect a few authoring views. The exact boundaries are in `README-Portability.md`.
-
-## The scripts (Node, zero dependencies)
-
-The detector scripts pull the `analyze()` engine straight out of `Delta-Atlas-Tracer.html`, so that detector's command line and page share one implementation rather than copied logic. You need Node.js installed and nothing else—no packages. This scoped guarantee does not imply that every Atlas page currently shares one synchronized data projection.
-
-Besides the calibration harness and CLI below: `tracer-bench.js` keeps the engine's measured scale limits reproducible and fails loudly if a complexity regression gets in; `mend-gate.js` runs the proposal register (every proposed change to this project, from any source, sorted fold/decline with a written reason — see `State-Delta-Bridge.md`); `mcp-manifest-pin.js` pins an MCP server's tool manifest by hash so a counterparty's silent contract change becomes a visible return to sort (`node mcp-manifest-pin.js selftest` proves it offline); and `ivy-gen.js` regrows the decorative ivy on the home page (`node ivy-gen.js` rewrites the vines in `index.html`; seeded and deterministic, same output every run, and it exits non-zero if a leaf detaches from its stem or a vine end would dangle visibly mid-page — the same rule as everything else here: structure checked, not eyeballed). `ask-corpus.js` pins the Ask engine (loads its `answer()` from the HTML and asserts real terms resolve while fragment-collisions like "sandbagging"→"Bagging" fall back to honest closest-matches instead of a confident wrong answer). `verify-terms.js` applies a human-checked batch from `Delta-Atlas-Verify.html`: `node verify-terms.js apply verified-batch.json` flips exactly those ids from candidate to reviewed, refusing anything unknown or already non-candidate (`--dry-run` to preview; `selftest` proves the logic on synthetic data first).
-
-Newest floor slice: `day-ledger.js` is an append-only, hash-chained daily ledger with dual attestation — every closing entry must carry both a human note and an agent note — plus a deterministic end-of-day reconciliation of what was planned versus what got done (`node day-ledger.js reconcile ledger.jsonl 2026-07-04`). Editing any past line breaks the chain loudly. `day-ledger-corpus.js` pins its rules with labeled cases. `day.js` is the capture wrapper for daily use — `node day plan p1 "draft the note"`, `node day done p1`, `node day close` — it stamps the time, prompts for both notes, and never asks you to type JSON; `node day week` reports the week's streak against its pre-registered pass line.
-
-`Coined-Terms-Grounding.md` does the same adversarial-cold-read treatment for the glossary's own house-coined vocabulary (Resilience Ledger, Substrate Gate, and the rest of the State-Delta family) — a single external citation for a term this project invented itself would be dishonest, so instead each one is grounded in the real traditions it draws from, and a fresh reader is set loose to try to refute the synthesis before it ships. The first drafts of both finished terms failed their own stress test; the corrected, narrower versions are what's actually cited in `terms.enriched.json`, and the failure is recorded rather than quietly fixed.
-
-**Calibration harness** — proves the detector still earns its labels:
-
-```
-cd path\to\this\folder
+```text
+git clone https://github.com/JakeTOpenSource/Resilience-Ledger.git
+cd Resilience-Ledger
 node tracer-corpus.js
+node gapcheck-corpus.js
+node continuity-audit-corpus.js
 ```
 
-It runs the labeled corpus, prints PASS/FAIL per case plus precision and recall, and exits non-zero if any label fails. The labels are the floor: when a case fails, the fix is to change the lexicon or rules in the HTML — never the label.
+Run the CLI against a local file:
 
-**CLI** — run the checks from a pipeline, or from an agent on its own output. Two commands, same shape: `trace` (ordering drift in a reasoning or decision log) and `gapcheck` (unhandled risks and ungoverned autonomy in a plan or policy). Both take a file or `-` for stdin, print a human report by default, and emit machine-readable JSON with `--json`:
-
-```
-node delta-atlas-cli.js trace    mytrace.txt --json   ordering drift in a decision log
-node delta-atlas-cli.js gapcheck myplan.txt --json   unhandled risks in a plan or policy
-type myplan.txt | node delta-atlas-cli.js gapcheck -  pipe from stdin (cat on Mac/Linux)
+```text
+node delta-atlas-cli.js trace mytrace.txt --json
+node delta-atlas-cli.js gapcheck myplan.txt --json
 ```
 
-Exit codes: `0` clean, `1` flags found, `2` usage or load error. A zero exit is not a safety guarantee — the engines read structure, not meaning. A human (or the agent's human) still confirms anything that matters. See `llms.txt` for the agent-facing entry point.
+Exit codes are `0` for no flags, `1` for flags, and `2` for a usage or load error. These are detector outcomes, not safety certificates.
 
-## Authority, research custody, and privacy
+For the browser tools, download the repository and open `index.html` or a tool page. [README-Portability.md](README-Portability.md) explains file-access restrictions, optional assets, offline caching, and which views need more. The [governance documentation](governance/README.md) and [STP reproduction instructions](research/stp-v1.2/README.md) cover their additional checks and prerequisites.
 
-The append-only event ledger, generated authority map, research artifact and
-feedback registers, recorded production receipt, and public/private handling
-floor live in [`governance/`](governance/). Run
-`node governance/governance-validate.js` and
-`node governance/harnesses/run-all.js` to check those records offline. The
-second gate independently replays projections in Node and Python and requires
-the resulting roots to agree.
+## Data status: visible disagreement
 
-The recorded authority state deliberately leaves two things unresolved rather
-than guessing: the exact Calibration Ledger v8 artifact pinned by State
-Transition Protocol v1.1, and the commit that produced the current Cloudflare
-Pages deployment. A provider-reported successful deployment is not accepted as
-equivalent to repository `main` until an independent manifest comparison holds.
-The Cloudflare receipt is a historical observation from 2026-08-11, not a
-moving statement about current `main`. The status-vocabulary contract keeps
-the original ledger enum as a frozen legacy adapter and does not claim it is
-semantically equivalent to the State Transition Protocol vocabulary.
+The declared candidate input, [terms.enriched.json](terms.enriched.json), contains **439 terms**, all carrying a stored `reviewed` label. That label is not a receipt proving who reviewed a definition, when, against which exact source, or whether it is semantically correct.
 
-### STP v1.2 public reproduction packet
+Ask, Explore, and the Curation dashboard retain **435-term projections: 177 reviewed and 258 candidate**. Gap Check retains 433 terms. These are different snapshots, not interchangeable counts of verified knowledge.
 
-[`research/stp-v1.2/`](research/stp-v1.2/) is an owner-authorized,
-privacy-minimized candidate packet for instrumented transitions, explicit null
-versus absence, invasive sensing receipts, bounded survivability, concurrency,
-effect finality, and resource-economical evidence acquisition. It contains
-only public sources, schemas, synthetic fixtures, and independent JavaScript
-and Python reducers. Its exact files are sealed by a release manifest and the
-governance ledger.
+The [data-sync baseline](governance/contracts/atlas-data-sync-baseline.md) records missing IDs, status mismatches, source differences, and the smaller Canon projection. Its current decision is `DEFER`. A passing baseline check preserves that recorded disagreement; it does not reconcile or accept the content.
 
-The packet remains proposed research. A passing run proves agreement on its
-enumerated synthetic cases; it does not prove live calibration, external event
-truth, statistical reliability, unbounded safety, or protocol acceptance.
+## Related projects
 
-### Six-Signal Method and pinned public snapshot card
+| Project | What to review |
+|---|---|
+| [Clutch](https://github.com/JakeTOpenSource/clutch-skill) | A separate human-approved task-routing protocol, canonical skill, deterministic reducers, adversarial fixtures, and release package. Version 0.4.0-rc.1 is a research preview in `PREPARE_ONLY`; publication does not activate routing. |
+| [The Stable](https://github.com/JakeTOpenSource/the-stable) | Agent-calibration instruments, recorded plans, replay tools, and retained failed hypotheses. [Start with its findings](https://github.com/JakeTOpenSource/the-stable/blob/main/FINDINGS.md). |
+| [The Crosswalk](https://github.com/JakeTOpenSource/the-crosswalk) | Static decision aids for deciding whether to code, learn, direct AI, or hire. |
+| [typed-refusal-harness](https://github.com/JakeTOpenSource/typed-refusal-harness) | Aggregate experiment counts and an attribution audit. The original model harness is not published there. |
 
-[`Six-Signal-Method.html`](Six-Signal-Method.html) is a no-input educational
-page that explains why six independent questions must not collapse into one
-score or color. It reports no current system status. The companion
-[`research/atlas-snapshot-read-only/`](research/atlas-snapshot-read-only/)
-package demonstrates the narrower first step: pin already-public source bytes
-before interpreting them. Its offline verifier checks seven Git object IDs,
-SHA-256 digests, and byte lengths while publishing no private evaluation.
+GroundingHarness and AI-Governance-Ledger are historical project names; this repository is the current home.
 
-## The seed frame: download it and harden it privately
+## Research and evidence boundaries
 
-The public lexicon here is deliberately the general floor. If you run these detectors on real work, the strongest move is to take the folder and harden it privately: add your own domain's invariants, euphemisms, and corpus cases in a private overlay, so nobody can read your tripwires from the public repo.
+The [STP v1.2 packet](research/stp-v1.2/README.md) is proposed research containing public sources, schemas, synthetic fixtures, and JavaScript/Python reducers. Agreement on its enumerated cases does not establish live calibration or general reliability.
 
-The convention: private overlays live in files ending `.local.js` (for example `tracer-overlay.local.js`) next to the tools, and private corpus cases stay in your copy. The `.gitignore` in this repo blocks `*.local.js` and `*.local.json`, so a public fork can never leak a private lexicon — or the manifest pins that reveal which servers you rely on — by accident. **Never commit `*.local.*`.**
+The paper *From Model Output to Accepted State* remains in owner review: [PR #15 contains the v4 candidate](https://github.com/JakeTOpenSource/Resilience-Ledger/pull/15), and [PR #14 retains v3](https://github.com/JakeTOpenSource/Resilience-Ledger/pull/14). Neither is merged. Passing a release verifier checks the stated artifacts; it is not peer review or acceptance of every claim.
 
-The overlay is live as of engine 0.4.0: copy `tracer-overlay.sample.js` to `tracer-overlay.local.js` and fill in your domain's phrases. The Tracer page loads it automatically; the CLI and corpus take `--overlay <file>`. Overlays are additive only — they can extend the public floor, never weaken it — and the tool displays "base + private overlay" so provenance stays visible in every report. If a rule you write turns out to be structural — it catches the shape of a failure, not your domain's words — send that part back. Keep the words that describe your systems to yourself.
+The [power-witness studies](rung3-power-experiment/README.md) are an experimental side project. Power telemetry can characterize activity under a defined measurement setup; it does not establish useful work, authorship, or truth.
 
-## Honest limits
+For the method, read [White-Paper.html](White-Paper.html), [Coherence-Ledger-Method.md](Coherence-Ledger-Method.md), and the [recorded adversarial review](Red-Team-Report.md). Sources and borrowed ideas remain attributed in the relevant documents.
 
-- The detectors score by word- and structure-level heuristics. They flag likely weakness; they do not understand meaning. Treat output as a pointer to where to look, not a verdict. The judgment stays human.
-- Any finite word list is one hop from evasion. The structural rules are the load-bearing part; the euphemism lists are a labeled, versioned fallback. Known misses are written down in the calibration log instead of hidden.
-- Glossary entries are AI-drafted and stay marked **candidate** until a human verifies them. Read candidates as drafts.
-- Returns from other systems are divergence, not verification. When another AI or an outside reviewer says the tools pass, that is a data point to be sorted, not a confirmation. How returns are sorted is in `CONTRIBUTING.md`.
-- This is independent educational research. It is not legal, compliance, or professional advice, and it is not affiliated with or endorsed by any organization it cites. See `LICENSE.txt`.
+[`Six-Signal-Method.html`](Six-Signal-Method.html) explains six evidence categories and what each can establish. The pinned, read-only snapshot packet in [`research/atlas-snapshot-read-only/`](research/atlas-snapshot-read-only/) preserves a dated observation; it is not a live system assessment.
 
-## The story
+## Privacy and operation
 
-This started as a glossary built around one question — what does this term actually *do*? — and the same move kept applying one level up: from terms, to frameworks, to the traces agents leave behind, to this project's own process. The docs below are the journey, kept in the open, mistakes included:
+The analysis tools run locally in the browser and do not send submitted tool text to a model or API. The hosted site still makes ordinary page requests, and Cloudflare may collect visit and page-performance telemetry.
 
-- `White-Paper.html` — the living plain-English legend: what every tool does, the exact ledger meanings, and how the project governs itself. Start here; hand it to any AI model before it writes about this project.
-- `Coherence-Ledger-Method.md` — the audit method, including the self-test it has to pass.
-- `Delta-Atlas-Tracer-Calibration.md` — the re-derivation log: every lexicon change, the reason, and each outside return folded or declined in writing (including the stress test that broke lexicon 0.1 with a thesaurus swap).
-- `Red-Team-Report.md` — an adversarial review of the project's own artifacts, deliberately harder on the parts that felt finished.
-- `Skills-Method-Register.md` — the reusable methods that emerged, separated from the subject matter.
-- `Translator-Framework-Design.md` — the sovereign-zero translator design.
-- `README-Portability.md` — exactly what runs offline and why.
-- `Resilience Ledger v0 5.pdf` — the theory underneath all of it. (`Resilience Ledger v0 4.pdf` is kept as history; the re-derivation log inside the paper records what changed between them and why.)
-- `experiments` — pre-registered drift experiments. Drift Experiment 01 commits its four possible readings *before* the run, so the result can't be reinterpreted after the fact. Status: designed, awaiting its run.
+Local overlay filenames are ignored by default. This reduces accidental inclusion of untracked files; it does not prevent forced adds, previously tracked files, or renamed copies. Review the staged diff before publishing. See [README-Portability.md](README-Portability.md) for the operating boundaries.
+
+Repository checks do not establish which exact files a live deployment is currently serving. Deployment receipts are dated observations with their own evidence boundaries.
 
 ## License and credit
 
-Everything here — the content, the data, the tools, the docs — is **CC BY 4.0** (see `LICENSE.txt`). Use it, copy it, adapt it, build on it, even commercially. The one condition is credit. A line like this covers it:
+The content, data, tools, and documentation in this repository are **CC BY 4.0**, as stated in [LICENSE.txt](LICENSE.txt). Credit Jake Tiller and Delta Atlas / Resilience Ledger, link to the license, and indicate changes. [CITATION.cff](CITATION.cff) supplies citation metadata.
 
-> "Delta Atlas / Resilience Ledger" by Jake Tiller — CC BY 4.0 — https://resilience-eval-ai.pages.dev/
-
-...and say if you changed it. For formal citation there is a `CITATION.cff` in this repo; GitHub shows it as a "Cite this repository" button.
-
-The project itself is not for sale, by design. The license permits others to build on it, including commercially, because openness is the point — but this work exists as a public good, and credit is the only currency it asks for.
+This is independent educational research, with no affiliation with or endorsement by the organizations it cites. AI assistance is part of the development history; the code, sources, tests, limitations, and recorded corrections are the basis for review.

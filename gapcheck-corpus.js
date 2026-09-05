@@ -12,6 +12,9 @@
  * ("without any guardrail", "no human in the loop") must NOT be credited as present.
  * Before the guard, Gap Check substring-matched the control word and silently marked the
  * risk defended / the autonomy overseen — inflating the safety picture of an unsafe doc.
+ * Cancellation fixtures also cover everyday-language bridges in the real page KB:
+ * a scrapped control stays absent, a later valid mention still counts, and a
+ * cancellation word near a named risk must not erase the risk.
  *
  * License: CC BY 4.0, consistent with the rest of the project.
  */
@@ -73,6 +76,48 @@ We deploy a guardrail and run red teaming against it every release.`,
     name: "sanity — plain risk with no control mentioned at all (must flag)",
     text:
 `There is a real chance of prompt injection in the pipeline.`,
+    mustFlag: [/Risk named with no control.*Prompt Injection/i],
+    mustNot: []
+  },
+  {
+    name: "bridge cancellation after control — never-implemented human review is not oversight",
+    text: "Our autonomous agent can execute production changes. Human review was never implemented.",
+    mustFlag: [/Autonomy with no oversight/i],
+    mustNot: []
+  },
+  {
+    name: "bridge cancellation before control — cancelled human review is not oversight",
+    text: "Our autonomous agent can execute production changes. We cancelled human review.",
+    mustFlag: [/Autonomy with no oversight/i],
+    mustNot: []
+  },
+  {
+    name: "bridge negation — absent human review is not oversight",
+    text: "Our autonomous agent executes production changes without human review.",
+    mustFlag: [/Autonomy with no oversight/i],
+    mustNot: []
+  },
+  {
+    name: "bridge present — required human review remains oversight",
+    text: "Our autonomous agent can execute production changes. The release requires human review.",
+    mustFlag: [],
+    mustNot: [/Autonomy with no oversight/i]
+  },
+  {
+    name: "bridge later valid occurrence — a cancelled earlier control does not erase a present one",
+    text: "Human review was never implemented. After a separate incident response and a complete process redesign, the autonomous agent now requires human review.",
+    mustFlag: [],
+    mustNot: [/Autonomy with no oversight/i]
+  },
+  {
+    name: "bridge risk before cancellation — a nearby cancelled control does not erase prompt injection",
+    text: "A malicious prompt; cancelled safeguards made it worse.",
+    mustFlag: [/Risk named with no control.*Prompt Injection/i],
+    mustNot: []
+  },
+  {
+    name: "bridge risk after cancellation — a nearby cancelled control does not erase prompt injection",
+    text: "We cancelled safeguards. A malicious prompt reached the service.",
     mustFlag: [/Risk named with no control.*Prompt Injection/i],
     mustNot: []
   }
