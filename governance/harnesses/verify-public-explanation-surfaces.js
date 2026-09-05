@@ -85,7 +85,7 @@ function contentFailures(home, guide, library, evidence) {
   requireRule(/Ask and Explore snapshot[\s\S]{0,80}435/i.test(home),
     'home must identify the 435-record Ask and Explore snapshot');
   requireRule(/public data-sync baseline/i.test(home) &&
-    /href=["']governance\/contracts\/atlas-data-sync-baseline\.md["']/i.test(home),
+    /href=["'](?:Delta-Atlas-Document\.html\?file=)?governance\/contracts\/atlas-data-sync-baseline\.md["']/i.test(home),
   'home must expose the recorded projection mismatch baseline');
   requireRule(/160 recorded cross-domain primitives/i.test(library) && !/150 cross-domain primitives/i.test(home + library),
     'Library must report the pinned 160-record primitives inventory');

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="Read Delta Atlas public Markdown, JSON and text files with a persistent route home."/>
+<meta name="theme-color" content="#16301f"/>
+<meta name="referrer" content="no-referrer"/>
+<title>Document reader - Delta Atlas</title>
+<link rel="icon" href="favicon.png"/>
+<link rel="stylesheet" href="assets/atlas-document-v1.css"/>
+<style>
+/* canonical typography: shared site baseline */
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;line-height:1.6;}
+textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
+button{font-family:inherit;}
+::placeholder{color:var(--dim);opacity:1;}
+</style>
+<script src="assets/atlas-document-v1.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to document</a>
+<header class="reader-bar">
+  <nav aria-label="Document navigation">
+    <a class="home-link" href="index.html" target="_top">← Atlas home</a>
+    <a href="index.html#Delta-Atlas-Library.html" target="_top">Library</a>
+    <a id="document-download" download target="_blank" rel="noopener noreferrer" hidden>Download original</a>
+  </nav>
+</header>
+<main id="content" class="reader-wrap" tabindex="-1">
+  <h1>Document reader</h1>
+  <p class="filename" id="document-filename">Public Atlas files</p>
+  <p class="reader-note" id="document-format">Markdown, JSON and plain text are shown as source text. Links inside the document remain text.</p>
+  <p class="reader-status" id="document-status" role="status" aria-live="polite">Preparing the document reader.</p>
+  <noscript><p class="reader-status">JavaScript is needed to load a document here. Atlas home and Library remain available above.</p></noscript>
+  <pre id="document-text" tabindex="0" aria-label="Document source text" hidden></pre>
+</main>
+</body>
+</html>

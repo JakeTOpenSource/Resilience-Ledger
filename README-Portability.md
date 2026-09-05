@@ -28,6 +28,14 @@ This is the model-agnostic boundary: the fixed engines do not depend on Claude, 
 
 The homepage's hanging-garden artwork is a local 1672 × 941 WebP. Its CSS, image and optional WebGL water script are declared core cache assets. The water effect needs browser WebGL support; a still image remains visible if animation cannot start. Pause/play and reduced-motion handling affect decoration only, with no role in tool results or authority. Test from HTTP(S), since local `file:` texture restrictions vary. The image adds approximately 598 kB to the initial uncached assets; no model call is needed to display it. Mobile framing shows the full landscape rather than enlarging a portrait crop.
 
+## Returning from tools and documents
+
+The Atlas header exposes a native Home link while a tool is open. Standalone content pages also carry an always-available Home link, so return navigation does not depend on browser chrome or prior history. The normal shell route still uses one parent history entry; if its JavaScript return fails, the native link can load the front page. Script-free evidence pages retain their restricted policies.
+
+Website links to public Markdown, JSON and text files open `Delta-Atlas-Document.html` with a sticky Home/Library bar. The reader requires an exact filename in a public manifest, renders source text without interpreting HTML or Markdown links, and limits previews to 1 MiB. Invalid paths or loading failures retain navigation. Download original preserves the source file; the original raw URLs remain unchanged for code and pinned references. External references open separately so Atlas stays available. Installed-app behavior ultimately depends on the host browser; these controls work within the site rather than depending on a visible browser Back button.
+
+Cache v93 includes the reader, shared return assets and documents directly linked by the current HTML pages. The manifest lists additional public files, which are not all pre-cached merely by being listed. An offline document needs its bytes in the cache; a missing document reports an error with Home still available.
+
 ## Historical map links
 
 Map and Reflections are retained as small redirects so older links still reach the project. Their former visualization and Three.js setup instructions do not describe the current files. Opening a redirect offline still requires its destination and that destination's assets to be available.

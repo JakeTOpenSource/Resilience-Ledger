@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-atlas-return-layout="document">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -43,8 +43,111 @@
  button{font-family:inherit;}
  ::placeholder{color:var(--dim);opacity:1;}
 </style>
+<style>
+/* Standalone recovery navigation. Existing tool controls and engines stay intact. */
+html[data-atlas-return-layout] {
+  --atlas-return-height: calc(53px + env(safe-area-inset-top, 0px));
+  scroll-padding-top: calc(var(--atlas-return-height) + 12px);
+}
+html[data-atlas-return-embedded="true"] { --atlas-return-height: 0px; }
+nav.atlas-return-nav {
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex: none;
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  padding: calc(4px + env(safe-area-inset-top, 0px)) 14px 4px;
+  border: 0;
+  border-bottom: 1px solid #4a6b56;
+  border-radius: 0;
+  background: #10281a;
+  color: #fafcf7;
+  text-align: left;
+}
+nav.atlas-return-nav[hidden] { display: none !important; }
+nav.atlas-return-nav > a {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  max-width: 100%;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid #4a6b56;
+  border-radius: 8px;
+  background: #16301f;
+  color: #e3c258;
+  font: 600 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+nav.atlas-return-nav > a:hover { border-color: #e3c258; text-decoration: underline; }
+nav.atlas-return-nav > a:focus-visible { outline: 3px solid #fafcf7; outline-offset: 2px; }
+html[data-atlas-return-layout] body > .skip { z-index: 40; }
+html[data-atlas-return-layout="query"] { --atlas-return-header-height: 78px; }
+html[data-atlas-return-layout="primitives"] { --atlas-return-header-height: 70px; }
+html[data-atlas-return-layout="query"] body > header,
+html[data-atlas-return-layout="primitives"] body > header,
+html[data-atlas-return-layout="chat"] .askbar,
+html[data-atlas-return-layout="verify"] body > .bar {
+  top: var(--atlas-return-height);
+}
+html[data-atlas-return-layout="query"] .side,
+html[data-atlas-return-layout="primitives"] .side {
+  top: calc(var(--atlas-return-height) + var(--atlas-return-header-height));
+  height: calc(100vh - var(--atlas-return-height) - var(--atlas-return-header-height));
+}
+html[data-atlas-return-layout="curation"] .side {
+  top: var(--atlas-return-height);
+  height: calc(100vh - 80px - var(--atlas-return-height));
+}
+html[data-atlas-return-layout="gap"] .wrap,
+html[data-atlas-return-layout="tracer"] .wrap {
+  min-height: calc(100vh - 66px - var(--atlas-return-height));
+}
+/* Field's canvas remains at the viewport origin; only its existing bar gains a link. */
+html[data-atlas-return-layout="field"] nav.atlas-return-nav {
+  position: static;
+  width: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+/* The error page keeps its original centered flex layout. */
+html[data-atlas-return-layout="guided"]:not([data-atlas-return-embedded="true"]) body {
+  height: auto;
+  min-height: 100%;
+}
+html[data-atlas-return-layout="not-found"] nav.atlas-return-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+}
+@media (max-width: 720px) {
+  html[data-atlas-return-layout="query"] .side,
+  html[data-atlas-return-layout="primitives"] .side,
+  html[data-atlas-return-layout="curation"] .side { top: auto; height: auto; }
+  html[data-atlas-return-layout="gap"] .wrap,
+  html[data-atlas-return-layout="tracer"] .wrap { min-height: 0; }
+}
+@media print {
+  html[data-atlas-return-layout] { --atlas-return-height: 0px; }
+  nav.atlas-return-nav { display: none; }
+}
+
+</style>
+
 </head>
 <body>
+<nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
 <a class="skip" href="#content">Skip to evidence</a>
 <main class="wrap" id="content" tabindex="-1">
 <nav aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas tools</a><a href="Delta-Atlas-Evidence.html" aria-current="page">Evidence</a><a href="index.html#Delta-Atlas-Library.html" target="_top">Library</a></nav>
@@ -67,8 +170,8 @@ Human review was never implemented.</code></pre>
 <p>The shared engine now checks cancellation in everyday-language phrases as well as aliases. The regression cases also preserve genuine review and keep nearby risks visible.</p>
 <ul class="links">
 <li><a href="index.html#Delta-Atlas-GapCheck.html" target="_top">Try the case in Gap Check</a></li>
-<li><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/lexicon-engine.js" target="_top">Inspect the shared detection engine on GitHub</a></li>
-<li><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/gapcheck-corpus.js" target="_top">Read the regression cases on GitHub</a></li>
+<li><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/lexicon-engine.js" target="_blank" rel="noopener noreferrer">Inspect the shared detection engine on GitHub</a></li>
+<li><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/gapcheck-corpus.js" target="_blank" rel="noopener noreferrer">Read the regression cases on GitHub</a></li>
 </ul>
 </section>
 <section aria-labelledby="reproduce-title">
@@ -78,36 +181,36 @@ Human review was never implemented.</code></pre>
 node gapcheck-corpus.js
 node coherence-audit-corpus.js
 node continuity-audit-corpus.js</code></pre>
-<p>These checks need no package installation or model API. For the broader suite and its runtime requirements, inspect the <a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/.github/workflows/gates.yml" target="_top">CI workflow</a>.</p>
+<p>These checks need no package installation or model API. For the broader suite and its runtime requirements, inspect the <a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/.github/workflows/gates.yml" target="_blank" rel="noopener noreferrer">CI workflow</a>.</p>
 </section>
 <section aria-labelledby="research-title">
 <h2 id="research-title">Public research to inspect</h2>
 <div class="grid">
 <article class="card">
 <span class="role">Protocol preview &middot; PREPARE_ONLY</span>
-<h3><a href="https://github.com/JakeTOpenSource/clutch-skill" target="_top">Clutch</a></h3>
+<h3><a href="https://github.com/JakeTOpenSource/clutch-skill" target="_blank" rel="noopener noreferrer">Clutch</a></h3>
 <p>Approved task handoffs, explicit recovery routes, deterministic reducers and a reproduction package. Its public preview does not activate routing.</p>
 </article>
 <article class="card">
 <span class="role">Research candidate</span>
-<h3><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/tree/main/research/stp-v1.2" target="_top">State Transition Protocol v1.2</a></h3>
+<h3><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/tree/main/research/stp-v1.2" target="_blank" rel="noopener noreferrer">State Transition Protocol v1.2</a></h3>
 <p>Inspect synthetic fixtures and JavaScript/Python reducers for evidence, effects and accepted state.</p>
 </article>
 <article class="card">
 <span class="role">Paper candidate &middot; owner review</span>
-<h3><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/pull/15" target="_top">From Model Output to Accepted State, v4</a></h3>
+<h3><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/pull/15" target="_blank" rel="noopener noreferrer">From Model Output to Accepted State, v4</a></h3>
 <p>PR #15 carries the current review candidate, with its discussion and checks. The proposal remains separate from accepted project guidance.</p>
 </article>
 <article class="card">
 <span class="role">Methods and evidence boundaries</span>
 <h3><a href="index.html#White-Paper.html" target="_top">Project guide</a></h3>
-<p>Read the Atlas methods and limits, then inspect the <a href="Red-Team-Report.md" target="_top">red-team report</a> and <a href="governance/contracts/atlas-data-sync-baseline.md" target="_top">recorded data differences</a>.</p>
+<p>Read the Atlas methods and limits, then inspect the <a href="Delta-Atlas-Document.html?file=Red-Team-Report.md" target="_top">red-team report</a> and <a href="Delta-Atlas-Document.html?file=governance/contracts/atlas-data-sync-baseline.md" target="_top">recorded data differences</a>.</p>
 </article>
 </div>
 </section>
 <footer>
 <p>Passing checks establish the declared behavior for the checked code and cases. They do not certify real-world safety, definition accuracy or productivity gains. Research status belongs to each linked artifact.</p>
-<p><a href="index.html#Delta-Atlas-Library.html" target="_top">Browse the full library</a> &middot; <a href="LICENSE.txt" target="_top">CC BY 4.0</a></p>
+<p><a href="index.html#Delta-Atlas-Library.html" target="_top">Browse the full library</a> &middot; <a href="Delta-Atlas-Document.html?file=LICENSE.txt" target="_top">CC BY 4.0</a></p>
 </footer>
 </main>
 </body>
