@@ -55,7 +55,7 @@ check(taskCards.length === 3 && taskCards.every((card, index) => card[1] === exp
   card[2].includes(expectedTasks[index][1]) && /class="cw">Paste [^<]+/.test(card[2])),
   'three primary tasks identify their input and bind the intended existing tools');
 check(html.indexOf(primaryTools) < html.indexOf('<details class="sample">') &&
-  /class="[^"]*tool-boundary[^"]*">[^<]*A clean result does not certify correctness or safety\./.test(html),
+  /class="[^"]*tool-boundary[^"]*">[^<]*[Aa] clean result does not certify correctness or safety\./.test(html),
   'primary tasks precede the optional sample and retain a visible result ceiling');
 check(!primaryTools.includes('Coherence-Audit.html') && /onclick="nav\('Coherence-Audit\.html'\)"[^>]*>Framework Audit: review a general plan/.test(html),
   'Framework Audit remains a reachable secondary tool');
