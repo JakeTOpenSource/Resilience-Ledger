@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/>
+<html lang="en" data-atlas-return-layout="document"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Delta Atlas - How it works</title>
 <meta name="theme-color" content="#16301f"/>
@@ -43,9 +43,12 @@
  textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
  button{font-family:inherit;}
  ::placeholder{color:var(--dim);opacity:1;}
-</style></head><body>
+</style><link rel="stylesheet" href="assets/atlas-return-v1.css"/>
+<script defer src="assets/atlas-return-v1.js"></script>
+</head><body>
+<nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
 <header>
- <a class="back" href="index.html">&larr; Delta Atlas</a>
+ <a class="back" href="index.html" target="_top">&larr; Delta Atlas</a>
  <h1>How it works</h1>
  <p>One engine, many checks. What every tool here is actually doing &mdash; and how much each check is worth.</p>
 </header>
@@ -63,9 +66,9 @@
   <a href="Delta-Atlas-GapCheck.html"><span class="job">Reviewing an <b>AI plan, policy, or system prompt</b></span><span class="to">Gap Check &rarr;</span></a>
   <a href="Coherence-Audit.html"><span class="job">Checking whether a <b>framework's parts hold up</b></span><span class="to">Framework Audit &rarr;</span></a>
   <a href="Delta-Atlas-ContinuityAudit.html"><span class="job">Reviewing a <b>handover or operations manual</b></span><span class="to">Continuity Audit &rarr;</span></a>
-  <a href="index.html"><span class="job">Just want a <b>word explained</b></span><span class="to">Ask / glossary &rarr;</span></a>
+  <a href="index.html" target="_top"><span class="job">Just want a <b>word explained</b></span><span class="to">Ask / glossary &rarr;</span></a>
  </div>
- <p style="margin:12px 2px 0;color:var(--dim);font-size:12.5px">Or, if you're an AI agent (or telling one what to do): run these checks from a pipeline on your own output &mdash; see <a href="llms.txt">llms.txt</a>.</p>
+ <p style="margin:12px 2px 0;color:var(--dim);font-size:12.5px">Or, if you're an AI agent (or telling one what to do): run these checks from a pipeline on your own output &mdash; see <a href="Delta-Atlas-Document.html?file=llms.txt" target="_top">llms.txt</a>.</p>
 
  <h2>The ladder &mdash; how much a check is worth</h2>
 

@@ -183,6 +183,7 @@ function navigationFailures(source) {
   const historyCalls = [];
   const document = {
     title: 'unchanged',
+    getElementById() { return null; },
     querySelectorAll() { return []; }
   };
   const context = { frame, home, loading, document, history: { pushState(...args) { historyCalls.push(args); } } };

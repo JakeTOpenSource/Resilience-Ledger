@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-atlas-return-layout="document">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,8 +54,111 @@
     }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
   </style>
+<style>
+/* Standalone recovery navigation. Existing tool controls and engines stay intact. */
+html[data-atlas-return-layout] {
+  --atlas-return-height: calc(53px + env(safe-area-inset-top, 0px));
+  scroll-padding-top: calc(var(--atlas-return-height) + 12px);
+}
+html[data-atlas-return-embedded="true"] { --atlas-return-height: 0px; }
+nav.atlas-return-nav {
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex: none;
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  padding: calc(4px + env(safe-area-inset-top, 0px)) 14px 4px;
+  border: 0;
+  border-bottom: 1px solid #4a6b56;
+  border-radius: 0;
+  background: #10281a;
+  color: #fafcf7;
+  text-align: left;
+}
+nav.atlas-return-nav[hidden] { display: none !important; }
+nav.atlas-return-nav > a {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+  max-width: 100%;
+  margin: 0;
+  padding: 8px 12px;
+  border: 1px solid #4a6b56;
+  border-radius: 8px;
+  background: #16301f;
+  color: #e3c258;
+  font: 600 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+nav.atlas-return-nav > a:hover { border-color: #e3c258; text-decoration: underline; }
+nav.atlas-return-nav > a:focus-visible { outline: 3px solid #fafcf7; outline-offset: 2px; }
+html[data-atlas-return-layout] body > .skip { z-index: 40; }
+html[data-atlas-return-layout="query"] { --atlas-return-header-height: 78px; }
+html[data-atlas-return-layout="primitives"] { --atlas-return-header-height: 70px; }
+html[data-atlas-return-layout="query"] body > header,
+html[data-atlas-return-layout="primitives"] body > header,
+html[data-atlas-return-layout="chat"] .askbar,
+html[data-atlas-return-layout="verify"] body > .bar {
+  top: var(--atlas-return-height);
+}
+html[data-atlas-return-layout="query"] .side,
+html[data-atlas-return-layout="primitives"] .side {
+  top: calc(var(--atlas-return-height) + var(--atlas-return-header-height));
+  height: calc(100vh - var(--atlas-return-height) - var(--atlas-return-header-height));
+}
+html[data-atlas-return-layout="curation"] .side {
+  top: var(--atlas-return-height);
+  height: calc(100vh - 80px - var(--atlas-return-height));
+}
+html[data-atlas-return-layout="gap"] .wrap,
+html[data-atlas-return-layout="tracer"] .wrap {
+  min-height: calc(100vh - 66px - var(--atlas-return-height));
+}
+/* Field's canvas remains at the viewport origin; only its existing bar gains a link. */
+html[data-atlas-return-layout="field"] nav.atlas-return-nav {
+  position: static;
+  width: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+/* The error page keeps its original centered flex layout. */
+html[data-atlas-return-layout="guided"]:not([data-atlas-return-embedded="true"]) body {
+  height: auto;
+  min-height: 100%;
+}
+html[data-atlas-return-layout="not-found"] nav.atlas-return-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+}
+@media (max-width: 720px) {
+  html[data-atlas-return-layout="query"] .side,
+  html[data-atlas-return-layout="primitives"] .side,
+  html[data-atlas-return-layout="curation"] .side { top: auto; height: auto; }
+  html[data-atlas-return-layout="gap"] .wrap,
+  html[data-atlas-return-layout="tracer"] .wrap { min-height: 0; }
+}
+@media print {
+  html[data-atlas-return-layout] { --atlas-return-height: 0px; }
+  nav.atlas-return-nav { display: none; }
+}
+
+</style>
+
 </head>
 <body>
+<nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
 <main>
   <header>
     <p><a href="index.html" target="_top">Back to Delta Atlas</a></p>
@@ -126,8 +229,8 @@
 
   <section class="reproduce" aria-labelledby="reproduce-title">
     <h2 id="reproduce-title">A small reproducible example</h2>
-    <p>The companion <a href="research/atlas-snapshot-read-only/README.md">Pinned Snapshot Card</a> names seven already-public files at one public Git commit and records their Git object IDs, SHA-256 digests, and byte lengths. Its verifier checks identity only. It deliberately publishes no private evaluation, lamp state, or live result.</p>
-    <p><a href="research/atlas-snapshot-read-only/snapshot-card.json">Inspect the machine-readable card</a>.</p>
+    <p>The companion <a href="Delta-Atlas-Document.html?file=research/atlas-snapshot-read-only/README.md" target="_top">Pinned Snapshot Card</a> names seven already-public files at one public Git commit and records their Git object IDs, SHA-256 digests, and byte lengths. Its verifier checks identity only. It deliberately publishes no private evaluation, lamp state, or live result.</p>
+    <p><a href="Delta-Atlas-Document.html?file=research/atlas-snapshot-read-only/snapshot-card.json" target="_top">Inspect the machine-readable card</a>.</p>
   </section>
 
   <footer>

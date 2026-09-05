@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/>
+<html lang="en" data-atlas-shell="true"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Delta Atlas</title>
 <meta name="theme-color" content="#16301f"/>
@@ -17,7 +17,7 @@
     the 100vh line above is the fallback for older browsers. */
  #bar{flex:none;display:flex;align-items:center;gap:6px;padding:9px 16px;border-bottom:1px solid var(--line);
    background:#10281a;position:relative;z-index:10;flex-wrap:wrap;}
- #brand{font-weight:700;font-size:14.5px;cursor:pointer;margin-right:8px;letter-spacing:.2px;display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--txt);padding:0;}
+ #brand{font-weight:700;font-size:14.5px;cursor:pointer;margin-right:8px;letter-spacing:.2px;display:flex;align-items:center;gap:8px;border:0;background:transparent;color:var(--txt);padding:0;min-height:44px;text-decoration:none;}
  #brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
  .primary-nav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
  .nav{cursor:pointer;border:1px solid transparent;background:transparent;color:var(--dim);font-size:13px;padding:10px 11px;min-height:44px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;}
@@ -257,7 +257,7 @@
        tiles for feDropShadow over large SVG canvases, showing white boxes on iPad. -->
 </defs></svg>
 <header id="bar">
-  <button id="brand" type="button" onclick="goHome(true)"><span class="dot"></span>Delta Atlas</button>
+  <a id="brand" href="index.html" target="_top" aria-label="Return to Delta Atlas home"><span class="dot" aria-hidden="true"></span><span id="brand-label">Delta Atlas</span></a>
   <nav class="primary-nav" aria-label="Primary navigation">
     <button class="nav" id="home0" type="button" onclick="goHome(true)">Tools</button>
     <button class="nav" type="button" data-f="Delta-Atlas-Evidence.html" onclick="nav('Delta-Atlas-Evidence.html')">Evidence</button>
@@ -380,14 +380,14 @@
     </div>
 
     <footer class="floor">
-      <div class="fhead"><b>WHAT THE EVIDENCE SUPPORTS</b><a class="seamlink" href="governance/README.md" target="_blank" rel="noopener noreferrer">inspect the governance boundary &rarr;</a></div>
-      <p><b>Evidence status.</b> Candidate source inventory: 439 vocabulary records. Ask and Explore snapshot: <b>435 records</b>. All 439 source records carry the repository label reviewed, but complete per-term review receipts are not consistently recorded. A term can be sourced and still be wrong. The <a href="governance/contracts/atlas-data-sync-baseline.md" target="_blank" rel="noopener noreferrer">public data-sync baseline</a> records the disagreement. Source-support scores are heuristics, not truth, confidence, acceptance or safety results.</p>
+      <div class="fhead"><b>WHAT THE EVIDENCE SUPPORTS</b><a class="seamlink" href="Delta-Atlas-Document.html?file=governance/README.md" target="_top" rel="noopener noreferrer">inspect the governance boundary &rarr;</a></div>
+      <p><b>Evidence status.</b> Candidate source inventory: 439 vocabulary records. Ask and Explore snapshot: <b>435 records</b>. All 439 source records carry the repository label reviewed, but complete per-term review receipts are not consistently recorded. A term can be sourced and still be wrong. The <a href="Delta-Atlas-Document.html?file=governance/contracts/atlas-data-sync-baseline.md" target="_top" rel="noopener noreferrer">public data-sync baseline</a> records the disagreement. Source-support scores are heuristics, not truth, confidence, acceptance or safety results.</p>
       <details class="home-detail"><summary>Privacy, local storage and offline use</summary>
         <p>Your plan and search text are analyzed locally. Atlas does not place submitted text in request URLs or send it to a model or API. Cloudflare Web Analytics may collect ordinary request metadata plus page-performance and visit measurements; <a href="https://developers.cloudflare.com/speed/observatory/rum-beacon/" target="_blank" rel="noopener noreferrer">read Cloudflare's RUM description</a>.</p>
         <p>This browser may retain a one-use Quick handoff, missed-search history, or verification checklist. <button class="data-clear" type="button" onclick="clearAtlasData()">Clear saved Atlas data</button><span class="storage-status" id="storage-status" role="status" aria-live="polite"></span></p>
-        <p>A successful install pre-caches a defined subset of core routes and engines, not every page. Optional assets and an existing browser cache can vary. <a href="sw.js" target="_blank" rel="noopener noreferrer">Inspect the exact cache list</a> and <a href="README-Portability.md" target="_blank" rel="noopener noreferrer">portability notes</a>.</p>
+        <p>A successful install pre-caches a defined subset of core routes and engines, not every page. Optional assets and an existing browser cache can vary. <a href="sw.js" target="_blank" rel="noopener noreferrer">Inspect the exact cache list</a> and <a href="Delta-Atlas-Document.html?file=README-Portability.md" target="_top" rel="noopener noreferrer">portability notes</a>.</p>
       </details>
-      <p class="disc">Provided as-is for learning and review. The tools do not enforce policy or authorize actions. No affiliation with or endorsement by the organizations cited. Content licensed <a href="LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. &copy; 2026 Jake Tiller.</p>
+      <p class="disc">Provided as-is for learning and review. The tools do not enforce policy or authorize actions. No affiliation with or endorsement by the organizations cited. Content licensed <a href="Delta-Atlas-Document.html?file=LICENSE.txt" target="_top" rel="noopener noreferrer">CC BY 4.0</a>. &copy; 2026 Jake Tiller.</p>
       <p class="garden-motion-note" id="motion-status" role="status" aria-live="polite">The garden remains visible while its water effect prepares.</p>
     </footer>
   </div>
@@ -415,7 +415,7 @@
    'White-Paper.html':'White Paper'
  });
  function base(f){ return (f||'').split('?')[0]; }
- function setActive(f){ var b=base(f); document.querySelectorAll('.nav').forEach(function(x){ x.classList.toggle('on', x.dataset && x.dataset.f===b); }); }
+ function setActive(f){ var b=base(f); document.querySelectorAll('.nav').forEach(function(x){ x.classList.toggle('on', x.dataset && x.dataset.f===b); }); var brandLabel=document.getElementById('brand-label'); if(brandLabel)brandLabel.textContent=f?'\u2190 Atlas home':'Delta Atlas'; }
  function routeFromLocation(){ var h=''; try{h=decodeURIComponent((location.hash||'').replace('#',''));}catch(e){return null;} return Object.prototype.hasOwnProperty.call(NAV_ROUTES,h)?h:null; }
  function canReplaceFrameLocation(target){
    try{return !!target&&!!target.contentWindow&&!!target.contentWindow.location&&typeof target.contentWindow.location.replace==='function';}
@@ -432,7 +432,11 @@
    if(!canReplaceFrameLocation(frame)) return false;
    if(writeHistory!==false){try{ history.pushState({route:routePath},'', '#'+encodeURIComponent(routePath)); }catch(e){return false;}}
     loading.textContent='Loading '+routeLabel+'\u2026';
-    frame.onload=function(){ loading.style.display='none'; frame.focus(); };
+    frame.onload=function(){
+      // Passive reference pages need no script of their own to share shell navigation.
+      try{var child=frame.contentDocument, returnNav=child&&child.querySelector('nav.atlas-return-nav'); if(returnNav){child.documentElement.dataset.atlasReturnEmbedded='true';returnNav.hidden=true;}}catch(e){}
+      loading.style.display='none'; frame.focus();
+    };
    if(!replaceFrameLocation(frame,routePath)){frame.onload=null; if(writeHistory!==false){try{history.back();}catch(e){}} return false;}
    home.style.display='none'; frame.style.display='block'; loading.style.display='block';
    frame.title=routeLabel; setActive(routePath); document.title=routeLabel;
@@ -465,6 +469,12 @@
  }
  function applyLocation(){ var route=routeFromLocation(); if(route){nav(route,false);}else{goHome(false);} }
  window.addEventListener('popstate',applyLocation);
+ // Keep the native Home URL as an escape if frame cleanup or history rejects.
+ function returnToAtlas(event){
+   if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+   try{if(goHome(true))event.preventDefault();}catch(e){/* The native link still returns home. */}
+ }
+ document.getElementById('brand').addEventListener('click',returnToAtlas);
  (function(){ applyLocation(); })();
  if('serviceWorker' in navigator){ window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }
  window.doShare=function(){ var url=location.href; var b=document.getElementById('shareBtn');

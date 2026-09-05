@@ -638,6 +638,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "keep-atlas-home-reachable-from-standalone-tools",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Owner observed missing return controls, especially raw JSON and Markdown on mobile; Codex-assisted repair"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Keep Atlas home reachable from standalone tools and public text documents",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }
