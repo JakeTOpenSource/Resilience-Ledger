@@ -1,6 +1,6 @@
 # Delta Atlas
 
-**Deterministic tools and evidence records for AI-assisted work.** Delta Atlas reads plans, frameworks, and agent traces for structural weaknesses, then makes the rules and recorded results available for inspection.
+**Local checklists, experimental text checks, and inspectable evidence.** Delta Atlas helps you review a work handover and explore fixed checks for AI plans and action logs. No model call or account is needed to use the tools.
 
 Created by Jake Tiller through AI-assisted development. The project combines working JavaScript tools, labeled tests, documented corrections, and proposed research. Its value can be assessed from those artifacts.
 
@@ -8,11 +8,13 @@ Created by Jake Tiller through AI-assisted development. The project combines wor
 
 ## Start with one example
 
-[Gap Check](https://resilience-eval-ai.pages.dev/Delta-Atlas-GapCheck.html) reads a plan for missing controls. It uses versioned rules in the browser, without a model call or account.
+[Look for handover gaps](https://resilience-eval-ai.pages.dev/Delta-Atlas-ContinuityAudit.html): answer five short questions about a task, its usual owner, an authorized backup, written instructions and a trial. Missing answers are reported as **not provided**; arrangements remain **not verified**, even when you supply an answer. Try the built-in example without preparing a document. The older text audit remains available as an advanced option.
+
+[Review the wording of an AI plan](https://resilience-eval-ai.pages.dev/Delta-Atlas-GapCheck.html) (Gap Check) looks for recognized risk and safeguard phrases. [Review an AI action log](https://resilience-eval-ai.pages.dev/Delta-Atlas-Tracer.html) (Priority Tracer) highlights some wording about bypassing or stopping for a rule. Both include examples. Everyday wording, context and contradictions can be missed; supplied text does not establish what actually happened.
 
 Inspect the [shared detector](lexicon-engine.js), its [labeled cases](gapcheck-corpus.js), and the [Continuity Audit cases](continuity-audit-corpus.js) that exercise the same engine in another domain. The [coherence scorer](coherence-score-engine.js) is also shared across tools rather than copied into each page.
 
-The detectors use finite word and structural rules. Their output points to text worth reviewing; a clean result does not establish meaning, correctness, or safety.
+The detectors use finite word and structural rules. Their output points to text worth reviewing; a clean result does not establish meaning, correctness, or safety. Text-pattern scores in the advanced audit are diagnostics, not measurements of operational resilience. Automated checks and example walkthroughs do not establish beginner comprehension, accuracy across arbitrary inputs, or productivity gains. Independent user testing remains open.
 
 ## Inspect the engineering
 

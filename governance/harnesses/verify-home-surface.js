@@ -47,13 +47,16 @@ check(Boolean(searchControl) && /onclick="showSearch\(\)"/.test(searchControl) &
 const primaryTools = (html.match(/<div\b[^>]*class="[^"]*\bprimary-tools\b[^"]*"[^>]*>([\s\S]*?)<\/div>/) || [])[1] || '';
 const taskCards = [...primaryTools.matchAll(/<button\b[^>]*type="button"[^>]*onclick="nav\('([^']+)'\)"[^>]*>([\s\S]*?)<\/button>/g)];
 const expectedTasks = [
-  ['Delta-Atlas-GapCheck.html', 'Check an AI plan'],
-  ['Delta-Atlas-Tracer.html', 'Inspect an agent trace'],
-  ['Delta-Atlas-ContinuityAudit.html', 'Check an operating procedure']
+  ['Delta-Atlas-ContinuityAudit.html', 'Look for handover gaps', 'Answer five short questions'],
+  ['Delta-Atlas-GapCheck.html', 'Review the wording of an AI plan', 'Try an example or paste a plan'],
+  ['Delta-Atlas-Tracer.html', 'Review an AI action log', 'Try an example or paste recorded steps']
 ];
 check(taskCards.length === 3 && taskCards.every((card, index) => card[1] === expectedTasks[index][0] &&
-  card[2].includes(expectedTasks[index][1]) && /class="cw">Paste [^<]+/.test(card[2])),
+  card[2].includes(expectedTasks[index][1]) && card[2].includes(expectedTasks[index][2])),
   'three primary tasks identify their input and bind the intended existing tools');
+check(taskCards[0]?.[2].includes('START HERE') && taskCards[2]?.[2].includes('TECHNICAL') &&
+  html.includes('No document needed to try the examples.') && html.includes('Everyday wording can be missed.'),
+  'beginner entry identifies a starting point, examples and text-check limits');
 check(html.indexOf(primaryTools) < html.indexOf('<details class="sample">') &&
   /class="[^"]*tool-boundary[^"]*">[^<]*[Aa] clean result does not certify correctness or safety\./.test(html),
   'primary tasks precede the optional sample and retain a visible result ceiling');

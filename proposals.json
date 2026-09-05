@@ -661,6 +661,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "make-beginner-handover-checks-concrete-and-text",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Owner requested plain-English tools, example-first use and the proposed handover checklist; Codex-assisted implementation"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Make beginner handover checks concrete and text-tool results honest",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }

@@ -8,6 +8,7 @@
 const fs = require("fs");
 const path = require("path");
 const H = require("./corpus-harness.js");
+const Handover = require("./assets/handover-check-v1.js");
 
 function loadTools() {
   const html = fs.readFileSync(path.join(__dirname, "Delta-Atlas-ContinuityAudit.html"), "utf8");
@@ -18,12 +19,20 @@ function loadTools() {
   const pure = inline.slice(0, cut);
   const LexiconEngine = require("./lexicon-engine.js");
   const CoherenceScoreEngine = require("./coherence-score-engine.js");
-  const document = { getElementById: () => ({ value: "", textContent: "" }) };
+  const elements = {};
+  const document = { getElementById: id => elements[id] || (elements[id] = { value: "", textContent: "", scrollIntoView() {} }) };
   const sandbox = {};
   new Function("document", "window", "LexiconEngine", "CoherenceScoreEngine",
-    pure + "\nthis.analyze = analyze; this.SCORER = SCORER; this.KB = KB; this.resilienceReading = resilienceReading;"
+    pure + "\nthis.analyze = analyze; this.SCORER = SCORER; this.KB = KB; this.resilienceReading = resilienceReading; this.runAudit = run;"
   ).call(sandbox, document, sandbox, LexiconEngine, CoherenceScoreEngine);
-  return { analyze: sandbox.analyze, SCORER: sandbox.SCORER, KB: sandbox.KB, resilienceReading: sandbox.resilienceReading, content: CoherenceScoreEngine.content };
+  return { analyze: sandbox.analyze, SCORER: sandbox.SCORER, KB: sandbox.KB, resilienceReading: sandbox.resilienceReading, content: CoherenceScoreEngine.content,
+    renderAudit(goal, parts) {
+      document.getElementById('goal').value = goal;
+      document.getElementById('parts').value = parts;
+      sandbox.runAudit();
+      return document.getElementById('res').innerHTML;
+    }
+  };
 }
 
 const GAP_CASES = [
@@ -152,7 +161,7 @@ function resilienceOf(tools, goal, lines) {
   return tools.resilienceReading(A, roll, parts); // parts drives the substance-gated Anchor
 }
 
-const RES_TOP_BAND = 72; // the UI's "reads resilient" threshold
+const RES_TOP_BAND = 72; // retained legacy numeric threshold; no resilience claim is rendered
 
 function runResilienceCases(tools) {
   const goal = "Keep the service running whether or not any one team member is available.";
@@ -176,11 +185,83 @@ function runResilienceCases(tools) {
   else H.fail("resilience: attack too close to strong", "strong=" + strong.overall + " attack=" + attack.overall);
 }
 
+function runHandoverCases(tools) {
+  const empty = Handover.buildReview({});
+  if (empty.missing === 5 && empty.rows.every(row => row.value === 'not provided') && empty.verification === 'not verified' && empty.questions.length === 5)
+    H.pass('handover: empty answers remain not provided, with five concrete next questions');
+  else H.fail('handover: empty answers acquired unsupported content', JSON.stringify(empty));
+
+  const example = Handover.buildReview(Handover.EXAMPLE);
+  if (example.missing === 1 && example.rows.find(row => row.key === 'owner').value === 'Sam' &&
+      example.rows.find(row => row.key === 'backup').value === 'not provided' &&
+      example.questions.some(question => question.includes('Who could cover “Send Friday invoices”')) &&
+      example.questions.some(question => question.includes('safely try “Send Friday invoices”')))
+    H.pass('handover: Sam example exposes the missing authorized backup and asks for a trial');
+  else H.fail('handover: example lost its specific missing answer or next step', JSON.stringify(example));
+
+  const filled = Object.assign({}, Handover.EXAMPLE, { backup: 'Priya' });
+  const yes = Handover.buildReview(Object.assign({}, filled, { tried: 'yes' }));
+  const no = Handover.buildReview(Object.assign({}, filled, { tried: 'no' }));
+  if (yes.missing === 0 && yes.verification === 'not verified' && no.verification === 'not verified' &&
+      yes.rows.find(row => row.key === 'tried').value === 'You reported yes — not verified' &&
+      no.rows.find(row => row.key === 'tried').value.includes('Not tried') &&
+      yes.questions.some(question => question.includes('where is the result recorded?')) &&
+      !Object.prototype.hasOwnProperty.call(yes, 'score'))
+    H.pass('handover: yes is a report without proof; no remains not tried; neither receives a score');
+  else H.fail('handover: reported practice became verified or indistinguishable', JSON.stringify({ yes, no }));
+
+  const unknown = Handover.buildReview({ task: '  ', owner: null, backup: {}, instructions: [], tried: 'approved' });
+  if (unknown.missing === 5 && unknown.verification === 'not verified') H.pass('handover: absent and unsupported answers do not count as provided');
+  else H.fail('handover: malformed answers were treated as evidence', JSON.stringify(unknown));
+
+  function node(tag) {
+    return { tag, children: [], textContent: '', hidden: true,
+      appendChild(child) { this.children.push(child); }, replaceChildren() { this.children = []; },
+      set innerHTML(_) { throw new Error('handover output must never use an HTML sink'); }
+    };
+  }
+  const payload = '<img src=x onerror="globalThis.handoverInjected=true">';
+  const output = node('section');
+  const hostile = Handover.buildReview({ task: payload, owner: payload, backup: payload, instructions: payload, tried: 'yes' });
+  try {
+    Handover.renderReview({ createElement: node }, output, hostile);
+    const nodes = [];
+    (function visit(value) { nodes.push(value); value.children.forEach(visit); })(output);
+    if (nodes.filter(value => value.tag === 'dd' && value.textContent === payload).length === 4 &&
+        nodes.every(value => ['section', 'h2', 'h3', 'p', 'dl', 'div', 'dt', 'dd', 'ol', 'li', 'details', 'summary'].includes(value.tag)) && !output.hidden)
+      H.pass('handover: HTML-shaped task, people and instruction answers remain literal text');
+    else H.fail('handover: literal answer rendering is incomplete', JSON.stringify(nodes));
+  } catch (error) { H.fail('handover: renderer used an HTML sink', error.message); }
+
+  const html = fs.readFileSync(path.join(__dirname, 'Delta-Atlas-ContinuityAudit.html'), 'utf8');
+  const header = html.match(/<header>([\s\S]*?)<\/header>/)[1];
+  if (header.includes('Look for handover gaps') && !/SOP|claim|witness|resilience reading/i.test(header) &&
+      /<details class="advanced-audit" id="advanced-audit">/.test(html) &&
+      ['task', 'owner', 'backup', 'instructions', 'tried'].every(key => html.includes('for="handover-' + key + '"')) &&
+      html.indexOf('id="handover-task"') < html.indexOf('id="advanced-audit"'))
+    H.pass('handover: plain first screen, five associated labels and collapsed advanced audit');
+  else H.fail('handover: beginner entry or retained advanced access is missing');
+
+  const rendered = tools.renderAudit('Send Friday invoices', 'Only one administrator knows the admin credentials.');
+  const diagnosticStart = rendered.indexOf('<details class="diagnostics">');
+  if (rendered.indexOf('Gaps to check in the text') >= 0 && diagnosticStart > rendered.indexOf('<div class="gap') &&
+      rendered.indexOf('Combined text-pattern score') > diagnosticStart &&
+      rendered.includes('0–100 textual heuristics') && rendered.includes('not verified') &&
+      !/Reads resilient|Mostly solid|Solid manual|credits real structure|risks defended|No gaps found/.test(rendered))
+    H.pass('advanced audit: actual gap findings precede collapsed numeric heuristics without reassurance');
+  else H.fail('advanced audit: primary output overstates the retained calculations');
+  const unmatched = tools.renderAudit('', 'Unfamiliar words only.');
+  if (unmatched.includes('No pattern-based gaps detected') && unmatched.includes('has not checked whether a backup exists'))
+    H.pass('advanced audit: no matched gaps does not imply verified arrangements');
+  else H.fail('advanced audit: no-match result implies that the handover works');
+}
+
 function run() {
   const tools = loadTools();
   runGapCases(tools.analyze);
   runScoreCases(tools.SCORER, tools.content);
   runResilienceCases(tools);
+  runHandoverCases(tools);
   process.exit(H.summarize());
 }
 run();
