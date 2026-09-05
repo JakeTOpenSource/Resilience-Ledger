@@ -4,6 +4,9 @@
 #garden-scene[hidden]{display:none;}
 #garden-still,#garden-water{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:50% 50%;pointer-events:none;}
 .garden-atmosphere{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(5,21,14,.18),transparent 62%),linear-gradient(0deg,rgba(5,20,14,.32),transparent 48%);}
+#garden-deer{position:absolute;pointer-events:none;overflow:hidden;}
+#garden-deer canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+#garden-deer[hidden],#garden-deer canvas[hidden]{display:none;}
 #home{z-index:1;background:transparent;}
 #frame{position:relative;z-index:2;}
 /* Preserve the home-page overflow boundary that prevents decorative blank scrolling. */
@@ -49,7 +52,8 @@
 /* A smaller left-aligned introduction leaves more of the garden visible.
    Keep the task cards and their scope note together below the open scenery. */
 @media(min-width:721px){
-  .hero{width:min(390px,100%);min-height:0;margin-top:24px;margin-bottom:112px;padding:20px 24px;}
+  /* Keep the lower-bank wildlife above the tools as the wide scene scales. */
+  .hero{width:min(390px,100%);min-height:0;margin-top:24px;margin-bottom:max(112px,calc(42vw - 233px));padding:20px 24px;}
   .hero .logo{font-size:14px;}
   .hero .headline{font-size:34px;line-height:1.12;margin:13px 0;}
   .hero .tagline{font-size:14px;line-height:1.6;}

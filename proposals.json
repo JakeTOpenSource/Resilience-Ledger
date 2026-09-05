@@ -730,6 +730,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "add-optional-garden-deer-with-bounded-shared-mot",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Codex implementation of owner-approved mother and youngster artwork, posture timing and live release"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Add optional garden deer with bounded shared motion and upright fallback",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }

@@ -8,6 +8,8 @@
 <link rel="apple-touch-icon" href="icon-192.png"/>
 <link rel="preload" href="assets/hanging-garden-v1.webp" as="image"/>
 <script src="assets/garden-water-v1.js" defer></script>
+<script src="assets/garden-deer-pose-v1.js" defer></script>
+<script src="assets/garden-deer-v1.js" defer></script>
 <style>
  :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--gold:#e3c258;--flag:#ff9d80;}
  *{box-sizing:border-box;} html,body{margin:0;height:100%;}
@@ -274,6 +276,7 @@
   <div id="garden-scene" aria-hidden="true">
     <img id="garden-still" src="assets/hanging-garden-v1.webp" width="1672" height="941" alt=""/>
     <canvas id="garden-water"></canvas>
+    <div id="garden-deer" aria-hidden="true"></div>
     <div class="garden-atmosphere"></div>
   </div>
   <div id="loading" role="status" aria-live="polite">Loading&hellip;</div>

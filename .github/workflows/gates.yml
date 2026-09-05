@@ -40,6 +40,10 @@ jobs:
         run: node continuity-audit-corpus.js
       - name: Theme and accessibility structure gate
         run: node theme-gate.js
+      - name: Garden deer pose geometry and motion lifecycle
+        run: |
+          node governance/harnesses/verify-garden-deer.js
+          node governance/harnesses/verify-garden-deer-runtime.js
       - name: Day-ledger corpus (dual attestation, chain integrity)
         run: node day-ledger-corpus.js
       - name: Benchmark (scale limits stay reproducible)
