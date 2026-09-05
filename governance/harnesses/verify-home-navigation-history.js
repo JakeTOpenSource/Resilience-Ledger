@@ -66,7 +66,7 @@ function failuresFor(text) {
 
   if (!routeDeclaration || failures.length) return failures;
   const functions = ['base', 'setActive', 'routeFromLocation', 'canReplaceFrameLocation',
-    'replaceFrameLocation', 'nav', 'goHome', 'applyLocation'];
+    'replaceFrameLocation', 'nav', 'goHome', 'showSearch', 'applyLocation'];
   let program;
   try {
     program = [routeDeclaration, ...functions.map((name) => extractFunction(text, name))].join('\n');
@@ -87,6 +87,8 @@ function failuresFor(text) {
   const pushes = [];
   const rollbacks = [];
   let focusCount = 0;
+  let queryFocusCount = 0;
+  let queryScrollCount = 0;
   let rejectChildReplace = false;
   const frame = {
     style: { display: 'block' },
@@ -99,12 +101,13 @@ function failuresFor(text) {
   };
   const home = { style: { display: 'block' }, scrollTop: 12 };
   const loading = { style: { display: 'none' } };
-  const hq = { focus() { focusCount += 1; } };
+  const heading = { focus() { focusCount += 1; } };
+  const hq = { focus() { queryFocusCount += 1; }, scrollIntoView() { queryScrollCount += 1; } };
   const location = { hash: '', pathname: '/' };
   const document = {
     title: 'Delta Atlas',
     querySelectorAll() { return []; },
-    getElementById(id) { return id === 'hq' ? hq : null; }
+    getElementById(id) { return { hq, 'home-title': heading }[id] || null; }
   };
   let rejectParentWrite = false;
   const history = {
@@ -119,7 +122,7 @@ function failuresFor(text) {
     homeScrollTop: home.scrollTop,
     loadingDisplay: loading.style.display,
     documentTitle: document.title,
-    focusCount
+    focusCount, queryFocusCount, queryScrollCount
   });
 
   try {
@@ -158,6 +161,30 @@ function failuresFor(text) {
       pushes.length === 0 && frame.title === 'Delta Atlas content' && document.title === 'Delta Atlas',
     'Back rendering must restore home and clear child state without writing parent history');
 
+    for (const [route, title] of [['Delta-Atlas-Evidence.html', 'Evidence'], ['Delta-Atlas-Library.html', 'Library'],
+      ['Delta-Atlas-ContinuityAudit.html', 'Continuity Audit']]) {
+      replacements.length = 0;
+      pushes.length = 0;
+      location.hash = `#${route}`;
+      context.applyLocation();
+      requireRule(JSON.stringify(replacements) === JSON.stringify([route]) && pushes.length === 0 &&
+        frame.title === title && document.title === title,
+      `${title} direct hash and Back/Forward rendering must use the allowlisted route without another history entry`);
+    }
+
+    replacements.length = 0;
+    pushes.length = 0;
+    const headingFocusBefore = focusCount;
+    requireRule(context.goHome(true) === true && focusCount === headingFocusBefore + 1 &&
+      queryFocusCount === 0 && pushes.length === 1 && JSON.stringify(replacements) === JSON.stringify(['about:blank']),
+    'Tools navigation must focus the home heading without forcing glossary focus');
+    replacements.length = 0;
+    pushes.length = 0;
+    context.showSearch();
+    requireRule(queryFocusCount === 1 && queryScrollCount === 1 && pushes.length === 1 &&
+      JSON.stringify(replacements) === JSON.stringify(['about:blank']) && home.style.display === 'block',
+    'Search must return home with one history entry and reveal and focus the glossary input');
+
     replacements.length = 0;
     pushes.length = 0;
     const beforeUnknown = presentationState();
@@ -173,6 +200,9 @@ function failuresFor(text) {
     requireRule(context.goHome(true) === false && replacements.length === 0 &&
       pushes.length === 0 && presentationState() === beforeRejectedNav,
     'rejected parent history write must leave home presentation unchanged');
+    context.showSearch();
+    requireRule(pushes.length === 0 && presentationState() === beforeRejectedNav,
+      'Search must not steal focus when its return-home history write is rejected');
 
     rejectParentWrite = false;
     rejectChildReplace = true;
@@ -314,6 +344,10 @@ const canaries = [
   source.replace("if(writeHistory!==false){try{history.back();}catch(e){}} return false;", 'return false;'),
   source.replaceAll("if(writeHistory!==false){try{history.back();}catch(e){}} return false;", 'return false;')
 ];
+canaries.push(
+  source.replace('if(goHome(true)){var input=', 'if(true){var input='),
+  source.replace("if(heading&&writeHistory!==false) heading.focus();", "if(heading) document.getElementById('hq').focus();")
+);
 for (const [index, mutated] of canaries.entries()) {
   if (mutated === source) errors.push(`navigation mutation ${index + 1} did not alter source`);
   else if (failuresFor(mutated).length === 0) errors.push(`navigation mutation ${index + 1} was not rejected`);

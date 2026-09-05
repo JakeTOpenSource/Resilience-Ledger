@@ -17,6 +17,7 @@ const page = fs.readFileSync(pagePath, 'utf8');
 const readme = fs.readFileSync(readmePath, 'utf8');
 const headers = fs.readFileSync(headersPath, 'utf8');
 const index = fs.readFileSync(indexPath, 'utf8');
+const library = fs.readFileSync(path.join(L.repoRoot, 'Delta-Atlas-Library.html'), 'utf8');
 const serviceWorker = fs.readFileSync(serviceWorkerPath, 'utf8');
 const errors = [];
 
@@ -115,6 +116,8 @@ requireSurface(page.includes('<a href="index.html" target="_top">Back to Delta A
 requireSurface(!page.includes('target="_blank"'), 'undisclosed new-tab link remains');
 
 const expectedRoutes = [
+  ['Delta-Atlas-Evidence.html', 'Evidence'],
+  ['Delta-Atlas-Library.html', 'Library'],
   ['Agentic-AI-Governance-GroundTruth.html', 'Curation dashboard'],
   ['Agentic-AI-Governance-Query.html', 'Explore'],
   ['Coherence-Audit.html', 'Framework Audit'],
@@ -138,10 +141,16 @@ function navigationFailures(source) {
   const navigationTargets = [...source.matchAll(/nav\('([^']+\.html)'/g)].map((match) => match[1]);
   if (JSON.stringify([...routes]) !== JSON.stringify(expectedRoutes)) failures.push('route allowlist or canonical titles changed');
   if (routes.get('Six-Signal-Method.html') !== 'Six Signals') failures.push('Six-Signal route or canonical title is missing');
-  if (!source.includes('<button class="nav" type="button" data-f="Six-Signal-Method.html" onclick="nav(\'Six-Signal-Method.html\')">Six Signals</button>')) {
-    failures.push('visible Six Signals navigation item is missing');
+  if (!/<button\b[^>]*data-f="Delta-Atlas-Library\.html"[^>]*>Library<\/button>/.test(source) ||
+      !/<a\b[^>]*href="index\.html#Six-Signal-Method\.html"[^>]*>Six Signals<\/a>/.test(library)) {
+    failures.push('Six Signals must remain visibly reachable through Library');
   }
   if (!navigationTargets.every((target) => routes.has(target))) failures.push('a navigation target bypasses the fixed route allowlist');
+  const libraryRoutes = [...library.matchAll(/href="index\.html#([^"#]+\.html)"/g)].map((match) => match[1]);
+  if (!libraryRoutes.every((route) => routes.has(route))) failures.push('a Library link targets an unavailable home route');
+  for (const [route] of expectedRoutes) {
+    if (!fs.existsSync(path.join(L.repoRoot, route))) failures.push(`${route}: preserved direct URL target is missing`);
+  }
   if (!/<iframe\b(?=[^>]*\bid="frame")(?=[^>]*\btitle="Delta Atlas content")[^>]*><\/iframe>/.test(source)) {
     failures.push('iframe fallback title is missing');
   }

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - Evidence</title>
+<meta name="description" content="Inspect Delta Atlas's code, regression tests, reproduction commands and public research candidates."/>
+<meta name="theme-color" content="#16301f"/>
+<link rel="icon" href="favicon.png"/>
+<style>
+ :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;}
+ *{box-sizing:border-box;}
+ body{margin:0;background:var(--bg);color:var(--txt);}
+ .wrap{max-width:900px;margin:0 auto;padding:24px 22px 64px;}
+ nav{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:30px;}
+ nav a{display:inline-flex;align-items:center;min-height:44px;}
+ h1{font-size:32px;line-height:1.2;margin:0 0 12px;}
+ .lead{font-size:17px;color:var(--dim);max-width:700px;margin:0;}
+ h2{font-size:20px;margin:34px 0 12px;}
+ h3{font-size:17px;line-height:1.35;margin:6px 0 8px;}
+ p{margin:0 0 12px;}
+ a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere;}
+ a:hover{text-decoration-thickness:2px;}
+ a:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:2px;}
+ .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+ .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0;}
+ .card p{color:var(--dim);}
+ .card p:last-child{margin-bottom:0;}
+ .role{font-size:12px;font-weight:650;letter-spacing:.6px;text-transform:uppercase;color:var(--dim);}
+ .action{display:inline-flex;align-items:center;min-height:44px;font-weight:600;}
+ .feature{border-left:3px solid var(--accent);}
+ .links{padding-left:22px;margin:0;}
+ .links li{padding:5px 0;}
+ pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0;}
+ code{font-size:13px;overflow-wrap:anywhere;}
+ footer{border-top:1px solid var(--line);padding-top:18px;margin-top:34px;color:var(--dim);font-size:13px;}
+ .skip{position:absolute;left:12px;top:-100px;z-index:2;background:var(--bg);padding:12px;}
+ .skip:focus{top:8px;}
+ @media(max-width:600px){.wrap{padding:18px 16px 48px;} .grid{grid-template-columns:1fr;} h1{font-size:28px;} nav{margin-bottom:22px;}}
+ /* canonical typography: one baseline across every page */
+ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;line-height:1.6;}
+ textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
+ button{font-family:inherit;}
+ ::placeholder{color:var(--dim);opacity:1;}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to evidence</a>
+<main class="wrap" id="content" tabindex="-1">
+<nav aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas tools</a><a href="Delta-Atlas-Evidence.html" aria-current="page">Evidence</a><a href="index.html#Delta-Atlas-Library.html" target="_top">Library</a></nav>
+<header>
+<h1>Inspect the engineering</h1>
+<p class="lead">Follow a working tool to its implementation, a documented failure and the checks that keep the repair in place.</p>
+</header>
+<section aria-labelledby="review-title">
+<h2 id="review-title">Start with the technical review</h2>
+<div class="card feature">
+<p>See how the browser tools share engines, how the tests run, and which parts of the research remain open.</p>
+<a class="action" href="evaluate.html" target="_top">Open the technical review &rarr;</a>
+</div>
+</section>
+<section aria-labelledby="repair-title">
+<h2 id="repair-title">A failure and its repair</h2>
+<p>The earlier Gap Check detector counted cancelled human review as oversight. This input now produces an oversight-gap finding:</p>
+<pre><code>Our autonomous agent can execute production changes.
+Human review was never implemented.</code></pre>
+<p>The shared engine now checks cancellation in everyday-language phrases as well as aliases. The regression cases also preserve genuine review and keep nearby risks visible.</p>
+<ul class="links">
+<li><a href="index.html#Delta-Atlas-GapCheck.html" target="_top">Try the case in Gap Check</a></li>
+<li><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/lexicon-engine.js" target="_top">Inspect the shared detection engine on GitHub</a></li>
+<li><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/gapcheck-corpus.js" target="_top">Read the regression cases on GitHub</a></li>
+</ul>
+</section>
+<section aria-labelledby="reproduce-title">
+<h2 id="reproduce-title">Reproduce the checks</h2>
+<p>From a repository checkout with Node.js installed, record the commit and run:</p>
+<pre><code>git rev-parse HEAD
+node gapcheck-corpus.js
+node coherence-audit-corpus.js
+node continuity-audit-corpus.js</code></pre>
+<p>These checks need no package installation or model API. For the broader suite and its runtime requirements, inspect the <a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/.github/workflows/gates.yml" target="_top">CI workflow</a>.</p>
+</section>
+<section aria-labelledby="research-title">
+<h2 id="research-title">Public research to inspect</h2>
+<div class="grid">
+<article class="card">
+<span class="role">Protocol preview &middot; PREPARE_ONLY</span>
+<h3><a href="https://github.com/JakeTOpenSource/clutch-skill" target="_top">Clutch</a></h3>
+<p>Approved task handoffs, explicit recovery routes, deterministic reducers and a reproduction package. Its public preview does not activate routing.</p>
+</article>
+<article class="card">
+<span class="role">Research candidate</span>
+<h3><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/tree/main/research/stp-v1.2" target="_top">State Transition Protocol v1.2</a></h3>
+<p>Inspect synthetic fixtures and JavaScript/Python reducers for evidence, effects and accepted state.</p>
+</article>
+<article class="card">
+<span class="role">Paper candidate &middot; owner review</span>
+<h3><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/pull/15" target="_top">From Model Output to Accepted State, v4</a></h3>
+<p>PR #15 carries the current review candidate, with its discussion and checks. The proposal remains separate from accepted project guidance.</p>
+</article>
+<article class="card">
+<span class="role">Methods and evidence boundaries</span>
+<h3><a href="index.html#White-Paper.html" target="_top">Project guide</a></h3>
+<p>Read the Atlas methods and limits, then inspect the <a href="Red-Team-Report.md" target="_top">red-team report</a> and <a href="governance/contracts/atlas-data-sync-baseline.md" target="_top">recorded data differences</a>.</p>
+</article>
+</div>
+</section>
+<footer>
+<p>Passing checks establish the declared behavior for the checked code and cases. They do not certify real-world safety, definition accuracy or productivity gains. Research status belongs to each linked artifact.</p>
+<p><a href="index.html#Delta-Atlas-Library.html" target="_top">Browse the full library</a> &middot; <a href="LICENSE.txt" target="_top">CC BY 4.0</a></p>
+</footer>
+</main>
+</body>
+</html>
+

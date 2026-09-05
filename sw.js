@@ -3,12 +3,13 @@
 // and does not collect application inputs.
 // Installation is all-or-nothing: a claimed offline shell must have every
 // declared core dependency, not a silently partial cache.
-const CACHE='aaig-v88';
+const CACHE='aaig-v89';
 const CORE=[
  'index.html','manifest.webmanifest','evaluate.html','404.html','terms.enriched.json',
  'Agentic-AI-Governance-Chat.html','Agentic-AI-Governance-GroundTruth.html','Delta-Atlas-Start.html','Delta-Atlas-Field.html',
  'Agentic-AI-Governance-Query.html','Delta-Atlas-GapCheck.html','Delta-Atlas-Quick.html','Delta-Atlas-Tracer.html','primitives.json','Delta-Atlas-Primitives.html','Delta-Atlas-Canon.md',
  'Coherence-Audit.html','White-Paper.html','Six-Signal-Method.html',
+ 'Delta-Atlas-ContinuityAudit.html','Delta-Atlas-Evidence.html','Delta-Atlas-Library.html',
  'lexicon-engine.js','coherence-score-engine.js',
  'Agentic-AI-Governance-Glossary.md','README-Portability.md','Translator-Framework-Design.md','Red-Team-Report.md','Coherence-Ledger-Method.md','LICENSE.txt',
  'icon-192.png','icon-512.png','icon-maskable-512.png','favicon.png'

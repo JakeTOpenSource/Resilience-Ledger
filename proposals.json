@@ -546,6 +546,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "simplify-atlas-navigation-around-tools-evidence",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Codex-assisted navigation-only change explicitly approved by owner 2026-09-05; no data removal"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Simplify Atlas navigation around tools evidence and library",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }
