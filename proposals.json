@@ -592,6 +592,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "integrate-the-owner-approved-hanging-garden-with",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Owner-approved visual preview and request for wide framing; Codex-assisted implementation"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Integrate the owner-approved hanging garden with bounded water motion",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }

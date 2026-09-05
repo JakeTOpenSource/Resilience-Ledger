@@ -6,6 +6,8 @@
 <link rel="manifest" href="manifest.webmanifest"/>
 <link rel="icon" href="favicon.png"/>
 <link rel="apple-touch-icon" href="icon-192.png"/>
+<link rel="preload" href="assets/hanging-garden-v1.webp" as="image"/>
+<script src="assets/garden-water-v1.js" defer></script>
 <style>
  :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--gold:#e3c258;--flag:#ff9d80;}
  *{box-sizing:border-box;} html,body{margin:0;height:100%;}
@@ -176,7 +178,9 @@
  @media(max-width:560px){.doors{grid-template-columns:1fr;}.wrap{padding-inline:16px;}.hero .headline{font-size:22px;}#hgo{padding-inline:16px;}.floor{margin-inline:-16px;padding-inline:20px;}}
  @media(prefers-reduced-motion:reduce){.card,.door{transition:none;}.card:hover,.door:hover{transform:none;}}
 
-</style></head><body>
+</style>
+<link rel="stylesheet" href="assets/garden-home-v1.css"/>
+</head><body>
 <a class="skip" href="#stage">Skip to main content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <path id="pBig" d="M50,97 C40,94 28,92 18,86 L8,78 C16,68 26,66 33,62 C24,54 17,44 14,32 L12,22 C22,22 31,26 38,28 C41,18 45,8 50,2 C55,8 59,18 62,28 C69,26 78,22 88,22 L86,32 C83,44 76,54 67,62 C74,66 84,68 92,78 L82,86 C72,92 60,94 50,97 Z"/>
@@ -260,12 +264,18 @@
     <button class="nav" type="button" data-f="Delta-Atlas-Library.html" onclick="nav('Delta-Atlas-Library.html')">Library</button>
   </nav>
   <div class="rightgrp">
+    <button class="garden-motion-toggle" id="motion-toggle" type="button" aria-pressed="false" disabled>Play water</button>
     <button class="nav" id="search0" type="button" onclick="showSearch()">Search terms</button>
     <button class="nav" id="shareBtn" type="button" onclick="doShare()">Share</button>
     <button class="nav" id="installBtn" style="display:none;color:#8fe0a5;border:1px solid #4a6b56" onclick="doInstall()">Install app</button>
   </div>
 </header>
 <main id="stage" aria-label="Delta Atlas tools" tabindex="-1">
+  <div id="garden-scene" aria-hidden="true">
+    <img id="garden-still" src="assets/hanging-garden-v1.webp" width="1672" height="941" alt=""/>
+    <canvas id="garden-water"></canvas>
+    <div class="garden-atmosphere"></div>
+  </div>
   <div id="loading" role="status" aria-live="polite">Loading&hellip;</div>
   <iframe id="frame" title="Delta Atlas content" tabindex="-1"></iframe>
   <div id="home">
@@ -324,11 +334,11 @@
     <div class="hero">
       <div class="plumb"></div>
       <h1 class="logo" id="home-title" tabindex="-1"><span class="dot"></span>Delta Atlas</h1>
-      <p class="headline">Inspect the work. See what needs attention.</p>
+      <p class="headline">Check the plan. Trace the decisions.</p>
       <p class="tagline">Inspect AI plans, agent traces, and operating procedures with local tools and visible checks.</p>
     </div>
 
-    <section aria-labelledby="tools-title">
+    <section class="garden-tools" aria-labelledby="tools-title">
       <h2 class="sec" id="tools-title">Choose a task</h2>
       <div class="doors primary-tools">
         <button class="card" type="button" onclick="nav('Delta-Atlas-GapCheck.html')"><span class="dk">GAP CHECK</span><span class="cn">Check an AI plan</span><span class="cw">Paste a policy, project plan or vendor claim. Find named risks without stated controls and autonomy without stated oversight.</span><span class="cgo">Open Gap Check &rarr;</span></button>
@@ -366,7 +376,7 @@
 
     <div class="block research-question">
       <h2>The research question</h2>
-      <p>What must be checked before an AI-assisted proposal changes something we rely on? Jake Tiller's independent, AI-assisted work separates proposals, permission, execution, observations and acceptance, then uses failures to design bounded recovery. Broader productivity and resilience benefits remain hypotheses to test.</p>
+      <p>What must be checked before an AI-assisted proposal changes something we rely on? Delta Atlas explores how to separate proposals, permission, execution, observations and acceptance, and use failures to define a recovery path. Broader productivity and resilience benefits remain hypotheses to test.</p>
     </div>
 
     <footer class="floor">
@@ -377,7 +387,8 @@
         <p>This browser may retain a one-use Quick handoff, missed-search history, or verification checklist. <button class="data-clear" type="button" onclick="clearAtlasData()">Clear saved Atlas data</button><span class="storage-status" id="storage-status" role="status" aria-live="polite"></span></p>
         <p>A successful install pre-caches a defined subset of core routes and engines, not every page. Optional assets and an existing browser cache can vary. <a href="sw.js" target="_blank" rel="noopener noreferrer">Inspect the exact cache list</a> and <a href="README-Portability.md" target="_blank" rel="noopener noreferrer">portability notes</a>.</p>
       </details>
-      <p class="disc">Independent educational research, provided as-is. The tools do not enforce policy or authorize actions. No affiliation with or endorsement by the organizations cited. Content licensed <a href="LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. &copy; 2026 Jake Tiller.</p>
+      <p class="disc">Provided as-is for learning and review. The tools do not enforce policy or authorize actions. No affiliation with or endorsement by the organizations cited. Content licensed <a href="LICENSE.txt" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. &copy; 2026 Jake Tiller.</p>
+      <p class="garden-motion-note" id="motion-status" role="status" aria-live="polite">The garden remains visible while its water effect prepares.</p>
     </footer>
   </div>
    </div>
