@@ -46,12 +46,12 @@
 .floor .garden-motion-note{font-size:12px;line-height:1.6;margin:14px 0 0;color:#d3decf;}
 @media(min-width:1800px){.hero{margin-top:52px;margin-bottom:82px;min-height:355px;}.primary-tools .cw{font-size:14px;}.primary-tools .card{padding:24px;}}
 @media(max-width:1000px){.home-page>.wrap{padding-inline:24px;}.hero{width:min(465px,100%);min-height:330px;margin-top:34px;margin-bottom:56px;padding:27px 30px;}.hero .headline{font-size:40px;}.garden-tools{padding:21px 20px 15px;}.primary-tools{gap:12px;}.primary-tools .card{padding:19px 16px;}.primary-tools .cn{font-size:18px;}.floor{margin-inline:-24px;padding-inline:26px;}}
-/* Compact unused hero space so desktop task cards and their scope note arrive
-   together. Keep the wide garden mapping and readable phone flow unchanged. */
+/* A smaller left-aligned introduction leaves more of the garden visible.
+   Keep the task cards and their scope note together below the open scenery. */
 @media(min-width:721px){
-  .hero{min-height:0;margin-top:24px;margin-bottom:24px;padding:22px 30px;}
+  .hero{width:min(390px,100%);min-height:0;margin-top:24px;margin-bottom:112px;padding:20px 24px;}
   .hero .logo{font-size:14px;}
-  .hero .headline{font-size:40px;line-height:1.12;margin:13px 0;}
+  .hero .headline{font-size:34px;line-height:1.12;margin:13px 0;}
   .hero .tagline{font-size:14px;line-height:1.6;}
   .garden-tools{padding:18px 22px 14px;}
   .garden-tools h2.sec{font-size:25px;margin-bottom:12px;}
@@ -67,7 +67,7 @@
   .home-page>.wrap{padding-inline:15px;}
   .hero{width:100%;min-height:0;margin:calc(56.2799vw + 14px) 0 26px;padding:25px 24px 27px;border-radius:3px 18px 18px 18px;background:#0a140f;}
   .hero .logo{font-size:14px;}
-  .hero .headline{font-size:38px;max-width:100%;margin:18px 0;}
+  .hero .headline{font-size:34px;max-width:100%;margin:18px 0;}
   .hero .tagline{font-size:14px;max-width:100%;}
   .garden-motion-toggle{font-size:11px;padding-inline:11px;}
   .garden-tools{padding:21px 18px 15px;background:#0a140f;}

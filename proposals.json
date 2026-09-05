@@ -684,6 +684,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "reveal-more-garden-around-the-homepage-introduct",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Owner requested smaller left-aligned introduction and lower task cards; preserve wording, wide image framing, controls and tool behavior."
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Reveal more garden around the homepage introduction",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }
