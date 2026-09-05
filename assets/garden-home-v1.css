@@ -26,6 +26,7 @@
 .primary-tools{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:0;}
 .primary-tools .card{padding:22px 21px 18px;background:#101c16;border-color:#607458;gap:10px;}
 .primary-tools .card:hover{background:#1b2c22;border-color:#e3cd91;transform:none;}
+.primary-tools .card.starting-point{border-color:#e3cd91;}
 .primary-tools .dk{font-size:10.5px;letter-spacing:.12em;color:#ddcd9f;}
 .primary-tools .cn{font-size:20px;line-height:1.25;margin:0;}
 .primary-tools .cw{font-size:13px;line-height:1.7;color:#d3decf;}

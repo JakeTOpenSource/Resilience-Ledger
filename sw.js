@@ -3,14 +3,14 @@
 // and does not collect application inputs.
 // Installation is all-or-nothing: a claimed offline shell must have every
 // declared core dependency, not a silently partial cache.
-const CACHE='aaig-v93';
+const CACHE='aaig-v94';
 const CORE=[
  'index.html','manifest.webmanifest','evaluate.html','404.html','terms.enriched.json',
  'Agentic-AI-Governance-Chat.html','Agentic-AI-Governance-GroundTruth.html','Delta-Atlas-Start.html','Delta-Atlas-Field.html',
  'Agentic-AI-Governance-Query.html','Delta-Atlas-GapCheck.html','Delta-Atlas-Quick.html','Delta-Atlas-Tracer.html','primitives.json','Delta-Atlas-Primitives.html','Delta-Atlas-Canon.md',
  'Coherence-Audit.html','White-Paper.html','Six-Signal-Method.html',
  'Delta-Atlas-ContinuityAudit.html','Delta-Atlas-Evidence.html','Delta-Atlas-Library.html',
- 'lexicon-engine.js','coherence-score-engine.js',
+ 'lexicon-engine.js','coherence-score-engine.js','assets/handover-check-v1.js',
  'assets/garden-home-v1.css','assets/garden-water-v1.js','assets/hanging-garden-v1.webp',
  'Delta-Atlas-Document.html','assets/atlas-return-v1.css','assets/atlas-return-v1.js',
  'assets/atlas-document-v1.css','assets/atlas-document-v1.js','assets/atlas-documents-v1.json',

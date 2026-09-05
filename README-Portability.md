@@ -42,6 +42,8 @@ Map and Reflections are retained as small redirects so older links still reach t
 
 ## How to run anything here
 
+The handover checklist uses `assets/handover-check-v1.js`, included in the core cache. Its five answers remain in the current page only; the tool does not submit or save them. Missing answers are reported as not provided, and supplied arrangements remain not verified. The advanced procedure-text audit is still available on the same Continuity Audit URL. Its numeric diagnostics retain the existing calculations and are explicitly text-pattern heuristics, not measurements of operational readiness.
+
 Most self-contained pages can be opened directly. Pages that load adjacent JSON or JavaScript can be restricted by `file://` browser rules; serve the folder from a local static server for the closest match to the deployed site. The service-worker offline promise is separately checked through the runtime contract.
 
 ## If you ever want to add a model on top

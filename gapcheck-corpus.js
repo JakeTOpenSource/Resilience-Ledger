@@ -20,6 +20,8 @@
  */
 const fs = require("fs");
 const path = require("path");
+const assert = require("assert").strict;
+const vm = require("vm");
 const H = require("./corpus-harness.js");
 
 function loadAnalyze() {
@@ -37,6 +39,118 @@ function loadAnalyze() {
   const sandbox = {};
   new Function("document", "window", "LexiconEngine", pure + "\nthis.analyze = analyze;").call(sandbox, document, {}, LexiconEngine);
   return sandbox.analyze;
+}
+
+// Exercise the real rendering/wiring with a minimal DOM boundary. This checks output
+// claims and focus requests, not browser layout or screen-reader behavior.
+function loadPage() {
+  const html = fs.readFileSync(path.join(__dirname, "Delta-Atlas-GapCheck.html"), "utf8");
+  const inline = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)]
+    .map(m => m[1]).find(s => /function analyze\(/.test(s));
+  if (!inline) throw new Error("gapcheck-corpus: inline page script missing");
+  const elements = {};
+  let focused = null;
+  function element(id) {
+    if (!elements[id]) elements[id] = {
+      value: "", innerHTML: "", textContent: "", attributes: {},
+      classList: { toggle() {}, add() {} },
+      addEventListener() {},
+      focus() { focused = id; },
+      setAttribute(key, value) { this.attributes[key] = value; },
+      querySelectorAll(selector) {
+        return selector === '[data-example]' && this.innerHTML.includes('data-example')
+          ? [element('result-example')] : [];
+      }
+    };
+    return elements[id];
+  }
+  const context = {
+    document: { getElementById: element, body: element('body') },
+    window: {}, location: { hash: '' },
+    localStorage: { getItem() { return null; }, removeItem() {} },
+    LexiconEngine: require("./lexicon-engine.js")
+  };
+  vm.runInNewContext(inline + '\nthis.page = { analyze, render, batchRender, runCheck, EXAMPLE };', context);
+  return { ...context.page, html, elements, focused: () => focused };
+}
+
+function checkPage(name, test) {
+  try { test(loadPage()); H.pass(name); }
+  catch (error) { H.fail(name, error.message); }
+}
+
+function runPresentationCases() {
+  checkPage('no-findings result does not invent oversight for a capability mention', page => {
+    const result = page.analyze('Machine learning.');
+    assert.equal(result.risks.length, 0);
+    assert.equal(result.findings.length, 0);
+    page.render('Machine learning.');
+    const output = page.elements.out.innerHTML;
+    assert.match(output, /No matching gaps were flagged/);
+    assert.match(output, /does not show that oversight or safeguards are in place/);
+    assert.doesNotMatch(output, /oversight is present|Every risk you named has a matching control/);
+    assert.equal(page.focused(), null, 'automatic/prefill renders must not steal focus');
+  });
+  checkPage('matching safeguard terms are not presented as implemented defenses', page => {
+    const text = 'Prompt injection. Guardrail.';
+    assert.equal(page.analyze(text).defended, 1);
+    page.render(text, true);
+    assert.match(page.elements.out.innerHTML, /named risks with related safeguard wording/);
+    assert.match(page.elements.out.innerHTML, /not evidence that safeguards are implemented or effective/);
+    assert.doesNotMatch(page.elements.out.innerHTML, /risks with a control present|risks defended/);
+    assert.equal(page.focused(), 'result-title');
+    assert.match(page.elements['result-status'].textContent, /Check complete/);
+  });
+  checkPage('everyday wording with no recognized terms has an actionable example', page => {
+    const text = 'It replies to emails. A person looks at each reply before it goes out.';
+    assert.equal(page.analyze(text).M.length, 0);
+    page.render(text, true);
+    assert.match(page.elements.out.innerHTML, /can miss everyday wording/);
+    assert.match(page.elements.out.innerHTML, /No finding does not mean your plan is safe/);
+    assert.equal(typeof page.elements['result-example'].onclick, 'function');
+    page.elements['result-example'].onclick();
+    assert.equal(page.elements.src.value, page.EXAMPLE);
+    assert.match(page.elements.out.innerHTML, /Autonomy with no oversight/);
+    assert.match(page.elements.out.innerHTML, /Risk named with no control: Prompt Injection/);
+  });
+  checkPage('beginner example flags missing safeguards and uses native definition buttons', page => {
+    page.elements.ex.onclick();
+    const titles = page.analyze(page.EXAMPLE).findings.map(f => f.t);
+    assert(titles.some(t => /Prompt Injection/.test(t)));
+    assert(titles.some(t => /Hallucination/.test(t)));
+    assert(titles.some(t => /Autonomy with no oversight/.test(t)));
+    assert.match(page.elements.out.innerHTML, /<button type="button" class="chip" aria-expanded="false"/);
+    assert.doesNotMatch(page.elements.out.innerHTML, /<span class="chip"/);
+    assert.match(page.elements.out.innerHTML, /Adding a safeguard name alone does not fix/);
+  });
+  checkPage('red flags remain visible even when no glossary term is recognized', page => {
+    const text = 'We pursue perfect uptime.';
+    assert.equal(page.analyze(text).M.length, 0);
+    page.render(text);
+    assert.match(page.elements.out.innerHTML, /Red flag: Goal pursued/);
+  });
+  checkPage('batch view describes wording matches and preserves the safety boundary', page => {
+    page.batchRender('Machine learning.\n---\nPrompt injection. Guardrail.', true);
+    assert.match(page.elements.out.innerHTML, /named risks with related safeguard wording/);
+    assert.match(page.elements.out.innerHTML, /No finding does not mean a plan is safe/);
+    assert.doesNotMatch(page.elements.out.innerHTML, /risks defended|oversight is present/);
+    assert.equal(page.focused(), 'result-title');
+    assert.match(page.elements['result-status'].textContent, /2 plans checked/);
+  });
+  checkPage('empty run and Clear recover to the labeled input without retaining results', page => {
+    assert.match(page.html, /<label[^>]*for="src"/);
+    assert.match(page.html, /<textarea[^>]*aria-describedby="src-help"/);
+    assert.match(page.html, /id="result-status"[^>]*role="status"/);
+    assert.match(page.html, /class="atlas-return-nav"[\s\S]*href="index.html" target="_top"/);
+    page.runCheck();
+    assert.equal(page.focused(), 'src');
+    page.elements.ex.onclick();
+    page.elements.clr.onclick();
+    assert.equal(page.elements.src.value, '');
+    assert.doesNotMatch(page.elements.out.innerHTML, /Autonomy with no oversight/);
+    assert.equal(page.focused(), 'src');
+    assert.match(page.elements['result-status'].textContent, /cleared/);
+  });
 }
 
 // Each case lists findings that MUST appear (mustFlag) and MUST NOT appear (mustNot), matched
@@ -137,6 +251,7 @@ function run() {
     detail.push("got: " + (titles.length ? titles.join(" | ") : "(no findings)"));
     H.fail(c.name, detail);
   }
+  runPresentationCases();
   process.exit(H.summarize());
 }
 

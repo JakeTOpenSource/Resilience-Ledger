@@ -334,31 +334,31 @@
     <div class="hero">
       <div class="plumb"></div>
       <h1 class="logo" id="home-title" tabindex="-1"><span class="dot"></span>Delta Atlas</h1>
-      <p class="headline">Check the plan. Trace the decisions.</p>
-      <p class="tagline">Inspect AI plans, agent traces, and operating procedures with local tools and visible checks.</p>
+      <p class="headline">Start with a simple example.</p>
+      <p class="tagline">Review a work handover or explore checks for AI plans and action logs. No document needed to try the examples.</p>
     </div>
 
     <section class="garden-tools" aria-labelledby="tools-title">
-      <h2 class="sec" id="tools-title">Choose a task</h2>
+      <h2 class="sec" id="tools-title">Choose a starting point</h2>
       <div class="doors primary-tools">
-        <button class="card" type="button" onclick="nav('Delta-Atlas-GapCheck.html')"><span class="dk">GAP CHECK</span><span class="cn">Check an AI plan</span><span class="cw">Paste a policy, project plan or vendor claim. Find named risks without stated controls and autonomy without stated oversight.</span><span class="cgo">Open Gap Check &rarr;</span></button>
-        <button class="card" type="button" onclick="nav('Delta-Atlas-Tracer.html')"><span class="dk">PRIORITY TRACER</span><span class="cn">Inspect an agent trace</span><span class="cw">Paste a decision log. Flag language that bends a stated rule, and distinguish a rule holding from a named authority amending it.</span><span class="cgo">Open the Tracer &rarr;</span></button>
-        <button class="card" type="button" onclick="nav('Delta-Atlas-ContinuityAudit.html')"><span class="dk">CONTINUITY AUDIT</span><span class="cn">Check an operating procedure</span><span class="cw">Paste an SOP or operations manual. Find named risks without stated controls and single points of failure without documented backup.</span><span class="cgo">Open Continuity Audit &rarr;</span></button>
+        <button class="card starting-point" type="button" onclick="nav('Delta-Atlas-ContinuityAudit.html')"><span class="dk">START HERE &middot; CONTINUITY AUDIT</span><span class="cn">Look for handover gaps</span><span class="cw">What happens when the usual person is away? Answer five short questions about a task and its backup.</span><span class="cgo">Start a handover check &rarr;</span></button>
+        <button class="card" type="button" onclick="nav('Delta-Atlas-GapCheck.html')"><span class="dk">GAP CHECK</span><span class="cn">Review the wording of an AI plan</span><span class="cw">Try an example or paste a plan. Look for recognized risk and safeguard phrases. Everyday wording can be missed.</span><span class="cgo">Open AI-plan check &rarr;</span></button>
+        <button class="card" type="button" onclick="nav('Delta-Atlas-Tracer.html')"><span class="dk">TECHNICAL &middot; PRIORITY TRACER</span><span class="cn">Review an AI action log</span><span class="cw">For people testing AI assistants. Try an example or paste recorded steps to look for wording about bypassed rules.</span><span class="cgo">Open action-log review &rarr;</span></button>
       </div>
-      <p class="seclead tool-boundary">These tools check text with a fixed set of rules; a clean result does not certify correctness or safety.</p>
+      <p class="seclead tool-boundary">Experimental checks using fixed rules. Results are questions to review; a clean result does not certify correctness or safety.</p>
       <p class="substrip"><button class="dlink" type="button" onclick="nav('Coherence-Audit.html')">Framework Audit: review a general plan</button><span class="qsep">&middot;</span><button class="dlink" type="button" onclick="nav('Delta-Atlas-Start.html')">Getting started</button></p>
       <details class="sample">
-       <summary>Try a sample before using your own plan</summary>
+       <summary>Preview an AI-plan example here</summary>
        <div class="herodemo">
-        <iframe class="demoframe" data-src="Delta-Atlas-GapCheck.html#embed" title="Gap Check running on a sample AI policy" loading="lazy"></iframe>
-        <p class="demonote">A fixed example running in the real tool. Its findings concern stated structure, not the truth of the policy.</p>
+        <iframe class="demoframe" data-src="Delta-Atlas-GapCheck.html#embed" title="AI-plan wording check with an example" loading="lazy"></iframe>
+        <p class="demonote">A fixed example running in the real tool. See which phrases it recognizes and what it asks you to review. It does not verify the plan.</p>
        </div>
       </details>
     </section>
 
     <div class="block evidence-entry">
       <h2>How does it work?</h2>
-      <p>Shared JavaScript engines, labeled checks, and a documented failure and repair. Inspect the implementation and reproduce its specified behavior.</p>
+      <p>The checklist reports missing answers. The text tools match a limited set of phrases and patterns. Their code, tests and known failures are available to inspect; usefulness for new users has not yet been established.</p>
       <p><a class="dlink" href="evaluate.html">Inspect the engineering &rarr;</a><span class="qsep">&middot;</span><button class="dlink" type="button" onclick="nav('Delta-Atlas-Evidence.html')">Evidence and research</button></p>
     </div>
 

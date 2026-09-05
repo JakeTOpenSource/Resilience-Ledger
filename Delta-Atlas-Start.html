@@ -49,18 +49,19 @@ function esc(s){return (s==null?'':String(s)).replace(/[&<>]/g,c=>({'&':'&amp;',
 
 function home(){
   setStages(1,4);
-  view.innerHTML='<h1>Let\'s get you oriented</h1><p class="lead">A couple of minutes. Pick whatever fits, you can come back.</p>'+
+  view.innerHTML='<h1>Choose a starting point</h1><p class="lead">No document needed. Try an example or start with a few questions about your work.</p>'+
+   '<button class="choice" data-go="handover"><div class="t">Who takes over when someone is away? &rarr;</div><div class="d">Answer five short questions about one task. See which handover details are still missing.</div></button>'+
    '<button class="choice" data-go="learn"><div class="t">I\'m new to AI &rarr;</div><div class="d">Learn the ten words everything else is built on, one at a time.</div></button>'+
-   '<button class="choice" data-go="gap"><div class="t">I need to check a document or policy &rarr;</div><div class="d">See what governance a real document is missing.</div></button>'+
-   '<button class="choice" data-go="audit"><div class="t">I want to sharpen a plan &rarr;</div><div class="d">Score any plan and turn vague parts into measurable ones.</div></button>'+
+   '<button class="choice" data-go="gap"><div class="t">I want to review an AI plan &rarr;</div><div class="d">Try an example and see which risk and safeguard phrases the tool recognizes.</div></button>'+
+   '<button class="choice" data-go="audit"><div class="t">I want to review the wording of a plan &rarr;</div><div class="d">Explore fixed checks for action words, measures and backup steps.</div></button>'+
    '<button class="choice" data-go="lookup"><div class="t">I just want to look a word up &rarr;</div><div class="d">Go straight to the search.</div></button>';
-  view.querySelectorAll('.choice').forEach(b=>b.onclick=()=>({learn:()=>learn(0),gap:gap,audit:audit,lookup:goHome}[b.dataset.go]()));
+  view.querySelectorAll('.choice').forEach(b=>b.onclick=()=>({handover:()=>go('Delta-Atlas-ContinuityAudit.html','Handover check'),learn:()=>learn(0),gap:gap,audit:audit,lookup:goHome}[b.dataset.go]()));
 }
 function learn(i){
   if(i<0) return home(); if(i>=B.length) return done();
   setStages(2,4);
   const t=B[i];
-  view.innerHTML='<span class="back" id="bk">&larr; start over</span>'+
+  view.innerHTML='<button type="button" class="btn back" id="bk">&larr; start over</button>'+
    '<div class="card"><div class="kicker">Basic '+(i+1)+' of '+B.length+'</div><h2>'+esc(t.name)+'</h2>'+(t.sub?'<div class="subname">'+esc(t.sub)+'</div>':'')+'<div class="def">'+esc(t.def)+'</div></div>'+
    '<div class="nav"><button class="btn" id="prev">Back</button><button class="btn pri" id="next">'+(i===B.length-1?'Finish':'Next')+'</button></div>';
   document.getElementById('bk').onclick=home;
@@ -80,16 +81,16 @@ function done(){
 }
 function routeCard(kicker,title,body,btnLabel,file,lbl){
   setStages(3,4);
-  view.innerHTML='<span class="back" id="bk">&larr; back</span><div class="card"><div class="kicker">'+kicker+'</div><h2>'+title+'</h2>'+
+  view.innerHTML='<button type="button" class="btn back" id="bk">&larr; back</button><div class="card"><div class="kicker">'+kicker+'</div><h2>'+title+'</h2>'+
    '<div class="explain">'+body+'</div><div class="row"><button class="btn pri" id="open">'+btnLabel+'</button></div></div>';
   document.getElementById('bk').onclick=home;
   document.getElementById('open').onclick=()=>go(file,lbl);
 }
-function gap(){ routeCard('Check a document','Gap Check',
-  'Paste an AI policy, a plan, or a vendor\'s claims. It reads the governance terms you used and tells you, in plain words, what is <b>missing</b>: a risk with no defense, autonomy with no oversight, and how to close each gap.',
+function gap(){ routeCard('Gap Check','Review the wording of an AI plan',
+  'Start with the built-in example, or paste a written plan. The checker looks for recognized risk and safeguard phrases. It can miss everyday wording and cannot verify that a safeguard works. Findings are questions for review.',
   'Open Gap Check &rarr;','Delta-Atlas-GapCheck.html','Gap Check'); }
-function audit(){ routeCard('Sharpen a plan','Framework Audit',
-  'Paste any plan, on any topic. It scores each part on whether it says what to do, can be tested, and stays on goal, then hands you a simple pattern to make the vague parts measurable.',
+function audit(){ routeCard('Text-pattern prototype','Framework Audit',
+  'Paste a plan, one step per line, or use an example. Explore fixed checks for action words, measures and backup steps. Its scores describe detected text patterns; they do not establish that the plan is workable or testable.',
   'Open Framework Audit &rarr;','Coherence-Audit.html','Framework Audit'); }
 home();
 </script></body></html>

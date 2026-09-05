@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-atlas-return-layout="document"><head><meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Delta Atlas - Continuity Audit</title>
+<title>Look for handover gaps - Delta Atlas</title>
 <style>
  :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--green:#8fe0a5;--amber:#f2cd55;--red:#ff9d80;}
  *{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;line-height:1.55;}
@@ -40,18 +40,70 @@
  textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
  button{font-family:inherit;}
  ::placeholder{color:var(--dim);opacity:1;}
+ [hidden]{display:none!important;}
+ .handover h2,.handover-results h2{font-size:21px;line-height:1.3;text-transform:none;letter-spacing:0;color:var(--txt);}
+ .handover label{font-size:15px;text-transform:none;letter-spacing:0;color:var(--txt);font-weight:600;}
+ .handover .hint{color:var(--dim);font-size:13px;margin:4px 0 14px;}
+ .handover select{width:100%;min-height:44px;background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:9px;padding:10px 12px;}
+ .handover button,.advanced-audit>summary,.diagnostics>summary{min-height:44px;}
+ .handover :is(input,select,button):focus-visible,.handover-results:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+ .handover-status{min-height:1.6em;color:var(--dim);}
+ .handover-results{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-top:18px;overflow-wrap:anywhere;scroll-margin-top:calc(var(--atlas-return-height,0px) + 12px);}
+ .handover-results h2{margin-top:0;}
+ .handover-results h3{font-size:17px;margin-bottom:8px;}
+ .handover-answers{margin:18px 0;}
+ .handover-answers>div{padding:10px 0;border-bottom:1px solid var(--line);}
+ .handover-answers dt{font-weight:650;}
+ .handover-answers dd{margin:3px 0 0;color:var(--dim);white-space:pre-wrap;}
+ .handover-results ol{padding-left:23px;}
+ .handover-results li{margin:10px 0;}
+ .advanced-audit{margin-top:32px;border:1px solid var(--line);border-radius:10px;padding:0 16px 16px;}
+ .advanced-audit>summary,.diagnostics>summary{cursor:pointer;padding:13px 0;font-weight:650;color:var(--accent);}
+ .advanced-audit>p{color:var(--dim);font-size:14px;}
+ .diagnostics{margin-top:24px;border-top:1px solid var(--line);}
+ @media(max-width:600px){.main{padding:16px 15px 64px;}.handover-results{padding:16px;}.advanced-audit{padding-inline:12px;}.dim{flex-wrap:wrap;}.dlbl{width:100%;}.row button{min-height:44px;}}
 </style><link rel="stylesheet" href="assets/atlas-return-v1.css"/>
 <script defer src="assets/atlas-return-v1.js"></script>
+<script defer src="assets/handover-check-v1.js"></script>
 </head><body>
 <nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
 <header>
- <h1>Delta Atlas - Continuity Audit</h1>
- <p>Paste an operations manual, SOP, or workflow — one procedure per line — and the one-sentence goal it serves. Get three readings from one input: a <b>resilience</b> reading (can the manual keep the goal on track when a key person is out, a vendor fails, or an emergency hits — does it absorb, stay anchored, and recover), the <b>gaps</b> (a risk named with no stated control, single points of failure with no documented backup), and a <b>coherence score</b> (is each procedure a clear, testable action, or a vague label). Same engines as Gap Check and Framework Audit, pointed at a new domain. In the atlas grammar: the manual is the <b>claim</b>; its named backups and controls are the <b>witness</b>; brittleness is the difference. Heuristic, deterministic, entirely on your device — nothing you paste here ever leaves your browser.</p>
+ <h1>Look for handover gaps</h1>
+ <p>What happens when the usual person is away? Answer five short questions about a task and its backup. You will get questions to follow up, not a safety score.</p>
 </header>
 <div class="main">
- <label>The goal (one sentence: what is this manual for?)</label>
+ <section class="handover" aria-labelledby="handover-title">
+  <h2 id="handover-title">Start with one task</h2>
+  <div class="handover-actions" style="margin-bottom:18px"><button type="button" class="ghost" id="handover-example">Try a handover example</button></div>
+  <p class="hint">Leave anything you do not know empty. Your answers stay on this page; this tool does not save or send them.</p>
+  <label for="handover-task">What task needs to be done?</label>
+  <input id="handover-task" autocomplete="off" maxlength="300" placeholder="For example, send Friday invoices"/>
+  <label for="handover-owner">Who usually does it?</label>
+  <input id="handover-owner" autocomplete="off" maxlength="160" placeholder="For example, Sam"/>
+  <label for="handover-backup">Who is allowed to cover it?</label>
+  <input id="handover-backup" autocomplete="off" maxlength="160" aria-describedby="handover-backup-hint" placeholder="A backup person, if known"/>
+  <p class="hint" id="handover-backup-hint">Naming someone does not confirm their permission or access. Leave this empty if you do not know.</p>
+  <label for="handover-instructions">Where are the instructions?</label>
+  <input id="handover-instructions" autocomplete="off" maxlength="500" placeholder="For example, a shared checklist or folder"/>
+  <label for="handover-tried">Has the backup actually tried the task?</label>
+  <select id="handover-tried" autocomplete="off" aria-describedby="handover-tried-hint">
+   <option value="">Not provided</option><option value="yes">Yes</option><option value="no">No</option><option value="unsure">Not sure</option>
+  </select>
+  <p class="hint" id="handover-tried-hint">Even a yes answer is not verified here. A real attempt and its result need to be checked separately.</p>
+  <div class="row">
+   <button type="button" id="handover-run">Show handover gaps</button>
+   <button type="button" class="ghost" id="handover-clear">Clear answers</button>
+  </div>
+  <p class="handover-status" id="handover-status" role="status" aria-live="polite"></p>
+  <section class="handover-results" id="handover-results" tabindex="-1" aria-labelledby="handover-result-title" hidden></section>
+  <noscript><p>JavaScript is needed to show the check. You can still use the five questions above and return to Atlas home.</p></noscript>
+ </section>
+ <details class="advanced-audit" id="advanced-audit">
+ <summary>Advanced: scan existing procedure text</summary>
+ <p>The original Continuity Audit looks for word patterns in a longer document. Paste one procedure per line to see its gap findings. Optional numeric diagnostics are text-based heuristics; they do not measure operational resilience or verify actual arrangements.</p>
+ <label for="goal">The goal (one sentence: what is this manual for?)</label>
  <input id="goal" placeholder="e.g. Keep the service running whether or not any one team member is available."/>
- <label>The procedures (one per line: steps, controls, responsibilities)</label>
+ <label for="parts">The procedures (one per line: steps, controls, responsibilities)</label>
  <textarea id="parts" placeholder="One procedure per line. For example:
 Only one administrator knows the admin credentials and access keys.
 The operations lead reconciles the operation accounts against receipts every month.
@@ -59,8 +111,8 @@ A new vendor is granted building access after a background check and a signed co
 If the on-call schedule changes, only one person is informed."></textarea>
  <div class="row">
    <button id="run">Run audit</button>
-   <button class="ghost" id="ex1">Strong example</button>
-   <button class="ghost" id="ex2">Weak example</button>
+   <button class="ghost" id="ex1">Example with named controls</button>
+   <button class="ghost" id="ex2">Example with missing controls</button>
    <button class="ghost" id="clr">Clear</button>
  </div>
  <div class="overlayloader">
@@ -70,6 +122,7 @@ If the on-call schedule changes, only one person is informed."></textarea>
  </div>
  <div class="res" id="res"></div>
  <div class="note">Honest limit: this reads words and patterns, not meaning or your operation's actual arrangements. It flags likely gaps to point you where to look; it does not deliver a verdict, and it cannot see anything you haven't written down. The judgment stays yours. Atlas does not submit the text you enter to a model or API. A private overlay is optional and data-only; invalid or unsupported files are rejected.</div>
+ </details>
 </div>
 <script src="lexicon-engine.js"></script>
 <script src="coherence-score-engine.js"></script>
@@ -302,31 +355,29 @@ function run(){
   const parts=raw.map(function(t,i){return SCORER.scorePart(t,goalTokens,raw,i);});
   const roll=SCORER.rollup(parts);
   function col(v){return v>=68?'var(--green)':v>=45?'var(--accent)':v>=28?'var(--amber)':'var(--red)';}
-  const vtxt = roll.overall>=75?['Solid manual','var(--green)'] : roll.overall>=55?['Mostly solid, a few soft spots','var(--accent)'] : roll.overall>=38?['Half-formed, needs work','var(--amber)'] : ['Mostly vague','var(--red)'];
-
   let h='';
-  // Resilience headline — frames the whole audit: does the goal stay resilient throughout?
+  // Preserve legacy numeric outputs, but present findings before optional diagnostics.
   const R = resilienceReading(A, roll, parts);
-  const rv = R.overall>=72?['Reads resilient &mdash; verify against real events','var(--green)'] : R.overall>=52?['Holds, with soft spots','var(--accent)'] : R.overall>=34?['Brittle in places','var(--amber)'] : ['Not yet resilient','var(--red)'];
-  h+='<h2>Resilience of the goal</h2>';
-  h+='<div class="slop" style="margin-bottom:8px">Can this manual keep the operation on its stated goal when disrupted &mdash; a key person out, a vendor failing, an emergency? <b style="color:'+rv[1]+'">'+R.overall+' &middot; '+rv[0]+'</b></div>';
-  [['Withstand','absorbs the hit — named risks have a control',R.withstand],['Anchor','stays true to the goal under stress',R.anchor],['Recover','resets to normal after a disruption',R.recover]].forEach(function(row){
-    h+='<div class="dim"><span class="dlbl">'+row[0]+' <span style="color:var(--dim);font-weight:400;font-size:11.5px">'+row[1]+'</span></span><span class="dtrk"><span class="dfill" style="width:'+row[2]+'%;background:'+col(row[2])+'"></span></span><span class="dval">'+row[2]+'</span></div>';
-  });
-  h+='<div class="overlaynote">Resilience here follows the <b>Resilience Ledger</b>: absorb load, stay anchored to a fixed reference, recover to baseline &mdash; the withstand/recover pattern from ecological resilience (Holling 1973) and cyber-resiliency engineering (MITRE 2011; NIST SP 800-160 v2). A whole-manual reading, not a per-line score, and it credits real structure (controls that defend named risks, recovery procedures) &mdash; not reassuring vocabulary. Honest limit: it still reads words, so a determined author can inflate a middling read by naming controls that aren\'t really there. A clean read points you to verify; it does not certify.</div>';
-
-  h+='<h2>Gaps &amp; coverage</h2>';
-  h+='<div class="slop">'+A.M.length+' governance terms found &middot; '+A.areas+'/'+KB.clusters.length+' areas touched &middot; '+A.defended+'/'+A.risks.length+' risks defended</div>';
-  if(!A.findings.length){ h+='<div class="gap info"><div class="t">No gaps found</div><div class="dt">Every risk this scan recognizes has a stated control alongside it.</div></div>'; }
+  h+='<h2>Gaps to check in the text</h2>';
+  h+='<p class="slop">These are word-pattern findings. Confirm whether each arrangement is current, relevant, authorized and usable. Arrangements are <b>not verified</b> by this scan.</p>';
+  if(!A.findings.length){ h+='<div class="gap info"><div class="t">No pattern-based gaps detected</div><div class="dt">This scan did not match a gap rule. It has not checked whether a backup exists, has access, or can do the task.</div></div>'; }
   A.findings.forEach(function(f){
     h+='<div class="gap '+(f.sev==='warn'?'warn':f.sev==='info'?'info':'')+'"><div class="t">'+f.t+'</div><div class="dt">'+f.dt+'</div>';
     if(f.sugg&&f.sugg.length){ h+='<div class="sugg">Consider: '+f.sugg.map(function(id){var t=KB.terms.find(function(x){return x.id===id;}); return t?'<span class="chip">'+esc(t.name)+'</span>':'';}).join('')+'</div>'; }
     h+='</div>';
   });
 
-  h+='<h2>How the manual holds up</h2><div class="slop" style="margin-bottom:8px">'+roll.overall+' &mdash; <b style="color:'+vtxt[1]+'">'+vtxt[0]+'</b> &middot; '+roll.clearN+' of '+parts.length+' procedures are clear and testable'+(roll.vagueN?'; '+roll.vagueN+' need work.':'.')+'</div>';
+  h+='<details class="diagnostics"><summary>Numeric text-pattern diagnostics</summary>';
+  h+='<p class="slop">All values below are <b>0–100 textual heuristics</b>, not probabilities, verified controls or measurements of operational resilience. Merely listing control words can inflate them. The existing calculations are retained for comparison with earlier runs.</p>';
+  h+='<h2>Whole-text pattern scores</h2><p class="slop">Combined text-pattern score: '+R.overall+'/100.</p>';
+  [['Control-word coverage','recognized risks and control terms occur in the same text',R.withstand],['Goal-word alignment','goal overlap on lines matching action and measure patterns',R.anchor],['Recovery-word coverage','recognized recovery terms, reduced by some matched gaps',R.recover]].forEach(function(row){
+    h+='<div class="dim"><span class="dlbl">'+row[0]+' <span style="color:var(--dim);font-weight:400;font-size:11.5px">'+row[1]+'</span></span><span class="dtrk"><span class="dfill" style="width:'+row[2]+'%;background:'+col(row[2])+'"></span></span><span class="dval">'+row[2]+'</span></div>';
+  });
+  h+='<div class="slop">'+A.M.length+' vocabulary terms matched &middot; '+A.areas+'/'+KB.clusters.length+' areas matched &middot; '+A.defended+'/'+A.risks.length+' recognized risks have a related control term in the text. Co-occurrence does not establish an actual defense.</div>';
+  h+='<h2>Procedure-wording diagnostics</h2><div class="slop" style="margin-bottom:8px">Wording score: '+roll.overall+'/100 &middot; '+roll.clearN+' of '+parts.length+' lines reach the existing wording threshold. This does not verify that a procedure is clear, testable or workable.</div>';
   SCORER.DIMS.forEach(function(d){ var v=roll.dimAvg[d.k];
-    h+='<div class="dim"><span class="dlbl">'+d.label+' <span style="color:var(--dim);font-weight:400;font-size:11.5px">'+d.help+'</span></span><span class="dtrk"><span class="dfill" style="width:'+v+'%;background:'+col(v)+'"></span></span><span class="dval">'+v+'</span></div>';
+    var label=d.k==='continuity'?'Backup-word pattern':d.label, help=d.k==='continuity'?'backup wording near a single-person phrase':d.help;
+    h+='<div class="dim"><span class="dlbl">'+label+' <span style="color:var(--dim);font-weight:400;font-size:11.5px">'+help+'</span></span><span class="dtrk"><span class="dfill" style="width:'+v+'%;background:'+col(v)+'"></span></span><span class="dval">'+v+'</span></div>';
   });
 
   h+='<h2>Every procedure, scored</h2>';
@@ -336,6 +387,7 @@ function run(){
     if(p.fix.length){ h+='<div class="sugg" style="font-size:12px;color:var(--dim)"><b style="color:var(--amber)">Tighten:</b> '+p.fix[0]+'</div>'; }
     h+='</div>';
   });
+  h+='</details>';
 
   res.className='res show'; res.innerHTML=h;
   res.scrollIntoView({behavior:'smooth',block:'start'});
