@@ -3,12 +3,16 @@
 
 const fs = require('fs');
 const path = require('path');
+const child = require('child_process');
 const L = require('../ledger/lib.js');
 
 const root = path.resolve(__dirname, '..', '..');
+const recordingCommit = 'f08dd60e4c4070d2cd5a1d8f0b88d780fb67fff6';
 const relative = {
   home: 'index.html',
   guide: 'White-Paper.html',
+  library: 'Delta-Atlas-Library.html',
+  evidence: 'Delta-Atlas-Evidence.html',
   contract: 'governance/contracts/public-explanation-surfaces.contract.v1.json',
   decision: 'governance/decision-log/0011-public-explanation-surface-cleanup.md',
   event: 'governance/ledger/events/governance/000010-public-explanation-surfaces-prepared.json'
@@ -20,6 +24,14 @@ function bytes(locator) {
 
 function text(locator) {
   return bytes(locator).toString('utf8');
+}
+
+// The preparation event describes its recording commit. Current navigation is
+// checked below; changing it does not rewrite the old event or its source bytes.
+function historicalBytes(locator) {
+  return child.execFileSync('git', ['-c', `safe.directory=${root}`, 'show', `${recordingCommit}:${locator}`], {
+    cwd: root, encoding: null, maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe']
+  });
 }
 
 function count(source, pattern) {
@@ -48,7 +60,7 @@ function checkNewTabLinks(source, label, errors) {
   }
 }
 
-function contentFailures(home, guide) {
+function contentFailures(home, guide, library, evidence) {
   const errors = [];
   const requireRule = (condition, message) => { if (!condition) errors.push(message); };
   const forbidden = [
@@ -65,7 +77,7 @@ function contentFailures(home, guide) {
     /(?:Witness Ledger|v0\.6)[\s\S]{0,80}(?:in preparation|next edition)/i
   ];
   for (const pattern of forbidden) {
-    requireRule(!pattern.test(home) && !pattern.test(guide), `unsupported claim remains: ${pattern}`);
+    requireRule([home, guide, library, evidence].every((surface) => !pattern.test(surface)), `unsupported claim remains: ${pattern}`);
   }
 
   requireRule(/candidate source inventory[\s\S]{0,120}439/i.test(home),
@@ -75,18 +87,18 @@ function contentFailures(home, guide) {
   requireRule(/public data-sync baseline/i.test(home) &&
     /href=["']governance\/contracts\/atlas-data-sync-baseline\.md["']/i.test(home),
   'home must expose the recorded projection mismatch baseline');
-  requireRule(/160 recorded cross-domain primitives/i.test(home) && !/150 cross-domain primitives/i.test(home),
-    'home must report the pinned 160-record primitives inventory');
-  requireRule(/older 435-term snapshot/i.test(home),
-    'home must scope the curation dashboard to its older snapshot');
+  requireRule(/160 recorded cross-domain primitives/i.test(library) && !/150 cross-domain primitives/i.test(home + library),
+    'Library must report the pinned 160-record primitives inventory');
+  requireRule(/older 435-term snapshot/i.test(library),
+    'Library must scope the curation dashboard to its older snapshot');
   requireRule(/defined subset of core routes and engines, not every page/i.test(home) &&
     /href=["']sw\.js["']/i.test(home), 'home must bound and expose the offline cache claim');
-  requireRule(/design hypothesis, not a transferred law/i.test(home),
-    'home must bound the Cadence cross-domain analogy');
-  requireRule(/conditional indicators, not diagnoses for every real system/i.test(home),
-    'home must bound the Basin cross-domain analogy');
-  requireRule(/Open Explore and choose an area/i.test(home) &&
-    !/<button\b[^>]*class=["'][^"']*\barea\b/i.test(home),
+  requireRule(/design hypothesis, not a transferred law/i.test(library),
+    'Library must bound the Cadence cross-domain analogy');
+  requireRule(/conditional indicators, not diagnoses for every real system/i.test(library),
+    'Library must bound the Basin cross-domain analogy');
+  requireRule(/Open Explore and choose an area/i.test(library) &&
+    !/<button\b[^>]*class=["'][^"']*\barea\b/i.test(home + library),
   'area labels must be descriptive until distinct filters are implemented');
   requireRule(/Cloudflare Web Analytics/i.test(home) &&
     /does not place submitted text in request URLs or send it to a model or API/i.test(home),
@@ -140,6 +152,18 @@ function contentFailures(home, guide) {
   scriptsParse(guide, 'White-Paper.html', errors);
   checkNewTabLinks(home, 'index.html', errors);
   checkNewTabLinks(guide, 'White-Paper.html', errors);
+  for (const [label, surface] of [['Library', library], ['Evidence', evidence]]) {
+    requireRule(count(surface, /<main\b/gi) === 1 && count(surface, /<h1\b/gi) === 1,
+      `${label} index must have one main landmark and one h1`);
+    const skip = surface.match(/<a\b[^>]*class=["'][^"']*\bskip\b[^"']*["'][^>]*href=["']#([^"']+)["']/i);
+    requireRule(Boolean(skip) && new RegExp(`<main\\b[^>]*\\bid=["']${skip && skip[1]}["'][^>]*tabindex=["']-1["']`, 'i').test(surface),
+      `${label} skip link must target the focusable main landmark`);
+    requireRule(!/<(?:script|form|input|textarea|iframe)\b/i.test(surface),
+      `${label} remains a passive index without a new input or script path`);
+    requireRule(/href=["']index\.html["'][^>]*target=["']_top["']/i.test(surface),
+      `${label} must return to the top-level tools page`);
+    checkNewTabLinks(surface, label, errors);
+  }
   return errors;
 }
 
@@ -148,6 +172,14 @@ const contract = JSON.parse(text(relative.contract));
 const decision = text(relative.decision);
 const home = text(relative.home);
 const guide = text(relative.guide);
+const library = text(relative.library);
+const evidence = text(relative.evidence);
+
+for (const locator of [relative.contract, relative.decision, relative.event]) {
+  if (L.sha256CanonicalTextBytes(bytes(locator)) !== L.sha256CanonicalTextBytes(historicalBytes(locator))) {
+    errors.push(`${locator}: historical preparation record changed`);
+  }
+}
 
 if (contract.schema_version !== 'public-explanation-surfaces-contract.v1' ||
     contract.status !== 'PROPOSED_SOURCE_CLEANUP' || contract.mode !== 'PREPARE_ONLY' ||
@@ -185,7 +217,7 @@ if (!Array.isArray(primitives.primitives) || primitives.primitives.length !== 16
   errors.push('primitives inventory no longer matches the contract');
 }
 
-errors.push(...contentFailures(home, guide));
+errors.push(...contentFailures(home, guide, library, evidence));
 
 if (!fs.existsSync(path.join(root, relative.event))) {
   errors.push(`${relative.event}: prepared-source event is missing`);
@@ -204,15 +236,15 @@ if (!fs.existsSync(path.join(root, relative.event))) {
       errors.push(`${reference.ref_id}: unsafe or missing evidence locator`);
       continue;
     }
-    const actual = reference.kind === 'archival_pdf' ? L.sha256Bytes(fs.readFileSync(absolute)) :
-      L.sha256CanonicalTextBytes(fs.readFileSync(absolute));
-    if (actual !== reference.sha256) errors.push(`${reference.ref_id}: evidence digest mismatch`);
+    const recorded = historicalBytes(reference.source_locator);
+    const actual = reference.kind === 'archival_pdf' ? L.sha256Bytes(recorded) :
+      L.sha256CanonicalTextBytes(recorded);
+    if (actual !== reference.sha256) errors.push(`${reference.ref_id}: historical evidence digest mismatch`);
   }
 }
 
 const canaries = [
   [home.replace('</body>', '<p>THE ONE NOBODY ELSE HAS</p></body>'), guide],
-  [home.replace('160 recorded cross-domain primitives', '150 cross-domain primitives'), guide],
   [home.replace('</body>', '<p>Nothing you paste ever leaves your machine.</p></body>'), guide],
   [home, guide.replace(/<b>Reset(?: to baseline)?<\/b>/i, '<b>Return</b>')],
   [home, guide.replace(/archival/gi, 'historical')],
@@ -222,10 +254,18 @@ const canaries = [
   [home, guide.replace(/atlas-data-sync-baseline\.md/gi, 'missing-baseline.md')],
   [home, guide.replace('</body>', '<p>Every change is logged.</p></body>')],
   [home, guide.replace('</body>', '<p>Browse all 439 terms.</p></body>')]
-];
-for (const [index, pair] of canaries.entries()) {
-  if (pair[0] === home && pair[1] === guide) errors.push(`mutation canary ${index + 1} did not alter a surface`);
-  else if (contentFailures(pair[0], pair[1]).length === 0) errors.push(`mutation canary ${index + 1} was not rejected`);
+].map(([mutatedHome, mutatedGuide]) => [mutatedHome, mutatedGuide, library, evidence]);
+canaries.push(
+  [home, guide, library.replace('160 recorded cross-domain primitives', '150 cross-domain primitives'), evidence],
+  [home, guide, library.replace('design hypothesis, not a transferred law', 'a universal law'), evidence],
+  [home, guide, library.replace('conditional indicators, not diagnoses for every real system', 'diagnoses for every real system'), evidence],
+  [home, guide, library.replace('older 435-term snapshot', 'current accepted inventory'), evidence],
+  [home, guide, library, evidence.replace('</body>', '<script src="unreviewed.js"></script></body>')]
+);
+const currentSurfaces = [home, guide, library, evidence];
+for (const [index, surfaces] of canaries.entries()) {
+  if (surfaces.every((surface, position) => surface === currentSurfaces[position])) errors.push(`mutation canary ${index + 1} did not alter a surface`);
+  else if (contentFailures(...surfaces).length === 0) errors.push(`mutation canary ${index + 1} was not rejected`);
 }
 
 if (errors.length) {

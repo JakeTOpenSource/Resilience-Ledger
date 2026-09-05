@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const root = path.resolve(__dirname, '..', '..');
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+const library = fs.readFileSync(path.join(root, 'Delta-Atlas-Library.html'), 'utf8');
 let failures = 0;
 function check(condition, message) {
   if (!condition) { failures += 1; console.error(`FAIL ${message}`); }
@@ -33,20 +34,43 @@ check(/Cloudflare Web Analytics/.test(html) && /plan and search text are (?:anal
 check(/history\.pushState/.test(html) && /addEventListener\('popstate'/.test(html), 'history traversal is implemented');
 check(/var url=location\.href;/.test(html), 'Share preserves the active route');
 check(/Object\.freeze\(\{/.test(html) && /NAV_ROUTES/.test(html) && /hasOwnProperty\.call\(NAV_ROUTES,routePath\)/.test(html), 'fixed route allowlist remains enforced');
-check(/Paste a plan into Gap Check/.test(html) && html.indexOf('Paste a plan into Gap Check') < html.indexOf('<details class="sample">'), 'primary plan action precedes optional sample');
+const primaryNav = (html.match(/<nav\b[^>]*aria-label="Primary navigation"[^>]*>([\s\S]*?)<\/nav>/) || [])[1] || '';
+const primaryLabels = [...primaryNav.matchAll(/<button\b[^>]*>([^<]+)<\/button>/g)].map((match) => match[1].trim());
+check(JSON.stringify(primaryLabels) === JSON.stringify(['Tools', 'Evidence', 'Library']), 'primary navigation exposes exactly Tools, Evidence, and Library');
+check(/id="home0"[^>]*onclick="goHome\(true\)"/.test(primaryNav) &&
+  /data-f="Delta-Atlas-Evidence\.html"/.test(primaryNav) && /data-f="Delta-Atlas-Library\.html"/.test(primaryNav),
+  'primary navigation binds the home and two index routes');
+const searchControl = (html.match(/<button\b[^>]*id="search0"[^>]*>Search terms<\/button>/) || [])[0] || '';
+check(Boolean(searchControl) && /onclick="showSearch\(\)"/.test(searchControl) &&
+  !/\bhidden\b|aria-hidden="true"|display\s*:\s*none/.test(searchControl) &&
+  /<input\b[^>]*id="hq"[^>]*aria-label="[^"]+"/.test(html), 'visible Search control targets the labelled glossary input');
+const primaryTools = (html.match(/<div\b[^>]*class="[^"]*\bprimary-tools\b[^"]*"[^>]*>([\s\S]*?)<\/div>/) || [])[1] || '';
+const taskCards = [...primaryTools.matchAll(/<button\b[^>]*type="button"[^>]*onclick="nav\('([^']+)'\)"[^>]*>([\s\S]*?)<\/button>/g)];
+const expectedTasks = [
+  ['Delta-Atlas-GapCheck.html', 'Check an AI plan'],
+  ['Delta-Atlas-Tracer.html', 'Inspect an agent trace'],
+  ['Delta-Atlas-ContinuityAudit.html', 'Check an operating procedure']
+];
+check(taskCards.length === 3 && taskCards.every((card, index) => card[1] === expectedTasks[index][0] &&
+  card[2].includes(expectedTasks[index][1]) && /class="cw">Paste [^<]+/.test(card[2])),
+  'three primary tasks identify their input and bind the intended existing tools');
+check(html.indexOf(primaryTools) < html.indexOf('<details class="sample">') &&
+  /class="[^"]*tool-boundary[^"]*">[^<]*A clean result does not certify correctness or safety\./.test(html),
+  'primary tasks precede the optional sample and retain a visible result ceiling');
+check(!primaryTools.includes('Coherence-Audit.html') && /onclick="nav\('Coherence-Audit\.html'\)"[^>]*>Framework Audit: review a general plan/.test(html),
+  'Framework Audit remains a reachable secondary tool');
 check(/sample\.addEventListener\('toggle'/.test(html) && /data-src="Delta-Atlas-GapCheck\.html#embed"/.test(html), 'sample frame is opt-in');
 check(/min-height:44px/.test(html) && /@media \(max-width:700px\)/.test(html), 'mobile touch and navigation rules exist');
 check(!/THE ONE NOBODY ELSE HAS/.test(html), 'unsupported competitive superlative is absent');
 check(/Candidate source inventory: 439 vocabulary records/.test(html) && /Ask and Explore snapshot: <b>435 records<\/b>/.test(html),
   'source inventory and embedded projection counts remain distinct');
-check(/160 recorded cross-domain primitives/.test(html), 'primitive count matches the recorded library');
-check(!/\b150 cross-domain primitives\b/.test(html), 'stale primitive count is absent');
-check(/These are the six topic filters available inside Explore/.test(html) &&
-  (html.match(/<button class="area"/g) || []).length === 0 &&
-  /Open Explore and choose an area/.test(html),
-  'area summaries do not pretend to deep-link to an unselected filter');
-check(/design hypothesis, not a transferred law/.test(html) && /conditional indicators, not diagnoses/.test(html),
-  'analogy cards preserve their scientific claim ceilings');
+check(/160 recorded cross-domain primitives/.test(library), 'Library primitive count matches the recorded inventory');
+check(!/\b150 cross-domain primitives\b/.test(html + library), 'stale primitive count is absent');
+check((`${html}\n${library}`.match(/<button\b[^>]*class="[^"]*\barea\b/g) || []).length === 0 &&
+  /Open Explore and choose an area/.test(library),
+  'Library directs readers to choose a real Explore filter');
+check(/design hypothesis, not a transferred law/.test(library) && /conditional indicators, not diagnoses/.test(library),
+  'relocated analogy cards preserve their scientific claim ceilings');
 check(/role="status" aria-live="polite"/.test(html) && /frame\.focus\(\)/.test(html),
   'embedded route loading is announced and focus is moved');
 check(!/every change logged with its reason|every seam on record/i.test(html), 'absolute history-coverage copy is absent');
