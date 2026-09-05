@@ -7,7 +7,7 @@ const fail=m=>{throw new Error(m);};
 const contract=JSON.parse(read('governance/contracts/atlas-runtime-contract.v1.json'));
 if(contract.type!=='delta-atlas-runtime-contract'||contract.version!==1) fail('contract identity');
 const sw=read('sw.js');
-if(!sw.includes("const CACHE='aaig-v89'")) fail('cache version');
+if(!sw.includes("const CACHE='aaig-v90'")) fail('cache version');
 if(/allSettled/.test(sw)) fail('install must not accept partial cache');
 if(!/Promise\.all\(CORE\.map\(u=>c\.add\(u\)\)\)/.test(sw)) fail('install is not fail-closed');
 const coreMatch=sw.match(/const CORE=\[([\s\S]*?)\];/); if(!coreMatch) fail('CORE not found');

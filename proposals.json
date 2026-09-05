@@ -569,6 +569,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "contain-decorative-artwork-within-the-homepage-c",
+      "date": "2026-09-05",
+      "source": {
+        "kind": "model",
+        "name": "Owner-reported screenshot reproduced at1920px; Codex-assisted live repair"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Contain decorative artwork within the homepage content height",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-05",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }
