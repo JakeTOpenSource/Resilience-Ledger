@@ -1,0 +1,653 @@
+{
+  "schema_version": "fmota-marker-assignments.v1",
+  "claim_register_sha256": "48e1d732cb8fd59ff54f47b996a2bc48ff25b62b386ba411e364f49e4b03817f",
+  "assignment_role": "AUTHOR_KEY",
+  "assignment_set_id": "author-v4",
+  "assignments": [
+    {
+      "claim_id": "FMOTA-V4-CLM-001",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-002",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-003",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-DEVICE-ANALYSIS",
+        "EV-DEVICE-RECEIPT",
+        "EV-TRANSITION-REPORT",
+        "EV-TRANSITION-RECEIPT",
+        "EV-BP-PROMPT",
+        "EV-BP-SUMMARY",
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT",
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": [
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-004",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS",
+        "EV-RL-GATE",
+        "EV-RL-ATLAS-DATA-CONTRACT",
+        "EV-RL-ATLAS-RUNTIME-CONTRACT",
+        "EV-RL-OBSERVATION-000001"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-005",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-006",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-007",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-008",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-BP-PROMPT",
+        "EV-BP-SUMMARY"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-009",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-TREE-275D"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-010",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-011",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-012",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-013",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-014",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-015",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-016",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-017",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-018",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-019",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-020",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS",
+        "EV-RL-CI-GATES"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-021",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-022",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-023",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-024",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-025",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-026",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-027",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-GATE"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-028",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-029",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-030",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-LEDGER-LIB",
+        "EV-RL-REPLAY-PY",
+        "EV-RL-VERIFY-REPLAYERS"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-031",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-032",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-033",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-034",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-035",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-036",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-037",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-038",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-GATE"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-039",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-DEVICE-ANALYSIS",
+        "EV-DEVICE-RECEIPT",
+        "EV-TRANSITION-REPORT",
+        "EV-TRANSITION-RECEIPT",
+        "EV-BP-PROMPT",
+        "EV-BP-SUMMARY",
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT"
+      ],
+      "unavailable_source_ids": [
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-062",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-040",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-GATE"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-041",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-ATLAS-DATA-CONTRACT",
+        "EV-RL-ATLAS-RUNTIME-CONTRACT",
+        "EV-RL-GATE"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-042",
+      "marker": "OBSERVED",
+      "ceiling": "Observed in the named run or artifact only; no causal or general claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-OBSERVATION-000001"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-043",
+      "marker": "OBSERVED",
+      "ceiling": "Observed in the named run or artifact only; no causal or general claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-OBSERVATION-000002"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-044",
+      "marker": "OBSERVED",
+      "ceiling": "Observed in the named run or artifact only; no causal or general claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-OBSERVATION-000003",
+        "EV-RL-CHECKPOINT-000013"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-045",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-OBSERVATION-000003",
+        "EV-RL-CHECKPOINT-000013"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-046",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-BP-PROMPT",
+        "EV-BP-SUMMARY",
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT"
+      ],
+      "unavailable_source_ids": [
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-047",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-BP-PROMPT",
+        "EV-BP-SUMMARY",
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT"
+      ],
+      "unavailable_source_ids": [
+        "EV-BP-EVALUATOR",
+        "EV-BP-RECEIPT"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-048",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-OBSERVATION-000001",
+        "EV-RL-GATE"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-049",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-RL-OBSERVATION-000001",
+        "EV-RL-OBSERVATION-000002",
+        "EV-RL-TREE-275D"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-050",
+      "marker": "OBSERVED",
+      "ceiling": "Observed in the named run or artifact only; no causal or general claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-TYPED-REFUSAL-ARMS",
+        "EV-TYPED-REFUSAL-STATS"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-051",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-TYPED-REFUSAL-ARMS",
+        "EV-TYPED-REFUSAL-STATS",
+        "EV-TYPED-REFUSAL-TREE",
+        "EV-TYPED-REFUSAL-CORPUS"
+      ],
+      "unavailable_source_ids": [
+        "EV-TYPED-REFUSAL-CORPUS"
+      ]
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-052",
+      "marker": "OBSERVED",
+      "ceiling": "Observed in the named run or artifact only; no causal or general claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-STABLE-PREREGISTRATION",
+        "EV-STABLE-DECISION-LOGS",
+        "EV-STABLE-CELLS"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-053",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-STABLE-REPLAY",
+        "EV-STABLE-CELLS",
+        "EV-STABLE-GATE"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-054",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-055",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-056",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-057",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-058",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-059",
+      "marker": "PROPOSED",
+      "ceiling": "Design, definition, or protocol proposal only; not implementation or outcome evidence.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-PUBLIC-STP-COMMIT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-060",
+      "marker": "OPEN",
+      "ceiling": "Unresolved; it cannot support acceptance, equivalence, or a positive operational claim.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-LEAN-QUERY-SOURCE",
+        "EV-LEAN-QUERY-RECEIPT"
+      ],
+      "unavailable_source_ids": []
+    },
+    {
+      "claim_id": "FMOTA-V4-CLM-061",
+      "marker": "TESTED",
+      "ceiling": "Exact only within the registered artifact, fixture, command, or derivation; no external validity unless separately stated.",
+      "rationale": "See the marked manuscript unit and its registered review sources.",
+      "relied_on_source_ids": [
+        "EV-WINDOWS-CLEAN-CLONE-V3",
+        "EV-REPRODUCE-RUNBOOK",
+        "EV-PACKET-EOL-RULE"
+      ],
+      "unavailable_source_ids": []
+    }
+  ]
+}
