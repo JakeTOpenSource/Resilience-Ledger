@@ -3,7 +3,7 @@
 // and does not collect application inputs.
 // Installation is all-or-nothing: a claimed offline shell must have every
 // declared core dependency, not a silently partial cache.
-const CACHE='aaig-v98';
+const CACHE='aaig-v99';
 const CORE=[
  'index.html','manifest.webmanifest','evaluate.html','404.html','terms.enriched.json',
  'Agentic-AI-Governance-Chat.html','Agentic-AI-Governance-GroundTruth.html','Delta-Atlas-Start.html','Delta-Atlas-Field.html',

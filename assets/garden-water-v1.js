@@ -133,9 +133,10 @@
       float ribbon(vec2 p, float y0, float y1, float x0, float x1, float w0, float w1) {
         float t = clamp((p.y - y0) / (y1 - y0), 0.0, 1.0);
         float x = mix(x0, x1, t), w = mix(w0, w1, t);
+        float endFeather = min(24.0, (y1 - y0) * 0.25);
         return (1.0 - smoothstep(w - 3.0, w, abs(p.x - x)))
           * smoothstep(y0, y0 + 6.0, p.y)
-          * (1.0 - smoothstep(y1 - 7.0, y1, p.y));
+          * (1.0 - smoothstep(y1 - endFeather, y1, p.y));
       }
       float cascades(vec2 p) {
         float m = ribbon(p, 93.0, 165.0, 1226.0, 1246.0, 13.0, 17.0);
@@ -143,8 +144,10 @@
         m = max(m, ribbon(p, 183.0, 324.0, 1365.0, 1365.0, 39.0, 47.0));
         m = max(m, ribbon(p, 346.0, 444.0, 1420.0, 1424.0, 65.0, 77.0));
         m = max(m, ribbon(p, 457.0, 489.0, 1380.0, 1376.0, 91.0, 98.0));
-        m = max(m, ribbon(p, 541.0, 656.0, 1259.0, 1288.0, 109.0, 161.0));
-        m = max(m, ribbon(p, 563.0, 662.0, 1403.0, 1440.0, 29.0, 39.0));
+        // Fade the lower curtain into its splash zone, where the pool begins.
+        // Stopping above the foam left an unmoving strip across the foot.
+        m = max(m, ribbon(p, 541.0, 687.0, 1259.0, 1288.0, 109.0, 161.0));
+        m = max(m, ribbon(p, 563.0, 689.0, 1403.0, 1440.0, 29.0, 39.0));
         return m;
       }
       float pool(vec2 p) {
@@ -178,9 +181,22 @@
         vec2 fallFlow = p - vec2(0.0, 48.0) * u_time;
         float stream = noise(fallFlow * vec2(0.072, 0.036));
         float fine = noise(fallFlow * vec2(0.17, 0.058) + vec2(4.0, 0.0));
-        // Keep the photographed vertical texture anchored: oscillating it up
-        // and down made bright strands appear to lift against the waterfall.
-        vec2 falling = vec2((stream - 0.5) * 0.65 + (fine - 0.5) * 0.25, 0.0);
+        // Two short downstream passes carry the photographed strands. Each
+        // sampling offset resets only when its own contribution is zero.
+        // Column offsets keep the whole curtain from pulsing in lockstep.
+        float phaseA = fract(u_time * (48.0 / 20.0) + noise(vec2(p.x * 0.043, 2.0)));
+        float phaseB = fract(phaseA + 0.5);
+        float weightA = 1.0 - abs(2.0 * phaseA - 1.0);
+        float sideways = (stream - 0.5) * 0.9 + (fine - 0.5) * 0.3;
+        vec2 sourceA = p + vec2(sideways, -20.0 * phaseA);
+        vec2 sourceB = p + vec2(sideways, -20.0 * phaseB);
+        vec3 passA = texture2D(u_image, clamp(sourceA / u_image_size, 0.0, 1.0)).rgb;
+        vec3 passB = texture2D(u_image, clamp(sourceB / u_image_size, 0.0, 1.0)).rgb;
+        // At the spill lips and edges, retain the base image instead of pulling
+        // a stationary stone/ledge into the moving water as a straight seam.
+        passA = mix(base, passA, cascades(sourceA));
+        passB = mix(base, passB, cascades(sourceB));
+        vec3 falling = mix(passB, passA, weightA);
 
         // Pools drift toward the foreground-left. Two-dimensional texture
         // avoids the ambiguous sideways direction of parallel wave stripes.
@@ -196,13 +212,13 @@
         detail = mix(detail, wash, washZone * 0.45);
         // Distort reflection edges sideways only, keeping their height fixed.
         vec2 rippling = vec2(surface * 0.65 + detail * 0.20, 0.0);
-        vec2 shift = falling * fall + rippling * pond;
-        vec3 moved = texture2D(u_image, clamp(uv + shift / u_image_size, 0.0, 1.0)).rgb;
+        vec3 reflection = texture2D(u_image, clamp(uv + rippling / u_image_size, 0.0, 1.0)).rgb;
+        vec3 moved = mix(reflection, falling, fall / max(fall + pond, 0.001));
 
-        // Subtle highlights travel with the local water pattern, not at a
-        // separate faster phase that can read as flashing or counter-motion.
-        float glint = pow(max(0.0, sin(fallFlow.y * 0.095 + stream * 3.0)), 8.0);
-        moved += fall * (glint * 0.045 - 0.006) * vec3(0.84, 0.95, 1.0);
+        // Irregular, elongated variations follow the same downstream field.
+        // Modulate existing color gently; no added white stripe or sine bands.
+        float filament = noise(fallFlow * vec2(0.23, 0.08) + vec2(13.0, 5.0));
+        moved *= 1.0 + fall * ((filament - 0.5) * 0.045 + (stream - 0.5) * 0.025);
         moved += pond * (surface * 0.006 + detail * 0.002) * vec3(0.60, 0.88, 0.87);
         gl_FragColor = vec4(clamp(moved, 0.0, 1.0), max(fall, pond));
       }

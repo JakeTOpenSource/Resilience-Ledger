@@ -776,6 +776,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "render-waterfall-strands-downstream-and-remove-a",
+      "date": "2026-09-06",
+      "source": {
+        "kind": "model",
+        "name": "Codex repair after owner reported static-looking water and an unnatural white line at the lower cascade"
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Render waterfall strands downstream and remove artificial highlight bands",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-06",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }
