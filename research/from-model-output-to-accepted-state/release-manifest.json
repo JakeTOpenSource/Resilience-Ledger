@@ -1,0 +1,253 @@
+{
+  "schema": "accepted-state-owner-review-release.v1",
+  "release_id": "from-model-output-to-accepted-state-0.1.0-owner-review.3",
+  "status": "OWNER_REVIEW",
+  "recorded_date": "2026-08-15",
+  "hash_basis": "SHA-256 of raw file bytes",
+  "excludes": [
+    "release-manifest.json self-reference",
+    ".tmp",
+    "__pycache__"
+  ],
+  "payload_root": "c87abd3580fcaa899eec65302d8e7d1ea5de17e0ce6730c38d5f03c8c547791c",
+  "files": {
+    ".gitattributes": {
+      "bytes": 230,
+      "media_type": "application/octet-stream",
+      "role": "release-documentation",
+      "sha256": "8e70dbf1030d624c64e5cf19d465bc7660a06992166df29675020864df68fab2",
+      "status": "OWNER_REVIEW"
+    },
+    "BOUNDARIES.md": {
+      "bytes": 3190,
+      "media_type": "text/markdown",
+      "role": "release-documentation",
+      "sha256": "78b4e9223c584a60d829d385b0c76d94cd24ec9a5a8c963b39648e47cac5ea21",
+      "status": "OWNER_REVIEW"
+    },
+    "CITATION.cff": {
+      "bytes": 1107,
+      "media_type": "application/yaml",
+      "role": "release-documentation",
+      "sha256": "2985aa0b1df571ecbf9d915774f16139e663f816d3019b89d4747567174c1a15",
+      "status": "OWNER_REVIEW"
+    },
+    "LICENSE.txt": {
+      "bytes": 1037,
+      "media_type": "text/plain",
+      "role": "release-documentation",
+      "sha256": "c86594fff80816a5443d6b26149d7a6b791338c490ca822a201deea0dab52b6f",
+      "status": "OWNER_REVIEW"
+    },
+    "README.md": {
+      "bytes": 5469,
+      "media_type": "text/markdown",
+      "role": "release-documentation",
+      "sha256": "33edfac3c2eb2c0a31d095e095ed74490aa9f96d5bd4fb8d15b473a76502d54c",
+      "status": "OWNER_REVIEW"
+    },
+    "RELATED-WORK.md": {
+      "bytes": 1360,
+      "media_type": "text/markdown",
+      "role": "release-documentation",
+      "sha256": "f2d56a7337ab424eee0f914bffe23a4ae5a4d1f82a62049a74510c226779043a",
+      "status": "OWNER_REVIEW"
+    },
+    "content_a.py": {
+      "bytes": 22832,
+      "media_type": "text/x-python",
+      "role": "paper-source",
+      "sha256": "c793f3934e694a6dde275290bfd8f11684a9f98d6080d1f5bd579763373e6aca",
+      "status": "OWNER_REVIEW"
+    },
+    "content_b.py": {
+      "bytes": 27156,
+      "media_type": "text/x-python",
+      "role": "paper-source",
+      "sha256": "d015068c9ea8d9fbb2e539f01de9969a0d8b63338d23006aaa6efaec1e2ab8ed",
+      "status": "OWNER_REVIEW"
+    },
+    "content_c.py": {
+      "bytes": 71317,
+      "media_type": "text/x-python",
+      "role": "paper-source",
+      "sha256": "687436a839a247809c6f1eb2c80e2ae529c24625db6aff418c5f2f939e5ec2e1",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/RELEASE-BUILD-RECEIPT-000001.md": {
+      "bytes": 2708,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "0e0a1c8ef73bfdd6797bb1dcdb4168264d2e9f5bd3193a1cb7ca3c0f9b175aa3",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/RELEASE-BUILD-RECEIPT-000002.md": {
+      "bytes": 6536,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "4f43366e22beeae29ce4d48d80f910ad5f93b30045b6df738412caa94dacadb5",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/RELEASE-BUILD-RECEIPT-000003.md": {
+      "bytes": 6977,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "a38b50371df75f62348f3cadebd37c766af3ba869a7cd4ae9682cf2d29e951fc",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/blind-prompt/PROMPT.md": {
+      "bytes": 1662,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "6b0628ef41bdf3b8d871238aa39ac44af43576887d5e0b1ed44ad8e7cdeccaf1",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/blind-prompt/PUBLIC-SUMMARY.md": {
+      "bytes": 1925,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "b04998e04354f0027a42aa2f082b4d934bd50a76aa387e22d73705bde5fe95c4",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/device-activation/BUILD-RECEIPT-000001.md": {
+      "bytes": 3158,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "ee60b9aa4baa0286fb5899255380d6bf9772ca9240354bddc3b1a75fce1b9ab6",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/device-activation/expected-analysis.json": {
+      "bytes": 2737,
+      "media_type": "application/json",
+      "role": "bounded-evidence",
+      "sha256": "7c550d125d383f7238ff936c7d05a3815ceb35132326253b973562fbca4b0a80",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/editorial-review/PUBLIC-DISPOSITION.md": {
+      "bytes": 5413,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "3bdf8723fa8d6d3d696a363316e627a392f86204c08129640b42c94edb056223",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/lean-query-quotient/BUILD-RECEIPT-000005.md": {
+      "bytes": 4233,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "8cdb9da9a9ddaba90c63390f1e94d11e18ca32f7d2a95b46b6ce3e1a27de79b2",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/lean-query-quotient/QueryQuotient.lean": {
+      "bytes": 3791,
+      "media_type": "application/octet-stream",
+      "role": "bounded-evidence",
+      "sha256": "cfbb166202ade30abc0c79287ff8c1acf216e91a863121ade923218caede9896",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/transition-stable-quotient/BUILD-RECEIPT-000001.md": {
+      "bytes": 4016,
+      "media_type": "text/markdown",
+      "role": "bounded-evidence",
+      "sha256": "4d0b0f50c361c51734db51a786fdc40b85de591e077d295677dbd40d63967514",
+      "status": "OWNER_REVIEW"
+    },
+    "evidence/transition-stable-quotient/expected-report.json": {
+      "bytes": 2627,
+      "media_type": "application/json",
+      "role": "bounded-evidence",
+      "sha256": "1b0e78adcac732561a0263ef2704d53b397597c502f81e88a0999a37232df183",
+      "status": "OWNER_REVIEW"
+    },
+    "figures.py": {
+      "bytes": 20056,
+      "media_type": "text/x-python",
+      "role": "paper-source",
+      "sha256": "00ddc57b44452616d4f1478f661bdc47beed9acf01fd3989f94e8751070ea239",
+      "status": "OWNER_REVIEW"
+    },
+    "figures/fig1-boundary.svg": {
+      "bytes": 4567,
+      "media_type": "image/svg+xml",
+      "role": "paper-source",
+      "sha256": "5f03bcee42dfeae18b761227cf8bd0ee11daf72cc837c99d53ef64c7d046f629",
+      "status": "OWNER_REVIEW"
+    },
+    "figures/fig2-lifecycle.svg": {
+      "bytes": 8496,
+      "media_type": "image/svg+xml",
+      "role": "paper-source",
+      "sha256": "0f8f739831c86259d8cca47493436cb729b5b6714a718d764eaba84753249e89",
+      "status": "OWNER_REVIEW"
+    },
+    "figures/fig3-stores.svg": {
+      "bytes": 3390,
+      "media_type": "image/svg+xml",
+      "role": "paper-source",
+      "sha256": "e2d39da854399b24e695dcd90a38ca12903709c586c9a8bbd253fa270b720e00",
+      "status": "OWNER_REVIEW"
+    },
+    "figures/fig4-signals.svg": {
+      "bytes": 4999,
+      "media_type": "image/svg+xml",
+      "role": "paper-source",
+      "sha256": "2d7c3e427c64835d8419375aff44bab7cffe3d17660eb46a268c311d3b69ee49",
+      "status": "OWNER_REVIEW"
+    },
+    "figures/fig5-repair.svg": {
+      "bytes": 6147,
+      "media_type": "image/svg+xml",
+      "role": "paper-source",
+      "sha256": "19d03dd2a9c4ee55229a7ef61b94c2e8119f28f805a72b55514d07ef02a1d0d3",
+      "status": "OWNER_REVIEW"
+    },
+    "paper/From-Model-Output-to-Accepted-State-Owner-Review-v3-LinkedIn.md": {
+      "bytes": 106036,
+      "media_type": "text/markdown",
+      "role": "paper-output",
+      "sha256": "7b42b837fe2bf3d7cc4c1a2f4e956ca8f44c7e8d6c35f04a5bba783a8606dbc2",
+      "status": "OWNER_REVIEW"
+    },
+    "paper/From-Model-Output-to-Accepted-State-Owner-Review-v3.pdf": {
+      "bytes": 958383,
+      "media_type": "application/pdf",
+      "role": "paper-output",
+      "sha256": "26e7f35e5e4fb125ba4339d0179cccf662d5d0fcbf09d8e27693b3b74fb0767c",
+      "status": "OWNER_REVIEW"
+    },
+    "style.py": {
+      "bytes": 7972,
+      "media_type": "text/x-python",
+      "role": "paper-source",
+      "sha256": "2465ab980b097a11bad0d7b343b64fe3aa46c809292577e14bef555dfd5e1bba",
+      "status": "OWNER_REVIEW"
+    },
+    "tools/update_manifest.py": {
+      "bytes": 2834,
+      "media_type": "text/x-python",
+      "role": "verification-tool",
+      "sha256": "96523bf6026a998d53358731550b55b485fc508ea987b0b179e6ba1e59ed4d06",
+      "status": "OWNER_REVIEW"
+    },
+    "tools/verify-release.mjs": {
+      "bytes": 4169,
+      "media_type": "text/javascript",
+      "role": "verification-tool",
+      "sha256": "4cb3fb53c5cbc3f48f1b0cbff789423db54f8d70831d0dc83934ef69b69bb960",
+      "status": "OWNER_REVIEW"
+    },
+    "tools/verify.ps1": {
+      "bytes": 2117,
+      "media_type": "text/plain",
+      "role": "verification-tool",
+      "sha256": "c59b2b523960ea1ffc54fc5e78aad406f3c8a6073046b56f0538d3262fc9070d",
+      "status": "OWNER_REVIEW"
+    },
+    "tools/verify_release.py": {
+      "bytes": 4515,
+      "media_type": "text/x-python",
+      "role": "verification-tool",
+      "sha256": "25a234898aefef17bda434738d5378e3c69cd077ca216af8bcf39146ba325e90",
+      "status": "OWNER_REVIEW"
+    }
+  }
+}
