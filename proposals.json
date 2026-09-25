@@ -822,6 +822,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "make-the-pool-flow-downstream-from-the-fall-foot",
+      "date": "2026-09-25",
+      "source": {
+        "kind": "model",
+        "name": "Owner direction 2026-09-25: the pond read as stagnant; Claude Code shader implementation. Falls, masks and still image unchanged."
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Make the pool flow downstream from the fall foot and let the splash foam drift",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-25",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }
