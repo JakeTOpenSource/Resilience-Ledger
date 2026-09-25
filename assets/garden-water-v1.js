@@ -166,7 +166,7 @@
       // The pool is a flow field, not a uniform drift. Water arrives at the foot
       // of the lower fall, spreads outward through the splash, then drains toward
       // the foreground-left, where the pool leaves the frame. The thin upper basin
-      // slides gently toward its spill lips. Speeds are image-space art speeds in
+      // slides slowly leftward. Speeds are image-space art speeds in
       // pixels per second, not measurements of physical water.
       vec2 poolField(vec2 p, out float near) {
         // The splash is a line along the whole foot of the lower curtain, from
@@ -201,15 +201,22 @@
       // One downstream pass over the pool: ripples refract the reflection,
       // photographed foam is carried along, bubbles at the splash catch light.
       vec3 poolPass(vec2 src, vec2 dir, vec2 perp, float near, vec3 base) {
-        vec2 along = vec2(dot(src, dir), dot(src, perp));
+        // The noise domain uses one fixed downstream axis for the whole pool.
+        // Projecting onto the local flow direction instead would rotate the
+        // domain from pixel to pixel and alias the ripples into grain wherever
+        // the field bends, which is exactly across the pool centre.
+        vec2 streakDir = vec2(-0.45, 0.89);
+        vec2 streakPerp = vec2(-streakDir.y, streakDir.x);
+        vec2 along = vec2(dot(src, streakDir), dot(src, streakPerp));
         // Streaks stretch along the current; ripples are finer across it.
         float ripple = noise(along * vec2(0.028, 0.115)) * 2.0 - 1.0;
         float fine = noise(along * vec2(0.075, 0.21) + vec2(5.0, 2.0)) * 2.0 - 1.0;
         float amp = 0.8 + 3.2 * near;
         vec2 shift = (perp * (ripple * 0.85 + fine * 0.25) + dir * fine * 0.30) * amp;
         vec3 c = texture2D(u_image, clamp((src + shift) / u_image_size, 0.0, 1.0)).rgb;
-        // Keep stones and banks still: only pool or curtain pixels are pulled
-        // downstream, so the splash directly under the fall keeps moving.
+        // Pull texture only where the pool or curtain masks hold at the source,
+        // so the splash directly under the fall keeps moving. The refraction
+        // shift above can still reach a few pixels past a mask edge.
         c = mix(base, c, max(pool(src), cascades(src)));
         float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
         float sat = max(c.r, max(c.g, c.b)) - min(c.r, min(c.g, c.b));
