@@ -1,0 +1,5 @@
+* -text
+
+evidence/blind-prompt/PROMPT.md whitespace=-blank-at-eof
+evidence/device-activation/BUILD-RECEIPT-000001.md whitespace=-blank-at-eof
+paper/From-Model-Output-to-Accepted-State-Owner-Review-v4-LinkedIn.md whitespace=-trailing-space

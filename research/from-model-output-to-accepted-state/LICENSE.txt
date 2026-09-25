@@ -1,0 +1,20 @@
+From Model Output to Accepted State
+Copyright (c) 2026 Jake Tiller
+
+This release packet, including its manuscript, figures, documentation, evidence
+reports, and verification source, is licensed under the Creative Commons
+Attribution 4.0 International License (CC BY 4.0).
+
+You may share and adapt the material for any purpose, including commercially,
+provided that you give appropriate credit, provide a link to the license, and
+indicate whether changes were made.
+
+Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+Full legal text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+The material is provided AS IS, without warranties or conditions of any kind.
+It is independent educational research, not legal, compliance, security,
+medical, financial, or other professional advice. Names and trademarks of cited
+projects and organizations belong to their respective owners. This license does
+not relicense third-party works that are quoted, cited, or linked. Citation does
+not imply affiliation or endorsement.
