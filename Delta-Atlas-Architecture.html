@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" data-atlas-return-layout="document">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - State-Delta Architecture</title>
+<meta name="description" content="BespokeNode and the state-delta architecture, walked top to bottom in plain English: the controlled path, the gates, HOLD versus TRIP, the four invariants, return to zero, and the V=IR crosswalk."/>
+<meta name="theme-color" content="#16301f"/>
+<link rel="icon" href="favicon.png"/>
+<style>
+ :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--flag:#ff9d80;}
+ *{box-sizing:border-box;}
+ body{margin:0;background:var(--bg);color:var(--txt);}
+ .wrap{max-width:860px;margin:0 auto;padding:24px 22px 64px;}
+ nav.page-nav{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:30px;}
+ nav.page-nav a{display:inline-flex;align-items:center;min-height:44px;}
+ h1{font-size:34px;line-height:1.2;margin:0 0 12px;}
+ .lead{font-size:17px;color:var(--dim);max-width:720px;margin:0 0 8px;line-height:1.6;}
+ .status{display:inline-block;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:20px;padding:4px 11px;margin:6px 0 0;}
+ h2{font-size:22px;margin:40px 0 10px;padding-top:8px;border-top:1px solid var(--line);}
+ h2 .n{color:var(--accent);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px;margin-right:10px;}
+ h3{font-size:16.5px;line-height:1.35;margin:18px 0 6px;}
+ p{margin:0 0 12px;max-width:760px;line-height:1.65;}
+ p b{color:var(--txt);}
+ a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere;}
+ a:hover{text-decoration-thickness:2px;}
+ a:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:2px;}
+ ol.path{counter-reset:step;list-style:none;padding:0;margin:14px 0;}
+ ol.path li{counter-increment:step;position:relative;padding:12px 16px 12px 58px;margin:0 0 8px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:var(--dim);line-height:1.55;}
+ ol.path li::before{content:counter(step);position:absolute;left:14px;top:11px;width:30px;height:30px;border-radius:50%;border:2px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:14px;}
+ ol.path li b{color:var(--txt);}
+ .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:12px 0;}
+ .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:0;}
+ .card h3{margin-top:0;} .card p{color:var(--dim);margin-bottom:8px;} .card p:last-child{margin-bottom:0;}
+ .card.hold{border-left:3px solid var(--accent);} .card.trip{border-left:3px solid var(--flag);}
+ .card.hold h3{color:var(--accent);} .card.trip h3{color:var(--flag);}
+ dl.inv{margin:12px 0;}
+ dl.inv dt{font-weight:700;margin-top:12px;} dl.inv dd{margin:2px 0 0;color:var(--dim);line-height:1.55;}
+ .tablewrap{overflow-x:auto;margin:12px 0 16px;}
+ table{border-collapse:collapse;width:100%;min-width:520px;margin:0;font-size:14px;}
+ caption{text-align:left;color:var(--dim);font-size:12.5px;padding-bottom:6px;}
+ th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.5;}
+ th{background:var(--panel);font-weight:650;} td{color:var(--dim);} td b{color:var(--txt);}
+ .note{background:var(--panel);border-left:3px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0;color:var(--dim);}
+ .note b{color:var(--txt);}
+ .limits{background:#3a2d0d;border:1px solid #6b5518;border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin:22px 0;}
+ .limits h2{border:0;margin:0 0 8px;padding:0;font-size:18px;}
+ .limits p{color:#f1ede0;}
+ footer{border-top:1px solid var(--line);padding-top:18px;margin-top:34px;color:var(--dim);font-size:13px;}
+ .skip{position:absolute;left:12px;top:-100px;z-index:2;background:var(--bg);padding:12px;}
+ .skip:focus{top:8px;}
+ .toc{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin:18px 0 8px;}
+ .toc ol{margin:6px 0 0;padding-left:22px;columns:2;column-gap:28px;} .toc li{padding:2px 0;break-inside:avoid;} .toc a{text-decoration:none;}
+ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;overflow-wrap:anywhere;}
+ @media(max-width:600px){.wrap{padding:18px 16px 48px;} h1{font-size:28px;} .toc ol{columns:1;} nav.page-nav{margin-bottom:22px;}}
+ /* canonical typography: one baseline across every page */
+ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;line-height:1.6;}
+ textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
+ button{font-family:inherit;}
+ ::placeholder{color:var(--dim);opacity:1;}
+</style>
+<link rel="stylesheet" href="assets/atlas-return-v1.css"/>
+</head>
+<body>
+<nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
+<a class="skip" href="#content">Skip to the architecture</a>
+<main class="wrap" id="content" tabindex="-1">
+<nav class="page-nav" aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas</a><a href="index.html#Delta-Atlas-Evidence.html" target="_top">Receipts and evidence</a><a href="index.html#Delta-Atlas-Library.html" target="_top">Library</a></nav>
+<header>
+<h1>State-Delta Architecture</h1>
+<p class="lead">BespokeNode, walked top to bottom. Nothing an agent does counts until it has been defined, permitted, gated, verified and accepted, in that order, by the right party at each step. This page is the framework in plain English. The <a href="Delta-Atlas-Document.html?file=BespokeNode-Spec-v0.1.md" target="_top">public specification</a> is the source it was written from.</p>
+<span class="status">Specification v0.1, candidate, 2026-09-24</span>
+</header>
+
+<nav class="toc" aria-labelledby="toc-title">
+<b id="toc-title">On this page</b>
+<ol>
+<li><a href="#thesis">The thesis</a></li>
+<li><a href="#problem">The problem it answers</a></li>
+<li><a href="#delta">State and delta</a></li>
+<li><a href="#path">The controlled path</a></li>
+<li><a href="#roles">The roles</a></li>
+<li><a href="#zones">The two zones</a></li>
+<li><a href="#gates">The gates</a></li>
+<li><a href="#protocols">The five protocols</a></li>
+<li><a href="#hold-trip">HOLD versus TRIP</a></li>
+<li><a href="#invariants">The four invariants</a></li>
+<li><a href="#ledger">The ledger and the accepted state</a></li>
+<li><a href="#contract">The conformance contract</a></li>
+<li><a href="#zero">Return to zero</a></li>
+<li><a href="#cost">The cost ladder and the meter</a></li>
+<li><a href="#crosswalk">The V=IR crosswalk</a></li>
+<li><a href="#limits">What is not yet shown</a></li>
+</ol>
+</nav>
+
+<section aria-labelledby="thesis">
+<h2 id="thesis"><span class="n">01</span>The thesis</h2>
+<p><b>Simplification is systems maintenance; the substrate is human cost.</b> Complexity is technical debt, and the debt is always paid in human cost somewhere down the line. Simplification is not dumbing down. It is maintenance work on the system.</p>
+<p>A related frame: grace versus consequences. Grace is the capability given to a system. Consequences are the cost borne. The working definition of integrity is the balance of the two.</p>
+<p>BespokeNode is not a model. It works with existing language models, vision models, planning systems, or other agentic components. It is not a product. There is nothing to buy. It is a structural floor: the part of the system that enforces safety rules locally and deterministically, whether or not the AI cooperates.</p>
+</section>
+
+<section aria-labelledby="problem">
+<h2 id="problem"><span class="n">02</span>The problem it answers</h2>
+<p>Agentic systems degrade in predictable ways as they scale. They drift. They hallucinate. They contradict themselves. They consume increasing compute to produce decreasing reliability. The mainstream response is more: more context, more data, more retrieval, more fine-tuning. The claim this framework makes is that more information does not resolve drift. It compounds it, because every accumulated data point that cannot be verified against current reality becomes another contradiction the system must navigate without resolution.</p>
+<p>Three patterns dominate current infrastructure, and each treats a symptom while accelerating the disease: unstructured accumulation of conflicting signals; fine-tuning that forces corrections to coexist with legacy data until boundaries blur; and soft governance that routes every safety property through the same probabilistic layer that generates the unsafe behavior. That last one is not infrastructure. It is hope.</p>
+</section>
+
+<section aria-labelledby="delta">
+<h2 id="delta"><span class="n">03</span>State and delta</h2>
+<p>Everything that arrives at a system's boundary is the same kind of object. A model's recommendation, a reviewer's return, a new term, a counterparty's changed tool description, the owner's own 2 a.m. spark: each is a <b>proposal</b>, a state-delta from a non-floor source, awaiting gates and a human sort. One object, one register, one gate, one queue.</p>
+<p>A state-delta is a small structured record saying what changed, where, and when. It is not a narrative. It is not a conversation history. It is the smallest thing that can be checked on its own and accepted on its own.</p>
+<p class="note">This site runs on the same rule. Every proposed change to Delta Atlas enters a register as a proposal, is validated by a deterministic gate, and is folded or declined by a human with a written reason. Sorts are terminal and the log is append-only. Read <a href="Delta-Atlas-Document.html?file=State-Delta-Bridge.md" target="_top">the State-Delta Bridge</a> for the mechanics.</p>
+</section>
+
+<section aria-labelledby="path">
+<h2 id="path"><span class="n">04</span>The controlled path</h2>
+<p>Every piece of agent work moves through the same lifecycle. No step is skippable.</p>
+<ol class="path">
+<li><b>Define the work.</b> What is being asked, in terms that can be checked.</li>
+<li><b>Check readiness.</b> Are the inputs, the sensors and the gates in place before anything runs?</li>
+<li><b>The owner permits an exact scope.</b> A generated proposal is inert until the owner permits its exact scope. Not a direction. A scope.</li>
+<li><b>The agent runs inside watch limits.</b> Bounded tokens, bounded time, bounded effects. Excursions are metered.</li>
+<li><b>The output is verified.</b> Deterministic checks first, then human review. Verification is of the output, not of the intention.</li>
+<li><b>The owner approves the exact output.</b> Never just the plan. Approval of an intention is not approval of a result.</li>
+<li><b>The next accepted state mints the contract for the next phase.</b> The next phase cannot begin until the current one is accepted and its contract exists.</li>
+</ol>
+</section>
+
+<section aria-labelledby="roles">
+<h2 id="roles"><span class="n">05</span>The roles</h2>
+<div class="tablewrap">
+<table>
+<caption>Four roles, and which of them may sort a proposal</caption>
+<thead><tr><th scope="col">Role</th><th scope="col">What it does</th><th scope="col">May it sort?</th></tr></thead>
+<tbody>
+<tr><td><b>Proposer</b></td><td>Any model, any reviewer, the author's own momentum. May add a proposal to the register.</td><td>Never. The model never holds the pen on the floor.</td></tr>
+<tr><td><b>Gate</b></td><td>Deterministic scripts. Verifies what can be verified without judgment: schema, custody, reasons, corpora, benchmarks.</td><td>No. It refuses or passes; it does not decide.</td></tr>
+<tr><td><b>Sorter</b></td><td>A human, reading cold. Folds or declines, with the reason in writing.</td><td>Yes. The only sorting authority.</td></tr>
+<tr><td><b>Counterparty</b></td><td>An agent outside your governance but inside your loop. A tool server is the pure case. It can change your agent's effective behavior unilaterally.</td><td>Never. Its changes land at review time as proposals, not at runtime.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Roles with opposing briefs produce friction by construction. That friction is the mechanism that beats sycophancy: an auditor whose brief is to attack the checker will find what an advisor whose brief is to help will not. The auditor's brief must always include checking the advisor's own record, not just the executor's output.</p>
+</section>
+
+<section aria-labelledby="zones">
+<h2 id="zones"><span class="n">06</span>The two zones</h2>
+<div class="two">
+<div class="card">
+<h3>The Dynamic Agent Layer</h3>
+<p>Where fluid reasoning, language flexibility and creative problem solving live. It runs inside a read-only, temporary sandbox that resets after each task. It has no direct authority over physical systems, financial systems, or user records.</p>
+</div>
+<div class="card">
+<h3>The Deterministic Structural Floor (the Harness)</h3>
+<p>The static, non-AI software environment on local hardware. It holds the unyielding rules of the domain: mathematical invariants, physical limits, clinical thresholds, legal boundaries. It needs no network connection to do its job. The gates run here as compiled logic outside the model's token stream, so the model cannot reason its way past them through prompting.</p>
+</div>
+</div>
+<p>Telemetry, software updates and non-critical context move through the <b>Tether</b>, the network-dependent pipeline. Single points of failure are confined to the Tether. They are never permitted in the Harness.</p>
+</section>
+
+<section aria-labelledby="gates">
+<h2 id="gates"><span class="n">07</span>The gates</h2>
+<p>Before any proposed change to system state is committed, it passes two filters, both on local hardware.</p>
+<div class="two">
+<div class="card">
+<h3>The Ontology Gate</h3>
+<p>Schema validation. Does the proposed change conform to the formal rules of the domain? Are the entities valid? Are the relationships allowed?</p>
+</div>
+<div class="card">
+<h3>The Semantics Gate</h3>
+<p>Operational coherence. Even if the change is schema-valid, does it make sense given current physical conditions, safety thresholds and context? A move can be valid on paper and catastrophic in practice. This gate catches that.</p>
+</div>
+</div>
+<p>If either gate fails, <b>Refusal Logic</b> fires. This is a hard stop, not an AI decision: a deterministic, programmatic block. The proposed change is rejected, the model loses the ability to push it through, and the failure point is logged.</p>
+</section>
+
+<section aria-labelledby="protocols">
+<h2 id="protocols"><span class="n">08</span>The five protocols</h2>
+<dl class="inv">
+<dt>Representation Locality</dt>
+<dd>Communication between components is restricted to state-deltas. Raw narrative, unstructured context and full conversation histories do not move between nodes. Long histories accumulate contradictions. Short structured deltas accumulate far fewer, and each one is small enough to gate.</dd>
+<dt>The Firewall of Cognition</dt>
+<dd>The reasoning engine never directly touches infrastructure. Tool calls and state changes execute in ephemeral sandboxes that self-destruct after returning a structured payload. The infrastructure never trusts the reasoning engine.</dd>
+<dt>Dual-Pass Local Validation</dt>
+<dd>Every proposed state-delta passes both gates before commitment. Hard programmatic boundaries cannot be argued with.</dd>
+<dt>Harness and Tether Separation</dt>
+<dd>Safety-critical functions live in the local Harness. Network failures, latency and API changes cannot compromise safety enforcement.</dd>
+<dt>Context Reset After Commit</dt>
+<dd>Once a state-delta is written to the Truth Ledger, the agent's temporary context is flushed. The next operation starts from verified current state, not from accumulated reasoning history. Drift cannot accumulate when working memory resets against verified state after each operation.</dd>
+</dl>
+</section>
+
+<section aria-labelledby="hold-trip">
+<h2 id="hold-trip"><span class="n">09</span>HOLD versus TRIP</h2>
+<p>Two safety states, each with its own recovery path. Neither is a dead end.</p>
+<div class="two">
+<div class="card hold">
+<h3>HOLD</h3>
+<p><b>Pause with a recovery path.</b> The evidence is unresolved: something needs a human look, a recheck, or more information before work continues. The system waits in its last safe state.</p>
+</div>
+<div class="card trip">
+<h3>TRIP</h3>
+<p><b>A confirmed violation with its own recovery path.</b> Something crossed a hard boundary. Work stops, the violation is recorded, and return requires going through recovery, not around it.</p>
+</div>
+</div>
+<p>The design goal is <b>productive mitigation</b>: safety that keeps the system doing useful work instead of tripping it dead. The electrical twin is selective coordination, where only the breaker nearest the fault trips and the rest of the building stays lit. The BespokeNode twin is HOLD: pause the faulted branch, keep the rest running, preserve a path back.</p>
+</section>
+
+<section aria-labelledby="invariants">
+<h2 id="invariants"><span class="n">10</span>The four invariants</h2>
+<p>These hold under every path, including HOLD and TRIP. They are not adjustable.</p>
+<dl class="inv">
+<dt>Spent capacity stays spent.</dt>
+<dd>A recovery never refunds what was used, and a retry is new work, not a continuation.</dd>
+<dt>No automatic restart.</dt>
+<dd>Nothing resumes itself. Every restart is a new permitted scope.</dd>
+<dt>Approve exact output, never just the plan.</dt>
+<dd>Approval of an intention is not approval of a result. The owner accepts exact bytes in a verified state.</dd>
+<dt>Replay without re-running external effects.</dt>
+<dd>Any decision must be reviewable from the record alone. Replaying the decision never replays its consequences in the world.</dd>
+</dl>
+</section>
+
+<section aria-labelledby="ledger">
+<h2 id="ledger"><span class="n">11</span>The ledger and the accepted state</h2>
+<p>The <b>Truth Ledger</b> is the append-only local record of validated state-deltas. Once written, entries cannot be edited or erased. The audit trail is the system, not a layer bolted on afterward.</p>
+<p>An <b>accepted state</b> is a typed boundary plus its receipts: the exact output, the verification record, and the owner's explicit acceptance, bound together. Anything downstream that needs the result reads the receipts, not somebody's summary of them.</p>
+<p><b>Thetabase</b> is the standing rule for cached knowledge: recheck access on every request. Do not trust the cache.</p>
+<p>The <b>changelog bound</b>: recursive learning is bounded above by the quality of its record. A load-bearing changelog needs honest failure accounting, falsifiable prevention rules, ingestion of its lessons as constraints, and loop closure. A system cannot learn faster than it records.</p>
+</section>
+
+<section aria-labelledby="contract">
+<h2 id="contract"><span class="n">12</span>The conformance contract</h2>
+<p>Each accepted state mints the contract for the next phase. The contract states the exact scope permitted, the gates that will check it, and what acceptance requires. An agent operating under BespokeNode never works from a standing permission. It works from the current phase's contract, and the contract expires when the phase is accepted.</p>
+</section>
+
+<section aria-labelledby="zero">
+<h2 id="zero"><span class="n">13</span>Return to zero</h2>
+<p>A confused agent returns to ground truth: sensors, verified state, training. It does not improvise a way forward from its own accumulated context, because accumulated context is exactly what drifts. Theta is home base: the fixed point that every transformation preserves. When in doubt, zero it out.</p>
+</section>
+
+<section aria-labelledby="cost">
+<h2 id="cost"><span class="n">14</span>The cost ladder and the meter</h2>
+<p>If the substrate is human cost, the system needs a meter for it. The bottom rung of the cost ladder is <b>tokens and time</b>: waste that is policy-safe to measure and directly measurable. It is the minimum viable human-cost meter. Light rungs trip HOLD before an excursion can climb to heavier rungs. That is selective coordination applied to the cost ladder.</p>
+<p>The <b>excursion contract</b>: tokens and time are a loan, not a grant. Every excursion repays at the checkpoint in one of three currencies: proven synthesis, a repeatable outcome, or an honest failure with the lesson attached. Anything else is torching, and it is metered and recorded.</p>
+<p class="note"><b>Status of this section.</b> The cost ladder, the meter and the excursion contract are supporting theory from the author's September 2026 briefing. They are stated here as design claims, not as measured results.</p>
+</section>
+
+<section aria-labelledby="crosswalk">
+<h2 id="crosswalk"><span class="n">15</span>The V=IR crosswalk</h2>
+<p>The framework crosswalks to basic circuit theory, in both directions. This is the worked example of the OpenMirror method: a one-to-one analogy mirror, verified correspondence by correspondence, where a break at any joint is a precise, located failure.</p>
+<div class="tablewrap">
+<table>
+<caption>Ohm's law, crosswalked to agent governance</caption>
+<thead><tr><th scope="col">Symbol</th><th scope="col">In the circuit</th><th scope="col">In the agent system</th></tr></thead>
+<tbody>
+<tr><th scope="row">V</th><td>Voltage. The potential that drives current.</td><td><b>Authority.</b> Permission, scope, instruction.</td></tr>
+<tr><th scope="row">I</th><td>Current. The flow of charge.</td><td><b>The flow of effects.</b> Tool calls, state changes, writes.</td></tr>
+<tr><th scope="row">R</th><td>Resistance. What the flow pushes against.</td><td><b>The gate.</b> Verification, friction.</td></tr>
+<tr><th scope="row">Open circuit</th><td>Infinite resistance. Safe, and nothing flows.</td><td>Maximum gating. Safe but useless. The goal is not maximum resistance. It is tuned resistance.</td></tr>
+<tr><th scope="row">Selective coordination</th><td>Only the breaker nearest the fault trips.</td><td>HOLD. Pause the faulted branch, keep the rest running.</td></tr>
+<tr><th scope="row">Shear drag</th><td>Current flowing against a brake. I&sup2;R loss dissipates watts as heat while V does not advance.</td><td>Resistive waste. Effort spent that moves no authority forward.</td></tr>
+<tr><th scope="row">Power = VI</th><td>The same in both cases. The ammeter cannot tell productive current from shear-drag current.</td><td>The meter cannot distinguish work from waste. That witness belongs to the accepted-state ledger, not the meter. If you only watch the meter, waste looks like work.</td></tr>
+</tbody>
+</table>
+</div>
+<p>The crosswalk is borrowed from decades of electrical safety practice, where selective coordination is a design discipline, not a metaphor. The author reports red-teaming it against a model-drafted version; the red-team notes are not yet published, and this is the version the author stands behind.</p>
+</section>
+
+<section aria-labelledby="limits" class="limits">
+<h2 id="limits">What this is not, and what is not yet shown</h2>
+<p>This is not a new AI model, not a product, not a silver bullet, and not finished work. The mechanisms are established computer science: distributed systems, ephemeral sandboxes, validation gates, append-only ledgers. What is offered is the synthesis, applied to agentic AI infrastructure.</p>
+<p>The framework is a specification at v0.1. Implementation, acceptance and independent replication are separate and pending. The probe program has validated the machinery on synthetic cases only. There is currently no evidence about true concurrent races, scheduler preemption, power loss, crash durability, or production behavior. Nothing here should be read as proof that the framework works at scale. It should be read as a precise claim about what working would look like, built to be pressure-tested.</p>
+<p>The V=IR mapping and the simplification thesis are crosswalks and analogies with a stated claim frame, not empirically validated laws. See the <a href="index.html#Delta-Atlas-Evidence.html" target="_top">receipts page</a> for exactly what has and has not been shown.</p>
+</section>
+
+<footer>
+<p>Written from <a href="Delta-Atlas-Document.html?file=BespokeNode-Spec-v0.1.md" target="_top">BespokeNode v0.1, public specification (candidate)</a>, drafted 2026-09-24 from the author's workspace materials, and from the earlier <a href="Delta-Atlas-Document.html?file=State-Delta-Bridge.md" target="_top">State-Delta Bridge</a> (v0.1, 2026-07-02), which remains in the repository as history.</p>
+<p><a href="index.html" target="_top">Back to Delta Atlas</a> &middot; <a href="index.html#Delta-Atlas-Evidence.html" target="_top">Receipts and evidence</a> &middot; <a href="Delta-Atlas-Document.html?file=LICENSE.txt" target="_top">CC BY 4.0</a></p>
+</footer>
+</main>
+<script src="assets/atlas-return-v1.js"></script>
+</body>
+</html>

@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Delta Atlas - Evidence</title>
-<meta name="description" content="Inspect Delta Atlas's code, regression tests, reproduction commands and public research candidates."/>
+<title>Delta Atlas - Receipts and evidence</title>
+<meta name="description" content="What Delta Atlas has proven, what it has not, the status of work in progress, and how to inspect the code and reproduce the checks."/>
 <meta name="theme-color" content="#16301f"/>
 <link rel="icon" href="favicon.png"/>
 <style>
- :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;}
+ :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--flag:#ff9d80;}
  *{box-sizing:border-box;}
  body{margin:0;background:var(--bg);color:var(--txt);}
  .wrap{max-width:900px;margin:0 auto;padding:24px 22px 64px;}
  nav{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:30px;}
  nav a{display:inline-flex;align-items:center;min-height:44px;}
  h1{font-size:32px;line-height:1.2;margin:0 0 12px;}
- .lead{font-size:17px;color:var(--dim);max-width:700px;margin:0;}
+ .lead{font-size:17px;color:var(--dim);max-width:720px;margin:0;line-height:1.6;}
  h2{font-size:20px;margin:34px 0 12px;}
  h3{font-size:17px;line-height:1.35;margin:6px 0 8px;}
  p{margin:0 0 12px;}
@@ -26,11 +26,19 @@
  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0;}
  .card p{color:var(--dim);}
  .card p:last-child{margin-bottom:0;}
+ .card.win{border-left:3px solid var(--win);} .card.flag{border-left:3px solid var(--flag);}
+ .card.win h3{color:var(--win);} .card.flag h3{color:var(--flag);}
+ .card ul{margin:0;padding-left:18px;} .card li{padding:4px 0;color:var(--dim);line-height:1.55;} .card li b{color:var(--txt);font-weight:600;}
  .role{font-size:12px;font-weight:650;letter-spacing:.6px;text-transform:uppercase;color:var(--dim);}
  .action{display:inline-flex;align-items:center;min-height:44px;font-weight:600;}
  .feature{border-left:3px solid var(--accent);}
  .links{padding-left:22px;margin:0;}
  .links li{padding:5px 0;}
+ .tablewrap{overflow-x:auto;margin:12px 0 16px;}
+ table{border-collapse:collapse;width:100%;min-width:520px;margin:0;font-size:14px;}
+ caption{text-align:left;color:var(--dim);font-size:12.5px;padding-bottom:6px;}
+ th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.5;}
+ th{background:var(--panel);font-weight:650;} td{color:var(--dim);} td b{color:var(--txt);}
  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0;}
  code{font-size:13px;overflow-wrap:anywhere;}
  footer{border-top:1px solid var(--line);padding-top:18px;margin-top:34px;color:var(--dim);font-size:13px;}
@@ -92,76 +100,77 @@ nav.atlas-return-nav > a {
 nav.atlas-return-nav > a:hover { border-color: #e3c258; text-decoration: underline; }
 nav.atlas-return-nav > a:focus-visible { outline: 3px solid #fafcf7; outline-offset: 2px; }
 html[data-atlas-return-layout] body > .skip { z-index: 40; }
-html[data-atlas-return-layout="query"] { --atlas-return-header-height: 78px; }
-html[data-atlas-return-layout="primitives"] { --atlas-return-header-height: 70px; }
-html[data-atlas-return-layout="query"] body > header,
-html[data-atlas-return-layout="primitives"] body > header,
-html[data-atlas-return-layout="chat"] .askbar,
-html[data-atlas-return-layout="verify"] body > .bar {
-  top: var(--atlas-return-height);
-}
-html[data-atlas-return-layout="query"] .side,
-html[data-atlas-return-layout="primitives"] .side {
-  top: calc(var(--atlas-return-height) + var(--atlas-return-header-height));
-  height: calc(100vh - var(--atlas-return-height) - var(--atlas-return-header-height));
-}
-html[data-atlas-return-layout="curation"] .side {
-  top: var(--atlas-return-height);
-  height: calc(100vh - 80px - var(--atlas-return-height));
-}
-html[data-atlas-return-layout="gap"] .wrap,
-html[data-atlas-return-layout="tracer"] .wrap {
-  min-height: calc(100vh - 66px - var(--atlas-return-height));
-}
-/* Field's canvas remains at the viewport origin; only its existing bar gains a link. */
-html[data-atlas-return-layout="field"] nav.atlas-return-nav {
-  position: static;
-  width: auto;
-  padding: 0;
-  border: 0;
-  background: transparent;
-}
-/* The error page keeps its original centered flex layout. */
-html[data-atlas-return-layout="guided"]:not([data-atlas-return-embedded="true"]) body {
-  height: auto;
-  min-height: 100%;
-}
-html[data-atlas-return-layout="not-found"] nav.atlas-return-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-}
-@media (max-width: 720px) {
-  html[data-atlas-return-layout="query"] .side,
-  html[data-atlas-return-layout="primitives"] .side,
-  html[data-atlas-return-layout="curation"] .side { top: auto; height: auto; }
-  html[data-atlas-return-layout="gap"] .wrap,
-  html[data-atlas-return-layout="tracer"] .wrap { min-height: 0; }
-}
 @media print {
   html[data-atlas-return-layout] { --atlas-return-height: 0px; }
   nav.atlas-return-nav { display: none; }
 }
-
 </style>
-
 </head>
 <body>
 <nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
-<a class="skip" href="#content">Skip to evidence</a>
+<a class="skip" href="#content">Skip to receipts</a>
 <main class="wrap" id="content" tabindex="-1">
-<nav aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas tools</a><a href="Delta-Atlas-Evidence.html" aria-current="page">Evidence</a><a href="index.html#Delta-Atlas-Library.html" target="_top">Library</a></nav>
+<nav aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas</a><a href="Delta-Atlas-Evidence.html" aria-current="page">Receipts</a><a href="Delta-Atlas-Architecture.html" target="_top">Architecture</a><a href="index.html#Delta-Atlas-Library.html" target="_top">Library</a></nav>
 <header>
-<h1>Inspect the engineering</h1>
-<p class="lead">Follow a working tool to its implementation, a documented failure and the checks that keep the repair in place.</p>
+<h1>Receipts and evidence</h1>
+<p class="lead">What has been shown, what has not, and where each claim's record lives. Dated evidence and named limits, no adjectives. Nothing on this page is called golden without the owner's explicit word.</p>
 </header>
-<section aria-labelledby="review-title">
-<h2 id="review-title">Start with the technical review</h2>
-<div class="card feature">
-<p>See how the browser tools share engines, how the tests run, and which parts of the research remain open.</p>
-<a class="action" href="evaluate.html" target="_top">Open the technical review &rarr;</a>
+
+<section aria-labelledby="proven-title">
+<h2 id="proven-title">What is proven, and what is not</h2>
+<div class="grid">
+<article class="card win">
+<h3>Proven</h3>
+<ul>
+<li><b>The probe machinery works end to end</b> on synthetic cases: declarations, sealed expectations, blind execution, contradiction detection and classification, audit hardening, public receipts.</li>
+<li><b>An audit leg with an opposing brief catches errors in the advisor's own record</b>, not just the executor's output. This is the mechanism that beats sycophancy: roles with opposing briefs produce friction by construction.</li>
+<li><b>The mechanism probes detect their targets</b> on deterministic synthetic cases.</li>
+<li><b>The chain-of-thought faithfulness instrument is not rigged.</b> An informed positive control scores faithful on it.</li>
+<li><b>The medical evaluation-integrity detector, version 2,</b> is clean on its bench under independent blind review.</li>
+</ul>
+</article>
+<article class="card flag">
+<h3>Not proven</h3>
+<ul>
+<li><b>Anything about real substrates.</b> No evidence on true concurrency, scheduler preemption, power loss, crash durability, or production behavior. The bench gives none.</li>
+<li><b>Two ground-truth probes are verified but not golden.</b> Built and blind-checker-verified; not owner-accepted.</li>
+<li><b>The chain-of-thought story-pair claim is unmade.</b> The blind track has not run and the owner has not adjudicated.</li>
+<li><b>The medical detector is unaccepted and unpublished.</b></li>
+<li><b>The V=IR mapping and the simplification thesis</b> are crosswalks and analogies with a stated claim frame, not empirically validated laws.</li>
+<li><b>Nothing has been independently replicated.</b></li>
+</ul>
+</article>
 </div>
 </section>
+
+<section aria-labelledby="gold-title">
+<h2 id="gold-title">Minted gold</h2>
+<div class="card feature">
+<span class="role">Public &middot; MIT &middot; minted gold by owner decision 2026-09-23</span>
+<h3><a href="https://github.com/JakeTOpenSource/parallel-advisor-pilot-001" target="_blank" rel="noopener noreferrer">pilot-001: a parallel advisor system</a></h3>
+<p>An eval-of-evals harness. It does not grade models. It grades the eval: were the answers locked before the run, did two independent parties reproduce them, what happened when they disagreed, and can a stranger re-run the whole thing.</p>
+<p>The first clause ran the full course: declaration, sealed expectations, blind two-track execution on two operating systems, a contradiction found and classified and resolved on the record, the detector hardened by an independent audit, re-audit, public receipts, and the judge's mint. The audit leg caught an error in the advisor's own record, not just executor output.</p>
+<p>What it does not prove: that the executors are smart, honest in general, or aligned. This pilot was deterministic. It proves the machinery, not the models. Judgment-based tasks, where an executor could actually drift, are the stated next frontier.</p>
+<a class="action" href="https://github.com/JakeTOpenSource/parallel-advisor-pilot-001" target="_blank" rel="noopener noreferrer">Read the receipts on GitHub &rarr;</a>
+</div>
+</section>
+
+<section aria-labelledby="progress-title">
+<h2 id="progress-title">Work in progress, by status only</h2>
+<p>These lines exist so the record is complete. Unaccepted work is named by status, not by content. Nothing below is published, golden, or citable until the owner says so.</p>
+<div class="tablewrap">
+<table>
+<caption>Status of unpublished probe series as of 2026-09-24</caption>
+<thead><tr><th scope="col">Track</th><th scope="col">Status</th><th scope="col">Gate to the next state</th></tr></thead>
+<tbody>
+<tr><td><b>Ground-truth probe series</b></td><td>Synthetic, local, unpublished. Load-bearing probes and mechanism probes green on the bench. Two further probes built and blind-checker-verified, not owner-accepted.</td><td>Owner acceptance. The bench gives no evidence about real substrates.</td></tr>
+<tr><td><b>Medical evaluation-integrity detector</b></td><td>Local, unpublished. Version 2 bench clean under independent blind review. Version 2 unaccepted; version 1 on HOLD.</td><td>Owner signature on the pending amendment and fresh sealed held-out material.</td></tr>
+<tr><td><b>Chain-of-thought faithfulness probe</b></td><td>Declaration approved and amended 2026-09-24. Thresholds pre-registered. Informed positive control run. Blind track not yet run.</td><td>Blind execution by a fresh session, then owner adjudication.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
 <section aria-labelledby="repair-title">
 <h2 id="repair-title">A failure and its repair</h2>
 <p>The earlier Gap Check detector counted cancelled human review as oversight. This input now produces an oversight-gap finding:</p>
@@ -174,6 +183,7 @@ Human review was never implemented.</code></pre>
 <li><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/gapcheck-corpus.js" target="_blank" rel="noopener noreferrer">Read the regression cases on GitHub</a></li>
 </ul>
 </section>
+
 <section aria-labelledby="reproduce-title">
 <h2 id="reproduce-title">Reproduce the checks</h2>
 <p>From a repository checkout with Node.js installed, record the commit and run:</p>
@@ -181,11 +191,19 @@ Human review was never implemented.</code></pre>
 node gapcheck-corpus.js
 node coherence-audit-corpus.js
 node continuity-audit-corpus.js</code></pre>
-<p>These checks need no package installation or model API. For the broader suite and its runtime requirements, inspect the <a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/.github/workflows/gates.yml" target="_blank" rel="noopener noreferrer">CI workflow</a>.</p>
+<p>These checks need no package installation or model API. For the broader suite and its runtime requirements, inspect the <a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/.github/workflows/gates.yml" target="_blank" rel="noopener noreferrer">CI workflow</a>. To check that the numbers on this site still trace to the repository, run Pin-Check against a checkout with stylesheets and pages in scope. This is the exact command behind the recorded clean run:</p>
+<pre><code>python skills/pin-check/pin_check.py index.html . --ext=.md,.py,.json,.js,.mjs,.txt,.yml,.yaml,.cff,.css,.html</code></pre>
+<p>With the tool's default extensions the same run reports one CSS color code and one HTML entity code as undefined, because stylesheets and pages are not read by default. The flag brings them into scope; the <a href="Delta-Atlas-Document.html?file=Delta-Atlas-Tracer-Calibration.md" target="_top">calibration log</a> records both runs.</p>
 </section>
+
 <section aria-labelledby="research-title">
 <h2 id="research-title">Public research to inspect</h2>
 <div class="grid">
+<article class="card">
+<span class="role">Specification &middot; v0.1 candidate</span>
+<h3><a href="Delta-Atlas-Architecture.html" target="_top">BespokeNode and the state-delta architecture</a></h3>
+<p>The framework walked top to bottom, with the <a href="Delta-Atlas-Document.html?file=BespokeNode-Spec-v0.1.md" target="_top">public specification</a> it was written from. A precise claim about what working would look like, built to be pressure-tested.</p>
+</article>
 <article class="card">
 <span class="role">Protocol preview &middot; PREPARE_ONLY</span>
 <h3><a href="https://github.com/JakeTOpenSource/clutch-skill" target="_blank" rel="noopener noreferrer">Clutch</a></h3>
@@ -206,13 +224,18 @@ node continuity-audit-corpus.js</code></pre>
 <h3><a href="index.html#White-Paper.html" target="_top">Project guide</a></h3>
 <p>Read the Atlas methods and limits, then inspect the <a href="Delta-Atlas-Document.html?file=Red-Team-Report.md" target="_top">red-team report</a> and <a href="Delta-Atlas-Document.html?file=governance/contracts/atlas-data-sync-baseline.md" target="_top">recorded data differences</a>.</p>
 </article>
+<article class="card">
+<span class="role">Technical review</span>
+<h3><a href="evaluate.html" target="_top">Guided engineering review</a></h3>
+<p>See how the browser tools share engines, how the tests run, and which parts of the research remain open.</p>
+</article>
 </div>
 </section>
+
 <footer>
-<p>Passing checks establish the declared behavior for the checked code and cases. They do not certify real-world safety, definition accuracy or productivity gains. Research status belongs to each linked artifact.</p>
+<p>Passing checks establish the declared behavior for the checked code and cases. They do not certify real-world safety, definition accuracy or productivity gains. Research status belongs to each linked artifact. Statuses on this page are as of 2026-09-24 and change only by owner decision.</p>
 <p><a href="index.html#Delta-Atlas-Library.html" target="_top">Browse the full library</a> &middot; <a href="Delta-Atlas-Document.html?file=LICENSE.txt" target="_top">CC BY 4.0</a></p>
 </footer>
 </main>
 </body>
 </html>
-

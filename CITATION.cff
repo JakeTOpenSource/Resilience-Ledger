@@ -8,16 +8,25 @@ authors:
 license: CC-BY-4.0
 url: "https://resilience-eval-ai.pages.dev/"
 repository-code: "https://github.com/JakeTOpenSource/Resilience-Ledger"
-date-released: 2026-07-02
+date-released: 2026-09-24
 abstract: >-
-  Deterministic, client-side coherence-audit tools: a function-first
-  plain-language glossary of agentic AI and its governance, a framework
-  audit scoring coherence and resilience on eight dimensions, a gap
-  check for plans and policies, and an ordering-drift detector for
-  agent traces, together with the Resilience Ledger method documents
-  and calibration logs. No model or external API is required by the
-  analysis engines; detector lexicons are versioned and openly displayed.
+  The public record of one researcher's theory of agentic AI governance
+  and the instruments built from it. BespokeNode, a state-delta
+  governance framework (controlled path, HOLD versus TRIP, four
+  invariants); Pin-Check, a skill that traces every precise value in a
+  document to an artifact; OpenMirror, a method for turning a metaphor
+  into policy one correspondence at a time, with the V=IR crosswalk as
+  its worked example. Alongside: deterministic, client-side instruments
+  (a function-first glossary of agentic AI governance, a framework
+  audit, a gap check for plans, an ordering-drift detector for agent
+  traces), the Resilience Ledger method documents and calibration logs.
+  No model or external API is required at runtime; detector lexicons are
+  versioned and openly displayed. Claims carry their status; nothing is
+  called golden without the owner's explicit word.
 keywords:
+  - state-delta architecture
+  - BespokeNode
+  - agent governance
   - coherence audit
   - agentic AI governance
   - ordering drift

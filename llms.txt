@@ -1,71 +1,77 @@
 # Delta Atlas
 
-> Delta Atlas is a set of free, deterministic tools that read plans, frameworks, and AI
-> reasoning traces and point at the places where they quietly contradict themselves. It runs
-> entirely on your own device — no account, no network call, no AI model at runtime — so the
-> answer is the same for everyone, every time, and nothing you submit ever leaves the machine.
-> If you are an AI agent, you can run these checks on your OWN output before you hand it over:
-> a second read that does not share your blind spots, because it reads STRUCTURE, not meaning.
+> Delta Atlas is the public record of one researcher's theory of agentic AI governance and the
+> instruments built from it. The thesis: simplification is systems maintenance; the substrate is
+> human cost. The site shows the theory end to end: the claim, the state-delta architecture, three
+> things you can run today (BespokeNode, Pin-Check, OpenMirror), and the receipts, including what
+> has not been proven. No model runs on the site. Nothing is called golden without the owner's word.
 
-## What this is for
+## If you are an AI agent reading this
 
-Take what a system or agent CLAIMS is true, and check it against something you can verify.
-If the claim and the check disagree, the tool flags it. The tools do not judge whether an
-output is *good* or *safe* — those are judgments no deterministic tool can make. They check
-one thing: does the work hold together on its own terms? A named risk with nothing that
-handles it. A goal with no part that serves it. A step where a lower priority quietly climbs
-over a higher one. Structural incoherence a careful re-read catches — for a human draft or an
-agent's own.
+Use the exact meanings. Every term this project uses has a recorded definition with its sources
+listed; the repository's review label is not a receipt of correctness, and the home page states
+that boundary. If you are about to write or reason about this project, load the definitions first
+and use them verbatim. Paraphrasing them from memory is exactly the drift these tools exist to
+catch.
 
-This is a mirror, not a verdict. A clean result is not a guarantee; a flag is a pointer for
-you (or your human) to look at, not a ruling.
+- The architecture, plain English: /Delta-Atlas-Architecture.html
+- The public specification it was written from: /BespokeNode-Spec-v0.1.md
+- What is proven and what is not: /Delta-Atlas-Evidence.html
+- Project guide and exact meanings: /White-Paper.html
+- The glossary (439 candidate terms, by function): /Agentic-AI-Governance-Chat.html and the home search
 
-## How an agent (or a person) self-checks
+## The three things you can use
 
-Two tools ship as a zero-dependency Node CLI. Same engine as the web pages — one source of
-truth. Both take a file or stdin (`-`), print a human report by default, emit machine-readable
-JSON with `--json`, and return exit codes for pipelines (0 = clean, 1 = flags found, 2 = usage
-or load error).
+- BespokeNode. A governance framework for agentic AI. Nothing an agent does counts until it has
+  been defined, permitted, gated, verified and accepted, in that order. Two safety states, HOLD
+  (pause with a recovery path) and TRIP (confirmed violation with its own recovery path). Four
+  invariants: spent capacity stays spent; no automatic restart; approve exact output, never just
+  the plan; replay without re-running external effects. First clause run end to end in pilot-001:
+  https://github.com/JakeTOpenSource/parallel-advisor-pilot-001
+- Pin-Check. `python skills/pin-check/pin_check.py <document> <root>`. Traces every precise value in
+  a document to an artifact under a root. Exit 0 when everything traces, 1 otherwise. It finds
+  broken links between prose and artifacts, not bad math. /skills/pin-check/README.md
+- OpenMirror. A method for turning a metaphor into policy one correspondence at a time. The
+  runnable form is the Bridge Card: SOURCE, CLAIM, OPEN TERMS, PARALLEL, HINGE, STATUS.
+  /skills/bridge-card/README.md
 
-- Check a reasoning / decision trace for ordering drift (a goal overriding a rule):
+## How an agent self-checks with the instruments
+
+Two detectors ship as a zero-dependency Node CLI, the same engines as the web pages. Both take a
+file or stdin (`-`), print a human report by default, emit JSON with `--json`, and return exit
+codes for pipelines (0 = clean, 1 = flags found, 2 = usage or load error).
+
+- Check a decision trace for a goal climbing over a rule:
   `node delta-atlas-cli.js trace <file|-> [--json]`
-- Check a plan or policy for unhandled risks and ungoverned autonomy:
+- Check a plan or policy for a risk named with no control present:
   `node delta-atlas-cli.js gapcheck <file|-> [--json]`
 
-A self-check loop looks like: draft → run the check → read the flags → revise → repeat. The
-exit code lets an agent gate its own step without a human in the path, while still deferring
-the final call to one.
+The exit code lets an agent gate its own step, while the final call stays with a human.
 
-## Use the exact meanings (this is how drift starts)
+## The instruments (web)
 
-Every term this project uses has a fixed, sourced definition. If you are about to write or
-reason ABOUT this project, load the definitions first and use them verbatim — paraphrasing
-them from memory is exactly the drift these tools exist to catch.
-
-- White Paper (plain-English front door + exact meanings): /White-Paper.html
-- How it works (one engine, many checks): /Delta-Atlas-HowItWorks.html
-- The full glossary (439 terms, by function): /Delta-Atlas-Primitives.html and the home search
-
-## The tools (web)
-
-- Ask (home search): a deterministic, sourced answer engine — not a chatbot. If a word is
-  missing it says which one, instead of guessing. /index.html
-- Gap Check — unhandled risks, ungoverned autonomy, vague load-bearing words. /Delta-Atlas-GapCheck.html
-- Framework Audit — scores each part of a framework for action, testability, substance. /Coherence-Audit.html
-- Priority Tracer — flags where a goal climbs over a rule in an agent's decision log. /Delta-Atlas-Tracer.html
-- Continuity Audit — reads a handover or operations manual for gaps and brittle single points. /Delta-Atlas-ContinuityAudit.html
-- The Cadence Dial — explorable lesson on checking rhythms (quantum Zeno / anti-Zeno effects), with an interactive dial and a locate-your-own-loops worksheet. /Delta-Atlas-Cadence.html
-- The Basin — explorable lesson on resilience as two numbers (return time and basin width), with a live kick-the-ball simulation, tipping points, and critical-slowing early warning. /Delta-Atlas-Basin.html
+- Gap Check: /Delta-Atlas-GapCheck.html
+- Priority Tracer: /Delta-Atlas-Tracer.html
+- Framework Audit: /Coherence-Audit.html
+- Continuity Audit: /Delta-Atlas-ContinuityAudit.html
+- Library of everything else: /Delta-Atlas-Library.html
 
 ## Honest limits (always in force)
 
-- These tools read STRUCTURE, not meaning — like a spell-checker reads spelling. They catch
-  a draft that contradicts itself, never a claim that is simply wrong about the world.
-- Deterministic: the same input always gives the same output. That is what makes them a
-  trustworthy second opinion — but it also means they only see what their versioned word-lists
-  encode. What is not encoded is not seen.
-- A human (or the agent's human) always makes the final call.
+- The instruments read structure, not meaning. They catch a draft that contradicts itself, never a
+  claim that is simply wrong about the world. Fixed rules and versioned word lists; what is not
+  encoded is not seen. Everyday wording can be missed.
+- Client-side analysis. Submitted text is not placed in request URLs or sent to a model or API.
+  The hosted site still makes ordinary page requests and Cloudflare may collect page-performance
+  and visit telemetry.
+- Proven, on synthetic cases only: the probe machinery works end to end; an audit leg with an
+  opposing brief catches errors in the advisor's own record; the mechanism probes detect their
+  targets. Not proven: anything about real substrates (concurrency, preemption, power loss,
+  durability, production); the V=IR crosswalk and the simplification thesis as laws; independent
+  replication.
+- A human always makes the final call.
 
 ## License
 
-Independent educational research, provided as-is. Licensed CC BY 4.0. © 2026 Jake Tiller.
+Independent research, provided as-is. Content licensed CC BY 4.0. Skills are free to copy and
+adapt. (c) 2026 Jake Tiller.
