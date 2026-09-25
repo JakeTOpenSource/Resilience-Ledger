@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Delta Atlas - Library</title>
-<meta name="description" content="Find Delta Atlas's reference tools, learning guides, simulations, experiments and curation pages."/>
+<meta name="description" content="Every Delta Atlas instrument, reference, simulation, experiment, skill and method document in one place, each with its stated limits."/>
 <meta name="theme-color" content="#16301f"/>
 <link rel="icon" href="favicon.png"/>
 <style>
@@ -31,8 +31,7 @@
  .feature{border-left:3px solid var(--accent);}
  .links{padding-left:22px;margin:0;}
  .links li{padding:5px 0;}
- pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0;}
- code{font-size:13px;overflow-wrap:anywhere;}
+ .boundary{color:var(--dim);font-size:13px;max-width:760px;}
  footer{border-top:1px solid var(--line);padding-top:18px;margin-top:34px;color:var(--dim);font-size:13px;}
  .skip{position:absolute;left:12px;top:-100px;z-index:2;background:var(--bg);padding:12px;}
  .skip:focus{top:8px;}
@@ -92,69 +91,85 @@ nav.atlas-return-nav > a {
 nav.atlas-return-nav > a:hover { border-color: #e3c258; text-decoration: underline; }
 nav.atlas-return-nav > a:focus-visible { outline: 3px solid #fafcf7; outline-offset: 2px; }
 html[data-atlas-return-layout] body > .skip { z-index: 40; }
-html[data-atlas-return-layout="query"] { --atlas-return-header-height: 78px; }
-html[data-atlas-return-layout="primitives"] { --atlas-return-header-height: 70px; }
-html[data-atlas-return-layout="query"] body > header,
-html[data-atlas-return-layout="primitives"] body > header,
-html[data-atlas-return-layout="chat"] .askbar,
-html[data-atlas-return-layout="verify"] body > .bar {
-  top: var(--atlas-return-height);
-}
-html[data-atlas-return-layout="query"] .side,
-html[data-atlas-return-layout="primitives"] .side {
-  top: calc(var(--atlas-return-height) + var(--atlas-return-header-height));
-  height: calc(100vh - var(--atlas-return-height) - var(--atlas-return-header-height));
-}
-html[data-atlas-return-layout="curation"] .side {
-  top: var(--atlas-return-height);
-  height: calc(100vh - 80px - var(--atlas-return-height));
-}
-html[data-atlas-return-layout="gap"] .wrap,
-html[data-atlas-return-layout="tracer"] .wrap {
-  min-height: calc(100vh - 66px - var(--atlas-return-height));
-}
-/* Field's canvas remains at the viewport origin; only its existing bar gains a link. */
-html[data-atlas-return-layout="field"] nav.atlas-return-nav {
-  position: static;
-  width: auto;
-  padding: 0;
-  border: 0;
-  background: transparent;
-}
-/* The error page keeps its original centered flex layout. */
-html[data-atlas-return-layout="guided"]:not([data-atlas-return-embedded="true"]) body {
-  height: auto;
-  min-height: 100%;
-}
-html[data-atlas-return-layout="not-found"] nav.atlas-return-nav {
-  position: fixed;
-  left: 0;
-  right: 0;
-}
-@media (max-width: 720px) {
-  html[data-atlas-return-layout="query"] .side,
-  html[data-atlas-return-layout="primitives"] .side,
-  html[data-atlas-return-layout="curation"] .side { top: auto; height: auto; }
-  html[data-atlas-return-layout="gap"] .wrap,
-  html[data-atlas-return-layout="tracer"] .wrap { min-height: 0; }
-}
 @media print {
   html[data-atlas-return-layout] { --atlas-return-height: 0px; }
   nav.atlas-return-nav { display: none; }
 }
-
 </style>
-
 </head>
 <body>
 <nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
 <a class="skip" href="#content">Skip to library</a>
 <main class="wrap" id="content" tabindex="-1">
-<nav aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas tools</a><a href="index.html#Delta-Atlas-Evidence.html" target="_top">Evidence</a><a href="Delta-Atlas-Library.html" aria-current="page">Library</a></nav>
+<nav aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas</a><a href="index.html#Delta-Atlas-Evidence.html" target="_top">Receipts</a><a href="Delta-Atlas-Architecture.html" target="_top">Architecture</a><a href="Delta-Atlas-Library.html" aria-current="page">Library</a></nav>
 <header>
 <h1>The library</h1>
-<p class="lead">Find a reference, explore a model or inspect the records. Each entry says what kind of work it supports.</p>
+<p class="lead">Every instrument, reference, simulation, experiment, skill and method document, grouped by what it does. Each entry states its limits.</p>
 </header>
+
+<section aria-labelledby="instruments-title">
+<h2 id="instruments-title">Instruments</h2>
+<p class="boundary">Deterministic browser tools. Fixed rules and versioned word lists, no model at runtime. Results are questions to review; a clean result does not certify correctness or safety. Everyday wording can be missed.</p>
+<div class="grid">
+<article class="card">
+<span class="role">Instrument</span>
+<h3><a href="index.html#Delta-Atlas-GapCheck.html" target="_top">Gap Check</a></h3>
+<p>Paste a plan or policy. It looks for recognized risk and safeguard phrases and reports a risk named with no control present. Try the built-in example first.</p>
+</article>
+<article class="card">
+<span class="role">Instrument</span>
+<h3><a href="index.html#Delta-Atlas-Tracer.html" target="_top">Priority Tracer</a></h3>
+<p>Paste an agent action log or decision trace. It highlights wording about a goal climbing over a rule, or a check being bypassed. Lexicon version shown in the tool.</p>
+</article>
+<article class="card">
+<span class="role">Instrument</span>
+<h3><a href="index.html#Coherence-Audit.html" target="_top">Framework Audit</a></h3>
+<p>Scores each part of a framework or plan on coherence and resilience dimensions: does it say what to do, can you tell if it worked, does it serve the goal, does it say what happens on failure.</p>
+</article>
+<article class="card">
+<span class="role">Instrument</span>
+<h3><a href="index.html#Delta-Atlas-ContinuityAudit.html" target="_top">Continuity Audit</a></h3>
+<p>A five-question work-handover check, plus the same engines pointed at an operations manual: risks with no stated control and single points of failure with no documented backup. Arrangements remain not verified.</p>
+</article>
+<article class="card">
+<span class="role">Guided input</span>
+<h3><a href="index.html#Delta-Atlas-Quick.html" target="_top">Quick Check</a></h3>
+<p>Guided input for Gap Check or Framework Audit, for a read in about a minute.</p>
+</article>
+<article class="card">
+<span class="role">Pipeline</span>
+<h3><a href="https://github.com/JakeTOpenSource/Resilience-Ledger/blob/main/delta-atlas-cli.js" target="_blank" rel="noopener noreferrer">Command-line interface</a></h3>
+<p>The same Gap Check and Tracer engines as a zero-dependency Node script with JSON output and explicit exit codes, for use in a pipeline.</p>
+</article>
+</div>
+</section>
+
+<section aria-labelledby="skills-title">
+<h2 id="skills-title">Skills and methods</h2>
+<div class="grid">
+<article class="card feature">
+<span class="role">Framework</span>
+<h3><a href="Delta-Atlas-Architecture.html" target="_top">BespokeNode and the state-delta architecture</a></h3>
+<p>The governance framework walked top to bottom. Source: the <a href="Delta-Atlas-Document.html?file=BespokeNode-Spec-v0.1.md" target="_top">v0.1 public specification</a> and the earlier <a href="Delta-Atlas-Document.html?file=State-Delta-Bridge.md" target="_top">State-Delta Bridge</a>.</p>
+</article>
+<article class="card feature">
+<span class="role">Skill</span>
+<h3><a href="Delta-Atlas-Document.html?file=skills/pin-check/README.md" target="_top">Pin-Check</a></h3>
+<p>Trace every precise number, digest, byte count and version in a document back to an artifact under a root you name. Python 3, standard library, no network.</p>
+</article>
+<article class="card feature">
+<span class="role">Method</span>
+<h3><a href="Delta-Atlas-Document.html?file=skills/bridge-card/README.md" target="_top">Bridge Card</a></h3>
+<p>The one-minute form of the OpenMirror method. Six fields, run on one paragraph before accepting it as true. Ends in accept, not yet, or a named uncertainty.</p>
+</article>
+<article class="card">
+<span class="role">Method</span>
+<h3><a href="index.html#Six-Signal-Method.html" target="_top">Six Signals</a></h3>
+<p>Separate calibration, consequence, evidence, integrity, privacy and activity. This guide reports no current system status.</p>
+</article>
+</div>
+</section>
+
 <section aria-labelledby="reference-title">
 <h2 id="reference-title">Find and understand</h2>
 <div class="grid">
@@ -175,22 +190,13 @@ html[data-atlas-return-layout="not-found"] nav.atlas-return-nav {
 <p>Browse 160 recorded cross-domain primitives and compare how a pattern is used in different fields.</p>
 </article>
 <article class="card">
-<span class="role">Method</span>
-<h3><a href="index.html#Six-Signal-Method.html" target="_top">Six Signals</a></h3>
-<p>Separate calibration, consequence, evidence, integrity, privacy and activity. This guide reports no current system status.</p>
+<span class="role">Guide</span>
+<h3><a href="index.html#Delta-Atlas-Start.html" target="_top">The two-minute guide</a></h3>
+<p>A short introduction to the tools. Also see <a href="Delta-Atlas-HowItWorks.html" target="_top">How it works</a> and the <a href="evaluate.html" target="_top">guided technical review</a>.</p>
 </article>
 </div>
 </section>
-<section aria-labelledby="help-title">
-<h2 id="help-title">Get started</h2>
-<div class="card">
-<p>Choose the input and tool that fit your question.</p>
-<ul class="links">
-<li><a href="index.html#Delta-Atlas-Start.html" target="_top">Read the two-minute guide</a> &mdash; a short introduction.</li>
-<li><a href="index.html#Delta-Atlas-Quick.html" target="_top">Use Quick Check</a> &mdash; guided input for Gap Check or Framework Audit.</li>
-</ul>
-</div>
-</section>
+
 <section aria-labelledby="lab-title">
 <h2 id="lab-title">Explore the lab</h2>
 <div class="grid">
@@ -211,6 +217,7 @@ html[data-atlas-return-layout="not-found"] nav.atlas-return-nav {
 </article>
 </div>
 </section>
+
 <section aria-labelledby="curation-title">
 <h2 id="curation-title">Curate the records</h2>
 <div class="grid">
@@ -226,24 +233,24 @@ html[data-atlas-return-layout="not-found"] nav.atlas-return-nav {
 </article>
 </div>
 </section>
+
 <section aria-labelledby="guides-title">
 <h2 id="guides-title">Read further</h2>
 <ul class="links">
-<li><a href="Delta-Atlas-HowItWorks.html" target="_top">How it works</a> &mdash; guide to the checks.</li>
-<li><a href="index.html#White-Paper.html" target="_top">Project guide and evidence boundaries</a> &mdash; methods and current limits.</li>
-<li><a href="Delta-Atlas-Document.html?file=Delta-Atlas-Canon.md" target="_top">Delta Atlas Canon</a> &mdash; reference vocabulary and portable specification.</li>
-<li><a href="Delta-Atlas-Document.html?file=Agentic-AI-Governance-Glossary.md" target="_top">Glossary as text</a> &mdash; the written reference.</li>
-<li><a href="Delta-Atlas-Document.html?file=README-Portability.md" target="_top">Portability</a> &mdash; runtime and offline boundaries.</li>
-<li><a href="Delta-Atlas-Document.html?file=Translator-Framework-Design.md" target="_top">Framework design</a> &mdash; the data model and translation method.</li>
-<li><a href="Delta-Atlas-Document.html?file=Coherence-Ledger-Method.md" target="_top">Coherence Ledger method</a> &mdash; the audit method.</li>
-<li><a href="Delta-Atlas-Document.html?file=Red-Team-Report.md" target="_top">Red-team report</a> &mdash; documented weaknesses and counterexamples.</li>
+<li><a href="index.html#White-Paper.html" target="_top">Project guide and evidence boundaries</a>: methods and current limits.</li>
+<li><a href="Delta-Atlas-Document.html?file=Delta-Atlas-Tracer-Calibration.md" target="_top">Calibration log</a>: dated changes to the detectors and the site, with reasons and recorded limits.</li>
+<li><a href="Delta-Atlas-Document.html?file=Delta-Atlas-Canon.md" target="_top">Delta Atlas Canon</a>: reference vocabulary and portable specification.</li>
+<li><a href="Delta-Atlas-Document.html?file=Agentic-AI-Governance-Glossary.md" target="_top">Glossary as text</a>: the written reference.</li>
+<li><a href="Delta-Atlas-Document.html?file=README-Portability.md" target="_top">Portability</a>: runtime and offline boundaries.</li>
+<li><a href="Delta-Atlas-Document.html?file=Translator-Framework-Design.md" target="_top">Framework design</a>: the data model and translation method.</li>
+<li><a href="Delta-Atlas-Document.html?file=Coherence-Ledger-Method.md" target="_top">Coherence Ledger method</a>: the audit method.</li>
+<li><a href="Delta-Atlas-Document.html?file=Red-Team-Report.md" target="_top">Red-team report</a>: documented weaknesses and counterexamples.</li>
 </ul>
 </section>
 <footer>
 <p>Reference snapshots differ, and a recorded review label does not establish semantic correctness. The <a href="Delta-Atlas-Document.html?file=governance/contracts/atlas-data-sync-baseline.md" target="_top">data-sync baseline</a> records those differences. Simulations and experiments illustrate ideas within their stated limits.</p>
-<p><a href="index.html#Delta-Atlas-Evidence.html" target="_top">Inspect the engineering evidence</a> &middot; <a href="Delta-Atlas-Document.html?file=LICENSE.txt" target="_top">CC BY 4.0</a></p>
+<p><a href="index.html#Delta-Atlas-Evidence.html" target="_top">Inspect the receipts and evidence</a> &middot; <a href="Delta-Atlas-Document.html?file=LICENSE.txt" target="_top">CC BY 4.0</a></p>
 </footer>
 </main>
 </body>
 </html>
-

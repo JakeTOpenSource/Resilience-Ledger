@@ -799,6 +799,29 @@
           "action": "queued"
         }
       ]
+    },
+    {
+      "id": "rebuild-the-home-around-the-thesis-three-usable",
+      "date": "2026-09-25",
+      "source": {
+        "kind": "model",
+        "name": "Owner declaration approved 2026-09-24 against the BespokeNode v0.1 spec; Claude Code implementation. Garden scenery retained by owner instruction."
+      },
+      "stream": "site-tools",
+      "type": "tool",
+      "title": "Rebuild the home around the thesis, three usable skills and receipts; add the State-Delta Architecture page",
+      "status": "cold-read-pending",
+      "gates": {
+        "schema": true,
+        "corpus": "n/a",
+        "bench": "n/a"
+      },
+      "log": [
+        {
+          "date": "2026-09-25",
+          "action": "queued"
+        }
+      ]
     }
   ]
 }
