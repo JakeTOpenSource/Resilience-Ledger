@@ -83,8 +83,8 @@ check(skillCards[2]?.includes('Delta-Atlas-Document.html?file=skills/bridge-card
   'OpenMirror card binds the Bridge Card and the crosswalk anchor, both of which exist');
 check(/not an empirically validated law/.test(skillCards[2] || '') && !/\bis an? (?:empirically )?(?:validated|proven) law\b/.test(skillCards[2] || ''),
   'OpenMirror card states the crosswalk is not a validated law and never upgrades it into one');
-check(/reports red-teaming/.test(skillCards[2] || '') && !/\baccepted (?:rebuild|version|one)\b/.test(skillCards[2] || ''),
-  'OpenMirror receipt is stated as an author report, not as an accepted state with no ledger entry');
+check(/I red-teamed it against a first draft; those notes are not yet published\./.test(skillCards[2] || '') && !/\baccepted (?:rebuild|version|one)\b/.test(skillCards[2] || ''),
+  'OpenMirror receipt is stated in the first person with its notes marked unpublished, not as an accepted state with no ledger entry');
 
 /* Receipts strip */
 const winBlock = (html.match(/<div class="rcol win">([\s\S]*?)<\/div>/) || [])[1] || '';
