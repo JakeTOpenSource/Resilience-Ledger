@@ -32,6 +32,22 @@
  .links{padding-left:22px;margin:0;}
  .links li{padding:5px 0;}
  .boundary{color:var(--dim);font-size:13px;max-width:760px;}
+ .gallery{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
+ .gallery li{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0;display:flex;flex-direction:column;gap:8px;}
+ .gallery a.thumb{display:block;border-radius:8px;overflow:hidden;background:#fff;}
+ .gallery a.thumb:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+ .gallery img{display:block;width:100%;height:170px;object-fit:contain;background:#fff;}
+ .gallery .cap{font-size:13px;color:var(--dim);margin:0;line-height:1.55;}
+ .gallery .cap b{color:var(--txt);}
+ .lightbox{display:none;}
+ .lightbox:target{display:block;position:fixed;inset:0;z-index:60;background:#07110c;overflow:auto;padding:14px;}
+ .lb-inner{max-width:1240px;margin:0 auto;}
+ .lb-bar{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin:0 0 8px;}
+ .lb-bar a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;}
+ .lb-close{padding:8px 14px;border:1px solid var(--accent);border-radius:22px;text-decoration:none;}
+ .lightbox img{display:block;max-width:100%;height:auto;margin:0 auto;background:#fff;border-radius:6px;}
+ .lb-cap{color:var(--dim);max-width:900px;margin:10px auto 24px;font-size:14px;}
+ .lb-cap b{color:var(--txt);}
  footer{border-top:1px solid var(--line);padding-top:18px;margin-top:34px;color:var(--dim);font-size:13px;}
  .skip{position:absolute;left:12px;top:-100px;z-index:2;background:var(--bg);padding:12px;}
  .skip:focus{top:8px;}
@@ -167,6 +183,170 @@ html[data-atlas-return-layout] body > .skip { z-index: 40; }
 <h3><a href="index.html#Six-Signal-Method.html" target="_top">Six Signals</a></h3>
 <p>Separate calibration, consequence, evidence, integrity, privacy and activity. This guide reports no current system status.</p>
 </article>
+</div>
+</section>
+
+
+
+<section id="papers" aria-labelledby="papers-title">
+<h2 id="papers-title">Protocols and papers</h2>
+<p class="boundary">The theory corpus behind the instruments. Each page says what the paper is, what it means, how it functions, and its exact status. Status words are the document's own; none is upgraded here.</p>
+<div class="grid">
+<article class="card">
+<span class="role">Protocol candidate · PROPOSED</span>
+<h3><a href="Paper-STP-v1-2.html" target="_top">State Transition Protocol v1.2 Candidate</a></h3>
+<p>The working version of the protocol, PROPOSED and under owner review. Five guarantees, each with what it does and does not cover. STP v1.1 remains the formal baseline.</p>
+</article>
+<article class="card">
+<span class="role">Protocol · formal baseline</span>
+<h3><a href="Paper-STP-v1-1.html" target="_top">State Transition Protocol v1.1</a></h3>
+<p>The formal baseline and the source of the five STP figures. One consequence path, from PROPOSE to CORRECT, with a separate receipt for each control function.</p>
+</article>
+<article class="card">
+<span class="role">Design brief · local measurements</span>
+<h3><a href="Paper-Thetabase.html" target="_top">Thetabase</a></h3>
+<p>A design brief for a caching library that reuses saved work but rechecks access on every request. Local timings, not production traffic.</p>
+</article>
+<article class="card">
+<span class="role">Research ledger · not peer reviewed</span>
+<h3><a href="Paper-Calibration-Ledger-v9.html" target="_top">Calibration Ledger v9</a></h3>
+<p>The research ledger. What was tried, what failed, and what replaced it, with every claim area labelled IMPLEMENTED, TESTED, PROPOSED, or UNKNOWN.</p>
+</article>
+<article class="card">
+<span class="role">Research note · Pin-Check</span>
+<h3><a href="Paper-Which-Labels.html" target="_top">Which labels an AI actually uses on its own work</a></h3>
+<p>The note behind Pin-Check. In the first run, the label that was correct every time was never used. Includes a ten-minute check for your own labels.</p>
+</article>
+<article class="card">
+<span class="role">Evidence review</span>
+<h3><a href="Paper-AI-Assisted-Work.html" target="_top">AI Assisted Work and Accepted State</a></h3>
+<p>The evidence review. Each component gets its own evidence boundary, so a pass in one cannot silently validate another. Negative results are retained.</p>
+</article>
+<article class="card">
+<span class="role">Working paper · owner-review draft v4</span>
+<h3><a href="Paper-From-Model-Output.html" target="_top">From Model Output to Accepted State</a></h3>
+<p>The working paper, owner-review draft v4. The typed boundary proposal, with each result marked TESTED, OBSERVED, PROPOSED, or OPEN.</p>
+</article>
+<article class="card">
+<span class="role">Blueprint · start here</span>
+<h3><a href="Paper-State-Delta-Architecture-v3.html" target="_top">State-Delta Architecture 3.0</a></h3>
+<p>The plain-language blueprint. Keep only what is currently true, check new information against reality, and set aside what cannot be verified. Start here if you are new.</p>
+</article>
+</div>
+</section>
+
+<section id="figures" aria-labelledby="figures-title">
+<h2 id="figures-title">Figures</h2>
+<p class="boundary">Select a figure to enlarge it. Every caption states what the figure shows and what it does not prove.</p>
+<ul class="gallery">
+<li><a class="thumb" href="#fig-stp-1" aria-label="Enlarge: STP v1.1, Figure 1: One consequence path, separate receipts"><img src="assets/figures/thumbs/stp-fig1-consequence-path.webp" width="720" height="269" alt="Flow diagram of ten stages in order: propose, normalize, check, authorize, prepare, execute, observe, accept, outcome, correct. A note says a failed gate records a refusal and preserves the prior accepted projection." loading="lazy"/></a>
+<p class="cap"><b>STP v1.1, Figure 1: One consequence path, separate receipts.</b> The ten-stage consequence path, from PROPOSE to CORRECT, in which each control function emits its own receipt and a failed gate records a refusal and preserves the prior accepted projection. The diagram draws the forward path only; it does not show that any implementation follows it.</p></li>
+<li><a class="thumb" href="#fig-stp-2" aria-label="Enlarge: STP v1.1, Figure 2: State layers with distinct authority"><img src="assets/figures/thumbs/stp-fig2-state-layers.webp" width="720" height="353" alt="Diagram of state layers: world state is seen through a witness observation, which feeds an evidence archive and a candidate state. The candidate state feeds the accepted projection, which feeds working context and outcome evidence, and outcome evidence feeds back into the accepted projection." loading="lazy"/></a>
+<p class="cap"><b>STP v1.1, Figure 2: State layers with distinct authority.</b> World state is reached only through witness observations; observations, candidate state, and the accepted projection are kept as separate records. Reality is accessed through fallible witnesses, and the accepted projection remains scope-bound: it is not a claim about external truth.</p></li>
+<li><a class="thumb" href="#fig-stp-3" aria-label="Enlarge: STP v1.1, Figure 3: Causal order, commutative merge, explicit conflict"><img src="assets/figures/thumbs/stp-fig3-causal-merge-conflict.webp" width="720" height="340" alt="Event graph: two separate writes from base version 12 merge into version 14. Two later writes to the same item are marked as a conflict, and the losing write is rebased." loading="lazy"/></a>
+<p class="cap"><b>STP v1.1, Figure 3: Causal order, commutative merge, explicit conflict.</b> Disjoint writes may merge. Competing writes produce an explicit conflict: one write wins, and the other is rechecked against the new base. The figure illustrates the protocol's conflict rule; it does not show that any implementation loses no updates.</p></li>
+<li><a class="thumb" href="#fig-stp-4" aria-label="Enlarge: STP v1.1, Figure 4: Hysteresis and dwell time reduce mode chattering"><img src="assets/figures/thumbs/stp-fig4-hysteresis.webp" width="720" height="325" alt="Line chart of a smooth risk signal crossing an upper enter threshold and later a lower exit threshold. The constrained-mode period lasts until the signal drops below the lower threshold." loading="lazy"/></a>
+<p class="cap"><b>STP v1.1, Figure 4: Hysteresis and dwell time reduce mode chattering.</b> Separate enter and exit thresholds, with a declared dwell time, reduce rapid switching between operating modes. The curve is illustrative and unitless, not measured data. It shows a smooth signal and does not show chattering being prevented on a noisy one.</p></li>
+<li><a class="thumb" href="#fig-stp-5" aria-label="Enlarge: STP v1.1, Figure 5: Zero trust applies to every role and adapter"><img src="assets/figures/thumbs/stp-fig5-zero-trust.webp" width="720" height="340" alt="Hub diagram: eight roles, including the model or planner, tools, witnesses, the authority service, and the ledger operator, all connect to one central non-bypassable commit boundary." loading="lazy"/></a>
+<p class="cap"><b>STP v1.1, Figure 5: Zero trust applies to every role and adapter.</b> No role, including the ledger operator and the authority service itself, bypasses the commit boundary. This is a design requirement drawn as a diagram; it does not show that any deployment enforces it.</p></li>
+<li><a class="thumb" href="#fig-vir" aria-label="Enlarge: V=IR: The alignment crosswalk (final, accepted 2026-09-14)"><img src="assets/figures/thumbs/vir-crosswalk-final.webp" width="480" height="720" alt="Poster mapping Ohm&#x27;s law onto AI agent control: voltage stands for authority, current for the flow of effects, and resistance for the gate. Five panels run from short circuit, with no gating, to open circuit, with no effects." loading="lazy"/></a>
+<p class="cap"><b>V=IR: The alignment crosswalk (final, accepted 2026-09-14).</b> V is authority, I is the flow of effects, and R is the gate, across five regimes from short circuit to open circuit. A crosswalk with a stated claim frame, read correspondence by correspondence, not an empirically validated law.</p></li>
+<li><a class="thumb" href="#fig-bespokenode" aria-label="Enlarge: BespokeNode framework diagram"><img src="assets/figures/thumbs/bespokenode-diagram.webp" width="720" height="370" alt="Governance flow diagram: define the task, check readiness, owner permits the exact scope, gated run with watch limits, verify, approve the exact output, and reach the next accepted state. HOLD and TRIP enforcement paths each have their own recovery path." loading="lazy"/></a>
+<p class="cap"><b>BespokeNode framework diagram.</b> The permission-to-accepted-work lifecycle and its two safety states, HOLD and TRIP, each with a distinct recovery path. By the diagram's own notes, core features were tested with fixed workers; multi-node scenarios, parallel chains, and join gates are not yet validated.</p></li>
+<li><a class="thumb" href="#fig-thetabase-1" aria-label="Enlarge: Thetabase, page 1 of 5: Reuse useful work. Recheck access. Adapt between runs."><img src="assets/figures/thumbs/thetabase-p1.webp" width="720" height="556" alt="3D illustration of the Thetabase flow: input passes an access check, is either computed or reused from a cache, passes a second access check, and becomes output. An offline profiling station tunes the configuration." loading="lazy"/></a>
+<p class="cap"><b>Thetabase, page 1 of 5: Reuse useful work. Recheck access. Adapt between runs.</b> The system flow: access check, compute or reuse, recheck, output, with offline profiling setting a fixed configuration for later runs. A design illustration from a design brief, not production evidence.</p></li>
+<li><a class="thumb" href="#fig-thetabase-2" aria-label="Enlarge: Thetabase, page 2 of 5: What gets optimized"><img src="assets/figures/thumbs/thetabase-p2.webp" width="720" height="556" alt="Page explaining two caching levels, whole-job reuse and stage reuse, with a small example in which one normalized batch of two orders produces a per-customer report and a per-day report." loading="lazy"/></a>
+<p class="cap"><b>Thetabase, page 2 of 5: What gets optimized.</b> Whole-job reuse by default, stage reuse only where measurements justify it, shown with a synthetic two-order example. The example shows the mechanism, not a performance result.</p></li>
+<li><a class="thumb" href="#fig-thetabase-3" aria-label="Enlarge: Thetabase, page 3 of 5: Adaptation is a measured decision"><img src="assets/figures/thumbs/thetabase-p3.webp" width="720" height="556" alt="Page describing offline adaptation in three steps, replay, compare, and configure, with the rule that reuse must save more compute than lookup, copying, and profiling cost, and a panel showing an optional research swarm that cannot grant itself access." loading="lazy"/></a>
+<p class="cap"><b>Thetabase, page 3 of 5: Adaptation is a measured decision.</b> Replay, Compare, Configure: the configuration changes only offline, from recorded runs, and is then fixed for later requests. A design brief page, not production evidence. An optional research swarm is shown as extension design; it is not required and not evaluated here.</p></li>
+<li><a class="thumb" href="#fig-thetabase-4" aria-label="Enlarge: Thetabase, page 4 of 5: Reuse pays when preparation dominates"><img src="assets/figures/thumbs/thetabase-p4.webp" width="720" height="556" alt="Two bar charts of local timings. On simple JSON reports whole-job caching is fastest; on repeated queries over one HTML document hybrid takes 1.58 seconds against 9.62 for whole-job caching and 9.54 for no cache." loading="lazy"/></a>
+<p class="cap"><b>Thetabase, page 4 of 5: Reuse pays when preparation dominates.</b> Local end-to-end timings on two workloads: whole-job caching was fastest on simple JSON reports, and hybrid stage reuse was fastest on repeated queries over one pinned HTML document. Local measurements, not production evidence; no general crossover point is claimed.</p></li>
+<li><a class="thumb" href="#fig-thetabase-5" aria-label="Enlarge: Thetabase, page 5 of 5: Use it. Measure it. Keep the receipts."><img src="assets/figures/thumbs/thetabase-p5.webp" width="720" height="556" alt="Reproduction card with two commands to verify and benchmark a kit, a five-line Python integration example that passes a host-supplied access check, and a note on design influences." loading="lazy"/></a>
+<p class="cap"><b>Thetabase, page 5 of 5: Use it. Measure it. Keep the receipts.</b> Two reproduce commands and a five-line integration example in which the host supplies the access check. The kit the commands refer to is not published on this site, and the page states that its design influences do not establish novelty or production validation.</p></li>
+</ul>
+<div class="lightbox" id="fig-stp-1" role="group" aria-label="Enlarged figure: STP v1.1, Figure 1: One consequence path, separate receipts">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/stp-fig1-consequence-path.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/stp-fig1-consequence-path.png" width="1906" height="712" alt="Flow diagram of ten stages in order: propose, normalize, check, authorize, prepare, execute, observe, accept, outcome, correct. A note says a failed gate records a refusal and preserves the prior accepted projection." loading="lazy"/>
+<p class="lb-cap"><b>STP v1.1, Figure 1: One consequence path, separate receipts.</b> The ten-stage consequence path, from PROPOSE to CORRECT, in which each control function emits its own receipt and a failed gate records a refusal and preserves the prior accepted projection. The diagram draws the forward path only; it does not show that any implementation follows it.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-stp-2" role="group" aria-label="Enlarged figure: STP v1.1, Figure 2: State layers with distinct authority">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/stp-fig2-state-layers.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/stp-fig2-state-layers.png" width="1905" height="934" alt="Diagram of state layers: world state is seen through a witness observation, which feeds an evidence archive and a candidate state. The candidate state feeds the accepted projection, which feeds working context and outcome evidence, and outcome evidence feeds back into the accepted projection." loading="lazy"/>
+<p class="lb-cap"><b>STP v1.1, Figure 2: State layers with distinct authority.</b> World state is reached only through witness observations; observations, candidate state, and the accepted projection are kept as separate records. Reality is accessed through fallible witnesses, and the accepted projection remains scope-bound: it is not a claim about external truth.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-stp-3" role="group" aria-label="Enlarged figure: STP v1.1, Figure 3: Causal order, commutative merge, explicit conflict">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/stp-fig3-causal-merge-conflict.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/stp-fig3-causal-merge-conflict.png" width="1904" height="900" alt="Event graph: two separate writes from base version 12 merge into version 14. Two later writes to the same item are marked as a conflict, and the losing write is rebased." loading="lazy"/>
+<p class="lb-cap"><b>STP v1.1, Figure 3: Causal order, commutative merge, explicit conflict.</b> Disjoint writes may merge. Competing writes produce an explicit conflict: one write wins, and the other is rechecked against the new base. The figure illustrates the protocol's conflict rule; it does not show that any implementation loses no updates.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-stp-4" role="group" aria-label="Enlarged figure: STP v1.1, Figure 4: Hysteresis and dwell time reduce mode chattering">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/stp-fig4-hysteresis.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/stp-fig4-hysteresis.png" width="1875" height="846" alt="Line chart of a smooth risk signal crossing an upper enter threshold and later a lower exit threshold. The constrained-mode period lasts until the signal drops below the lower threshold." loading="lazy"/>
+<p class="lb-cap"><b>STP v1.1, Figure 4: Hysteresis and dwell time reduce mode chattering.</b> Separate enter and exit thresholds, with a declared dwell time, reduce rapid switching between operating modes. The curve is illustrative and unitless, not measured data. It shows a smooth signal and does not show chattering being prevented on a noisy one.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-stp-5" role="group" aria-label="Enlarged figure: STP v1.1, Figure 5: Zero trust applies to every role and adapter">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/stp-fig5-zero-trust.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/stp-fig5-zero-trust.png" width="1891" height="894" alt="Hub diagram: eight roles, including the model or planner, tools, witnesses, the authority service, and the ledger operator, all connect to one central non-bypassable commit boundary." loading="lazy"/>
+<p class="lb-cap"><b>STP v1.1, Figure 5: Zero trust applies to every role and adapter.</b> No role, including the ledger operator and the authority service itself, bypasses the commit boundary. This is a design requirement drawn as a diagram; it does not show that any deployment enforces it.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-vir" role="group" aria-label="Enlarged figure: V=IR: The alignment crosswalk (final, accepted 2026-09-14)">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/vir-crosswalk-final.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/vir-crosswalk-final.png" width="832" height="1248" alt="Poster mapping Ohm&#x27;s law onto AI agent control: voltage stands for authority, current for the flow of effects, and resistance for the gate. Five panels run from short circuit, with no gating, to open circuit, with no effects." loading="lazy"/>
+<p class="lb-cap"><b>V=IR: The alignment crosswalk (final, accepted 2026-09-14).</b> V is authority, I is the flow of effects, and R is the gate, across five regimes from short circuit to open circuit. A crosswalk with a stated claim frame, read correspondence by correspondence, not an empirically validated law.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-bespokenode" role="group" aria-label="Enlarged figure: BespokeNode framework diagram">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/bespokenode-diagram.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/bespokenode-diagram.png" width="1392" height="716" alt="Governance flow diagram: define the task, check readiness, owner permits the exact scope, gated run with watch limits, verify, approve the exact output, and reach the next accepted state. HOLD and TRIP enforcement paths each have their own recovery path." loading="lazy"/>
+<p class="lb-cap"><b>BespokeNode framework diagram.</b> The permission-to-accepted-work lifecycle and its two safety states, HOLD and TRIP, each with a distinct recovery path. By the diagram's own notes, core features were tested with fixed workers; multi-node scenarios, parallel chains, and join gates are not yet validated.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-thetabase-1" role="group" aria-label="Enlarged figure: Thetabase, page 1 of 5: Reuse useful work. Recheck access. Adapt between runs">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/thetabase-p1.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/thetabase-p1.png" width="2200" height="1700" alt="3D illustration of the Thetabase flow: input passes an access check, is either computed or reused from a cache, passes a second access check, and becomes output. An offline profiling station tunes the configuration." loading="lazy"/>
+<p class="lb-cap"><b>Thetabase, page 1 of 5: Reuse useful work. Recheck access. Adapt between runs.</b> The system flow: access check, compute or reuse, recheck, output, with offline profiling setting a fixed configuration for later runs. A design illustration from a design brief, not production evidence.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-thetabase-2" role="group" aria-label="Enlarged figure: Thetabase, page 2 of 5: What gets optimized">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/thetabase-p2.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/thetabase-p2.png" width="2200" height="1700" alt="Page explaining two caching levels, whole-job reuse and stage reuse, with a small example in which one normalized batch of two orders produces a per-customer report and a per-day report." loading="lazy"/>
+<p class="lb-cap"><b>Thetabase, page 2 of 5: What gets optimized.</b> Whole-job reuse by default, stage reuse only where measurements justify it, shown with a synthetic two-order example. The example shows the mechanism, not a performance result.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-thetabase-3" role="group" aria-label="Enlarged figure: Thetabase, page 3 of 5: Adaptation is a measured decision">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/thetabase-p3.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/thetabase-p3.png" width="2200" height="1700" alt="Page describing offline adaptation in three steps, replay, compare, and configure, with the rule that reuse must save more compute than lookup, copying, and profiling cost, and a panel showing an optional research swarm that cannot grant itself access." loading="lazy"/>
+<p class="lb-cap"><b>Thetabase, page 3 of 5: Adaptation is a measured decision.</b> Replay, Compare, Configure: the configuration changes only offline, from recorded runs, and is then fixed for later requests. A design brief page, not production evidence. An optional research swarm is shown as extension design; it is not required and not evaluated here.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-thetabase-4" role="group" aria-label="Enlarged figure: Thetabase, page 4 of 5: Reuse pays when preparation dominates">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/thetabase-p4.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/thetabase-p4.png" width="2200" height="1700" alt="Two bar charts of local timings. On simple JSON reports whole-job caching is fastest; on repeated queries over one HTML document hybrid takes 1.58 seconds against 9.62 for whole-job caching and 9.54 for no cache." loading="lazy"/>
+<p class="lb-cap"><b>Thetabase, page 4 of 5: Reuse pays when preparation dominates.</b> Local end-to-end timings on two workloads: whole-job caching was fastest on simple JSON reports, and hybrid stage reuse was fastest on repeated queries over one pinned HTML document. Local measurements, not production evidence; no general crossover point is claimed.</p>
+</div>
+</div>
+<div class="lightbox" id="fig-thetabase-5" role="group" aria-label="Enlarged figure: Thetabase, page 5 of 5: Use it. Measure it. Keep the receipts">
+<div class="lb-inner">
+<p class="lb-bar"><a class="lb-close" href="#figures">Close figure</a><a class="lb-open" href="assets/figures/thetabase-p5.png" target="_blank" rel="noopener noreferrer">Open the image file in a new tab</a></p>
+<img src="assets/figures/thetabase-p5.png" width="2200" height="1700" alt="Reproduction card with two commands to verify and benchmark a kit, a five-line Python integration example that passes a host-supplied access check, and a note on design influences." loading="lazy"/>
+<p class="lb-cap"><b>Thetabase, page 5 of 5: Use it. Measure it. Keep the receipts.</b> Two reproduce commands and a five-line integration example in which the host supplies the access check. The kit the commands refer to is not published on this site, and the page states that its design influences do not establish novelty or production validation.</p>
+</div>
 </div>
 </section>
 

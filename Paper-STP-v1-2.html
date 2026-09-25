@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" data-atlas-return-layout="document">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - State Transition Protocol v1.2 Candidate</title>
+<meta name="description" content="The working version of the State Transition Protocol: a candidate concurrency, consequence, and exploration profile that proposes changes to STP v1.1."/>
+<meta name="theme-color" content="#16301f"/>
+<link rel="icon" href="favicon.png"/>
+<style>
+ :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--flag:#ff9d80;}
+ *{box-sizing:border-box;}
+ body{margin:0;background:var(--bg);color:var(--txt);}
+ .wrap{max-width:820px;margin:0 auto;padding:24px 22px 64px;}
+ nav.page-nav{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:28px;}
+ nav.page-nav a{display:inline-flex;align-items:center;min-height:44px;}
+ .kicker{font-size:12px;font-weight:650;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin:0 0 6px;}
+ h1{font-size:32px;line-height:1.2;margin:0 0 12px;}
+ .lead{font-size:17px;color:var(--dim);max-width:720px;margin:0 0 14px;line-height:1.6;}
+ .status-chip{display:inline-block;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:20px;padding:5px 12px;margin:0 0 18px;font-weight:650;}
+ h2{font-size:20px;margin:34px 0 10px;padding-top:8px;border-top:1px solid var(--line);}
+ p{margin:0 0 12px;max-width:740px;line-height:1.65;}
+ a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere;}
+ a:hover{text-decoration-thickness:2px;}
+ a:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:2px;}
+ dl.facts{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:0 0 16px;padding:14px 18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;max-width:740px;}
+ dl.facts dt{color:var(--dim);font-size:13px;}
+ dl.facts dd{margin:0;font-size:14px;}
+ .open-file{display:inline-flex;align-items:center;min-height:44px;padding:9px 16px;border-radius:24px;background:var(--accent);color:#1e2b17;font-weight:700;text-decoration:none;margin:0 10px 10px 0;}
+ .open-file:hover{background:#f0c75e;}
+ .status-block{background:#3a2d0d;border:1px solid #6b5518;border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin:18px 0;}
+ .status-block h2{border:0;margin:0 0 8px;padding:0;font-size:18px;}
+ .status-block p{color:#f1ede0;}
+ blockquote{margin:12px 0;padding:10px 16px;border-left:3px solid var(--line);color:var(--dim);max-width:720px;}
+ blockquote cite{display:block;font-style:normal;font-size:12.5px;margin-top:4px;}
+ ul.figs{list-style:none;padding:0;margin:10px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+ ul.figs a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px;text-decoration:none;color:var(--txt);font-size:13px;}
+ ul.figs img{display:block;width:100%;height:130px;object-fit:contain;background:#fff;border-radius:6px;margin-bottom:6px;}
+ footer{border-top:1px solid var(--line);padding-top:18px;margin-top:34px;color:var(--dim);font-size:13px;}
+ .skip{position:absolute;left:12px;top:-100px;z-index:2;background:var(--bg);padding:12px;}
+ .skip:focus{top:8px;}
+ @media(max-width:600px){.wrap{padding:18px 16px 48px;} h1{font-size:27px;} dl.facts{grid-template-columns:1fr;gap:2px;} dl.facts dd{margin-bottom:8px;}}
+ /* canonical typography: one baseline across every page */
+ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;line-height:1.6;}
+ textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
+ button{font-family:inherit;}
+ ::placeholder{color:var(--dim);opacity:1;}
+</style>
+<link rel="stylesheet" href="assets/atlas-return-v1.css"/>
+</head>
+<body>
+<nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
+<a class="skip" href="#content">Skip to the paper</a>
+<main class="wrap" id="content" tabindex="-1">
+<nav class="page-nav" aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas</a><a href="Delta-Atlas-Library.html#papers" target="_top">Protocols and papers</a><a href="Delta-Atlas-Library.html#figures" target="_top">Figures</a></nav>
+<header>
+<p class="kicker">Protocols and papers</p>
+<h1>State Transition Protocol v1.2 Candidate</h1>
+<p class="lead">The working version of the State Transition Protocol: a candidate concurrency, consequence, and exploration profile that proposes changes to STP v1.1.</p>
+<p class="status-chip">PROPOSED · owner review required</p>
+</header>
+<dl class="facts"><dt>Printed title</dt><dd>State Transition Protocol v1.2 Candidate: Concurrency, Consequence, and Exploration Profile</dd><dt>Format</dt><dd>Word document (.docx)</dd><dt>Date</dt><dd>12 August 2026</dd><dt>Structure</dt><dd>16 numbered sections, Appendix A (source and identity register) and Appendix B (verification packet)</dd></dl>
+<p><a class="open-file" href="assets/papers/stp-v1.2-candidate.docx" download>Download the Word document</a></p>
+<section aria-labelledby="means-title">
+<h2 id="means-title">What it means</h2>
+<p>Probabilistic systems may explore broadly. Deterministic, versioned gates control consequences. Independent observation records what happened, and append-only receipts preserve attempts and outcomes.</p>
+<p>Consequential autonomy increases only when observation, settlement, and recovery capacity are measured in the same unit and remain within bound.</p>
+<blockquote><p>This is a proposal and research instrument, not a certification, deployment authorization, or accepted replacement for STP v1.1.</p><cite>Candidate thesis</cite></blockquote><blockquote><p>This proves agreement for those bytes and implementations. It does not prove schedule equivalence or semantic truth.</p><cite>Section 6.1, Deterministic replay</cite></blockquote>
+</section>
+<section aria-labelledby="functions-title">
+<h2 id="functions-title">How it functions</h2>
+<p>Read it to see exactly what each guarantee covers and where it stops. Section 6 states five separate guarantees: deterministic replay, schedule equivalence, invariant safety, effect safety, and liveness and fairness. Each one says what it establishes and what it does not.</p>
+<p>The other sections set out the authority and claim boundary, a plain technical statement, formal objects and notation, the consequence path with a separate receipt for each phase, causal order and canonical replay, the pair and triple gate, exploration pressure against effect pressure with a per-lane backlog recurrence, a deterministic drift vector, neutral confidence, the optimizer and model authority ceiling, non-alias rules for adjacent systems, harness-neutral adapters, conformance evidence, the change record from v1.1, and the acceptance gates.</p>
+<p>Appendix B lists each verification lane with what it establishes and what remains outside the claim. The <a href="https://github.com/JakeTOpenSource/Resilience-Ledger/tree/main/research/stp-v1.2" target="_blank" rel="noopener noreferrer">public reproduction packet</a> in this repository is a separate, minimized executable release from the same v1.2 research: it runs synthetic cases in JavaScript and Python, overlaps this document on concurrency and effect finality, adds profiles this document does not contain, and is not the complete draft.</p>
+</section>
+<section class="status-block" aria-labelledby="status-title">
+<h2 id="status-title">Status and claim boundary</h2>
+<p>Working version, under owner review. The document's own control block reads <b>PROPOSED; owner review required</b>, and its baseline line reads <b>STP v1.1 remains current; no silent supersession</b>. Formal acceptance waits on the acceptance gates in section 16, ending in an append-only owner receipt (ACCEPT, ACCEPT_WITH_LIMITS, DEFER, REJECT, or SUPERSEDE). Until that receipt exists, the correct state is PROPOSED, and STP v1.1 remains the formal baseline.</p>
+<p>Its evidence is a dual JavaScript and Python harness over synthetic fixtures. Passing those fixtures shows agreement for the enumerated synthetic records only. It does not establish all deltas, all schedules, live external effects, global confluence, fairness, or semantic truth. In Appendix B, termination is UNKNOWN and Ledger identity is BLOCKING.</p>
+</section>
+<footer>
+<p>The paper is published as supplied. Its status is the one stated above and in the document itself; this page does not upgrade it.</p>
+<p><a href="Delta-Atlas-Library.html#papers" target="_top">All protocols and papers</a> &middot; <a href="index.html" target="_top">Back to Delta Atlas</a> &middot; Site text licensed <a href="Delta-Atlas-Document.html?file=LICENSE.txt" target="_top">CC BY 4.0</a></p>
+</footer>
+</main>
+<script src="assets/atlas-return-v1.js"></script>
+</body>
+</html>

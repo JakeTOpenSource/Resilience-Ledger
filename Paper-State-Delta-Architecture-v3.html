@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-atlas-return-layout="document">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - State-Delta Architecture 3.0</title>
+<meta name="description" content="The plain-language blueprint for grounding agentic AI, written so that technical and non-technical readers can use the same pages."/>
+<meta name="theme-color" content="#16301f"/>
+<link rel="icon" href="favicon.png"/>
+<style>
+ :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--flag:#ff9d80;}
+ *{box-sizing:border-box;}
+ body{margin:0;background:var(--bg);color:var(--txt);}
+ .wrap{max-width:820px;margin:0 auto;padding:24px 22px 64px;}
+ nav.page-nav{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:28px;}
+ nav.page-nav a{display:inline-flex;align-items:center;min-height:44px;}
+ .kicker{font-size:12px;font-weight:650;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin:0 0 6px;}
+ h1{font-size:32px;line-height:1.2;margin:0 0 12px;}
+ .lead{font-size:17px;color:var(--dim);max-width:720px;margin:0 0 14px;line-height:1.6;}
+ .status-chip{display:inline-block;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:20px;padding:5px 12px;margin:0 0 18px;font-weight:650;}
+ h2{font-size:20px;margin:34px 0 10px;padding-top:8px;border-top:1px solid var(--line);}
+ p{margin:0 0 12px;max-width:740px;line-height:1.65;}
+ a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere;}
+ a:hover{text-decoration-thickness:2px;}
+ a:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:2px;}
+ dl.facts{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:0 0 16px;padding:14px 18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;max-width:740px;}
+ dl.facts dt{color:var(--dim);font-size:13px;}
+ dl.facts dd{margin:0;font-size:14px;}
+ .open-file{display:inline-flex;align-items:center;min-height:44px;padding:9px 16px;border-radius:24px;background:var(--accent);color:#1e2b17;font-weight:700;text-decoration:none;margin:0 10px 10px 0;}
+ .open-file:hover{background:#f0c75e;}
+ .status-block{background:#3a2d0d;border:1px solid #6b5518;border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin:18px 0;}
+ .status-block h2{border:0;margin:0 0 8px;padding:0;font-size:18px;}
+ .status-block p{color:#f1ede0;}
+ blockquote{margin:12px 0;padding:10px 16px;border-left:3px solid var(--line);color:var(--dim);max-width:720px;}
+ blockquote cite{display:block;font-style:normal;font-size:12.5px;margin-top:4px;}
+ ul.figs{list-style:none;padding:0;margin:10px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+ ul.figs a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px;text-decoration:none;color:var(--txt);font-size:13px;}
+ ul.figs img{display:block;width:100%;height:130px;object-fit:contain;background:#fff;border-radius:6px;margin-bottom:6px;}
+ footer{border-top:1px solid var(--line);padding-top:18px;margin-top:34px;color:var(--dim);font-size:13px;}
+ .skip{position:absolute;left:12px;top:-100px;z-index:2;background:var(--bg);padding:12px;}
+ .skip:focus{top:8px;}
+ @media(max-width:600px){.wrap{padding:18px 16px 48px;} h1{font-size:27px;} dl.facts{grid-template-columns:1fr;gap:2px;} dl.facts dd{margin-bottom:8px;}}
+ /* canonical typography: one baseline across every page */
+ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;line-height:1.6;}
+ textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
+ button{font-family:inherit;}
+ ::placeholder{color:var(--dim);opacity:1;}
+</style>
+<link rel="stylesheet" href="assets/atlas-return-v1.css"/>
+</head>
+<body>
+<nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
+<a class="skip" href="#content">Skip to the paper</a>
+<main class="wrap" id="content" tabindex="-1">
+<nav class="page-nav" aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas</a><a href="Delta-Atlas-Library.html#papers" target="_top">Protocols and papers</a><a href="Delta-Atlas-Library.html#figures" target="_top">Figures</a></nav>
+<header>
+<p class="kicker">Protocols and papers</p>
+<h1>State-Delta Architecture 3.0</h1>
+<p class="lead">The plain-language blueprint for grounding agentic AI, written so that technical and non-technical readers can use the same pages.</p>
+<p class="status-chip">Blueprint · not a tested implementation</p>
+</header>
+<dl class="facts"><dt>Printed title</dt><dd>State-Delta Architecture: A Plain Language Blueprint for Grounding Agentic AI</dd><dt>Format</dt><dd>PDF, 9 pages</dd><dt>Date</dt><dd>No date printed; file dated 23 May 2026</dd><dt>Version</dt><dd>3.0 is the file&#x27;s version; the document itself prints no version</dd></dl>
+<p><a class="open-file" href="assets/papers/state-delta-architecture-3.0.pdf" target="_blank" rel="noopener noreferrer">Open the PDF</a></p>
+<section aria-labelledby="means-title">
+<h2 id="means-title">What it means</h2>
+<p>The blueprint argues that AI reliability is a structural problem, not a model-size problem. Its core image is a librarian who keeps only what reflects what is currently true, checks new information against reality, and sets aside what cannot be verified instead of adding it to the pile.</p>
+<p>It is written so that engineers, administrators, family members, and students can read the same pages.</p>
+<blockquote><p>If it does, update. If it does not, set it aside instead of adding it to the pile.</p><cite>Page 2</cite></blockquote><blockquote><p>If either gate fails, the system activates its Refusal Logic. This is a hard stop. It is not an AI decision.</p><cite>Page 3</cite></blockquote>
+</section>
+<section aria-labelledby="functions-title">
+<h2 id="functions-title">How it functions</h2>
+<p>Read it first if you are new to this work. It moves from the problem and the core idea to the architecture: a flexible reasoning layer, a fixed local Harness, and small structured records called State-Deltas passing between them. Each proposed change must pass an Ontology Gate and a Semantics Gate before it is written to an append-only Truth Ledger.</p>
+<p>Five protocols, plus a set of definitions each given in technical, plain, and bridge form, give readers a shared vocabulary. Worked examples cover education, personal health, infrastructure, and enterprise compliance, and the last part gives separate guidance for engineers, administrators, affected people, and students.</p>
+</section>
+<section class="status-block" aria-labelledby="status-title">
+<h2 id="status-title">Status and claim boundary</h2>
+<p>A blueprint and, in its own words, one synthesis among many. It states that it is not finished work. It contains no implementation, tests, or measured results, so the benefits described in its examples are design intentions, not demonstrated outcomes.</p>
+<p>It notes that its parts (sandboxes, validation gates, append-only ledgers, schema validation) are established ideas; what it offers is their synthesis applied to agentic AI. The <a href="Delta-Atlas-Architecture.html" target="_top">State-Delta Architecture page</a> on this site walks the BespokeNode specification, which draws on this blueprint.</p>
+</section>
+<footer>
+<p>The paper is published as supplied. Its status is the one stated above and in the document itself; this page does not upgrade it.</p>
+<p><a href="Delta-Atlas-Library.html#papers" target="_top">All protocols and papers</a> &middot; <a href="index.html" target="_top">Back to Delta Atlas</a> &middot; Site text licensed <a href="Delta-Atlas-Document.html?file=LICENSE.txt" target="_top">CC BY 4.0</a></p>
+</footer>
+</main>
+<script src="assets/atlas-return-v1.js"></script>
+</body>
+</html>
