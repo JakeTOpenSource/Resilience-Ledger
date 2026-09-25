@@ -69,6 +69,10 @@
  .substrip{margin:8px 0 4px;font-size:13.5px;color:var(--dim);display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;}
  .dlink{color:var(--accent);cursor:pointer;border:0;border-bottom:1px solid transparent;background:transparent;padding:0;font:inherit;min-height:44px;display:inline-flex;align-items:center;text-align:left;} .dlink:hover{border-bottom-color:var(--accent);}
  a.dlink{text-decoration:none;}
+ .toolslist{list-style:none;margin:6px 0 4px;padding:0;}
+ .toolslist li{display:flex;flex-wrap:wrap;gap:2px 14px;align-items:baseline;padding:4px 0;border-bottom:1px solid rgba(74,107,86,.5);}
+ .toolslist .dlink{font-weight:650;flex:0 0 auto;}
+ .toolslist span{color:var(--dim);font-size:13.5px;line-height:1.55;flex:1 1 320px;}
  .tool-boundary{margin:10px 0 6px;color:var(--dim);font-size:12.5px;}
  .sample{margin:14px 0 8px;text-align:left;border:1px solid var(--line);border-radius:12px;padding:0 14px;background:rgba(44,74,56,.4);}
  .sample summary{cursor:pointer;color:var(--accent);font-weight:650;padding:11px 2px;min-height:44px;display:flex;align-items:center;}
@@ -156,7 +160,7 @@
       <h1 class="logo" id="home-title" tabindex="-1"><span class="dot"></span>Delta Atlas</h1>
       <p class="headline">Simplification is systems maintenance; <b>the substrate is human cost.</b></p>
       <p class="tagline">One researcher's theory of agentic AI governance and the instruments built from it, shown end to end with receipts.</p>
-      <p class="hero-links"><a class="primary" href="Delta-Atlas-Architecture.html" target="_top">Read the architecture</a><button class="cta" type="button" onclick="nav('Delta-Atlas-Evidence.html')">See the receipts</button></p>
+      <p class="hero-links"><button class="cta" type="button" onclick="nav('Delta-Atlas-Evidence.html')">See the receipts</button></p>
     </section>
 
     <section class="garden-tools skills" aria-labelledby="skills-title">
@@ -166,7 +170,7 @@
         <article class="skill" aria-labelledby="skill-bespokenode">
           <span class="dk">Framework</span>
           <h3 id="skill-bespokenode">BespokeNode</h3>
-          <p>A governance framework for agentic AI. Nothing an agent does counts until it has been <b>defined, permitted, gated, verified and accepted</b>, in that order, by the right party at each step. Two safety states, HOLD and TRIP, each with its own recovery path. Four invariants that never bend.</p>
+          <p>A governance framework for agentic AI. Nothing an agent does counts until it has been <b>defined, permitted, gated, verified and accepted</b>, in that order, by the right party at each step. Two safety states, HOLD and TRIP, each with its own recovery path. Four invariants that never bend, among them: approve exact output, never just the plan; and no automatic restart.</p>
           <span class="lab">Run it now</span>
           <p><a href="https://github.com/JakeTOpenSource/parallel-advisor-pilot-001" target="_blank" rel="noopener noreferrer">pilot-001</a> is the first clause run through the framework end to end: sealed expectations, blind two-track execution, a contradiction found and resolved on the record, an independent audit that attacked the checker, and public receipts a stranger can re-run. MIT licensed.</p>
           <p>The same discipline governs this site's own changes: every proposed change is a state-delta in a register, sorted by a human with a written reason. Read <a href="Delta-Atlas-Document.html?file=State-Delta-Bridge.md" target="_top">how the register works</a>.</p>
@@ -192,7 +196,7 @@
           <span class="lab">Run it now</span>
           <p>The <a href="Delta-Atlas-Document.html?file=skills/bridge-card/README.md" target="_top">Bridge Card</a> is the one-minute form of the method. Six fields: SOURCE, CLAIM, OPEN TERMS, PARALLEL, HINGE, STATUS. Copy it into any assistant as a custom instruction or fill it by hand. It ends in accept, not yet, or a named uncertainty.</p>
           <span class="lab">Receipt</span>
-          <p>The worked example is the <a href="Delta-Atlas-Architecture.html#crosswalk" target="_top">V=IR crosswalk</a>: authority as voltage, effects as current, the gate as resistance. The author reports red-teaming it against a first draft; those notes are not yet published. It is a crosswalk with a stated claim frame, not an empirically validated law.</p>
+          <p>The worked example is the V=IR crosswalk: authority as voltage, effects as current, the gate as resistance. I red-teamed it against a first draft; those notes are not yet published. It is a crosswalk with a stated claim frame, not an empirically validated law.</p>
           <p class="foot"><a href="Delta-Atlas-Architecture.html#crosswalk" target="_top">Read the crosswalk &rarr;</a></p>
         </article>
       </div>
@@ -224,7 +228,13 @@
     <section class="garden-tools instruments" aria-labelledby="instruments-title">
       <h2 class="sec" id="instruments-title">The instruments</h2>
       <p class="seclead">Deterministic browser tools built along the way. Fixed rules, versioned word lists, no model at runtime. They read structure, not meaning.</p>
-      <p class="substrip"><button class="dlink" type="button" onclick="nav('Delta-Atlas-GapCheck.html')">Gap Check: read a plan for missing governance</button><button class="dlink" type="button" onclick="nav('Delta-Atlas-Tracer.html')">Priority Tracer: read an action log for bypassed rules</button><button class="dlink" type="button" onclick="nav('Coherence-Audit.html')">Framework Audit: review a general plan</button><button class="dlink" type="button" onclick="nav('Delta-Atlas-ContinuityAudit.html')">Continuity Audit: check a handover</button><button class="dlink" type="button" onclick="nav('Delta-Atlas-Library.html')">Everything else in the Library</button></p>
+      <ul class="toolslist">
+        <li><button class="dlink" type="button" onclick="nav('Delta-Atlas-GapCheck.html')">Gap Check</button><span>Paste a plan or policy. It looks for a risk named with no control beside it, and for autonomy with no oversight named.</span></li>
+        <li><button class="dlink" type="button" onclick="nav('Delta-Atlas-Tracer.html')">Priority Tracer</button><span>Paste an agent's action log. It flags wording where a goal climbs over a rule, or a check is bypassed.</span></li>
+        <li><button class="dlink" type="button" onclick="nav('Coherence-Audit.html')">Framework Audit</button><span>Paste a framework or plan. It scores each part on whether it says what to do, whether you could tell if it worked, and what happens on failure.</span></li>
+        <li><button class="dlink" type="button" onclick="nav('Delta-Atlas-ContinuityAudit.html')">Continuity Audit</button><span>Answer five short questions about a task and its backup. It reports what is missing when the usual person is away.</span></li>
+      </ul>
+      <p class="substrip"><button class="dlink" type="button" onclick="nav('Delta-Atlas-Library.html')">Everything else in the Library</button></p>
       <p class="tool-boundary">Experimental checks using fixed rules. Results are questions to review; a clean result does not certify correctness or safety.</p>
       <details class="sample">
        <summary>Preview Gap Check in place</summary>
@@ -243,7 +253,7 @@
         <button id="hgo" type="button" onclick="heroSearch()">Search</button>
       </div>
       <div class="hchips" id="hchips" aria-label="Common glossary searches"></div>
-      <div id="results"><div class="resultcard"><div class="reshead"><span>Answer &middot; fixed function-first engine</span><button class="dlink" type="button" onclick="clearResults()">Clear &times;</button></div><iframe id="ansframe" title="Glossary search result" referrerpolicy="no-referrer"></iframe></div></div>
+      <div id="results"><div class="resultcard"><div class="reshead"><span>This answer comes from the fixed function-first engine, not a chatbot.</span><button class="dlink" type="button" onclick="clearResults()">Clear &times;</button></div><iframe id="ansframe" title="Glossary search result" referrerpolicy="no-referrer"></iframe></div></div>
       <p class="substrip"><button class="dlink" type="button" onclick="nav('Agentic-AI-Governance-Query.html')">Browse Explore</button><button class="dlink" type="button" onclick="nav('White-Paper.html')">Project guide and evidence boundaries</button></p>
     </section>
 
