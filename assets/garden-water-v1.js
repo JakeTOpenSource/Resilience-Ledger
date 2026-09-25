@@ -7,6 +7,8 @@
  * Optional #home integration suspends the scene while an Atlas tool is open.
  * The cover transform is derived from that computed image position on resize.
  * Masks are authored in pixels of hanging-garden-v1.webp (1672 x 941).
+ * The pool moves along a flow field from the foot of the lower fall toward the
+ * foreground-left drain (v1.1, 2026-09-25); the falls are unchanged from v1.
  * data-frame-count counts successful WebGL draw submissions, not proof of visible
  * motion or a GPU performance measurement. Inspect the actual browser rendering.
  */
@@ -161,6 +163,62 @@
         float upper = ellipse(p, vec2(1310.0, 511.0), vec2(128.0, 14.0));
         return max(m, upper);
       }
+      // The pool is a flow field, not a uniform drift. Water arrives at the foot
+      // of the lower fall, spreads outward through the splash, then drains toward
+      // the foreground-left, where the pool leaves the frame. The thin upper basin
+      // slides gently toward its spill lips. Speeds are image-space art speeds in
+      // pixels per second, not measurements of physical water.
+      vec2 poolField(vec2 p, out float near) {
+        // The splash is a line along the whole foot of the lower curtain, from
+        // its left edge to its right edge, not a point in the middle. Water
+        // leaves that line downward and outward, never back up the fall.
+        float footY = 698.0;
+        vec2 foot = vec2(clamp(p.x, 1140.0, 1470.0), footY);
+        vec2 drain = vec2(860.0, 968.0);
+        vec2 fromFoot = p - foot;
+        // Compress the vertical axis so the splash zone is wide and flat.
+        float d = length(fromFoot * vec2(1.0, 1.35));
+        near = 1.0 - smoothstep(20.0, 260.0, d);
+        // Foam is heavier where the curtain lands hardest; vary it gently along the foot.
+        near *= 0.82 + 0.36 * noise(vec2(p.x * 0.012, 3.0));
+        // Under the curtain the water fans out slowly from the centre line; past the
+        // ends it turns outward more firmly. Never a single point, never a flat sheet.
+        vec2 away = normalize(vec2(fromFoot.x * 0.45 + (p.x - 1305.0) * 0.14, max(fromFoot.y, 14.0)));
+        vec2 toDrain = drain - p;
+        vec2 down = toDrain / max(length(toDrain), 1.0);
+        float spread = 1.0 - smoothstep(40.0, 200.0, d);
+        vec2 blended = mix(down, away, spread);
+        vec2 dir = blended / max(length(blended), 0.05);
+        vec2 perp = vec2(-dir.y, dir.x);
+        // A slow static meander keeps the streaks from lining up like combed hair.
+        dir = normalize(dir + perp * (noise(p * 0.011 + vec2(21.0, 4.0)) - 0.5) * 0.45);
+        float upper = ellipse(p, vec2(1310.0, 511.0), vec2(128.0, 14.0));
+        dir = normalize(mix(dir, vec2(-0.99, 0.12), upper));
+        near = mix(near, 0.30, upper);
+        float speed = 5.0 + 11.0 * near;
+        return dir * speed;
+      }
+      // One downstream pass over the pool: ripples refract the reflection,
+      // photographed foam is carried along, bubbles at the splash catch light.
+      vec3 poolPass(vec2 src, vec2 dir, vec2 perp, float near, vec3 base) {
+        vec2 along = vec2(dot(src, dir), dot(src, perp));
+        // Streaks stretch along the current; ripples are finer across it.
+        float ripple = noise(along * vec2(0.028, 0.115)) * 2.0 - 1.0;
+        float fine = noise(along * vec2(0.075, 0.21) + vec2(5.0, 2.0)) * 2.0 - 1.0;
+        float amp = 0.8 + 3.2 * near;
+        vec2 shift = (perp * (ripple * 0.85 + fine * 0.25) + dir * fine * 0.30) * amp;
+        vec3 c = texture2D(u_image, clamp((src + shift) / u_image_size, 0.0, 1.0)).rgb;
+        // Keep stones and banks still: only pool or curtain pixels are pulled
+        // downstream, so the splash directly under the fall keeps moving.
+        c = mix(base, c, max(pool(src), cascades(src)));
+        float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
+        float sat = max(c.r, max(c.g, c.b)) - min(c.r, min(c.g, c.b));
+        float foam = smoothstep(0.58, 0.82, lum) * (1.0 - smoothstep(0.10, 0.30, sat));
+        float glint = noise(src * 0.31 + vec2(11.0, 17.0)) * 2.0 - 1.0;
+        c *= 1.0 + foam * near * glint * 0.10;
+        c += (1.0 - foam) * (ripple * 0.030 + fine * 0.012) * (0.35 + 0.65 * near) * vec3(0.62, 0.88, 0.90);
+        return c;
+      }
       void main() {
         // v_uv is bottom-up; HTML object-fit and authored masks are top-down.
         vec2 uv = u_origin + vec2(v_uv.x, 1.0 - v_uv.y) * u_span;
@@ -198,28 +256,28 @@
         passB = mix(base, passB, cascades(sourceB));
         vec3 falling = mix(passB, passA, weightA);
 
-        // Pools drift toward the foreground-left. Two-dimensional texture
-        // avoids the ambiguous sideways direction of parallel wave stripes.
-        vec2 poolFlow = p - vec2(-6.0, 10.0) * u_time;
-        float surface = noise(poolFlow * vec2(0.035, 0.11)) * 2.0 - 1.0;
-        float detail = noise(poolFlow * vec2(0.061, 0.17) + vec2(7.0, 3.0)) * 2.0 - 1.0;
-        // A small wash returns sideways beneath the bottom fall. Its pattern
-        // still advances down the image; it never climbs the falling strands.
-        float washZone = ellipse(p, vec2(1285.0, 700.0), vec2(160.0, 32.0));
-        vec2 washFlow = p - vec2(5.0, 3.0) * u_time;
-        float wash = noise(washFlow * vec2(0.045, 0.15)) * 2.0 - 1.0;
-        surface = mix(surface, wash, washZone * 0.65);
-        detail = mix(detail, wash, washZone * 0.45);
-        // Distort reflection edges sideways only, keeping their height fixed.
-        vec2 rippling = vec2(surface * 0.65 + detail * 0.20, 0.0);
-        vec3 reflection = texture2D(u_image, clamp(uv + rippling / u_image_size, 0.0, 1.0)).rgb;
-        vec3 moved = mix(reflection, falling, fall / max(fall + pond, 0.001));
+        // Pool. Two short downstream passes carry the surface along the flow
+        // field; each pass resets only when its own weight is zero, so foam and
+        // reflections drift without snapping. A static phase offset keeps the
+        // whole pool from pulsing in lockstep.
+        float near;
+        vec2 flowVec = poolField(p, near);
+        vec2 dir = normalize(flowVec);
+        vec2 perp = vec2(-dir.y, dir.x);
+        float cycle = 1.6;
+        float phaseP = fract(u_time / cycle + noise(p * vec2(0.013, 0.019) + vec2(3.0, 9.0)));
+        float phaseQ = fract(phaseP + 0.5);
+        float weightP = 1.0 - abs(2.0 * phaseP - 1.0);
+        vec2 sourceP = p - flowVec * (cycle * phaseP);
+        vec2 sourceQ = p - flowVec * (cycle * phaseQ);
+        vec3 pondColor = mix(poolPass(sourceQ, dir, perp, near, base),
+                             poolPass(sourceP, dir, perp, near, base), weightP);
+        vec3 moved = mix(pondColor, falling, fall / max(fall + pond, 0.001));
 
         // Irregular, elongated variations follow the same downstream field.
         // Modulate existing color gently; no added white stripe or sine bands.
         float filament = noise(fallFlow * vec2(0.23, 0.08) + vec2(13.0, 5.0));
         moved *= 1.0 + fall * ((filament - 0.5) * 0.045 + (stream - 0.5) * 0.025);
-        moved += pond * (surface * 0.006 + detail * 0.002) * vec3(0.60, 0.88, 0.87);
         gl_FragColor = vec4(clamp(moved, 0.0, 1.0), max(fall, pond));
       }
     `;
