@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" data-atlas-return-layout="document">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - From Model Output to Accepted State</title>
+<meta name="description" content="The working paper that proposes the State Transition Protocol as a typed boundary between model proposals and accepted state."/>
+<meta name="theme-color" content="#16301f"/>
+<link rel="icon" href="favicon.png"/>
+<style>
+ :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--flag:#ff9d80;}
+ *{box-sizing:border-box;}
+ body{margin:0;background:var(--bg);color:var(--txt);}
+ .wrap{max-width:820px;margin:0 auto;padding:24px 22px 64px;}
+ nav.page-nav{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:28px;}
+ nav.page-nav a{display:inline-flex;align-items:center;min-height:44px;}
+ .kicker{font-size:12px;font-weight:650;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin:0 0 6px;}
+ h1{font-size:32px;line-height:1.2;margin:0 0 12px;}
+ .lead{font-size:17px;color:var(--dim);max-width:720px;margin:0 0 14px;line-height:1.6;}
+ .status-chip{display:inline-block;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:20px;padding:5px 12px;margin:0 0 18px;font-weight:650;}
+ h2{font-size:20px;margin:34px 0 10px;padding-top:8px;border-top:1px solid var(--line);}
+ p{margin:0 0 12px;max-width:740px;line-height:1.65;}
+ a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere;}
+ a:hover{text-decoration-thickness:2px;}
+ a:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:2px;}
+ dl.facts{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:0 0 16px;padding:14px 18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;max-width:740px;}
+ dl.facts dt{color:var(--dim);font-size:13px;}
+ dl.facts dd{margin:0;font-size:14px;}
+ .open-file{display:inline-flex;align-items:center;min-height:44px;padding:9px 16px;border-radius:24px;background:var(--accent);color:#1e2b17;font-weight:700;text-decoration:none;margin:0 10px 10px 0;}
+ .open-file:hover{background:#f0c75e;}
+ .status-block{background:#3a2d0d;border:1px solid #6b5518;border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin:18px 0;}
+ .status-block h2{border:0;margin:0 0 8px;padding:0;font-size:18px;}
+ .status-block p{color:#f1ede0;}
+ blockquote{margin:12px 0;padding:10px 16px;border-left:3px solid var(--line);color:var(--dim);max-width:720px;}
+ blockquote cite{display:block;font-style:normal;font-size:12.5px;margin-top:4px;}
+ ul.figs{list-style:none;padding:0;margin:10px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+ ul.figs a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px;text-decoration:none;color:var(--txt);font-size:13px;}
+ ul.figs img{display:block;width:100%;height:130px;object-fit:contain;background:#fff;border-radius:6px;margin-bottom:6px;}
+ footer{border-top:1px solid var(--line);padding-top:18px;margin-top:34px;color:var(--dim);font-size:13px;}
+ .skip{position:absolute;left:12px;top:-100px;z-index:2;background:var(--bg);padding:12px;}
+ .skip:focus{top:8px;}
+ @media(max-width:600px){.wrap{padding:18px 16px 48px;} h1{font-size:27px;} dl.facts{grid-template-columns:1fr;gap:2px;} dl.facts dd{margin-bottom:8px;}}
+ /* canonical typography: one baseline across every page */
+ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;line-height:1.6;}
+ textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
+ button{font-family:inherit;}
+ ::placeholder{color:var(--dim);opacity:1;}
+</style>
+<link rel="stylesheet" href="assets/atlas-return-v1.css"/>
+</head>
+<body>
+<nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
+<a class="skip" href="#content">Skip to the paper</a>
+<main class="wrap" id="content" tabindex="-1">
+<nav class="page-nav" aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas</a><a href="Delta-Atlas-Library.html#papers" target="_top">Protocols and papers</a><a href="Delta-Atlas-Library.html#figures" target="_top">Figures</a></nav>
+<header>
+<p class="kicker">Protocols and papers</p>
+<h1>From Model Output to Accepted State</h1>
+<p class="lead">The working paper that proposes the State Transition Protocol as a typed boundary between model proposals and accepted state.</p>
+<p class="status-chip">Working paper · owner-review draft v4</p>
+</header>
+<dl class="facts"><dt>Printed subtitle</dt><dd>A typed state boundary for AI-assisted operations</dd><dt>Format</dt><dd>PDF, 36 pages</dd><dt>Date</dt><dd>15 August 2026</dd><dt>License</dt><dd>Intended for release under CC BY 4.0, as stated in the draft</dd></dl>
+<p><a class="open-file" href="assets/papers/from-model-output-to-accepted-state.pdf" target="_blank" rel="noopener noreferrer">Open the PDF</a></p>
+<section aria-labelledby="means-title">
+<h2 id="means-title">What it means</h2>
+<p>A language model's output is a proposal. It is not an authorization, a completed action, an observation, or an accepted record of state.</p>
+<p>The paper proposes keeping those records separate through a conceptual ten-stage lifecycle in which only a valid acceptance record advances governed state. It reports a reference implementation, contracts, reducers, and test harnesses that keep the records separate within the evaluated boundary, and that, used on one public software project, found real defects, including defects in the system itself.</p>
+<blockquote><p>A proposal is not an authorization, a completed action, an observation, or an accepted record of state.</p><cite>Page 1</cite></blockquote><blockquote><p>This is cross-language replay parity, not independent reproduction.</p><cite>Page 1</cite></blockquote>
+</section>
+<section aria-labelledby="functions-title">
+<h2 id="functions-title">How it functions</h2>
+<p>Each result-bearing claim carries one of four markers. TESTED means exact behavior over a named finite corpus, reproducible by a stated command. OBSERVED means a bounded inspection at a recorded time. PROPOSED means specified beyond the tested boundary, not a result. OPEN marks where the evidence stops.</p>
+<p>Public case-study claims are bound to commit 275d0b3e7474 of this repository, and Appendix C lists full digests, exact locators, and the verification boundary for each artifact: public rows can be rehashed at that commit, while retained-source rows are not public inputs and cannot be checked from the repository. Section 11 states in one place what the work does not establish. The PDF here is the 15 August build of draft v4, 36 pages. A later 37-page build of the same draft, with an added related-work section, is under review in <a href="https://github.com/JakeTOpenSource/Resilience-Ledger/pull/15" target="_blank" rel="noopener noreferrer">pull request 15</a>.</p>
+</section>
+<section class="status-block" aria-labelledby="status-title">
+<h2 id="status-title">Status and claim boundary</h2>
+<p>Working paper, <b>owner-review draft v4</b>, dated 15 August 2026. The draft states that it has no completed publication commitment. The ten-stage lifecycle is conceptual and PROPOSED; the public packet implements a narrower seven-event profile over synthetic fixtures and is not a complete implementation of that lifecycle.</p>
+<p>Cross-language replay parity between JavaScript and Python ports is not independent reproduction. The 34 runner-reported numbered holds across twelve suites are a diagnostic inventory, not a coverage measure. The paper does not establish causation, lawful authority, regulatory compliance, statistical reliability, general safety, or independent validation.</p>
+</section>
+<footer>
+<p>The paper is published as supplied. Its status is the one stated above and in the document itself; this page does not upgrade it.</p>
+<p><a href="Delta-Atlas-Library.html#papers" target="_top">All protocols and papers</a> &middot; <a href="index.html" target="_top">Back to Delta Atlas</a> &middot; Site text licensed <a href="Delta-Atlas-Document.html?file=LICENSE.txt" target="_top">CC BY 4.0</a></p>
+</footer>
+</main>
+<script src="assets/atlas-return-v1.js"></script>
+</body>
+</html>

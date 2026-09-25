@@ -17,6 +17,7 @@ const scripts = [
   'verify-public-explanation-surfaces.js',
   'verify-atlas-foundational-repair.js',
   'verify-six-signal-surface.js',
+  'verify-portfolio-surface.js',
   'verify-authority.js',
   'authority-falsification.js',
   'falsification.js',

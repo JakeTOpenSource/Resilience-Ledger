@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" data-atlas-return-layout="document">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Delta Atlas - State Transition Protocol v1.1</title>
+<meta name="description" content="The earlier version of the State Transition Protocol, the source of the five STP figures, and the formal baseline that the v1.2 candidate proposes to change."/>
+<meta name="theme-color" content="#16301f"/>
+<link rel="icon" href="favicon.png"/>
+<style>
+ :root{--bg:#16301f;--panel:#2c4a38;--line:#4a6b56;--txt:#fafcf7;--dim:#d3decf;--accent:#e3c258;--win:#8fe0a5;--flag:#ff9d80;}
+ *{box-sizing:border-box;}
+ body{margin:0;background:var(--bg);color:var(--txt);}
+ .wrap{max-width:820px;margin:0 auto;padding:24px 22px 64px;}
+ nav.page-nav{display:flex;flex-wrap:wrap;gap:8px 20px;margin-bottom:28px;}
+ nav.page-nav a{display:inline-flex;align-items:center;min-height:44px;}
+ .kicker{font-size:12px;font-weight:650;letter-spacing:.7px;text-transform:uppercase;color:var(--dim);margin:0 0 6px;}
+ h1{font-size:32px;line-height:1.2;margin:0 0 12px;}
+ .lead{font-size:17px;color:var(--dim);max-width:720px;margin:0 0 14px;line-height:1.6;}
+ .status-chip{display:inline-block;font-size:12px;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);border:1px solid var(--line);border-radius:20px;padding:5px 12px;margin:0 0 18px;font-weight:650;}
+ h2{font-size:20px;margin:34px 0 10px;padding-top:8px;border-top:1px solid var(--line);}
+ p{margin:0 0 12px;max-width:740px;line-height:1.65;}
+ a{color:var(--accent);text-underline-offset:3px;overflow-wrap:anywhere;}
+ a:hover{text-decoration-thickness:2px;}
+ a:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:2px;}
+ dl.facts{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:0 0 16px;padding:14px 18px;background:var(--panel);border:1px solid var(--line);border-radius:12px;max-width:740px;}
+ dl.facts dt{color:var(--dim);font-size:13px;}
+ dl.facts dd{margin:0;font-size:14px;}
+ .open-file{display:inline-flex;align-items:center;min-height:44px;padding:9px 16px;border-radius:24px;background:var(--accent);color:#1e2b17;font-weight:700;text-decoration:none;margin:0 10px 10px 0;}
+ .open-file:hover{background:#f0c75e;}
+ .status-block{background:#3a2d0d;border:1px solid #6b5518;border-left:3px solid var(--accent);border-radius:12px;padding:16px 20px;margin:18px 0;}
+ .status-block h2{border:0;margin:0 0 8px;padding:0;font-size:18px;}
+ .status-block p{color:#f1ede0;}
+ blockquote{margin:12px 0;padding:10px 16px;border-left:3px solid var(--line);color:var(--dim);max-width:720px;}
+ blockquote cite{display:block;font-style:normal;font-size:12.5px;margin-top:4px;}
+ ul.figs{list-style:none;padding:0;margin:10px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+ ul.figs a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px;text-decoration:none;color:var(--txt);font-size:13px;}
+ ul.figs img{display:block;width:100%;height:130px;object-fit:contain;background:#fff;border-radius:6px;margin-bottom:6px;}
+ footer{border-top:1px solid var(--line);padding-top:18px;margin-top:34px;color:var(--dim);font-size:13px;}
+ .skip{position:absolute;left:12px;top:-100px;z-index:2;background:var(--bg);padding:12px;}
+ .skip:focus{top:8px;}
+ @media(max-width:600px){.wrap{padding:18px 16px 48px;} h1{font-size:27px;} dl.facts{grid-template-columns:1fr;gap:2px;} dl.facts dd{margin-bottom:8px;}}
+ /* canonical typography: one baseline across every page */
+ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14.5px;font-weight:450;line-height:1.6;}
+ textarea,input,select{font-family:inherit;font-size:14px;line-height:1.5;}
+ button{font-family:inherit;}
+ ::placeholder{color:var(--dim);opacity:1;}
+</style>
+<link rel="stylesheet" href="assets/atlas-return-v1.css"/>
+</head>
+<body>
+<nav class="atlas-return-nav" aria-label="Return to Atlas"><a href="index.html" target="_top">&#8592; Atlas home</a></nav>
+<a class="skip" href="#content">Skip to the paper</a>
+<main class="wrap" id="content" tabindex="-1">
+<nav class="page-nav" aria-label="Page navigation"><a href="index.html" target="_top">&larr; Delta Atlas</a><a href="Delta-Atlas-Library.html#papers" target="_top">Protocols and papers</a><a href="Delta-Atlas-Library.html#figures" target="_top">Figures</a></nav>
+<header>
+<p class="kicker">Protocols and papers</p>
+<h1>State Transition Protocol v1.1</h1>
+<p class="lead">The earlier version of the State Transition Protocol, the source of the five STP figures, and the formal baseline that the v1.2 candidate proposes to change.</p>
+<p class="status-chip">Open source independent research · CC BY 4.0</p>
+</header>
+<dl class="facts"><dt>Printed title</dt><dd>State Transition Protocol: a framework architecture for controlled state transitions in agentic systems</dd><dt>Format</dt><dd>PDF, 28 pages</dd><dt>Date</dt><dd>10 August 2026</dd><dt>Structure</dt><dd>14 numbered sections, Appendices A to C, Figures 1 to 5</dd></dl>
+<p><a class="open-file" href="assets/papers/stp-v1.1.pdf" target="_blank" rel="noopener noreferrer">Open the PDF</a></p>
+<section aria-labelledby="means-title">
+<h2 id="means-title">What it means</h2>
+<p>A model can propose a change and a tool can apply it, but accepted state advances only through a declared projection rule after the required evidence, authority, observation, and conflict checks.</p>
+<p>The protocol keeps world, observed, candidate, accepted, and desired state as separate records and gives each control function its own receipt. Its deterministic claim is narrow: identical valid events, ordering rules, schemas, and policy versions produce the same accepted projection.</p>
+<blockquote><p>Accepted state advances only through a declared projection rule after the required evidence, authority, observation, and conflict checks.</p><cite>Page 1</cite></blockquote><blockquote><p>Candidate synthesis. Literature convergence supports relevance. Evaluation and independent review remain required.</p><cite>Page 2</cite></blockquote>
+</section>
+<section aria-labelledby="functions-title">
+<h2 id="functions-title">How it functions</h2>
+<p>A consequential change is written as a typed delta and moves along one consequence path (Figure 1): PROPOSE, NORMALIZE, CHECK, AUTHORIZE, PREPARE, EXECUTE, OBSERVE, ACCEPT, OUTCOME, CORRECT. A failed gate records a refusal and preserves the prior accepted projection.</p>
+<p>To check the design, use its 15 deterministic fixtures (F01 to F15), its falsification conditions, its enforcement levels from a review card to independent witnessing, and the 12 architecture decisions in Appendix C. The document's own fast path is Sections 2, 3, 4, 7, and 11.</p>
+</section>
+<section class="status-block" aria-labelledby="status-title">
+<h2 id="status-title">Status and claim boundary</h2>
+<p>The printed status is <b>Open source independent research</b>, released for independent review and reproducible testing under CC BY 4.0. Appendix C marks its 12 architecture decisions (D01 to D12) as approved for version 1.1. The document calls its contribution a candidate synthesis that still needs evaluation and independent review.</p>
+<p>It provides a control model, fixtures, and design targets. It reports no fixture results from an implementation, and it does not establish external truth, safe outcomes, witness quality, or legitimate authority; a deployment must supply those.</p>
+<p>Version history: a v1.2 candidate (PROPOSED, owner review required) is the working version under owner review. STP v1.1 remains the current baseline until an owner receipt records a decision on v1.2.</p>
+</section>
+<section aria-labelledby="figs-title">
+<h2 id="figs-title">Figures from this paper</h2>
+<ul class="figs"><li><a href="Delta-Atlas-Library.html#fig-stp-1" target="_top"><img src="assets/figures/thumbs/stp-fig1-consequence-path.webp" width="720" height="269" alt="Flow diagram of ten stages in order: propose, normalize, check, authorize, prepare, execute, observe, accept, outcome, correct. A note says a failed gate records a refusal and preserves the prior accepted projection." loading="lazy"/>STP v1.1, Figure 1: One consequence path, separate receipts</a></li><li><a href="Delta-Atlas-Library.html#fig-stp-2" target="_top"><img src="assets/figures/thumbs/stp-fig2-state-layers.webp" width="720" height="353" alt="Diagram of state layers: world state is seen through a witness observation, which feeds an evidence archive and a candidate state. The candidate state feeds the accepted projection, which feeds working context and outcome evidence, and outcome evidence feeds back into the accepted projection." loading="lazy"/>STP v1.1, Figure 2: State layers with distinct authority</a></li><li><a href="Delta-Atlas-Library.html#fig-stp-3" target="_top"><img src="assets/figures/thumbs/stp-fig3-causal-merge-conflict.webp" width="720" height="340" alt="Event graph: two separate writes from base version 12 merge into version 14. Two later writes to the same item are marked as a conflict, and the losing write is rebased." loading="lazy"/>STP v1.1, Figure 3: Causal order, commutative merge, explicit conflict</a></li><li><a href="Delta-Atlas-Library.html#fig-stp-4" target="_top"><img src="assets/figures/thumbs/stp-fig4-hysteresis.webp" width="720" height="325" alt="Line chart of a smooth risk signal crossing an upper enter threshold and later a lower exit threshold. The constrained-mode period lasts until the signal drops below the lower threshold." loading="lazy"/>STP v1.1, Figure 4: Hysteresis and dwell time reduce mode chattering</a></li><li><a href="Delta-Atlas-Library.html#fig-stp-5" target="_top"><img src="assets/figures/thumbs/stp-fig5-zero-trust.webp" width="720" height="340" alt="Hub diagram: eight roles, including the model or planner, tools, witnesses, the authority service, and the ledger operator, all connect to one central non-bypassable commit boundary." loading="lazy"/>STP v1.1, Figure 5: Zero trust applies to every role and adapter</a></li></ul>
+</section>
+<footer>
+<p>The paper is published as supplied. Its status is the one stated above and in the document itself; this page does not upgrade it.</p>
+<p><a href="Delta-Atlas-Library.html#papers" target="_top">All protocols and papers</a> &middot; <a href="index.html" target="_top">Back to Delta Atlas</a> &middot; Site text licensed <a href="Delta-Atlas-Document.html?file=LICENSE.txt" target="_top">CC BY 4.0</a></p>
+</footer>
+</main>
+<script src="assets/atlas-return-v1.js"></script>
+</body>
+</html>
